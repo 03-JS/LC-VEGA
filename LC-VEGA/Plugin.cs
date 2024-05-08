@@ -99,18 +99,6 @@ namespace LC_VEGA
 
         internal void GenerateConfigValues()
         {
-            playIntro = Config.Bind(
-                "General", // Config section
-                "Play intro", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will give you its introduction speech every time you open the game." // Description
-            );
-            enableAdvancedScannerAuto = Config.Bind(
-                "Advanced scanner", // Config section
-                "Enable the Advance Scanner automatically", // Key of this config
-                false, // Default value
-                "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often." // Description
-            );
             vocalLevel = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Vocal Level", // Key of this config
@@ -120,6 +108,18 @@ namespace LC_VEGA
                 "Low: Gives you useful info, doesn't talk on most interactions and new enemy scans. Recommended for more experienced players.\n" +
                 "Medium: Gives you useful info, doesn't talk on most interactions. Recommended for intermediate level players." +
                 "High: The default value. Will speak on every interaction. Recommended for inexperienced players." // Description
+            );
+            playIntro = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Play intro", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will give you its introduction speech every time you open the game." // Description
+            );
+            enableAdvancedScannerAuto = Config.Bind(
+                "Advanced scanner", // Config section
+                "Enable the Advance Scanner automatically", // Key of this config
+                false, // Default value
+                "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often." // Description
             );
         }
 
