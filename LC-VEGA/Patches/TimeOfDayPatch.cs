@@ -1,0 +1,37 @@
+﻿using HarmonyLib;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Random = UnityEngine.Random;
+
+namespace LC_VEGA.Patches
+{
+    [HarmonyPatch(typeof(TimeOfDay))]
+    internal class TimeOfDayPatch
+    {
+        [HarmonyPatch("MoveTimeOfDay")]
+        [HarmonyPostfix]
+        static void Give8pmWarning(ref int ___hour)
+        {
+            // Plugin.LogToConsole("Current hour -> " + ___hour);
+            if (___hour == 14 || ___hour == 15)
+            {
+                if (!VEGA.warningGiven)
+                {
+                    if (GameNetworkManager.Instance.localPlayerController.isInsideFactory)
+                    {
+                        if (!VEGA.audioSource.isPlaying)
+                        {
+                            VEGA.warningGiven = true;
+                        }
+                        VEGA.PlayAudioWithVariant("GettingLate", Random.Range(1, 4));
+                    }
+                }
+            }
+            else
+            {
+                VEGA.warningGiven = false;
+            }
+        }
+    }
+}

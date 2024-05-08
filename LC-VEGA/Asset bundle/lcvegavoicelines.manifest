@@ -1,0 +1,193 @@
+ManifestFileVersion: 0
+CRC: 537494103
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4c35439cd0df3764e3a9371949f0b863
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 4c35439cd0df3764e3a9371949f0b863
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/LC-VEGA/Voice lines/Entities/Scan/NutcrackerScan.wav
+- Assets/LC-VEGA/Voice lines/Hazards/TrapDisabled-3.wav
+- Assets/LC-VEGA/Voice lines/Moons/44-LIQ.wav
+- Assets/LC-VEGA/Voice lines/Time/Sundown.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/ManticoilShort.wav
+- Assets/LC-VEGA/Voice lines/Time/Noon.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllTrapsDisabled-3.wav
+- Assets/LC-VEGA/Voice lines/Weather/Rainy-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/ThumperScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Slime.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerEnabled-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/SandwormShort.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/BunkerSpiderScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/YippeeBug.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/Coil-HeadScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/BrackenScan.wav
+- Assets/LC-VEGA/Voice lines/Moons/56-VOW.wav
+- Assets/LC-VEGA/Voice lines/Doors/AllDoorsClosed-2.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/SlimeScan.wav
+- Assets/LC-VEGA/Voice lines/Weather/Flooded-2.wav
+- Assets/LC-VEGA/Voice lines/Hazards/NoTraps.wav
+- Assets/LC-VEGA/Voice lines/Time/GettingLate-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/ButlerShort.wav
+- Assets/LC-VEGA/Voice lines/Ship/TeleporterOnCooldown.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/Coil-HeadShort.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/SandwormScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/ForestKeeper.wav
+- Assets/LC-VEGA/Voice lines/Misc/Intro.wav
+- Assets/LC-VEGA/Voice lines/Ship/RadarSwitch-3.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/RedBees.wav
+- Assets/LC-VEGA/Voice lines/Weather/Rainy-2.wav
+- Assets/LC-VEGA/Voice lines/Hazards/NoTurrets.wav
+- Assets/LC-VEGA/Voice lines/Misc/IndoorsOnly-1.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllMinesDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Misc/IndoorsOnly-2.wav
+- Assets/LC-VEGA/Voice lines/Entities/No data/NoEntityData-4.wav
+- Assets/LC-VEGA/Voice lines/Time/Dawn.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllTurretsDisabled-2.wav
+- Assets/LC-VEGA/Voice lines/Moons/8-TIT.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Nutcracker.wav
+- Assets/LC-VEGA/Voice lines/Hazards/MineDisabled-2.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllTrapsDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Coil-Head.wav
+- Assets/LC-VEGA/Voice lines/Entities/No data/NoEntityData-2.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/RedBeesShort.wav
+- Assets/LC-VEGA/Voice lines/Doors/DoorClosed-2.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/ScannerAlreadyActive.wav
+- Assets/LC-VEGA/Voice lines/Misc/RadiationSpike.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Bracken.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Jester.wav
+- Assets/LC-VEGA/Voice lines/Hazards/TurretDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Misc/ReportComplete-3.wav
+- Assets/LC-VEGA/Voice lines/Misc/GoodLuck.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllTurretsDisabled-3.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Snakes.wav
+- Assets/LC-VEGA/Voice lines/Moons/7-DIN.wav
+- Assets/LC-VEGA/Voice lines/Radar booster/NoBoosters.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerDisabled-2.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/EyelessDogScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/BaboonHawkShort.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllTrapsDisabled-2.wav
+- Assets/LC-VEGA/Voice lines/Moons/5-EMB.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/ThumperShort.wav
+- Assets/LC-VEGA/Voice lines/Ship/Teleport-3.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/SnareFleaScan.wav
+- Assets/LC-VEGA/Voice lines/Doors/DoorOpened-3.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/EyelessDogShort.wav
+- Assets/LC-VEGA/Voice lines/Hazards/NoMines.wav
+- Assets/LC-VEGA/Voice lines/Doors/DoorOpened-1.wav
+- Assets/LC-VEGA/Voice lines/Ship/Teleport-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/ManticoilScan.wav
+- Assets/LC-VEGA/Voice lines/Moons/68-ART.wav
+- Assets/LC-VEGA/Voice lines/Time/None.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/SnakesScan.wav
+- Assets/LC-VEGA/Voice lines/Misc/ReportComplete-2.wav
+- Assets/LC-VEGA/Voice lines/Doors/AllDoorsOpened-2.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoPower-2.wav
+- Assets/LC-VEGA/Voice lines/Moons/41-EXP.wav
+- Assets/LC-VEGA/Voice lines/Misc/IndoorsOnly-3.wav
+- Assets/LC-VEGA/Voice lines/Ship/RadarSwitch-2.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/SporeLizard.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerDisabled-3.wav
+- Assets/LC-VEGA/Voice lines/Hazards/TrapDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/SnakesShort.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/BrackenShort.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllMinesDisabled-2.wav
+- Assets/LC-VEGA/Voice lines/Doors/DoorClosed-1.wav
+- Assets/LC-VEGA/Voice lines/Moons/61-MAR.wav
+- Assets/LC-VEGA/Voice lines/Hazards/NoTrapNearby.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/ForestKeeperShort.wav
+- Assets/LC-VEGA/Voice lines/Moons/71-GOR.wav
+- Assets/LC-VEGA/Voice lines/Misc/SoloCrew.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/EyelessDog.wav
+- Assets/LC-VEGA/Voice lines/Ship/LightsOn.wav
+- Assets/LC-VEGA/Voice lines/Weather/Stormy-2.wav
+- Assets/LC-VEGA/Voice lines/Moons/20-ADA.wav
+- Assets/LC-VEGA/Voice lines/Weather/Eclipsed-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/No data/NoEntityData-3.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllMinesDisabled-3.wav
+- Assets/LC-VEGA/Voice lines/Doors/DoorClosed-3.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoPower-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/BunkerSpider.wav
+- Assets/LC-VEGA/Voice lines/Hazards/TurretDisabled-2.wav
+- Assets/LC-VEGA/Voice lines/Weather/Foggy-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/LocustsShort.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/BaboonHawk.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/SlimeShort.wav
+- Assets/LC-VEGA/Voice lines/Ship/Teleport-2.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoPower-3.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Locusts.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/NutcrackerShort.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/SnareFleaShort.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoProblem-4.wav
+- Assets/LC-VEGA/Voice lines/Hazards/AllTurretsDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Moons/85-REN.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/YippeeBugScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Manticoil.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/RedBeesScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/OldBirdShort.wav
+- Assets/LC-VEGA/Voice lines/Radar booster/NoBoostersNearby.wav
+- Assets/LC-VEGA/Voice lines/Weather/Eclipsed-2.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerEnabled-2.wav
+- Assets/LC-VEGA/Voice lines/Misc/GettingCrewStatus.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Butler.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/JesterShort.wav
+- Assets/LC-VEGA/Voice lines/Hazards/NoMineNearby.wav
+- Assets/LC-VEGA/Voice lines/Doors/ShipDoorsClosed.wav
+- Assets/LC-VEGA/Voice lines/Time/GettingLate-3.wav
+- Assets/LC-VEGA/Voice lines/Hazards/MineDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Ship/RadarAlreadyFocused.wav
+- Assets/LC-VEGA/Voice lines/Time/Midnight.wav
+- Assets/LC-VEGA/Voice lines/Doors/NoDoorNearby.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/YippeeBugShort.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/ScannerAlreadyInactive.wav
+- Assets/LC-VEGA/Voice lines/Misc/ReportComplete-1.wav
+- Assets/LC-VEGA/Voice lines/Hazards/MineDisabled-3.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/SporeLizardShort.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Ship/LightsOff.wav
+- Assets/LC-VEGA/Voice lines/Hazards/TrapDisabled-2.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerEnabled-3.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/OldBird.wav
+- Assets/LC-VEGA/Voice lines/Hazards/NoVisibleTurret.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Sandworm.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/OldBirdScan.wav
+- Assets/LC-VEGA/Voice lines/Weather/Foggy-2.wav
+- Assets/LC-VEGA/Voice lines/Entities/Summary/BunkerSpiderShort.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoSignalTranslator.wav
+- Assets/LC-VEGA/Voice lines/Moons/220-ASS.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoProblem-1.wav
+- Assets/LC-VEGA/Voice lines/Moons/21-OFF.wav
+- Assets/LC-VEGA/Voice lines/Time/GettingLate-2.wav
+- Assets/LC-VEGA/Voice lines/Hazards/NoTurretNearby.wav
+- Assets/LC-VEGA/Voice lines/Doors/DoorOpened-2.wav
+- Assets/LC-VEGA/Voice lines/Doors/AllDoorsOpened-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/ButlerScan.wav
+- Assets/LC-VEGA/Voice lines/Doors/AllDoorsClosed-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/SporeLizardScan.wav
+- Assets/LC-VEGA/Voice lines/Weather/Flooded-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/Thumper.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/BaboonHawkScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/ForestKeeperScan.wav
+- Assets/LC-VEGA/Voice lines/Doors/NoDoors.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/JesterScan.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/SnareFlea.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoProblem-3.wav
+- Assets/LC-VEGA/Voice lines/Misc/NoProblem-2.wav
+- Assets/LC-VEGA/Voice lines/Entities/No data/NoEntityData-1.wav
+- Assets/LC-VEGA/Voice lines/Moons/4-MARS.wav
+- Assets/LC-VEGA/Voice lines/Doors/ShipDoorsOpened.wav
+- Assets/LC-VEGA/Voice lines/Ship/RadarSwitch-1.wav
+- Assets/LC-VEGA/Voice lines/Hazards/TurretDisabled-3.wav
+- Assets/LC-VEGA/Voice lines/Weather/Stormy-1.wav
+- Assets/LC-VEGA/Voice lines/Entities/Scan/LocustsScan.wav
+Dependencies: []
