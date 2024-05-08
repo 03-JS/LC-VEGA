@@ -106,7 +106,7 @@ namespace LC_VEGA
                 "Changes how often VEGA speaks.\n" +
                 "None: Will only speak when asked to.\n" +
                 "Low: Gives you useful info, doesn't talk on most interactions and new enemy scans. Recommended for more experienced players.\n" +
-                "Medium: Gives you useful info, doesn't talk on most interactions. Recommended for intermediate level players." +
+                "Medium: Gives you useful info, doesn't talk on most interactions. Recommended for intermediate level players.\n" +
                 "High: The default value. Will speak on every interaction. Recommended for inexperienced players." // Description
             );
             playIntro = Config.Bind(
