@@ -23,7 +23,7 @@ namespace LC_VEGA
     public class Plugin : BaseUnityPlugin
     {
         private const string modGUID = "JS03.LC-VEGA";
-        private const string modName = "VEGA";
+        private const string modName = "LC-VEGA";
         private const string modVersion = "6.6.6";
 
         internal static AssetBundle assetBundle;
