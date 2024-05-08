@@ -23,22 +23,11 @@ namespace LC_VEGA.Patches
         static void RadiationWarning()
         {
             VEGA.facilityHasPower = false;
-            VEGA.PlayAudio("RadiationSpike", 6.5f);
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+            {
+                VEGA.PlayAudio("RadiationSpike", 6.5f); 
+            }
         }
-
-        //[HarmonyPatch(typeof(RoundManager), "PowerSwitchOnClientRpc")]
-        //[HarmonyPostfix]
-        //static void PowerOnClient()
-        //{
-        //    VEGA.facilityHasPower = true;
-        //}
-
-        //[HarmonyPatch(typeof(RoundManager), "PowerSwitchOffClientRpc")]
-        //[HarmonyPostfix]
-        //static void PowerOffClient()
-        //{
-        //    VEGA.facilityHasPower = false;
-        //}
 
         [HarmonyPatch(typeof(RoundManager), "TurnOnAllLights")]
         [HarmonyPostfix]
@@ -60,7 +49,7 @@ namespace LC_VEGA.Patches
 
         [HarmonyPatch(typeof(PlayerControllerB), "KillPlayerClientRpc")]
         [HarmonyPostfix]
-        static void DisableVega()
+        static void DisableVEGA()
         {
             VEGA.audioSource.Stop();
         }

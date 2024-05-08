@@ -18,12 +18,15 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void PlayNewEnemyLine(int enemyID, ref float ___playerPingingScan)
         {
-            if (___playerPingingScan >= 0f)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Medium)
             {
-                if (enemyID < VEGA.enemyList.Length)
+                if (___playerPingingScan >= 0f)
                 {
-                    VEGA.PlayAudio(VEGA.enemyList[enemyID] + "Scan", 0.7f);
-                }
+                    if (enemyID < VEGA.enemyList.Length)
+                    {
+                        VEGA.PlayAudio(VEGA.enemyList[enemyID] + "Scan", 0.7f);
+                    }
+                } 
             }
         }
     }

@@ -13,24 +13,26 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void Give8pmWarning(ref int ___hour)
         {
-            // Plugin.LogToConsole("Current hour -> " + ___hour);
-            if (___hour == 14 || ___hour == 15)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
-                if (!VEGA.warningGiven)
+                if (___hour == 14 || ___hour == 15)
                 {
-                    if (GameNetworkManager.Instance.localPlayerController.isInsideFactory)
+                    if (!VEGA.warningGiven)
                     {
-                        if (!VEGA.audioSource.isPlaying)
+                        if (GameNetworkManager.Instance.localPlayerController.isInsideFactory)
                         {
-                            VEGA.warningGiven = true;
+                            if (!VEGA.audioSource.isPlaying)
+                            {
+                                VEGA.warningGiven = true;
+                            }
+                            VEGA.PlayAudioWithVariant("GettingLate", Random.Range(1, 4));
                         }
-                        VEGA.PlayAudioWithVariant("GettingLate", Random.Range(1, 4));
                     }
                 }
-            }
-            else
-            {
-                VEGA.warningGiven = false;
+                else
+                {
+                    VEGA.warningGiven = false;
+                } 
             }
         }
     }

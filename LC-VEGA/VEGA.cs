@@ -172,7 +172,10 @@ namespace LC_VEGA
                     {
                         Plugin.LogToConsole("Opening door");
                         closestDoor.SetDoorLocalClient(true);
-                        PlayAudioWithVariant("DoorOpened", Random.Range(1, 4), 0.7f);
+                        if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                        {
+                            PlayAudioWithVariant("DoorOpened", Random.Range(1, 4), 0.7f);
+                        }
                     }
                     else
                     {
@@ -206,7 +209,10 @@ namespace LC_VEGA
             if (doorsExist)
             {
                 Plugin.LogToConsole("Opening all doors");
-                PlayAudioWithVariant("AllDoorsOpened", Random.Range(1, 3), 0.7f);
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                {
+                    PlayAudioWithVariant("AllDoorsOpened", Random.Range(1, 3), 0.7f);
+                }
             }
             else
             {
@@ -230,7 +236,10 @@ namespace LC_VEGA
                     {
                         Plugin.LogToConsole("Closing door");
                         closestDoor.SetDoorLocalClient(false);
-                        PlayAudioWithVariant("DoorClosed", Random.Range(1, 4), 0.7f);
+                        if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                        {
+                            PlayAudioWithVariant("DoorClosed", Random.Range(1, 4), 0.7f); 
+                        }
                     }
                     else
                     {
@@ -264,7 +273,10 @@ namespace LC_VEGA
             if (doorsExist)
             {
                 Plugin.LogToConsole("Closing all doors");
-                PlayAudioWithVariant("AllDoorsClosed", Random.Range(1, 3), 0.7f);
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                {
+                    PlayAudioWithVariant("AllDoorsClosed", Random.Range(1, 3), 0.7f); 
+                }
             }
             else
             {
@@ -358,7 +370,10 @@ namespace LC_VEGA
                         {
                             Plugin.LogToConsole("Disabling turret");
                             closestTurret.CallFunctionFromTerminal();
-                            PlayAudioWithVariant("TurretDisabled", Random.Range(1, 4), 0.7f);
+                            if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                            {
+                                PlayAudioWithVariant("TurretDisabled", Random.Range(1, 4), 0.7f); 
+                            }
                         }
                         else
                         {
@@ -392,7 +407,10 @@ namespace LC_VEGA
             }
             if (turretsExist)
             {
-                PlayAudioWithVariant("AllTurretsDisabled", Random.Range(1, 4), 0.7f);
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                {
+                    PlayAudioWithVariant("AllTurretsDisabled", Random.Range(1, 4), 0.7f); 
+                }
             }
             else
             {
@@ -447,7 +465,10 @@ namespace LC_VEGA
                     {
                         Plugin.LogToConsole("Disabling landmine");
                         closestMine.CallFunctionFromTerminal();
-                        PlayAudioWithVariant("MineDisabled", Random.Range(1, 4));
+                        if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                        {
+                            PlayAudioWithVariant("MineDisabled", Random.Range(1, 4)); 
+                        }
                     }
                     else
                     {
@@ -476,7 +497,10 @@ namespace LC_VEGA
             }
             if (minesExist)
             {
-                PlayAudioWithVariant("AllMinesDisabled", Random.Range(1, 4));
+                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                {
+                    PlayAudioWithVariant("AllMinesDisabled", Random.Range(1, 4)); 
+                }
             }
             else
             {
@@ -534,7 +558,10 @@ namespace LC_VEGA
                     {
                         Plugin.LogToConsole("Disabling spike trap");
                         closestTrap.CallFunctionFromTerminal();
-                        PlayAudioWithVariant("TrapDisabled", Random.Range(1, 4));
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                        {
+                            PlayAudioWithVariant("TrapDisabled", Random.Range(1, 4)); 
+                        }
                     }
                     else
                     {
@@ -566,7 +593,10 @@ namespace LC_VEGA
             }
             if (trapsExist)
             {
-                PlayAudioWithVariant("AllTrapsDisabled", Random.Range(1, 4));
+                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                {
+                    PlayAudioWithVariant("AllTrapsDisabled", Random.Range(1, 4)); 
+                }
             }
             else
             {
@@ -581,7 +611,10 @@ namespace LC_VEGA
                 ShipTeleporter teleporter = GameObject.Find("Teleporter(Clone)").GetComponent<ShipTeleporter>();
                 if (teleporterCooldownTime <= 0f)
                 {
-                    PlayAudioWithVariant("Teleport", Random.Range(1, 4));
+                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                    {
+                        PlayAudioWithVariant("Teleport", Random.Range(1, 4)); 
+                    }
                     teleporter.PressTeleportButtonServerRpc();
                 }
                 else
@@ -806,7 +839,10 @@ namespace LC_VEGA
                 }
                 else
                 {
-                    PlayAudioWithVariant("ReportComplete", Random.Range(1, 4));
+                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                    {
+                        PlayAudioWithVariant("ReportComplete", Random.Range(1, 4)); 
+                    }
                     HUDManager.Instance.DisplayTip(header, livingPlayers + deceasedPlayers);
                 }
             }
@@ -891,7 +927,10 @@ namespace LC_VEGA
                 HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("Enemies:");
                 HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("Items:");
 
-                PlayAudioWithVariant("AdvancedScannerEnabled", Random.Range(1, 4));
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                {
+                    PlayAudioWithVariant("AdvancedScannerEnabled", Random.Range(1, 4)); 
+                }
             }, 0.85f);
             Voice.ListenForPhrases(new string[] { "VEGA, disable scanner", "VEGA, disable advanced scanner", "VEGA, turn off scanner", "VEGA, turn off advanced scanner", "VEGA, disable scan" }, (message) =>
             {
@@ -907,7 +946,10 @@ namespace LC_VEGA
                 HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
                 HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
 
-                PlayAudioWithVariant("AdvancedScannerDisabled", Random.Range(1, 4));
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                {
+                    PlayAudioWithVariant("AdvancedScannerDisabled", Random.Range(1, 4)); 
+                }
             }, 0.85f);
         }
 
@@ -974,7 +1016,10 @@ namespace LC_VEGA
                 {
                     if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
                     {
-                        PlayAudio("ShipDoorsOpened", 0.7f);
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                        {
+                            PlayAudio("ShipDoorsOpened", 0.7f); 
+                        }
                     }
                     InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
                     component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
@@ -987,7 +1032,10 @@ namespace LC_VEGA
                 {
                     if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
                     {
-                        PlayAudio("ShipDoorsClosed", 0.7f);
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                        {
+                            PlayAudio("ShipDoorsClosed", 0.7f); 
+                        }
                     }
                     InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
                     component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
