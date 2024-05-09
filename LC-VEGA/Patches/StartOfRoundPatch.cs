@@ -40,6 +40,7 @@ namespace LC_VEGA.Patches
                     }
                 }
             }
+            VEGA.localPlayer = __instance.localPlayerController;
             VEGA.creditsChar = HUDManager.Instance.totalValueText.text.ToCharArray()[0];
 
             InstantiateAdvancedScannerItems();
