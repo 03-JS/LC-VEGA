@@ -116,8 +116,8 @@ namespace LC_VEGA
                 "If set to true, VEGA will give you its introduction speech every time you open the game." // Description
             );
             enableAdvancedScannerAuto = Config.Bind(
-                "Advanced scanner", // Config section
-                "Enable the Advance Scanner automatically", // Key of this config
+                "Advanced Scanner", // Config section
+                "Enable the Advanced Scanner automatically", // Key of this config
                 false, // Default value
                 "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often." // Description
             );

@@ -20,13 +20,14 @@ namespace LC_VEGA.Patches
         {
             if (Plugin.vocalLevel.Value >= VocalLevels.Medium)
             {
-                if (___playerPingingScan >= 0f)
+                Plugin.LogToConsole("Player Pinging Scan -> " + ___playerPingingScan);
+                if (___playerPingingScan > -1f)
                 {
                     if (enemyID < VEGA.enemyList.Length)
                     {
                         VEGA.PlayAudio(VEGA.enemyList[enemyID] + "Scan", 0.7f);
                     }
-                } 
+                }
             }
         }
     }
