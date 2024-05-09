@@ -17,7 +17,6 @@ namespace LC_VEGA
     {
         public static AudioSource audioSource;
         public static List<AudioClip> voiceLines;
-        public static PlayerControllerB localPlayer;
         public static bool shouldBeInterrupted;
         public static bool warningGiven;
         public static bool facilityHasPower;
@@ -127,7 +126,7 @@ namespace LC_VEGA
 
         public static void PlayAudio(string clipName, float delay = 0.25f)
         {
-            if (!localPlayer.isPlayerDead)
+            if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
             {
                 if (audioSource != null)
                 {
@@ -159,7 +158,7 @@ namespace LC_VEGA
 
         internal static void OpenSecureDoor()
         {
-            if (localPlayer.isInsideFactory)
+            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
                 if (!facilityHasPower)
                 {
@@ -169,7 +168,7 @@ namespace LC_VEGA
                 TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
                 if (closestDoor != null)
                 {
-                    if (Vector3.Distance(closestDoor.transform.position, localPlayer.transform.position) < 11f)
+                    if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
                         Plugin.LogToConsole("Opening door");
                         closestDoor.SetDoorLocalClient(true);
@@ -223,7 +222,7 @@ namespace LC_VEGA
 
         internal static void CloseSecureDoor()
         {
-            if (localPlayer.isInsideFactory)
+            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
                 if (!facilityHasPower)
                 {
@@ -233,7 +232,7 @@ namespace LC_VEGA
                 TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
                 if (closestDoor != null)
                 {
-                    if (Vector3.Distance(closestDoor.transform.position, localPlayer.transform.position) < 11f)
+                    if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
                         Plugin.LogToConsole("Closing door");
                         closestDoor.SetDoorLocalClient(false);
@@ -311,7 +310,7 @@ namespace LC_VEGA
             float distanceToPlayer = 0f;
             foreach (var door in secureDoors)
             {
-                distanceToPlayer = Vector3.Distance(door.transform.position, localPlayer.transform.position);
+                distanceToPlayer = Vector3.Distance(door.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 // Plugin.LogToConsole("DOOR DIST. TO PLAYER -> " + distanceToPlayer);
                 distances.Add(distanceToPlayer);
                 if (distanceToPlayer <= distances.Min())
@@ -348,7 +347,7 @@ namespace LC_VEGA
             float distanceToPlayer = 0f;
             foreach (var turret in turrets)
             {
-                distanceToPlayer = Vector3.Distance(turret.transform.position, localPlayer.transform.position);
+                distanceToPlayer = Vector3.Distance(turret.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
                 if (distanceToPlayer <= distances.Min())
                 {
@@ -360,14 +359,14 @@ namespace LC_VEGA
 
         internal static void DisableTurret()
         {
-            if (localPlayer.isInsideFactory)
+            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
                 TerminalAccessibleObject? closestTurret = GetClosestTurret();
                 if (closestTurret != null)
                 {
-                    if (Vector3.Distance(closestTurret.transform.position, localPlayer.transform.position) < 51f)
+                    if (Vector3.Distance(closestTurret.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f)
                     {
-                        if (localPlayer.HasLineOfSightToPosition(closestTurret.transform.position, 45, 240))
+                        if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 240))
                         {
                             Plugin.LogToConsole("Disabling turret");
                             closestTurret.CallFunctionFromTerminal();
@@ -445,7 +444,7 @@ namespace LC_VEGA
             float distanceToPlayer = 0f;
             foreach (var mine in mines)
             {
-                distanceToPlayer = Vector3.Distance(mine.transform.position, localPlayer.transform.position);
+                distanceToPlayer = Vector3.Distance(mine.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
                 if (distanceToPlayer <= distances.Min())
                 {
@@ -457,12 +456,12 @@ namespace LC_VEGA
 
         internal static void DisableMine()
         {
-            if (localPlayer.isInsideFactory)
+            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
                 TerminalAccessibleObject? closestMine = GetClosestMine();
                 if (closestMine != null)
                 {
-                    if (Vector3.Distance(closestMine.transform.position, localPlayer.transform.position) < 11f)
+                    if (Vector3.Distance(closestMine.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
                         Plugin.LogToConsole("Disabling landmine");
                         closestMine.CallFunctionFromTerminal();
@@ -538,7 +537,7 @@ namespace LC_VEGA
             float distanceToPlayer = 0f;
             foreach (var trap in traps)
             {
-                distanceToPlayer = Vector3.Distance(trap.transform.position, localPlayer.transform.position);
+                distanceToPlayer = Vector3.Distance(trap.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
                 if (distanceToPlayer <= distances.Min())
                 {
@@ -550,12 +549,12 @@ namespace LC_VEGA
 
         internal static void DisableSpikeTrap()
         {
-            if (localPlayer.isInsideFactory)
+            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
                 TerminalAccessibleObject? closestTrap = GetClosestSpikeTrap();
                 if (closestTrap != null)
                 {
-                    if (Vector3.Distance(closestTrap.transform.position, localPlayer.transform.position) < 11f)
+                    if (Vector3.Distance(closestTrap.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
                         Plugin.LogToConsole("Disabling spike trap");
                         closestTrap.CallFunctionFromTerminal();
@@ -650,7 +649,7 @@ namespace LC_VEGA
         {
             if (performAdvancedScan)
             {
-                Vector3 playerPosition = localPlayer.transform.position;
+                Vector3 playerPosition = StartOfRound.Instance.localPlayerController.transform.position;
 
                 int enemyCount = 0;
                 int itemCount = 0;
@@ -767,7 +766,7 @@ namespace LC_VEGA
             float distanceToPlayer = 0f;
             foreach (var item in boosters)
             {
-                distanceToPlayer = Vector3.Distance(item.transform.position, localPlayer.transform.position);
+                distanceToPlayer = Vector3.Distance(item.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
                 if (distanceToPlayer <= distances.Min())
                 {
@@ -784,7 +783,7 @@ namespace LC_VEGA
             {
                 if (closestBooster.radarEnabled)
                 {
-                    if (Vector3.Distance(closestBooster.transform.position, localPlayer.transform.position) < 16f)
+                    if (Vector3.Distance(closestBooster.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 16f)
                     {
                         int index = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.transform == closestBooster.transform);
                         if (ping)
@@ -893,14 +892,14 @@ namespace LC_VEGA
             // Ship's lights
             Voice.ListenForPhrases(new string[] { "VEGA, lights on", "VEGA, turn the lights on" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     CoroutineManager.StartCoroutine(SwitchLights(on: true));
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, lights out", "VEGA, lights off", "VEGA, turn the lights off" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     CoroutineManager.StartCoroutine(SwitchLights(on: false)); 
                 }
@@ -972,7 +971,7 @@ namespace LC_VEGA
         {
             Voice.ListenForPhrases(new string[] { "VEGA, crew status", "VEGA, team status", "VEGA, crew info", "VEGA, team info", "VEGA, crew report", "VEGA, team report" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     CoroutineManager.StartCoroutine(GetCrewStatus()); 
                 }
@@ -983,21 +982,21 @@ namespace LC_VEGA
         {
             Voice.ListenForPhrases(new string[] { "VEGA, tp", "VEGA, activate tp", "VEGA, teleport", "VEGA, activate teleporter" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     ActivateTeleporter(); 
                 }
             }, 0.93f);
             Voice.ListenForPhrases(new string[] { "VEGA, switch to me", "VEGA, switch radar", "VEGA, switch radar to me", "VEGA, focus", "VEGA, focus on me" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
-                    if (StartOfRound.Instance.mapScreen.targetedPlayer == localPlayer)
+                    if (StartOfRound.Instance.mapScreen.targetedPlayer == StartOfRound.Instance.localPlayerController)
                     {
                         PlayAudio("RadarAlreadyFocused");
                         return;
                     }
-                    int index = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.transform == localPlayer.transform);
+                    int index = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.transform == StartOfRound.Instance.localPlayerController.transform);
                     StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(index); 
                 }
                 PlayAudioWithVariant("RadarSwitch", Random.Range(1, 4));
@@ -1009,28 +1008,28 @@ namespace LC_VEGA
             // Secure doors
             Voice.ListenForPhrases(new string[] { "VEGA, open secure door", "VEGA, open door", "VEGA, open the door", "VEGA, open the secure door" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     OpenSecureDoor(); 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, close secure door", "VEGA, close door", "VEGA, close the door", "VEGA, close the secure door" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     CloseSecureDoor(); 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, open all secure doors", "VEGA, open all doors" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     OpenAllDoors(); 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     CloseAllDoors(); 
                 }
@@ -1039,7 +1038,7 @@ namespace LC_VEGA
             // Ship doors
             Voice.ListenForPhrases(new string[] { "VEGA, open ship doors", "VEGA, open the ship's doors", "VEGA, open hangar doors" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                     if (shipDoors != null)
@@ -1052,13 +1051,13 @@ namespace LC_VEGA
                             }
                         }
                         InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
-                        component.Interact(((Component)(object)localPlayer).transform);
+                        component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                     } 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, close ship doors", "VEGA, close the ship's doors", "VEGA, close hangar doors" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                     if (shipDoors != null)
@@ -1071,7 +1070,7 @@ namespace LC_VEGA
                             }
                         }
                         InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
-                        component.Interact(((Component)(object)localPlayer).transform);
+                        component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                     } 
                 }
             }, 0.9f);
@@ -1083,7 +1082,7 @@ namespace LC_VEGA
             {
                 Voice.ListenForPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal }, (message) =>
                 {
-                    if (!localPlayer.isPlayerDead)
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
                         SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
                         if (translator == null)
@@ -1101,14 +1100,14 @@ namespace LC_VEGA
         {
             Voice.ListenForPhrases(new string[] { "VEGA, ping" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     InteractWithBooster(ping: true); 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, flash" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     InteractWithBooster(ping: false); 
                 }
@@ -1120,14 +1119,14 @@ namespace LC_VEGA
             // Turrets
             Voice.ListenForPhrases(new string[] { "VEGA, disable the turret", "VEGA, disable turret" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     DisableTurret(); 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, disable all turrets" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     DisableAllTurrets(); 
                 }
@@ -1136,14 +1135,14 @@ namespace LC_VEGA
             // Landmines
             Voice.ListenForPhrases(new string[] { "VEGA, disable the mine", "VEGA, disable mine", "VEGA, disable the landmine", "VEGA, disable landmine" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     DisableMine(); 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, disable all mines", "VEGA, disable all landmines" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     DisableAllMines(); 
                 }
@@ -1152,14 +1151,14 @@ namespace LC_VEGA
             // Spike traps
             Voice.ListenForPhrases(new string[] { "VEGA, disable the trap", "VEGA, disable trap", "VEGA, disable the spike trap", "VEGA, disable spike trap" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     DisableSpikeTrap(); 
                 }
             }, 0.9f);
             Voice.ListenForPhrases(new string[] { "VEGA, disable all traps", "VEGA, disable all spike traps" }, (message) =>
             {
-                if (!localPlayer.isPlayerDead)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     DisableAllSpikeTraps(); 
                 }
