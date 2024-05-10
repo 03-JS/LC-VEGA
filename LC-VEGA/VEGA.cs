@@ -126,9 +126,9 @@ namespace LC_VEGA
 
         public static void PlayAudio(string clipName, float delay = 0.25f)
         {
-            if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+            if (audioSource != null)
             {
-                if (audioSource != null)
+                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                 {
                     if (!audioSource.isPlaying)
                     {
@@ -143,10 +143,10 @@ namespace LC_VEGA
                         audioSource.PlayDelayed(delay);
                     }
                 }
-                else
-                {
-                    Plugin.LogToConsole("Unable to play audio. The audio source for VEGA does not exist", "error");
-                }
+            }
+            else
+            {
+                Plugin.LogToConsole("Unable to play audio. The audio source for VEGA does not exist", "error");
             }
         }
 
@@ -606,7 +606,7 @@ namespace LC_VEGA
 
         internal static void ActivateTeleporter()
         {
-            if (GameObject.Find("Teleporter(Clone)").GetComponent<ShipTeleporter>())
+            if (GameObject.Find("Teleporter(Clone)"))
             {
                 ShipTeleporter teleporter = GameObject.Find("Teleporter(Clone)").GetComponent<ShipTeleporter>();
                 if (teleporterCooldownTime <= 0f)
@@ -622,6 +622,11 @@ namespace LC_VEGA
                     PlayAudio("TeleporterOnCooldown");
                     Plugin.LogToConsole("The teleporter is on cooldown!", "warn");
                 }
+            }
+            else
+            {
+                // PlayAudioWithVariant("NoTeleporter", Random.Range(1, 4));
+                Plugin.LogToConsole("You might need a teleporter for that", "warn");
             }
         }
 
@@ -1048,7 +1053,7 @@ namespace LC_VEGA
                     {
                         CloseSecureDoor();
                     }
-                }, 0.9f); 
+                }, 0.9f);
             }
             if (Plugin.registerInteractAllSecureDoors.Value)
             {
@@ -1065,7 +1070,7 @@ namespace LC_VEGA
                     {
                         CloseAllDoors();
                     }
-                }, 0.9f); 
+                }, 0.9f);
             }
 
             // Ship doors
@@ -1108,7 +1113,7 @@ namespace LC_VEGA
                             component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                         }
                     }
-                }, 0.9f); 
+                }, 0.9f);
             }
         }
 
@@ -1131,7 +1136,7 @@ namespace LC_VEGA
                             HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
                         }
                     }, 0.9f);
-                } 
+                }
             }
         }
 
@@ -1152,7 +1157,7 @@ namespace LC_VEGA
                     {
                         InteractWithBooster(ping: false);
                     }
-                }, 0.9f); 
+                }, 0.9f);
             }
         }
 
@@ -1167,7 +1172,7 @@ namespace LC_VEGA
                         {
                             DisableTurret();
                         }
-                    }, 0.9f); 
+                    }, 0.9f);
             }
             if (Plugin.registerDisableAllTurrets.Value)
             {
@@ -1177,7 +1182,7 @@ namespace LC_VEGA
                         {
                             DisableAllTurrets();
                         }
-                    }, 0.9f); 
+                    }, 0.9f);
             }
 
             // Landmines
@@ -1189,7 +1194,7 @@ namespace LC_VEGA
                         {
                             DisableMine();
                         }
-                    }, 0.9f); 
+                    }, 0.9f);
             }
             if (Plugin.registerDisableAllMines.Value)
             {
@@ -1199,7 +1204,7 @@ namespace LC_VEGA
                         {
                             DisableAllMines();
                         }
-                    }, 0.9f); 
+                    }, 0.9f);
             }
 
             // Spike traps
@@ -1211,7 +1216,7 @@ namespace LC_VEGA
                         {
                             DisableSpikeTrap();
                         }
-                    }, 0.9f); 
+                    }, 0.9f);
             }
             if (Plugin.registerDisableAllSpikeTraps.Value)
             {
@@ -1221,7 +1226,7 @@ namespace LC_VEGA
                         {
                             DisableAllSpikeTraps();
                         }
-                    }, 0.9f); 
+                    }, 0.9f);
             }
         }
 
@@ -1284,7 +1289,7 @@ namespace LC_VEGA
                 Voice.ListenForPhrases(new string[] { "VEGA, info about the Company", "VEGA, info about the Company building", "VEGA, info about Gordion" }, (message) =>
                 {
                     PlayAudio("71-GOR");
-                }, 0.9f); 
+                }, 0.9f);
             }
         }
 
@@ -1511,7 +1516,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f); 
+                }, 0.9f);
             }
         }
 
@@ -1738,7 +1743,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f); 
+                }, 0.9f);
             }
         }
     }

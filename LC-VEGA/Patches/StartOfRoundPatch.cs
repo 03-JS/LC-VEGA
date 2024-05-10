@@ -24,6 +24,10 @@ namespace LC_VEGA.Patches
             {
                 Plugin.LogToConsole("VEGA audio source created successfully");
                 VEGA.audioSource.playOnAwake = false;
+                VEGA.audioSource.bypassEffects = true;
+                VEGA.audioSource.bypassListenerEffects = true;
+                VEGA.audioSource.bypassReverbZones = true;
+                VEGA.audioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
             }
             else
             {

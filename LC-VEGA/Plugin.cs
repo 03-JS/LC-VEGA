@@ -24,7 +24,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "1.1.2";
+        private const string modVersion = "1.2.0";
 
         internal static AssetBundle assetBundle;
 
@@ -34,6 +34,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
         public static ConfigEntry<bool> playIntro;
         public static ConfigEntry<bool> readBestiaryEntries;
+        public static ConfigEntry<bool> ignoreMasterVolume;
         public static ConfigEntry<VocalLevels> vocalLevel;
 
         // Voice commands config values
@@ -136,6 +137,12 @@ namespace LC_VEGA
                 "Low: Gives you useful info, doesn't talk on most interactions and new enemy scans. Recommended for more experienced players.\n" +
                 "Medium: Gives you useful info, doesn't talk on most interactions. Recommended for intermediate level players.\n" +
                 "High: The default value. Will speak on every interaction. Recommended for inexperienced players." // Description
+            );
+            ignoreMasterVolume = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Ignore Master Volume setting", // Key of this config
+                false, // Default value
+                "If set to true, VEGA will ignore the game's master volume setting and always play at the same volume level.\nThis setting only applies before joining a game." // Description
             );
             playIntro = Config.Bind(
                 "Dialogue & Interactions", // Config section
