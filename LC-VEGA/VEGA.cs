@@ -966,7 +966,7 @@ namespace LC_VEGA
                     HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
                     HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
 
-                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                     {
                         PlayAudioWithVariant("AdvancedScannerDisabled", Random.Range(1, 4));
                     }

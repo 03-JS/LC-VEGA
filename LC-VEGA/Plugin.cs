@@ -24,7 +24,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "1.1.0";
+        private const string modVersion = "1.1.1";
 
         internal static AssetBundle assetBundle;
 
