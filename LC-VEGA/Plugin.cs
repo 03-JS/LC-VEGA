@@ -159,13 +159,13 @@ namespace LC_VEGA
             // Voice commands
             registerMoonsInfo = Config.Bind(
                 "Voice Recognition", // Config section
-                "Register Moon commands", // Key of this config
+                "Register Moon info commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerBestiaryEntries = Config.Bind(
                 "Voice Recognition", // Config section
-                "Register Bestiary entry commands", // Key of this config
+                "Register Bestiary entries commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
@@ -189,7 +189,7 @@ namespace LC_VEGA
             );
             registerInteractAllSecureDoors = Config.Bind(
                 "Voice Recognition", // Config section
-                "Register Open / Close ALL Secure Doors command", // Key of this config
+                "Register Open / Close All Secure Doors command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
