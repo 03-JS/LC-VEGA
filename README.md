@@ -169,7 +169,7 @@ To interact with the lights, you need to say:
 
 ### Weather
 ---
-VEGA can give you information on all weather phenomenons from the base game by saying:
+VEGA can give you information on all weather phenomena from the base game by saying:
 
 - VEGA, info about rainy / stormy / foggy / flooded / eclipsed weather
 
