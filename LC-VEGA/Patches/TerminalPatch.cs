@@ -37,7 +37,7 @@ namespace LC_VEGA.Patches
                 VEGA.audioSource.Stop();
                 VEGA.shouldBeInterrupted = false;
             }
-            if (___currentNode.creatureFileID != -1)
+            if (___currentNode.creatureFileID != -1 && Plugin.readBestiaryEntries.Value)
             {
                 Plugin.LogToConsole("CREATURE FILE ID -> " + ___currentNode.creatureFileID, "warn");
                 VEGA.shouldBeInterrupted = true;
