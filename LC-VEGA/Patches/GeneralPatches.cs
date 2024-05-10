@@ -18,16 +18,16 @@ namespace LC_VEGA.Patches
         internal static bool eclipsedWeatherWarned = false;
         internal static bool roundStart;
 
-        [HarmonyPatch(typeof(LungProp), "DisconnectFromMachinery")]
-        [HarmonyPostfix]
-        static void RadiationWarning()
-        {
-            VEGA.facilityHasPower = false;
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-            {
-                VEGA.PlayAudio("RadiationSpike", 6.5f); 
-            }
-        }
+        //[HarmonyPatch(typeof(LungProp), "DisconnectFromMachinery")]
+        //[HarmonyPostfix]
+        //static void RadiationWarning()
+        //{
+        //    VEGA.facilityHasPower = false;
+        //    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+        //    {
+        //        VEGA.PlayAudio("RadiationSpike", 6.5f); 
+        //    }
+        //}
 
         [HarmonyPatch(typeof(RoundManager), "TurnOnAllLights")]
         [HarmonyPostfix]

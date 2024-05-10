@@ -887,7 +887,7 @@ namespace LC_VEGA
             Voice.ListenForPhrases(new string[] { "VEGA, thank you", "VEGA, thanks", "Thank you, VEGA", "Thanks, VEGA" }, (message) =>
             {
                 PlayAudioWithVariant("NoProblem", Random.Range(1, 5));
-            }, 0.93f);
+            }, 0.94f);
 
             // Ship's lights
             Voice.ListenForPhrases(new string[] { "VEGA, lights on", "VEGA, turn the lights on" }, (message) =>

@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using GameNetcodeStuff;
+using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,24 @@ namespace LC_VEGA.Patches
         public static GameObject? enemies;
         public static GameObject? items;
 
-        [HarmonyPatch("ScanNewCreatureClientRpc")]
+        [HarmonyPatch("RadiationWarningHUD")]
         [HarmonyPostfix]
-        static void PlayNewEnemyLine(int enemyID, ref float ___playerPingingScan)
+        static void PlayRadiationWarning()
         {
-            if (Plugin.vocalLevel.Value >= VocalLevels.Medium)
+            VEGA.facilityHasPower = false;
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
-                Plugin.LogToConsole("Player Pinging Scan -> " + ___playerPingingScan);
-                if (___playerPingingScan > -1f)
+                VEGA.PlayAudio("RadiationSpike");
+            }
+        }
+
+        [HarmonyPatch("AttemptScanNewCreature")]
+        [HarmonyPrefix]
+        static void PlayNewEnemyLine(int enemyID, ref Terminal ___terminalScript)
+        {
+            if (!___terminalScript.scannedEnemyIDs.Contains(enemyID))
+            {
+                if (Plugin.vocalLevel.Value >= VocalLevels.Medium)
                 {
                     if (enemyID < VEGA.enemyList.Length)
                     {
