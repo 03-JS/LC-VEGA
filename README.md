@@ -32,6 +32,8 @@ You can also ask him to give you a summary of the creature by saying:
 ---
 VEGA is capable of adding two trackers to your helmet's display that will give you information on how many items and creatures are near you in real time, similarly to the ship's minimap. The item tracker doesn't just give you the number of nearby items however, it also displays how much they are worth in total. Also, items held by you or other players do not get tracked by the Adavanced Scanner.
 
+![advancedScannergif](https://github.com/03-JS/LC-VEGA/blob/master/GIFs/Advanced%20Scanner%20example.gif?raw=true)
+
 To activate the Advanced Scanner, use the following command:
 
 - VEGA, activate scanner / enable scanner / turn on scanner / activate advanced scanner / enable advanced scanner / scan
@@ -71,6 +73,8 @@ And, as is the case with [Secure Doors](#secure-doors), he can also disable all 
 VEGA is capable of using the ship's teleporter. To have him do so, you just have to say:
 
 - VEGA, tp / teleport / activate tp / activate teleporter
+
+![VEGAusingteleporter](https://github.com/03-JS/LC-VEGA/blob/master/GIFs/LC-VEGA%20TP.gif?raw=true)
 
 I heavily recommend you always use the [Radar Switch](#radar-switch) command before asking him to use the teleporter if you aren't playing solo, as you could otherwise accidentally teleport someone else back to the ship.
 
