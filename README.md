@@ -30,7 +30,7 @@ You can also ask him to give you a summary of the creature by saying:
 
 ### Advanced Scanner
 ---
-VEGA is capable of adding two trackers to your helmet's display that will give you information on how many items and creatures are near you in real time, similarly to the ship's minimap. The item tracker doesn't just give you the number of nearby items however, it also displays how much they are worth in total. Also, items held by you or other players do not get tracked by the Adavanced Scanner.
+VEGA is capable of adding two trackers to your helmet's display that will give you information on how many items and creatures are near you in real time, similarly to the ship's minimap. The item tracker doesn't just give you the number of nearby items however, it also displays how much they are worth in total. Also, items held by you or other players do not get tracked by the Advanced Scanner.
 
 ![advancedScannergif](https://github.com/03-JS/LC-VEGA/blob/master/GIFs/Advanced%20Scanner%20example.gif?raw=true)
 
