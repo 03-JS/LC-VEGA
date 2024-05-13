@@ -24,7 +24,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "1.2.0";
+        private const string modVersion = "1.2.1";
 
         internal static AssetBundle assetBundle;
 
@@ -38,6 +38,7 @@ namespace LC_VEGA
         public static ConfigEntry<VocalLevels> vocalLevel;
 
         // Voice commands config values
+        public static ConfigEntry<float> confidence;
         public static ConfigEntry<bool> registerMoonsInfo;
         public static ConfigEntry<bool> registerBestiaryEntries;
         public static ConfigEntry<bool> registerCreatureInfo;
@@ -162,8 +163,14 @@ namespace LC_VEGA
                 false, // Default value
                 "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often." // Description
             );
-            
+
             // Voice commands
+            confidence = Config.Bind(
+                "Voice Recognition", // Config section
+                "Confidence", // Key of this config
+                0.9f, // Default value
+                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize your voice. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. The default value is 0.9, which works well in most cases, but if VEGA doesn't pick you up, try lowering it to 0.65 or 0.7.\nApplies after a game restart.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
             registerMoonsInfo = Config.Bind(
                 "Voice Recognition", // Config section
                 "Register Moon info commands", // Key of this config

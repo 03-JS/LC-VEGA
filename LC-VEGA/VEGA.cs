@@ -890,14 +890,14 @@ namespace LC_VEGA
                 Voice.ListenForPhrases(new string[] { "VEGA, shut up", "VEGA, stop", "VEGA, stop talking" }, (message) =>
                     {
                         audioSource.Stop();
-                    }, 0.93f);
+                    }, Plugin.confidence.Value + 0.03f);
             }
             if (Plugin.registerThanks.Value)
             {
                 Voice.ListenForPhrases(new string[] { "VEGA, thank you", "VEGA, thanks", "Thank you, VEGA", "Thanks, VEGA" }, (message) =>
                     {
                         PlayAudioWithVariant("NoProblem", Random.Range(1, 5));
-                    }, 0.94f);
+                    }, Plugin.confidence.Value + 0.04f);
             }
 
             // Ship's lights
@@ -909,14 +909,14 @@ namespace LC_VEGA
                         {
                             CoroutineManager.StartCoroutine(SwitchLights(on: true));
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, lights out", "VEGA, lights off", "VEGA, turn the lights off" }, (message) =>
                 {
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
                         CoroutineManager.StartCoroutine(SwitchLights(on: false));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
         }
 
@@ -929,7 +929,7 @@ namespace LC_VEGA
                     Voice.ListenForPhrases(new string[] { "VEGA, info about " + condition + " weather" }, (message) =>
                     {
                         PlayAudioWithVariant(condition, 2);
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 }
             }
         }
@@ -956,7 +956,7 @@ namespace LC_VEGA
                         {
                             PlayAudioWithVariant("AdvancedScannerEnabled", Random.Range(1, 4));
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, disable scanner", "VEGA, disable advanced scanner", "VEGA, turn off scanner", "VEGA, turn off advanced scanner", "VEGA, disable scan" }, (message) =>
                 {
                     if (!performAdvancedScan)
@@ -975,7 +975,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("AdvancedScannerDisabled", Random.Range(1, 4));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
         }
 
@@ -986,7 +986,7 @@ namespace LC_VEGA
                 Voice.ListenForPhrases(new string[] { "VEGA, what's the current time of day?", "VEGA, current time of day", "VEGA, time of day", "VEGA, current time", "VEGA, time" }, (message) =>
                     {
                         GetDayMode();
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
         }
 
@@ -1000,7 +1000,7 @@ namespace LC_VEGA
                         {
                             CoroutineManager.StartCoroutine(GetCrewStatus());
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
         }
 
@@ -1031,7 +1031,7 @@ namespace LC_VEGA
                             StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(index);
                         }
                         PlayAudioWithVariant("RadarSwitch", Random.Range(1, 4));
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
         }
 
@@ -1046,14 +1046,14 @@ namespace LC_VEGA
                         {
                             OpenSecureDoor();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, close secure door", "VEGA, close door", "VEGA, close the door", "VEGA, close the secure door" }, (message) =>
                 {
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
                         CloseSecureDoor();
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
             if (Plugin.registerInteractAllSecureDoors.Value)
             {
@@ -1063,14 +1063,14 @@ namespace LC_VEGA
                         {
                             OpenAllDoors();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" }, (message) =>
                 {
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
                         CloseAllDoors();
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
 
             // Ship doors
@@ -1094,7 +1094,7 @@ namespace LC_VEGA
                                 component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                             }
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, close ship doors", "VEGA, close the ship's doors", "VEGA, close hangar doors" }, (message) =>
                 {
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1113,7 +1113,7 @@ namespace LC_VEGA
                             component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                         }
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
         }
 
@@ -1135,7 +1135,7 @@ namespace LC_VEGA
                             }
                             HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 }
             }
         }
@@ -1150,14 +1150,14 @@ namespace LC_VEGA
                         {
                             InteractWithBooster(ping: true);
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, flash" }, (message) =>
                 {
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
                         InteractWithBooster(ping: false);
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
         }
 
@@ -1172,7 +1172,7 @@ namespace LC_VEGA
                         {
                             DisableTurret();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
             if (Plugin.registerDisableAllTurrets.Value)
             {
@@ -1182,7 +1182,7 @@ namespace LC_VEGA
                         {
                             DisableAllTurrets();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
 
             // Landmines
@@ -1194,7 +1194,7 @@ namespace LC_VEGA
                         {
                             DisableMine();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
             if (Plugin.registerDisableAllMines.Value)
             {
@@ -1204,7 +1204,7 @@ namespace LC_VEGA
                         {
                             DisableAllMines();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
 
             // Spike traps
@@ -1216,7 +1216,7 @@ namespace LC_VEGA
                         {
                             DisableSpikeTrap();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
             if (Plugin.registerDisableAllSpikeTraps.Value)
             {
@@ -1226,7 +1226,7 @@ namespace LC_VEGA
                         {
                             DisableAllSpikeTraps();
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
             }
         }
 
@@ -1237,59 +1237,59 @@ namespace LC_VEGA
                 Voice.ListenForPhrase("VEGA, info about experimentation", (message) =>
                     {
                         PlayAudio("41-EXP");
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about assurance", (message) =>
                 {
                     PlayAudio("220-ASS");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about vow", (message) =>
                 {
                     PlayAudio("56-VOW");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about offense", (message) =>
                 {
                     PlayAudio("21-OFF");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about march", (message) =>
                 {
                     PlayAudio("61-MAR");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about adamance", (message) =>
                 {
                     PlayAudio("20-ADA");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about rend", (message) =>
                 {
                     PlayAudio("85-REN");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about dine", (message) =>
                 {
                     PlayAudio("7-DIN");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about titan", (message) =>
                 {
                     PlayAudio("8-TIT");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about artifice", (message) =>
                 {
                     PlayAudio("68-ART");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about embrion", (message) =>
                 {
                     PlayAudio("5-EMB");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about liquidation", (message) =>
                 {
                     PlayAudio("44-LIQ");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrase("VEGA, info about mars", (message) =>
                 {
                     PlayAudio("4-MARS");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about the Company", "VEGA, info about the Company building", "VEGA, info about Gordion" }, (message) =>
                 {
                     PlayAudio("71-GOR");
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
         }
 
@@ -1307,7 +1307,7 @@ namespace LC_VEGA
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Bunker spider entry", "VEGA, read Spider entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(12))
@@ -1318,7 +1318,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Hoarding bug entry", "VEGA, read Loot bug entry", "VEGA, read Yippee bug entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(4))
@@ -1329,7 +1329,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Bracken entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(1))
@@ -1340,7 +1340,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Butler entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(19))
@@ -1351,7 +1351,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Coil head entry", "VEGA, read Coil entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(7))
@@ -1362,7 +1362,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Forest Keeper entry", "VEGA, read Giant entry", "VEGA, read Keeper entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(6))
@@ -1373,7 +1373,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Eyeless dog entry", "VEGA, read dog entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(3))
@@ -1384,7 +1384,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Earth Leviathan entry", "VEGA, read Leviathan entry", "VEGA, read Worm entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(9))
@@ -1395,7 +1395,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Jester entry", "VEGA, read Jack in the box entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(10))
@@ -1406,7 +1406,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Roaming locusts entry", "VEGA, read Locusts entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(15))
@@ -1417,7 +1417,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Manticoil entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(13))
@@ -1428,7 +1428,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Nutcracker entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(17))
@@ -1439,7 +1439,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Old bird entry", "VEGA, read Bird entry", "VEGA, read Mech entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(18))
@@ -1450,7 +1450,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Circuit bees entry", "VEGA, read Bees entry", "VEGA, read Red Bees entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(14))
@@ -1461,7 +1461,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Hygrodere entry", "VEGA, read Slime entry", "VEGA, read Blob entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(5))
@@ -1472,7 +1472,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Tulip snake entry", "VEGA, read Tulip entry", "VEGA, read Snake entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(21))
@@ -1483,7 +1483,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Snare flea entry", "VEGA, read Flea entry", "VEGA, read Centipede entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(0))
@@ -1494,7 +1494,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Spore lizard entry", "VEGA, read Lizard entry", "VEGA, read Spore doggy entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(11))
@@ -1505,7 +1505,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Thumper entry", "VEGA, read Crawler entry", "VEGA, read Halve entry" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(2))
@@ -1516,7 +1516,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
         }
 
@@ -1534,7 +1534,7 @@ namespace LC_VEGA
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
-                    }, 0.9f);
+                    }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Bunker spiders", "VEGA, info about Spiders" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(12))
@@ -1545,7 +1545,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Hoarding bugs", "VEGA, info about Loot bugs", "VEGA, info about Yippee bugs" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(4))
@@ -1556,7 +1556,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Brackens", "VEGA, info about the Bracken" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(1))
@@ -1567,7 +1567,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Butlers" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(19))
@@ -1578,7 +1578,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Coil heads", "VEGA, info about Coils" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(7))
@@ -1589,7 +1589,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Forest Keepers", "VEGA, info about Giants", "VEGA, info about Keepers" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(6))
@@ -1600,7 +1600,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Eyeless dogs", "VEGA, info about dogs" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(3))
@@ -1611,7 +1611,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Earth Leviathans", "VEGA, info about Leviathans", "VEGA, info about Worms" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(9))
@@ -1622,7 +1622,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Jesters", "VEGA, info about the Jack in the box" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(10))
@@ -1633,7 +1633,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Roaming locusts", "VEGA, info about Locusts" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(15))
@@ -1644,7 +1644,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Manticoils" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(13))
@@ -1655,7 +1655,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Nutcrackers" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(17))
@@ -1666,7 +1666,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Old birds", "VEGA, info about Birds", "VEGA, info about Mechs" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(18))
@@ -1677,7 +1677,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Circuit bees", "VEGA, info about Bees", "VEGA, info about Red Bees" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(14))
@@ -1688,7 +1688,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Hygroderes", "VEGA, info about Slimes", "VEGA, info about Blobs" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(5))
@@ -1699,7 +1699,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Tulip snakes", "VEGA, info about Tulips", "VEGA, info about Snakes" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(21))
@@ -1710,7 +1710,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Snare fleas", "VEGA, info about Fleas", "VEGA, info about Centipedes" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(0))
@@ -1721,7 +1721,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Spore lizards", "VEGA, info about Lizards", "VEGA, info about Spore doggies" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(11))
@@ -1732,7 +1732,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, info about Thumpers", "VEGA, info about Crawlers", "VEGA, info about Halves" }, (message) =>
                 {
                     if (TerminalPatch.scannedEnemyIDs.Contains(2))
@@ -1743,7 +1743,7 @@ namespace LC_VEGA
                     {
                         PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                     }
-                }, 0.9f);
+                }, Plugin.confidence.Value);
             }
         }
     }
