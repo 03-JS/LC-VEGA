@@ -169,7 +169,7 @@ namespace LC_VEGA
                 "Voice Recognition", // Config section
                 "Confidence", // Key of this config
                 0.9f, // Default value
-                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize your voice. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. The default value is 0.9, which works well in most cases, but if VEGA doesn't pick you up, try lowering it to 0.65 or 0.7.\nApplies after a game restart.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. The default value is 0.9, which works well in most cases, but if VEGA doesn't pick you up, try lowering it to 0.65 or 0.7.\nApplies after a game restart.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             registerMoonsInfo = Config.Bind(
                 "Voice Recognition", // Config section
