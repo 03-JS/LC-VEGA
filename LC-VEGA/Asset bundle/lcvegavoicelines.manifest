@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 537494103
+CRC: 2601448820
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4c35439cd0df3764e3a9371949f0b863
+    Hash: 382a0acfac6a74ac8df2e83e12f3c6e1
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 4c35439cd0df3764e3a9371949f0b863
+    Hash: 382a0acfac6a74ac8df2e83e12f3c6e1
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -18,7 +18,6 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/LC-VEGA/Voice lines/Entities/Scan/NutcrackerScan.wav
 - Assets/LC-VEGA/Voice lines/Hazards/TrapDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Moons/44-LIQ.wav
 - Assets/LC-VEGA/Voice lines/Time/Sundown.wav
 - Assets/LC-VEGA/Voice lines/Entities/Summary/ManticoilShort.wav
 - Assets/LC-VEGA/Voice lines/Time/Noon.wav
@@ -87,8 +86,9 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Doors/DoorOpened-1.wav
 - Assets/LC-VEGA/Voice lines/Ship/Teleport-1.wav
 - Assets/LC-VEGA/Voice lines/Entities/Scan/ManticoilScan.wav
-- Assets/LC-VEGA/Voice lines/Moons/68-ART.wav
+- Assets/LC-VEGA/Voice lines/Ship/NoTeleporter-2.wav
 - Assets/LC-VEGA/Voice lines/Time/None.wav
+- Assets/LC-VEGA/Voice lines/Moons/68-ART.wav
 - Assets/LC-VEGA/Voice lines/Entities/Scan/SnakesScan.wav
 - Assets/LC-VEGA/Voice lines/Misc/ReportComplete-2.wav
 - Assets/LC-VEGA/Voice lines/Doors/AllDoorsOpened-2.wav
@@ -96,10 +96,10 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Moons/41-EXP.wav
 - Assets/LC-VEGA/Voice lines/Misc/IndoorsOnly-3.wav
 - Assets/LC-VEGA/Voice lines/Ship/RadarSwitch-2.wav
-- Assets/LC-VEGA/Voice lines/Entities/Bestiary/SporeLizard.wav
-- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerDisabled-3.wav
 - Assets/LC-VEGA/Voice lines/Hazards/TrapDisabled-1.wav
+- Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerDisabled-3.wav
 - Assets/LC-VEGA/Voice lines/Entities/Summary/SnakesShort.wav
+- Assets/LC-VEGA/Voice lines/Entities/Bestiary/SporeLizard.wav
 - Assets/LC-VEGA/Voice lines/Entities/Summary/BrackenShort.wav
 - Assets/LC-VEGA/Voice lines/Hazards/AllMinesDisabled-2.wav
 - Assets/LC-VEGA/Voice lines/Doors/DoorClosed-1.wav
@@ -155,9 +155,11 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Entities/Summary/SporeLizardShort.wav
 - Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerDisabled-1.wav
 - Assets/LC-VEGA/Voice lines/Ship/LightsOff.wav
+- Assets/LC-VEGA/Voice lines/Moons/44-LIQ.wav
 - Assets/LC-VEGA/Voice lines/Hazards/TrapDisabled-2.wav
 - Assets/LC-VEGA/Voice lines/Advanced Scanner/AdvancedScannerEnabled-3.wav
 - Assets/LC-VEGA/Voice lines/Entities/Bestiary/OldBird.wav
+- Assets/LC-VEGA/Voice lines/Ship/NoTeleporter-3.wav
 - Assets/LC-VEGA/Voice lines/Hazards/NoVisibleTurret.wav
 - Assets/LC-VEGA/Voice lines/Entities/Bestiary/Sandworm.wav
 - Assets/LC-VEGA/Voice lines/Entities/Scan/OldBirdScan.wav
@@ -170,6 +172,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Time/GettingLate-2.wav
 - Assets/LC-VEGA/Voice lines/Hazards/NoTurretNearby.wav
 - Assets/LC-VEGA/Voice lines/Doors/DoorOpened-2.wav
+- Assets/LC-VEGA/Voice lines/Ship/NoTeleporter-1.wav
 - Assets/LC-VEGA/Voice lines/Doors/AllDoorsOpened-1.wav
 - Assets/LC-VEGA/Voice lines/Entities/Scan/ButlerScan.wav
 - Assets/LC-VEGA/Voice lines/Doors/AllDoorsClosed-1.wav

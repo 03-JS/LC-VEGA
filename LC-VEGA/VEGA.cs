@@ -625,8 +625,8 @@ namespace LC_VEGA
             }
             else
             {
-                // PlayAudioWithVariant("NoTeleporter", Random.Range(1, 4));
-                Plugin.LogToConsole("You might need a teleporter for that", "warn");
+                PlayAudioWithVariant("NoTeleporter", Random.Range(1, 4));
+                // Plugin.LogToConsole("You might need a teleporter for that", "warn");
             }
         }
 
@@ -890,14 +890,14 @@ namespace LC_VEGA
                 Voice.ListenForPhrases(new string[] { "VEGA, shut up", "VEGA, stop", "VEGA, stop talking" }, (message) =>
                     {
                         audioSource.Stop();
-                    }, Plugin.confidence.Value + 0.03f);
+                    }, Plugin.confidence.Value);
             }
             if (Plugin.registerThanks.Value)
             {
                 Voice.ListenForPhrases(new string[] { "VEGA, thank you", "VEGA, thanks", "Thank you, VEGA", "Thanks, VEGA" }, (message) =>
                     {
                         PlayAudioWithVariant("NoProblem", Random.Range(1, 5));
-                    }, Plugin.confidence.Value + 0.04f);
+                    }, Plugin.confidence.Value);
             }
 
             // Ship's lights
