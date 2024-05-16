@@ -24,7 +24,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "1.2.2";
+        private const string modVersion = "1.3.0";
 
         internal static AssetBundle assetBundle;
 
@@ -84,6 +84,7 @@ namespace LC_VEGA
 
             PatchStuff();
             CheckForBMXLC();
+            PatchMods();
         }
 
         internal void LoadAssets()
@@ -113,6 +114,14 @@ namespace LC_VEGA
             harmony.PatchAll(typeof(TimeOfDayPatch));
             harmony.PatchAll(typeof(HUDManagerPatch));
             harmony.PatchAll(typeof(GeneralPatches));
+        }
+
+        internal void PatchMods()
+        {
+            ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
+            ModChecker.hasSCP096 = ModChecker.CheckForMod("Scopophobia");
+            ModChecker.hasGiantSpecimens = ModChecker.CheckForMod("TheGiantSpecimens");
+            ModChecker.hasMWMoons = ModChecker.CheckForMod("");
         }
 
         internal void CheckForBMXLC()
