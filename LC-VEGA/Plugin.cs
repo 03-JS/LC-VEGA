@@ -29,13 +29,16 @@ namespace LC_VEGA
         internal static AssetBundle assetBundle;
 
         public static bool gameOpened;
-        
-        // Config values
-        public static ConfigEntry<bool> enableAdvancedScannerAuto;
+
+        // Dialogue & Interactions config values
+        public static ConfigEntry<VocalLevels> vocalLevel;
         public static ConfigEntry<bool> playIntro;
         public static ConfigEntry<bool> readBestiaryEntries;
         public static ConfigEntry<bool> ignoreMasterVolume;
-        public static ConfigEntry<VocalLevels> vocalLevel;
+        public static ConfigEntry<string> messages;
+
+        // Advanced Scanner config values
+        public static ConfigEntry<bool> enableAdvancedScannerAuto;
 
         // Voice commands config values
         public static ConfigEntry<float> confidence;
@@ -158,6 +161,13 @@ namespace LC_VEGA
                 true, // Default value
                 "If set to true, VEGA will read every bestiary entry you open in the terminal." // Description
             );
+            messages = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Signal Translator messages", // Key of this config
+                "YES,NO,OKAY,HELP,THANKS,ITEMS,MAIN,FIRE,GIANT,GIANTS,DOG,DOGS,WORM,WORMS,BABOONS,HAWKS,DANGER,GIRL,GHOST,BRACKEN,BUTLER,BUTLERS,BUG,BUGS,YIPPEE,SNARE,FLEA,COIL,SLIME,THUMPER,MIMIC,MIMICS,MASKED,SPIDER,SNAKES,OLD BIRD,HEROBRINE,FOOTBALL,FURBO,FIEND,SLENDER,LOCKER,SHY GUY,SIRENHEAD,DRIFTWOOD,WALKER,WATCHER,INSIDE,TRAPPED,LEAVE,GOLD,APPARATUS", // Default value
+                "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma (',')" // Description
+            );
+
             enableAdvancedScannerAuto = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Enable the Advanced Scanner automatically", // Key of this config

@@ -1,10 +1,7 @@
-﻿using GameNetcodeStuff;
-using LC_VEGA.Patches;
-using System;
+﻿using LC_VEGA.Patches;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TMPro;
 using UnityEngine;
 using VoiceRecognitionAPI;
@@ -29,7 +26,8 @@ namespace LC_VEGA
         internal static string enemiesTopText;
         internal static string itemsTopText;
         internal static float scannerRange;
-
+        
+        public static string[] signals;
         public static string[] weathers =
         {
             "Foggy",
@@ -61,60 +59,6 @@ namespace LC_VEGA
             { 18, "OldBird" },
             { 19, "Butler" },
             { 21, "Snakes" }
-        };
-
-        public static string[] signals = {
-            "YES",
-            "NO",
-            "OKAY",
-            "HELP",
-            "THANKS",
-            "ITEMS",
-            "MAIN",
-            "FIRE",
-            "GIANT",
-            "GIANTS",
-            "DOG",
-            "DOGS",
-            "WORM",
-            "WORMS",
-            "BABOONS",
-            "HAWKS",
-            "DANGER",
-            "GIRL",
-            "GHOST",
-            "BRACKEN",
-            "BUTLER",
-            "BUTLERS",
-            "BUG",
-            "BUGS",
-            "YIPPEE",
-            "SNARE",
-            "FLEA",
-            "COIL",
-            "SLIME",
-            "THUMPER",
-            "MIMIC",
-            "MIMICS",
-            "MASKED",
-            "SPIDER",
-            "SNAKES",
-            "OLD BIRD",
-            "HEROBRINE",
-            "FOOTBALL",
-            "FURBO",
-            "FIEND",
-            "SLENDER",
-            "LOCKER",
-            "SHY GUY",
-            "SIRENHEAD",
-            "DRIFTWOOD",
-            "WALKER",
-            "INSIDE",
-            "TRAPPED",
-            "LEAVE",
-            "GOLD",
-            "APPARATUS"
         };
 
         public static void PlayIntro()
@@ -181,7 +125,7 @@ namespace LC_VEGA
                     return true;
                 }
             }
-            PlayAudio("NoInfoOnMoon");
+            PlayAudioWithVariant("NoInfoOnMoon", Random.Range(1, 4));
             return false;
         }
 
@@ -894,6 +838,7 @@ namespace LC_VEGA
         {
             Plugin.LogToConsole("Initializing VEGA");
             shouldBeInterrupted = false;
+            signals = Plugin.messages.Value.Split(",");
             InitializeScannerVariables();
 
             Plugin.LogToConsole("Registering voice commands");
