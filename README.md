@@ -2,6 +2,9 @@
 
 ![logo](https://i.imgur.com/te0TBnW.png)
 
+## Showcase video
+[![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q&t=1s)
+
 ## Description
 
 VEGA is a sentient AI from the modern DOOM games that can assist you in many different ways through voice commands. You can ask him to do almost anything, and can even give you info about moons, creatures and a lot more.
@@ -110,18 +113,22 @@ You can ask VEGA to transmit a wide variety of different signals to the signal t
 
 - VEGA, transmit / send [message]
 
-These are the messages you can send:
+This is the defualt set of messages you can send:
 
 - YES
 - NO
 - OKAY
 - HELP
+- THANKS
 - ITEMS
 - MAIN
 - FIRE
 - GIANT
+- GIANTS
 - DOG
+- DOGS
 - WORM
+- WORMS
 - BABOONS
 - HAWKS
 - DANGER
@@ -131,6 +138,7 @@ These are the messages you can send:
 - BUTLER
 - BUTLERS
 - BUG
+- BUGS
 - YIPPEE
 - SNARE
 - FLEA
@@ -138,14 +146,29 @@ These are the messages you can send:
 - SLIME
 - THUMPER
 - MIMIC
+- MIMICS
 - MASKED
 - SPIDER
 - SNAKES
 - OLD BIRD
+- HEROBRINE
+- FOOTBALL
+- FURBO
+- FIEND
+- SLENDER
+- LOCKER
+- SHY GUY
+- SIRENHEAD
+- DRIFTWOOD
+- WALKER
+- WATCHER
+- INSIDE
 - TRAPPED
 - LEAVE
 - GOLD
 - APPARATUS
+
+You can add your own custom messages in the configuration file under the **Dialogue & Interactions** section.
 
 ### Time
 ---
