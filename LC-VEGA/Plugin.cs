@@ -119,9 +119,6 @@ namespace LC_VEGA
         internal void PatchMods()
         {
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
-            ModChecker.hasSCP096 = ModChecker.CheckForMod("Scopophobia");
-            ModChecker.hasGiantSpecimens = ModChecker.CheckForMod("TheGiantSpecimens");
-            ModChecker.hasMWMoons = ModChecker.CheckForMod("");
         }
 
         internal void CheckForBMXLC()
