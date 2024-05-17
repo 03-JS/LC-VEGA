@@ -24,7 +24,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "2.0.0";
+        private const string modVersion = "1.3.0";
 
         internal static AssetBundle assetBundle;
 
@@ -165,8 +165,8 @@ namespace LC_VEGA
             messages = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Signal Translator messages", // Key of this config
-                "YES,NO,OKAY,HELP,THANKS,ITEMS,MAIN,FIRE,GIANT,GIANTS,DOG,DOGS,WORM,WORMS,BABOONS,HAWKS,DANGER,GIRL,GHOST,BRACKEN,BUTLER,BUTLERS,BUG,BUGS,YIPPEE,SNARE,FLEA,COIL,SLIME,THUMPER,MIMIC,MIMICS,MASKED,SPIDER,SNAKES,OLD BIRD,HEROBRINE,FOOTBALL,FURBO,FIEND,SLENDER,LOCKER,SHY GUY,SIRENHEAD,DRIFTWOOD,WALKER,WATCHER,INSIDE,TRAPPED,LEAVE,GOLD,APPARATUS", // Default value
-                "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma (',')" // Description
+                "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, HEROBRINE, FOOTBALL, FURBO, FIEND, SLENDER, LOCKER, SHY GUY, SIRENHEAD, DRIFTWOOD, WALKER, WATCHER, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS", // Default value
+                "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma and a white space, like so -> 'Message, Another message'\nApplies after a game restart." // Description
             );
 
             // Advanced Scanner

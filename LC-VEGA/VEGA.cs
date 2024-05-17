@@ -838,7 +838,7 @@ namespace LC_VEGA
         {
             Plugin.LogToConsole("Initializing VEGA");
             shouldBeInterrupted = false;
-            signals = Plugin.messages.Value.Split(",");
+            signals = Plugin.messages.Value.Split(", ");
             InitializeScannerVariables();
 
             Plugin.LogToConsole("Registering voice commands");
@@ -988,7 +988,7 @@ namespace LC_VEGA
                         {
                             ActivateTeleporter();
                         }
-                    }, 0.93f);
+                    }, Plugin.confidence.Value);
             }
             if (Plugin.registerRadarSwitch.Value)
             {
@@ -1267,237 +1267,237 @@ namespace LC_VEGA
                 }, Plugin.confidence.Value);
 
                 // Modded
-                Voice.ListenForPhrase("VEGA, info about Asteroid 13", (message) =>
-                {
-                    if (ClientHasMoon("57 Asteroid-13"))
-                    {
-                        PlayAudio("57-AST-13");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Atlantica", (message) =>
-                {
-                    if (ClientHasMoon("44 Atlantica"))
-                    {
-                        PlayAudio("44-ATL");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Cosmocos", (message) =>
-                {
-                    if (ClientHasMoon("42 Cosmocos"))
-                    {
-                        PlayAudio("42-COS");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Desolation", (message) =>
-                {
-                    if (ClientHasMoon("48 Desolation"))
-                    {
-                        PlayAudio("48-DES");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Etern", (message) =>
-                {
-                    if (ClientHasMoon("154 Etern"))
-                    {
-                        PlayAudio("154-ETE");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Fission C", (message) =>
-                {
-                    if (ClientHasMoon("25 Fission-C"))
-                    {
-                        PlayAudio("25-FIS-C");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Gloom", (message) =>
-                {
-                    if (ClientHasMoon("36 Gloom"))
-                    {
-                        PlayAudio("36-GLO");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Gratar", (message) =>
-                {
-                    if (ClientHasMoon("147 Gratar"))
-                    {
-                        PlayAudio("147-GRA");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Infernis", (message) =>
-                {
-                    if (ClientHasMoon("46 Infernis"))
-                    {
-                        PlayAudio("46-INF");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Junic", (message) =>
-                {
-                    if (ClientHasMoon("84 Junic"))
-                    {
-                        PlayAudio("84-JUN");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Oldred", (message) =>
-                {
-                    if (ClientHasMoon("134 Oldred"))
-                    {
-                        PlayAudio("134-OLD");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Polarus", (message) =>
-                {
-                    if (ClientHasMoon("94 Polarus"))
-                    {
-                        PlayAudio("94-POL");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Acidir", (message) =>
-                {
-                    if (ClientHasMoon("76 Acidir"))
-                    {
-                        PlayAudio("76-ACI");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Affliction", (message) =>
-                {
-                    if (ClientHasMoon("59 Affliction"))
-                    {
-                        PlayAudio("59-AFF");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Eve M", (message) =>
-                {
-                    if (ClientHasMoon("127 Eve-M"))
-                    {
-                        PlayAudio("127-EVE-M");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Sector 0", (message) =>
-                {
-                    if (ClientHasMoon("71 Sector-0"))
-                    {
-                        PlayAudio("71-SEC-0");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Summit", (message) =>
-                {
-                    if (ClientHasMoon("290 Summit"))
-                    {
-                        PlayAudio("290-SUM");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Penumbra", (message) =>
-                {
-                    if (ClientHasMoon("813 Penumbra"))
-                    {
-                        PlayAudio("813-PEN");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Argent", (message) =>
-                {
-                    if (ClientHasMoon("32 Argent"))
-                    {
-                        PlayAudio("32-ARG");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Azure", (message) =>
-                {
-                    if (ClientHasMoon("39 Azure"))
-                    {
-                        PlayAudio("39-AZU");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Budapest", (message) =>
-                {
-                    if (ClientHasMoon("618 Budapest"))
-                    {
-                        PlayAudio("618-BUD");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Celestria", (message) =>
-                {
-                    if (ClientHasMoon("9 Celestria"))
-                    {
-                        PlayAudio("9-CEL");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Crystallum", (message) =>
-                {
-                    if (ClientHasMoon("Crystallum"))
-                    {
-                        PlayAudio("???-CRY");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Echelon", (message) =>
-                {
-                    if (ClientHasMoon("30 Echelon"))
-                    {
-                        PlayAudio("30-ECH");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Harloth", (message) =>
-                {
-                    if (ClientHasMoon("93 Harloth"))
-                    {
-                        PlayAudio("93-HAR");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Maritopia", (message) =>
-                {
-                    if (ClientHasMoon("153 Maritopia"))
-                    {
-                        PlayAudio("153-MAR");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Nimbus", (message) =>
-                {
-                    if (ClientHasMoon("Nimbus"))
-                    {
-                        PlayAudio("???-NIM");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Nyx", (message) =>
-                {
-                    if (ClientHasMoon("34 Nyx"))
-                    {
-                        PlayAudio("34-NYX");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Psych Sanctum", (message) =>
-                {
-                    if (ClientHasMoon("111 PsychSanctum"))
-                    {
-                        PlayAudio("111-PSY");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Spectralis", (message) =>
-                {
-                    if (ClientHasMoon("Spectralis"))
-                    {
-                        PlayAudio("???-SPE");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Zenit", (message) =>
-                {
-                    if (ClientHasMoon("37 Zenit"))
-                    {
-                        PlayAudio("37-ZEN");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Calt Prime", (message) =>
-                {
-                    if (ClientHasMoon("35 CaltPrime"))
-                    {
-                        PlayAudio("35-CAL");
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Sanguine", (message) =>
-                {
-                    if (ClientHasMoon("Sanguine"))
-                    {
-                        PlayAudio("???-SAN");
-                    }
-                }, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Asteroid 13", (message) =>
+                //{
+                //    if (ClientHasMoon("57 Asteroid-13"))
+                //    {
+                //        PlayAudio("57-AST-13");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Atlantica", (message) =>
+                //{
+                //    if (ClientHasMoon("44 Atlantica"))
+                //    {
+                //        PlayAudio("44-ATL");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Cosmocos", (message) =>
+                //{
+                //    if (ClientHasMoon("42 Cosmocos"))
+                //    {
+                //        PlayAudio("42-COS");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Desolation", (message) =>
+                //{
+                //    if (ClientHasMoon("48 Desolation"))
+                //    {
+                //        PlayAudio("48-DES");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Etern", (message) =>
+                //{
+                //    if (ClientHasMoon("154 Etern"))
+                //    {
+                //        PlayAudio("154-ETE");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Fission C", (message) =>
+                //{
+                //    if (ClientHasMoon("25 Fission-C"))
+                //    {
+                //        PlayAudio("25-FIS-C");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Gloom", (message) =>
+                //{
+                //    if (ClientHasMoon("36 Gloom"))
+                //    {
+                //        PlayAudio("36-GLO");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Gratar", (message) =>
+                //{
+                //    if (ClientHasMoon("147 Gratar"))
+                //    {
+                //        PlayAudio("147-GRA");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Infernis", (message) =>
+                //{
+                //    if (ClientHasMoon("46 Infernis"))
+                //    {
+                //        PlayAudio("46-INF");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Junic", (message) =>
+                //{
+                //    if (ClientHasMoon("84 Junic"))
+                //    {
+                //        PlayAudio("84-JUN");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Oldred", (message) =>
+                //{
+                //    if (ClientHasMoon("134 Oldred"))
+                //    {
+                //        PlayAudio("134-OLD");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Polarus", (message) =>
+                //{
+                //    if (ClientHasMoon("94 Polarus"))
+                //    {
+                //        PlayAudio("94-POL");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Acidir", (message) =>
+                //{
+                //    if (ClientHasMoon("76 Acidir"))
+                //    {
+                //        PlayAudio("76-ACI");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Affliction", (message) =>
+                //{
+                //    if (ClientHasMoon("59 Affliction"))
+                //    {
+                //        PlayAudio("59-AFF");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Eve M", (message) =>
+                //{
+                //    if (ClientHasMoon("127 Eve-M"))
+                //    {
+                //        PlayAudio("127-EVE-M");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Sector 0", (message) =>
+                //{
+                //    if (ClientHasMoon("71 Sector-0"))
+                //    {
+                //        PlayAudio("71-SEC-0");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Summit", (message) =>
+                //{
+                //    if (ClientHasMoon("290 Summit"))
+                //    {
+                //        PlayAudio("290-SUM");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Penumbra", (message) =>
+                //{
+                //    if (ClientHasMoon("813 Penumbra"))
+                //    {
+                //        PlayAudio("813-PEN");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Argent", (message) =>
+                //{
+                //    if (ClientHasMoon("32 Argent"))
+                //    {
+                //        PlayAudio("32-ARG");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Azure", (message) =>
+                //{
+                //    if (ClientHasMoon("39 Azure"))
+                //    {
+                //        PlayAudio("39-AZU");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Budapest", (message) =>
+                //{
+                //    if (ClientHasMoon("618 Budapest"))
+                //    {
+                //        PlayAudio("618-BUD");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Celestria", (message) =>
+                //{
+                //    if (ClientHasMoon("9 Celestria"))
+                //    {
+                //        PlayAudio("9-CEL");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Crystallum", (message) =>
+                //{
+                //    if (ClientHasMoon("Crystallum"))
+                //    {
+                //        PlayAudio("???-CRY");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Echelon", (message) =>
+                //{
+                //    if (ClientHasMoon("30 Echelon"))
+                //    {
+                //        PlayAudio("30-ECH");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Harloth", (message) =>
+                //{
+                //    if (ClientHasMoon("93 Harloth"))
+                //    {
+                //        PlayAudio("93-HAR");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Maritopia", (message) =>
+                //{
+                //    if (ClientHasMoon("153 Maritopia"))
+                //    {
+                //        PlayAudio("153-MAR");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Nimbus", (message) =>
+                //{
+                //    if (ClientHasMoon("Nimbus"))
+                //    {
+                //        PlayAudio("???-NIM");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Nyx", (message) =>
+                //{
+                //    if (ClientHasMoon("34 Nyx"))
+                //    {
+                //        PlayAudio("34-NYX");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Psych Sanctum", (message) =>
+                //{
+                //    if (ClientHasMoon("111 PsychSanctum"))
+                //    {
+                //        PlayAudio("111-PSY");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Spectralis", (message) =>
+                //{
+                //    if (ClientHasMoon("Spectralis"))
+                //    {
+                //        PlayAudio("???-SPE");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Zenit", (message) =>
+                //{
+                //    if (ClientHasMoon("37 Zenit"))
+                //    {
+                //        PlayAudio("37-ZEN");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Calt Prime", (message) =>
+                //{
+                //    if (ClientHasMoon("35 CaltPrime"))
+                //    {
+                //        PlayAudio("35-CAL");
+                //    }
+                //}, Plugin.confidence.Value);
+                //Voice.ListenForPhrase("VEGA, info about Sanguine", (message) =>
+                //{
+                //    if (ClientHasMoon("Sanguine"))
+                //    {
+                //        PlayAudio("???-SAN");
+                //    }
+                //}, Plugin.confidence.Value);
             }
         }
 
