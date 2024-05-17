@@ -84,7 +84,7 @@ namespace LC_VEGA
 
             PatchStuff();
             CheckForBMXLC();
-            PatchMods();
+            CheckInstalledMods();
         }
 
         internal void LoadAssets()
@@ -116,7 +116,7 @@ namespace LC_VEGA
             harmony.PatchAll(typeof(GeneralPatches));
         }
 
-        internal void PatchMods()
+        internal void CheckInstalledMods()
         {
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
         }
