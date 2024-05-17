@@ -14,7 +14,7 @@ namespace LC_VEGA
         public static bool hasMalfunctions;
         
         // Moons
-        public static bool hasLLL;
+        // public static bool hasLLL;
 
         public static bool CheckForMod(string modGUID)
         {

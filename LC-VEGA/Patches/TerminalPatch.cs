@@ -44,7 +44,7 @@ namespace LC_VEGA.Patches
                 VEGA.audioSource.Stop();
                 Plugin.LogToConsole("Attempting to play an audio from the bestiary -> " + ___currentNode.creatureName);
                 float delay = 0.85f;
-                VEGA.PlayAudio(VEGA.enemyList[___currentNode.creatureFileID], delay);
+                VEGA.PlayAudio(VEGA.enemies[___currentNode.creatureFileID], delay);
             }
         }
     }

@@ -24,7 +24,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "1.3.0";
+        private const string modVersion = "2.0.0";
 
         internal static AssetBundle assetBundle;
 
@@ -83,7 +83,6 @@ namespace LC_VEGA
             gameOpened = true;
 
             PatchStuff();
-            CheckForBMXLC();
             CheckInstalledMods();
         }
 
@@ -118,19 +117,15 @@ namespace LC_VEGA
 
         internal void CheckInstalledMods()
         {
-            ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
-        }
-
-        internal void CheckForBMXLC()
-        {
-            Dictionary<string, PluginInfo> Mods = Chainloader.PluginInfos;
-            foreach (PluginInfo info in Mods.Values)
+            // BMX Lobby compat
+            if (ModChecker.CheckForMod("BMX.LobbyCompatibility"))
             {
-                if (info.Metadata.GUID.Contains("BMX.LobbyCompatibility"))
-                {
-                    PluginHelper.RegisterPlugin(modGUID, Version.Parse(modVersion), CompatibilityLevel.ClientOnly, VersionStrictness.None);
-                }
+                PluginHelper.RegisterPlugin(modGUID, Version.Parse(modVersion), CompatibilityLevel.ClientOnly, VersionStrictness.None);
             }
+
+            // Other mods
+            ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
+            // ModChecker.hasLLL = ModChecker.CheckForMod("imabatby.lethallevelloader");
         }
 
         internal void GenerateConfigValues()

@@ -34,9 +34,9 @@ namespace LC_VEGA.Patches
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Medium)
                 {
-                    if (enemyID < VEGA.enemyList.Length)
+                    if (VEGA.enemies.ContainsKey(enemyID))
                     {
-                        VEGA.PlayAudio(VEGA.enemyList[enemyID] + "Scan", 0.7f);
+                        VEGA.PlayAudio(VEGA.enemies[enemyID] + "Scan", 0.7f);
                     }
                 }
             }
