@@ -133,6 +133,7 @@ namespace LC_VEGA
 
         internal void GenerateConfigValues()
         {
+            // Dialogue & Interactions
             vocalLevel = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Vocal Level", // Key of this config
@@ -168,6 +169,7 @@ namespace LC_VEGA
                 "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma (',')" // Description
             );
 
+            // Advanced Scanner
             enableAdvancedScannerAuto = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Enable the Advanced Scanner automatically", // Key of this config
