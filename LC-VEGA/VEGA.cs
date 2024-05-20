@@ -1767,7 +1767,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Driftwood entry", "VEGA, read Driftwood Giant entry" }, (message) =>
@@ -1778,7 +1778,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Slender entry", "VEGA, read Slenderman entry", "VEGA, read Faceless Stalker entry" }, (message) =>
@@ -1789,7 +1789,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Football entry" }, (message) =>
@@ -1800,7 +1800,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Shy guy entry", "VEGA, read SCP-096 entry" }, (message) =>
@@ -1811,7 +1811,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Locker entry" }, (message) =>
@@ -1822,7 +1822,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Siren Head entry", "VEGA, read Sirenhead entry" }, (message) =>
@@ -1833,7 +1833,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Rolling Giant entry" }, (message) =>
@@ -1844,7 +1844,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Peepers entry", "VEGA, read Peeper entry" }, (message) =>
@@ -1855,7 +1855,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Shockwave drone entry" }, (message) =>
@@ -1866,7 +1866,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Cleaning drone entry" }, (message) =>
@@ -1877,7 +1877,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read Moving turret entry", "VEGA, read Mobile turret entry" }, (message) =>
@@ -1888,7 +1888,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
                 Voice.ListenForPhrases(new string[] { "VEGA, read The Lost entry", "VEGA, read Maggie entry" }, (message) =>
@@ -1899,7 +1899,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
             }
