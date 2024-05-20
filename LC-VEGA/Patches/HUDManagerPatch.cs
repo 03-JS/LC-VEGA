@@ -42,7 +42,7 @@ namespace LC_VEGA.Patches
                     {
                         foreach (var file in ___terminalScript.enemyFiles)
                         {
-                            if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName) && !file.creatureName.Equals("Football") && !file.creatureName.Equals("Locker") && !file.creatureName.Contains("Drone") && !file.creatureName.Contains("Turret"))
+                            if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName) && !file.creatureName.Equals("Football") && !file.creatureName.Equals("Locker") && !file.creatureName.Equals("Boombas") && !file.creatureName.Contains("Drone") && !file.creatureName.Contains("Turret"))
                             {
                                 VEGA.PlayAudio(file.creatureName + "Scan", 0.7f);
                             }

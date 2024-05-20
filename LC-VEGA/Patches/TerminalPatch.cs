@@ -10,12 +10,14 @@ namespace LC_VEGA.Patches
     internal class TerminalPatch
     {
         public static List<int> scannedEnemyIDs;
+        public static List<TerminalNode> scannedEnemyFiles;
 
         [HarmonyPatch("Start")]
         [HarmonyPostfix]
-        static void GetLists(ref List<int> ___scannedEnemyIDs)
+        static void GetLists(ref List<int> ___scannedEnemyIDs, Terminal __instance)
         {
             scannedEnemyIDs = ___scannedEnemyIDs;
+            scannedEnemyFiles = __instance.enemyFiles;
         }
 
         [HarmonyPatch("QuitTerminal")]
