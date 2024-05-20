@@ -38,6 +38,16 @@ namespace LC_VEGA.Patches
                     {
                         VEGA.PlayAudio(VEGA.enemies[enemyID] + "Scan", 0.7f);
                     }
+                    else
+                    {
+                        foreach (var file in ___terminalScript.enemyFiles)
+                        {
+                            if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName) && !file.creatureName.Equals("Football") && !file.creatureName.Equals("Locker") && !file.creatureName.Contains("Drone") && !file.creatureName.Contains("Turret"))
+                            {
+                                VEGA.PlayAudio(file.creatureName + "Scan", 0.7f);
+                            }
+                        }
+                    }
                 }
             }
         }

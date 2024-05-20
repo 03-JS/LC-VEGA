@@ -26,7 +26,7 @@ namespace LC_VEGA
         internal static string enemiesTopText;
         internal static string itemsTopText;
         internal static float scannerRange;
-        
+
         public static string[] signals;
         public static string[] weathers =
         {
@@ -59,6 +59,22 @@ namespace LC_VEGA
             { 18, "OldBird" },
             { 19, "Butler" },
             { 21, "Snakes" }
+        };
+
+        public static string[] moddedEnemies =
+        {
+            "RedWood Giant",
+            "Stalker",
+            "DriftWood Giant",
+            "Football",
+            "Shy guy",
+            "Locker",
+            "Siren Head",
+            "Rolling Giant",
+            "Peepers",
+            "Shockwave Drone",
+            "Cleaning Drone",
+            "Moving Turret"
         };
 
         public static void PlayIntro()
@@ -608,13 +624,27 @@ namespace LC_VEGA
             ShipLights shipLights = Object.FindObjectOfType<ShipLights>();
             if (shipLights != null)
             {
-                if (shipLights.areLightsOn)
+                if (on)
                 {
-                    PlayAudio("LightsOff");
+                    if (shipLights.areLightsOn)
+                    {
+                        PlayAudio("LightsAlreadyOn");
+                    }
+                    else
+                    {
+                        PlayAudio("LightsOn");
+                    }
                 }
                 else
                 {
-                    PlayAudio("LightsOn");
+                    if (!shipLights.areLightsOn)
+                    {
+                        PlayAudio("LightsAlreadyOff");
+                    }
+                    else
+                    {
+                        PlayAudio("LightsOff");
+                    }
                 }
 
                 yield return new WaitForSeconds(2f);
@@ -957,7 +987,7 @@ namespace LC_VEGA
         {
             if (Plugin.registerTime.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, what's the current time of day?", "VEGA, current time of day", "VEGA, time of day", "VEGA, current time", "VEGA, time" }, (message) =>
+                Voice.ListenForPhrases(new string[] { "VEGA, what's the current time of day?", "VEGA, current time of day", "VEGA, time of day", "VEGA, current time", "VEGA, time", "VEGA, what time is it?" }, (message) =>
                     {
                         GetDayMode();
                     }, Plugin.confidence.Value);
@@ -1057,15 +1087,15 @@ namespace LC_VEGA
                             HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                             if (shipDoors != null)
                             {
-                                if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                                InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
+                                component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
+                                if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
                                 {
                                     if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                                     {
                                         PlayAudio("ShipDoorsOpened", 0.7f);
                                     }
                                 }
-                                InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
-                                component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                             }
                         }
                     }, Plugin.confidence.Value);
@@ -1076,15 +1106,15 @@ namespace LC_VEGA
                         HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                         if (shipDoors != null)
                         {
-                            if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                            InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
+                            component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
+                            if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
                             {
                                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                                 {
                                     PlayAudio("ShipDoorsClosed", 0.7f);
                                 }
                             }
-                            InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
-                            component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                         }
                     }
                 }, Plugin.confidence.Value);

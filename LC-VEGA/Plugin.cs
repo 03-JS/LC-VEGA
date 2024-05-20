@@ -24,7 +24,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "1.3.0";
+        private const string modVersion = "2.0.0";
 
         internal static AssetBundle assetBundle;
 
@@ -165,7 +165,7 @@ namespace LC_VEGA
             messages = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Signal Translator messages", // Key of this config
-                "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, HEROBRINE, FOOTBALL, FURBO, FIEND, SLENDER, LOCKER, SHY GUY, SIRENHEAD, DRIFTWOOD, WALKER, WATCHER, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS", // Default value
+                "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, HEROBRINE, FOOTBALL, FIEND, SLENDER, LOCKER, SHY GUY, SIRENHEAD, DRIFTWOOD, WALKER, WATCHER, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS", // Default value
                 "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma and a white space, like so -> 'Message, Another message'\nApplies after a game restart." // Description
             );
 
@@ -181,8 +181,8 @@ namespace LC_VEGA
             confidence = Config.Bind(
                 "Voice Recognition", // Config section
                 "Confidence", // Key of this config
-                0.9f, // Default value
-                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. The default value is 0.9, which works well in most cases, but if VEGA doesn't pick you up, try lowering it to 0.65 or 0.7.\nApplies after a game restart.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                0.7f, // Default value
+                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. If VEGA doesn't pick you up, try lowering this value.\nApplies after a game restart.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             registerMoonsInfo = Config.Bind(
                 "Voice Recognition", // Config section

@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace LC_VEGA.Patches
@@ -39,12 +40,19 @@ namespace LC_VEGA.Patches
             }
             if (___currentNode.creatureFileID != -1 && Plugin.readBestiaryEntries.Value)
             {
-                Plugin.LogToConsole("CREATURE FILE ID -> " + ___currentNode.creatureFileID, "warn");
+                Plugin.LogToConsole("CREATURE FILE ID -> " + ___currentNode.creatureFileID);
                 VEGA.shouldBeInterrupted = true;
                 VEGA.audioSource.Stop();
                 Plugin.LogToConsole("Attempting to play an audio from the bestiary -> " + ___currentNode.creatureName);
                 float delay = 0.85f;
-                VEGA.PlayAudio(VEGA.enemies[___currentNode.creatureFileID], delay);
+                if (VEGA.enemies.ContainsKey(___currentNode.creatureFileID))
+                {
+                    VEGA.PlayAudio(VEGA.enemies[___currentNode.creatureFileID], delay);
+                }
+                else if (VEGA.moddedEnemies.Contains(___currentNode.creatureName))
+                {
+                    VEGA.PlayAudio(___currentNode.creatureName, delay);
+                }
             }
         }
     }
