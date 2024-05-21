@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 3496576853
+CRC: 1516785837
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 300a3343a6e4c280603b6ea7cf0a2a24
+    Hash: 7f95df30376a4e7aec7dfb4107862ce7
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 300a3343a6e4c280603b6ea7cf0a2a24
+    Hash: 7f95df30376a4e7aec7dfb4107862ce7
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -59,6 +59,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Weather/Rainy-2.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTurrets.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-1.wav
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/ShrimpScan.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-1.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-2.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-4.wav
@@ -146,6 +147,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-3.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-3.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-3.wav
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/ShrimpShort.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-1.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/BunkerSpider.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-2.wav
@@ -196,6 +198,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-3.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/OldBird.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-3.wav
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shrimp.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoVisibleTurret.wav
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Sandworm.wav
 - Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shockwave Drone.wav

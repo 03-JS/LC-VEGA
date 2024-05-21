@@ -75,7 +75,8 @@ namespace LC_VEGA
             "Shockwave Drone",
             "Cleaning Drone",
             "Moving Turret",
-            "Maggie"
+            "Maggie",
+            "Shrimp"
         };
 
         public static void PlayIntro()
@@ -1902,6 +1903,17 @@ namespace LC_VEGA
                         PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                     }
                 }, Plugin.confidence.Value);
+                Voice.ListenForPhrases(new string[] { "VEGA, read Shrimp entry" }, (message) =>
+                {
+                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                    {
+                        PlayAudio("Shrimp");
+                    }
+                    else
+                    {
+                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                    }
+                }, Plugin.confidence.Value);
             }
         }
 
@@ -2269,6 +2281,17 @@ namespace LC_VEGA
                     if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
                     {
                         PlayAudio("MaggieShort");
+                    }
+                    else
+                    {
+                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                    }
+                }, Plugin.confidence.Value);
+                Voice.ListenForPhrases(new string[] { "VEGA, info about Shrimps" }, (message) =>
+                {
+                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                    {
+                        PlayAudio("ShrimpShort");
                     }
                     else
                     {
