@@ -893,36 +893,56 @@ namespace LC_VEGA
         {
             if (Plugin.registerStop.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, shut up", "VEGA, stop", "VEGA, stop talking" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, shut up", "VEGA, stop", "VEGA, stop talking" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, shut up" || recognized.Message != "VEGA, stop" || recognized.Message != "VEGA, stop talking") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         audioSource.Stop();
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
             if (Plugin.registerThanks.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, thank you", "VEGA, thanks", "Thank you, VEGA", "Thanks, VEGA" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, thank you", "VEGA, thanks", "Thank you, VEGA", "Thanks, VEGA" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, thank you" || recognized.Message != "VEGA, thanks" || recognized.Message != "Thank you, VEGA" || recognized.Message != "Thanks, VEGA") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         PlayAudioWithVariant("NoProblem", Random.Range(1, 5));
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
 
             // Ship's lights
             if (Plugin.registerInteractShipLights.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, lights on", "VEGA, turn the lights on" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, lights on", "VEGA, turn the lights on" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, lights on" || recognized.Message != "VEGA, turn the lights on") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             CoroutineManager.StartCoroutine(SwitchLights(on: true));
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, lights out", "VEGA, lights off", "VEGA, turn the lights off" }, (message) =>
-                {
-                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
-                    {
-                        CoroutineManager.StartCoroutine(SwitchLights(on: false));
                     }
-                }, Plugin.confidence.Value);
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, lights out", "VEGA, lights off", "VEGA, turn the lights off" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, lights out" || recognized.Message != "VEGA, lights off" || recognized.Message != "VEGA, turn the lights off") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            CoroutineManager.StartCoroutine(SwitchLights(on: false));
+                        }
+                    }
+                });
             }
         }
 
@@ -932,10 +952,15 @@ namespace LC_VEGA
             {
                 foreach (var condition in weathers)
                 {
-                    Voice.ListenForPhrases(new string[] { "VEGA, info about " + condition + " weather" }, (message) =>
+                    Voice.RegisterPhrases(new string[] { "VEGA, info about " + condition + " weather" });
+                    Voice.RegisterCustomHandler((obj, recognized) =>
                     {
-                        PlayAudioWithVariant(condition, 2);
-                    }, Plugin.confidence.Value);
+                        if (recognized.Message != "VEGA, info about " + condition + " weather") return;
+                        if (recognized.Confidence >= Plugin.confidence.Value)
+                        {
+                            PlayAudioWithVariant(condition, 2);
+                        }
+                    });
                 }
             }
         }
@@ -944,7 +969,11 @@ namespace LC_VEGA
         {
             if (Plugin.registerAdvancedScanner.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, activate scanner", "VEGA, activate advanced scanner", "VEGA, turn on scanner", "VEGA, turn on advanced scanner", "VEGA, scan", "VEGA, enable scanner", "VEGA, enable advanced scanner" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, activate scanner", "VEGA, activate advanced scanner", "VEGA, turn on scanner", "VEGA, turn on advanced scanner", "VEGA, scan", "VEGA, enable scanner", "VEGA, enable advanced scanner" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, activate scanner" || recognized.Message != "VEGA, activate advanced scanner" || recognized.Message != "VEGA, turn on scanner" || recognized.Message != "VEGA, turn on advanced scanner" || recognized.Message != "VEGA, scan" || recognized.Message != "VEGA, enable scanner" || recognized.Message != "VEGA, enable advanced scanner") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (performAdvancedScan)
                         {
@@ -962,26 +991,32 @@ namespace LC_VEGA
                         {
                             PlayAudioWithVariant("AdvancedScannerEnabled", Random.Range(1, 4));
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, disable scanner", "VEGA, disable advanced scanner", "VEGA, turn off scanner", "VEGA, turn off advanced scanner", "VEGA, disable scan" }, (message) =>
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, disable scanner", "VEGA, disable advanced scanner", "VEGA, turn off scanner", "VEGA, turn off advanced scanner", "VEGA, disable scan" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (!performAdvancedScan)
+                    if (recognized.Message != "VEGA, disable scanner" || recognized.Message != "VEGA, disable advanced scanner" || recognized.Message != "VEGA, turn off scanner" || recognized.Message != "VEGA, turn off advanced scanner" || recognized.Message != "VEGA, disable scan") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("ScannerAlreadyInactive");
-                        return;
+                        if (!performAdvancedScan)
+                        {
+                            PlayAudio("ScannerAlreadyInactive");
+                            return;
+                        }
+
+                        Plugin.LogToConsole("Deactivating advanced scanner");
+                        performAdvancedScan = false;
+
+                        HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
+                        HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
+
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                        {
+                            PlayAudioWithVariant("AdvancedScannerDisabled", Random.Range(1, 4));
+                        }
                     }
-
-                    Plugin.LogToConsole("Deactivating advanced scanner");
-                    performAdvancedScan = false;
-
-                    HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
-                    HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
-
-                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                    {
-                        PlayAudioWithVariant("AdvancedScannerDisabled", Random.Range(1, 4));
-                    }
-                }, Plugin.confidence.Value);
+                });
             }
         }
 
@@ -989,10 +1024,15 @@ namespace LC_VEGA
         {
             if (Plugin.registerTime.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, what's the current time of day?", "VEGA, current time of day", "VEGA, time of day", "VEGA, current time", "VEGA, time", "VEGA, what time is it?" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, what's the current time of day?", "VEGA, current time of day", "VEGA, time of day", "VEGA, current time", "VEGA, time", "VEGA, what time is it?" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, what's the current time of day?" || recognized.Message != "VEGA, current time of day" || recognized.Message != "VEGA, time of day" || recognized.Message != "VEGA, current time" || recognized.Message != "VEGA, time" || recognized.Message != "VEGA, what time is it?") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         GetDayMode();
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
         }
 
@@ -1000,13 +1040,18 @@ namespace LC_VEGA
         {
             if (Plugin.registerCrewStatus.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, crew status", "VEGA, team status", "VEGA, crew info", "VEGA, team info", "VEGA, crew report", "VEGA, team report" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, crew status", "VEGA, team status", "VEGA, crew info", "VEGA, team info", "VEGA, crew report", "VEGA, team report" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, crew status" || recognized.Message != "VEGA, team status" || recognized.Message != "VEGA, crew info" || recognized.Message != "VEGA, team info" || recognized.Message != "VEGA, crew report" || recognized.Message != "VEGA, team report") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             CoroutineManager.StartCoroutine(GetCrewStatus());
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
         }
 
@@ -1014,17 +1059,26 @@ namespace LC_VEGA
         {
             if (Plugin.registerTeleporter.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, tp", "VEGA, activate tp", "VEGA, teleport", "VEGA, activate teleporter" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, tp", "VEGA, activate tp", "VEGA, teleport", "VEGA, activate teleporter" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, tp" || recognized.Message != "VEGA, activate tp" || recognized.Message != "VEGA, teleport" || recognized.Message != "VEGA, activate teleporter") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             ActivateTeleporter();
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
             if (Plugin.registerRadarSwitch.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, switch to me", "VEGA, switch radar", "VEGA, switch radar to me", "VEGA, focus", "VEGA, focus on me" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, switch to me", "VEGA, switch radar", "VEGA, switch radar to me", "VEGA, focus", "VEGA, focus on me" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, switch to me" || recognized.Message != "VEGA, switch radar" || recognized.Message != "VEGA, switch radar to me" || recognized.Message != "VEGA, focus" || recognized.Message != "VEGA, focus on me") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1037,7 +1091,8 @@ namespace LC_VEGA
                             StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(index);
                         }
                         PlayAudioWithVariant("RadarSwitch", Random.Range(1, 4));
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
         }
 
@@ -1046,43 +1101,67 @@ namespace LC_VEGA
             // Secure doors
             if (Plugin.registerInteractSecureDoor.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, open secure door", "VEGA, open door", "VEGA, open the door", "VEGA, open the secure door" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, open secure door", "VEGA, open door", "VEGA, open the door", "VEGA, open the secure door" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, open secure door" || recognized.Message != "VEGA, open door" || recognized.Message != "VEGA, open the door" || recognized.Message != "VEGA, open the secure door") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             OpenSecureDoor();
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, close secure door", "VEGA, close door", "VEGA, close the door", "VEGA, close the secure door" }, (message) =>
-                {
-                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
-                    {
-                        CloseSecureDoor();
                     }
-                }, Plugin.confidence.Value);
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, close secure door", "VEGA, close door", "VEGA, close the door", "VEGA, close the secure door" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, close secure door" || recognized.Message != "VEGA, close door" || recognized.Message != "VEGA, close the door" || recognized.Message != "VEGA, close the secure door") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            CloseSecureDoor();
+                        }
+                    }
+                });
             }
             if (Plugin.registerInteractAllSecureDoors.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, open all secure doors", "VEGA, open all doors" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, open all secure doors", "VEGA, open all doors" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, open all secure doors" || recognized.Message != "VEGA, open all doors") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             OpenAllDoors();
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" }, (message) =>
-                {
-                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
-                    {
-                        CloseAllDoors();
                     }
-                }, Plugin.confidence.Value);
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, close all secure doors" || recognized.Message != "VEGA, close all doors") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            CloseAllDoors();
+                        }
+                    }
+                });
             }
 
             // Ship doors
             if (Plugin.registerInteractShipDoors.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, open ship doors", "VEGA, open the ship's doors", "VEGA, open hangar doors" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, open ship doors", "VEGA, open the ship's doors", "VEGA, open hangar doors" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, open ship doors" || recognized.Message != "VEGA, open the ship's doors" || recognized.Message != "VEGA, open hangar doors") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1100,26 +1179,32 @@ namespace LC_VEGA
                                 }
                             }
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, close ship doors", "VEGA, close the ship's doors", "VEGA, close hangar doors" }, (message) =>
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, close ship doors", "VEGA, close the ship's doors", "VEGA, close hangar doors" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                    if (recognized.Message != "VEGA, close ship doors" || recognized.Message != "VEGA, close the ship's doors" || recognized.Message != "VEGA, close hangar doors") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
-                        if (shipDoors != null)
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
-                            InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
-                            component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
-                            if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                            HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
+                            if (shipDoors != null)
                             {
-                                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                                InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
+                                component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
+                                if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
                                 {
-                                    PlayAudio("ShipDoorsClosed", 0.7f);
+                                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                                    {
+                                        PlayAudio("ShipDoorsClosed", 0.7f);
+                                    }
                                 }
                             }
                         }
                     }
-                }, Plugin.confidence.Value);
+                });
             }
         }
 
@@ -1129,19 +1214,24 @@ namespace LC_VEGA
             {
                 foreach (var signal in signals)
                 {
-                    Voice.ListenForPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal }, (message) =>
+                    Voice.RegisterPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal });
+                    Voice.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (recognized.Message != "VEGA, transmit " + signal || recognized.Message != "VEGA, send " + signal) return;
+                        if (recognized.Confidence >= Plugin.confidence.Value)
                         {
-                            SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
-                            if (translator == null)
+                            if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                             {
-                                PlayAudio("NoSignalTranslator");
-                                return;
+                                SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
+                                if (translator == null)
+                                {
+                                    PlayAudio("NoSignalTranslator");
+                                    return;
+                                }
+                                HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
                             }
-                            HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
                         }
-                    }, Plugin.confidence.Value);
+                    });
                 }
             }
         }
@@ -1150,20 +1240,30 @@ namespace LC_VEGA
         {
             if (Plugin.registerRadarBoosters.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, ping" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, ping" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, ping") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             InteractWithBooster(ping: true);
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, flash" }, (message) =>
-                {
-                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
-                    {
-                        InteractWithBooster(ping: false);
                     }
-                }, Plugin.confidence.Value);
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, flash" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, flash") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            InteractWithBooster(ping: false);
+                        }
+                    }
+                });
             }
         }
 
@@ -1172,67 +1272,97 @@ namespace LC_VEGA
             // Turrets
             if (Plugin.registerDisableTurret.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, disable the turret", "VEGA, disable turret" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, disable the turret", "VEGA, disable turret" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, disable the turret" || recognized.Message != "VEGA, disable turret") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             DisableTurret();
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
             if (Plugin.registerDisableAllTurrets.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, disable all turrets" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, disable all turrets" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, disable all turrets") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             DisableAllTurrets();
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
 
             // Landmines
             if (Plugin.registerDisableMine.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, disable the mine", "VEGA, disable mine", "VEGA, disable the landmine", "VEGA, disable landmine" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, disable the mine", "VEGA, disable mine", "VEGA, disable the landmine", "VEGA, disable landmine" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, disable the mine" || recognized.Message != "VEGA, disable mine" || recognized.Message != "VEGA, disable the landmine" || recognized.Message != "VEGA, disable landmine") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             DisableMine();
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
             if (Plugin.registerDisableAllMines.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, disable all mines", "VEGA, disable all landmines" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, disable all mines", "VEGA, disable all landmines" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, disable all mines" || recognized.Message != "VEGA, disable all landmines") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             DisableAllMines();
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
 
             // Spike traps
             if (Plugin.registerDisableSpikeTrap.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, disable the trap", "VEGA, disable trap", "VEGA, disable the spike trap", "VEGA, disable spike trap" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, disable the trap", "VEGA, disable trap", "VEGA, disable the spike trap", "VEGA, disable spike trap" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, disable the trap" || recognized.Message != "VEGA, disable trap" || recognized.Message != "VEGA, disable the spike trap" || recognized.Message != "VEGA, disable spike trap") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             DisableSpikeTrap();
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
             if (Plugin.registerDisableAllSpikeTraps.Value)
             {
-                Voice.ListenForPhrases(new string[] { "VEGA, disable all traps", "VEGA, disable all spike traps" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, disable all traps", "VEGA, disable all spike traps" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, disable all traps" || recognized.Message != "VEGA, disable all spike traps") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             DisableAllSpikeTraps();
                         }
-                    }, Plugin.confidence.Value);
+                    }
+                });
             }
         }
 
@@ -1241,295 +1371,530 @@ namespace LC_VEGA
             if (Plugin.registerMoonsInfo.Value)
             {
                 // Vanilla
-                Voice.ListenForPhrase("VEGA, info about experimentation", (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, info about experimentation" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, info about experimentation") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         PlayAudio("41-EXP");
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about assurance", (message) =>
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about assurance" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("220-ASS");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about vow", (message) =>
+                    if (recognized.Message != "VEGA, info about assurance") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("220-ASS");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about vow" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("56-VOW");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about offense", (message) =>
+                    if (recognized.Message != "VEGA, info about vow") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("56-VOW");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about offense" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("21-OFF");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about march", (message) =>
+                    if (recognized.Message != "VEGA, info about offense") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("21-OFF");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about march" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("61-MAR");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about adamance", (message) =>
+                    if (recognized.Message != "VEGA, info about march") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("61-MAR");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about adamance" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("20-ADA");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about rend", (message) =>
+                    if (recognized.Message != "VEGA, info about adamance") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("20-ADA");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about rend" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("85-REN");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about dine", (message) =>
+                    if (recognized.Message != "VEGA, info about rend") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("85-REN");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about dine" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("7-DIN");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about titan", (message) =>
+                    if (recognized.Message != "VEGA, info about dine") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("7-DIN");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about titan" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("8-TIT");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about artifice", (message) =>
+                    if (recognized.Message != "VEGA, info about titan") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("8-TIT");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about artifice" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("68-ART");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about embrion", (message) =>
+                    if (recognized.Message != "VEGA, info about artifice") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("68-ART");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about embrion" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("5-EMB");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about liquidation", (message) =>
+                    if (recognized.Message != "VEGA, info about embrion") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("5-EMB");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about liquidation" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("44-LIQ");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about mars", (message) =>
+                    if (recognized.Message != "VEGA, info about liquidation") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("44-LIQ");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about mars" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("4-MARS");
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about the Company", "VEGA, info about the Company building", "VEGA, info about Gordion" }, (message) =>
+                    if (recognized.Message != "VEGA, info about mars") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("4-MARS");
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about the Company", "VEGA, info about the Company building", "VEGA, info about Gordion" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    PlayAudio("71-GOR");
-                }, Plugin.confidence.Value);
+                    if (recognized.Message != "VEGA, info about the Company" || recognized.Message != "VEGA, info about the Company building" || recognized.Message != "VEGA, info about Gordion") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        PlayAudio("71-GOR");
+                    }
+                });
 
                 // Modded
-                Voice.ListenForPhrase("VEGA, info about Asteroid 13", (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Asteroid 13" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("57 Asteroid-13"))
+                    if (recognized.Message != "VEGA, info about Asteroid 13") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("57-AST-13");
+                        if (ClientHasMoon("57 Asteroid-13"))
+                        {
+                            PlayAudio("57-AST-13");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Atlantica", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Atlantica" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("44 Atlantica"))
+                    if (recognized.Message != "VEGA, info about Atlantica") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("44-ATL");
+                        if (ClientHasMoon("44 Atlantica"))
+                        {
+                            PlayAudio("44-ATL");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Cosmocos", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Cosmocos" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("42 Cosmocos"))
+                    if (recognized.Message != "VEGA, info about Cosmocos") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("42-COS");
+                        if (ClientHasMoon("42 Cosmocos"))
+                        {
+                            PlayAudio("42-COS");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Desolation", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Desolation" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("48 Desolation"))
+                    if (recognized.Message != "VEGA, info about Desolation") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("48-DES");
+                        if (ClientHasMoon("48 Desolation"))
+                        {
+                            PlayAudio("48-DES");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Etern", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Etern" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("154 Etern"))
+                    if (recognized.Message != "VEGA, info about Etern") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("154-ETE");
+                        if (ClientHasMoon("154 Etern"))
+                        {
+                            PlayAudio("154-ETE");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Fission C", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Fission C" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("25 Fission-C"))
+                    if (recognized.Message != "VEGA, info about Fission C") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("25-FIS-C");
+                        if (ClientHasMoon("25 Fission-C"))
+                        {
+                            PlayAudio("25-FIS-C");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Gloom", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Gloom" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("36 Gloom"))
+                    if (recognized.Message != "VEGA, info about Gloom") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("36-GLO");
+                        if (ClientHasMoon("36 Gloom"))
+                        {
+                            PlayAudio("36-GLO");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Gratar", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Gratar" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("147 Gratar"))
+                    if (recognized.Message != "VEGA, info about Gratar") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("147-GRA");
+                        if (ClientHasMoon("147 Gratar"))
+                        {
+                            PlayAudio("147-GRA");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Infernis", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Infernis" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("46 Infernis"))
+                    if (recognized.Message != "VEGA, info about Infernis") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("46-INF");
+                        if (ClientHasMoon("46 Infernis"))
+                        {
+                            PlayAudio("46-INF");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Junic", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Junic" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("84 Junic"))
+                    if (recognized.Message != "VEGA, info about Junic") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("84-JUN");
+                        if (ClientHasMoon("84 Junic"))
+                        {
+                            PlayAudio("84-JUN");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Oldred", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Oldred" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("134 Oldred"))
+                    if (recognized.Message != "VEGA, info about Oldred") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("134-OLD");
+                        if (ClientHasMoon("134 Oldred"))
+                        {
+                            PlayAudio("134-OLD");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Polarus", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Polarus" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("94 Polarus"))
+                    if (recognized.Message != "VEGA, info about Polarus") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("94-POL");
+                        if (ClientHasMoon("94 Polarus"))
+                        {
+                            PlayAudio("94-POL");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Acidir", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Acidir" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("76 Acidir"))
+                    if (recognized.Message != "VEGA, info about Acidir") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("76-ACI");
+                        if (ClientHasMoon("76 Acidir"))
+                        {
+                            PlayAudio("76-ACI");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Affliction", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Affliction" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("59 Affliction"))
+                    if (recognized.Message != "VEGA, info about Affliction") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("59-AFF");
+                        if (ClientHasMoon("59 Affliction"))
+                        {
+                            PlayAudio("59-AFF");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Eve M", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Eve M" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("127 Eve-M"))
+                    if (recognized.Message != "VEGA, info about Eve M") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("127-EVE-M");
+                        if (ClientHasMoon("127 Eve-M"))
+                        {
+                            PlayAudio("127-EVE-M");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Sector 0", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Sector 0" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("71 Sector-0"))
+                    if (recognized.Message != "VEGA, info about Sector 0") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("71-SEC-0");
+                        if (ClientHasMoon("71 Sector-0"))
+                        {
+                            PlayAudio("71-SEC-0");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Summit", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Summit" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("290 Summit"))
+                    if (recognized.Message != "VEGA, info about Summit") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("290-SUM");
+                        if (ClientHasMoon("290 Summit"))
+                        {
+                            PlayAudio("290-SUM");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Penumbra", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Penumbra" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("813 Penumbra"))
+                    if (recognized.Message != "VEGA, info about Penumbra") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("813-PEN");
+                        if (ClientHasMoon("813 Penumbra"))
+                        {
+                            PlayAudio("813-PEN");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Argent", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Argent" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("32 Argent"))
+                    if (recognized.Message != "VEGA, info about Argent") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("32-ARG");
+                        if (ClientHasMoon("32 Argent"))
+                        {
+                            PlayAudio("32-ARG");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Azure", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Azure" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("39 Azure"))
+                    if (recognized.Message != "VEGA, info about Azure") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("39-AZU");
+                        if (ClientHasMoon("39 Azure"))
+                        {
+                            PlayAudio("39-AZU");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Budapest", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Budapest" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("618 Budapest"))
+                    if (recognized.Message != "VEGA, info about Budapest") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("618-BUD");
+                        if (ClientHasMoon("618 Budapest"))
+                        {
+                            PlayAudio("618-BUD");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Celestria", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Celestria" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("9 Celestria"))
+                    if (recognized.Message != "VEGA, info about Celestria") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("9-CEL");
+                        if (ClientHasMoon("9 Celestria"))
+                        {
+                            PlayAudio("9-CEL");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Crystallum", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Crystallum" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("Crystallum"))
+                    if (recognized.Message != "VEGA, info about Crystallum") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("???-CRY");
+                        if (ClientHasMoon("Crystallum"))
+                        {
+                            PlayAudio("???-CRY");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Echelon", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Echelon" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("30 Echelon"))
+                    if (recognized.Message != "VEGA, info about Echelon") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("30-ECH");
+                        if (ClientHasMoon("30 Echelon"))
+                        {
+                            PlayAudio("30-ECH");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Harloth", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Harloth" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("93 Harloth"))
+                    if (recognized.Message != "VEGA, info about Harloth") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("93-HAR");
+                        if (ClientHasMoon("93 Harloth"))
+                        {
+                            PlayAudio("93-HAR");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Maritopia", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Maritopia" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("153 Maritopia"))
+                    if (recognized.Message != "VEGA, info about Maritopia") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("153-MAR");
+                        if (ClientHasMoon("153 Maritopia"))
+                        {
+                            PlayAudio("153-MAR");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Nimbus", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Nimbus" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("Nimbus"))
+                    if (recognized.Message != "VEGA, info about Nimbus") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("???-NIM");
+                        if (ClientHasMoon("Nimbus"))
+                        {
+                            PlayAudio("???-NIM");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Nyx", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Nyx" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("34 Nyx"))
+                    if (recognized.Message != "VEGA, info about Nyx") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("34-NYX");
+                        if (ClientHasMoon("34 Nyx"))
+                        {
+                            PlayAudio("34-NYX");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Psych Sanctum", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Psych Sanctum" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("111 PsychSanctum"))
+                    if (recognized.Message != "VEGA, info about Psych Sanctum") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("111-PSY");
+                        if (ClientHasMoon("111 PsychSanctum"))
+                        {
+                            PlayAudio("111-PSY");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Spectralis", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Spectralis" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("Spectralis"))
+                    if (recognized.Message != "VEGA, info about Spectralis") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("???-SPE");
+                        if (ClientHasMoon("Spectralis"))
+                        {
+                            PlayAudio("???-SPE");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Zenit", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Zenit" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("37 Zenit"))
+                    if (recognized.Message != "VEGA, info about Zenit") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("37-ZEN");
+                        if (ClientHasMoon("37 Zenit"))
+                        {
+                            PlayAudio("37-ZEN");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Calt Prime", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Calt Prime" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("35 CaltPrime"))
+                    if (recognized.Message != "VEGA, info about Calt Prime") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("35-CAL");
+                        if (ClientHasMoon("35 CaltPrime"))
+                        {
+                            PlayAudio("35-CAL");
+                        }
                     }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrase("VEGA, info about Sanguine", (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Sanguine" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (ClientHasMoon("Sanguine"))
+                    if (recognized.Message != "VEGA, info about Sanguine") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("???-SAN");
+                        if (ClientHasMoon("Sanguine"))
+                        {
+                            PlayAudio("???-SAN");
+                        }
                     }
-                }, Plugin.confidence.Value);
+                });
             }
         }
 
