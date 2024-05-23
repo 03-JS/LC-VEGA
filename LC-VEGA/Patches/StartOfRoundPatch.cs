@@ -33,8 +33,13 @@ namespace LC_VEGA.Patches
             {
                 Plugin.LogToConsole("Unable to create VEGA audio source", "error");
             }
-            if (Plugin.playIntro.Value)
+            if (Plugin.playIntro.Value && !SaveManager.playedIntro)
             {
+                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                {
+                    VEGA.PlayIntro();
+                }
+                /* 
                 if (Plugin.gameOpened)
                 {
                     Plugin.gameOpened = false;
@@ -43,6 +48,7 @@ namespace LC_VEGA.Patches
                         VEGA.PlayIntro(); 
                     }
                 }
+                */
             }
             VEGA.creditsChar = HUDManager.Instance.totalValueText.text.ToCharArray()[0];
 

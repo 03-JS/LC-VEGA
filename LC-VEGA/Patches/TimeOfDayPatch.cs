@@ -27,12 +27,16 @@ namespace LC_VEGA.Patches
                             }
                             VEGA.PlayAudioWithVariant("GettingLate", Random.Range(1, 4));
                         }
+                        else
+                        {
+                            VEGA.warningGiven = true;
+                        }
                     }
                 }
                 else
                 {
                     VEGA.warningGiven = false;
-                } 
+                }
             }
         }
     }

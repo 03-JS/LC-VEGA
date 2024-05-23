@@ -94,6 +94,7 @@ namespace LC_VEGA
                         }
                     }
                     audioSource.PlayDelayed(4.5f);
+                    SaveManager.playedIntro = true;
                 }
             }
             else
@@ -699,7 +700,7 @@ namespace LC_VEGA
                                 }
                             }
                         }
-                        else if (collider.GetComponent<MaskedPlayerEnemy>()?.isEnemyDead == false)
+                        else if (Plugin.detectMasked.Value && collider.GetComponent<MaskedPlayerEnemy>()?.isEnemyDead == false)
                         {
                             enemyCount++;
                         }
@@ -858,6 +859,144 @@ namespace LC_VEGA
             }
         }
 
+        internal static IEnumerator GetCrewInShip(float delay = 5f)
+        {
+            int deadPlayers = 0;
+            List<string> playersInShip = new List<string>();
+            foreach (var player in StartOfRound.Instance.allPlayerScripts)
+            {
+                if (player.isInHangarShipRoom)
+                {
+                    playersInShip.Add(player.playerUsername);
+                }
+                if (player.isPlayerDead)
+                {
+                    deadPlayers++;
+                }
+            }
+
+            if (StartOfRound.Instance.livingPlayers == 1 && deadPlayers == 0)
+            {
+                if (playersInShip.Count > 0)
+                {
+                    PlayAudio("SoloCrewInShip");
+                }
+                else
+                {
+                    PlayAudio("SoloCrewOutside");
+                }
+            }
+            else
+            {
+                PlayAudio("GettingCrewInShip");
+
+                yield return new WaitForSeconds(delay);
+
+                string header = "CREWMATES IN THE SHIP:";
+                string body = "";
+                if (playersInShip.Count == 0)
+                {
+                    body = "No one is in the ship.";
+                }
+                else
+                {
+                    int players = 0;
+                    for (int i = 0; i < playersInShip.Count; i++)
+                    {
+                        players++;
+                        body = playersInShip[i] + ", ";
+                        if (i + 1 == playersInShip.Count)
+                        {
+                            body = playersInShip[i];
+                        }
+                        else if (players == 4)
+                        {
+                            body = playersInShip[i] + ",\n";
+                            players = 0;
+                        }
+                    }
+                }
+
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                {
+                    PlayAudioWithVariant("ReportComplete", Random.Range(2, 4));
+                }
+                HUDManager.Instance.DisplayTip(header, body);
+            }
+        }
+
+        internal static IEnumerator GetScrapLeft(float delay = 5f)
+        {
+            int scrapLeft = 0;
+            int scrapInShip = 0;
+            int creditsLeft = 0;
+            int creditsInShip = 0;
+
+            PlayAudioWithVariant("GettingScrapLeft", Random.Range(1, 4));
+
+            yield return new WaitForSeconds(delay);
+
+            string header = "SCRAP SCAN RESULTS:";
+            string scrapOutsideStr = "";
+            string scrapInShipStr = "";
+            GrabbableObject[] items = Object.FindObjectsOfType<GrabbableObject>();
+
+            foreach (var item in items)
+            {
+                if (item.itemProperties.isScrap && !item.isHeld)
+                {
+                    if (item.isInFactory)
+                    {
+                        scrapLeft++;
+                        creditsLeft += item.scrapValue;
+                    }
+                    else if (item.isInShipRoom)
+                    {
+                        scrapInShip++;
+                        creditsInShip += item.scrapValue;
+                    }
+                }
+            }
+
+            if (scrapLeft == 0)
+            {
+                scrapOutsideStr = "There are no items outside the ship.";
+            }
+            else
+            {
+                if (scrapLeft > 1)
+                {
+                    scrapOutsideStr = "There are " + scrapLeft + " items left, worth " + "<color=green>" + creditsChar + creditsLeft + "</color>";
+                }
+                else
+                {
+                    scrapOutsideStr = "There is 1 item left, worth " + "<color=green>" + creditsChar + creditsLeft + "</color>";
+                }
+            }
+
+            if (scrapInShip == 0)
+            {
+                scrapInShipStr = "There are no items inside the ship.";
+            }
+            else
+            {
+                if (scrapInShip > 1)
+                {
+                    scrapInShipStr = "The ship currently has " + scrapInShip + " items, worth " + "<color=green>" + creditsChar + creditsInShip + "</color>";
+                }
+                else
+                {
+                    scrapInShipStr = "The ship currently has 1 item, worth " + "<color=green>" + creditsChar + creditsInShip + "</color>";
+                }
+            }
+
+            if (Plugin.vocalLevel.Value >= VocalLevels.High)
+            {
+                PlayAudioWithVariant("ScrapScanComplete", Random.Range(1, 4));
+            }
+            HUDManager.Instance.DisplayTip(header, scrapOutsideStr + "\n" + scrapInShipStr);
+        }
+
         internal static void InitializeScannerVariables()
         {
             performAdvancedScan = Plugin.enableAdvancedScannerAuto.Value;
@@ -886,7 +1025,7 @@ namespace LC_VEGA
             RegisterRadarBoosterCommands();
             RegisterSignalTranslatorCommands();
             RegisterWeatherCommands();
-            RegisterCrewStatusCommands();
+            RegisterReportCommands();
         }
 
         internal static void RegisterMiscCommands()
@@ -1036,7 +1175,7 @@ namespace LC_VEGA
             }
         }
 
-        internal static void RegisterCrewStatusCommands()
+        internal static void RegisterReportCommands()
         {
             if (Plugin.registerCrewStatus.Value)
             {
@@ -1049,6 +1188,36 @@ namespace LC_VEGA
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             CoroutineManager.StartCoroutine(GetCrewStatus());
+                        }
+                    }
+                });
+            }
+            if (Plugin.registerCrewInShip.Value)
+            {
+                Voice.RegisterPhrases(new string[] { "VEGA, crew in ship", "VEGA, people in ship", "VEGA, get people in ship", "VEGA, how many people are in the ship?", "VEGA, is anyone in the ship?", "VEGA, is anybody in the ship?" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, crew in ship" || recognized.Message != "VEGA, people in ship" || recognized.Message != "VEGA, get people in ship" || recognized.Message != "VEGA, how many people are in the ship?" || recognized.Message != "VEGA, is anyone in the ship?" || recognized.Message != "VEGA, is anybody in the ship?") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            CoroutineManager.StartCoroutine(GetCrewInShip());
+                        }
+                    }
+                });
+            }
+            if (Plugin.registerScrapLeft.Value)
+            {
+                Voice.RegisterPhrases(new string[] { "VEGA, scrap left", "VEGA, items left", "VEGA, scan for scrap", "VEGA, scan for items" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, scrap left" || recognized.Message != "VEGA, items left" || recognized.Message != "VEGA, scan for scrap" || recognized.Message != "VEGA, scan for items") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            CoroutineManager.StartCoroutine(GetScrapLeft());
                         }
                     }
                 });

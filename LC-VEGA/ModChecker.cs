@@ -10,11 +10,9 @@ namespace LC_VEGA
 {
     internal class ModChecker
     {   
-        // Other
         public static bool hasMalfunctions;
-        
-        // Moons
-        // public static bool hasLLL;
+        public static bool hasDiveristy;
+        public static bool hasCodeRebirth;
 
         public static bool CheckForMod(string modGUID)
         {
@@ -23,6 +21,7 @@ namespace LC_VEGA
             {
                 if (info.Metadata.GUID.Equals(modGUID))
                 {
+                    Plugin.LogToConsole("Found mod: " + modGUID);
                     return true;
                 }
             }

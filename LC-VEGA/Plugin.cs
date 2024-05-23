@@ -28,7 +28,7 @@ namespace LC_VEGA
 
         internal static AssetBundle assetBundle;
 
-        public static bool gameOpened;
+        // public static bool gameOpened;
 
         // Dialogue & Interactions config values
         public static ConfigEntry<VocalLevels> vocalLevel;
@@ -39,6 +39,7 @@ namespace LC_VEGA
 
         // Advanced Scanner config values
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
+        public static ConfigEntry<bool> detectMasked;
 
         // Voice commands config values
         public static ConfigEntry<float> confidence;
@@ -57,9 +58,12 @@ namespace LC_VEGA
         public static ConfigEntry<bool> registerTeleporter;
         public static ConfigEntry<bool> registerRadarSwitch;
         public static ConfigEntry<bool> registerCrewStatus;
+        public static ConfigEntry<bool> registerCrewInShip;
+        public static ConfigEntry<bool> registerScrapLeft;
         public static ConfigEntry<bool> registerRadarBoosters;
         public static ConfigEntry<bool> registerSignalTranslator;
         public static ConfigEntry<bool> registerTime;
+        public static ConfigEntry<bool> registerLeverPull;
         public static ConfigEntry<bool> registerInteractShipDoors;
         public static ConfigEntry<bool> registerInteractShipLights;
         public static ConfigEntry<bool> registerWeatherInfo;
@@ -83,10 +87,11 @@ namespace LC_VEGA
             LoadAssets();
             GenerateConfigValues();
             VEGA.Initialize();
-            gameOpened = true;
+            // gameOpened = true;
 
             PatchStuff();
             CheckInstalledMods();
+            ManageSaveValues();
         }
 
         internal void LoadAssets()
@@ -120,6 +125,8 @@ namespace LC_VEGA
 
         internal void CheckInstalledMods()
         {
+            mls.LogInfo("Looking for compatible mods...");
+
             // BMX Lobby compat
             if (ModChecker.CheckForMod("BMX.LobbyCompatibility"))
             {
@@ -128,7 +135,22 @@ namespace LC_VEGA
 
             // Other mods
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
-            // ModChecker.hasLLL = ModChecker.CheckForMod("imabatby.lethallevelloader");
+            ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
+        }
+
+        internal void ManageSaveValues()
+        {
+            SaveManager.playedIntro = false;
+            SaveManager.firstTimeDiversity = true;
+            if (File.Exists(Application.persistentDataPath + SaveManager.fileName))
+            {
+                SaveManager.playedIntro = SaveManager.LoadFromFile(0);
+                SaveManager.firstTimeDiversity = SaveManager.LoadFromFile(1);
+            }
+            else
+            {
+                SaveManager.SaveToFile();
+            }
         }
 
         internal void GenerateConfigValues()
@@ -175,6 +197,12 @@ namespace LC_VEGA
                 "Enable the Advanced Scanner automatically", // Key of this config
                 false, // Default value
                 "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often." // Description
+            );
+            detectMasked = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Detected masked employees", // Key of this config
+                true, // Default value
+                "Determines if the Advanced Scanner should be able to count Masked employees as entities." // Description
             );
 
             // Voice commands
@@ -274,6 +302,18 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            registerCrewInShip = Config.Bind(
+                "Voice Recognition", // Config section
+                "Register Crew in ship commands", // Key of this config
+                true, // Default value
+                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            registerScrapLeft = Config.Bind(
+                "Voice Recognition", // Config section
+                "Register Scrap / items left commands", // Key of this config
+                true, // Default value
+                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
             registerRadarBoosters = Config.Bind(
                 "Voice Recognition", // Config section
                 "Register Radar Booster commands", // Key of this config
@@ -289,6 +329,12 @@ namespace LC_VEGA
             registerTime = Config.Bind(
                 "Voice Recognition", // Config section
                 "Register Current time of day commands", // Key of this config
+                true, // Default value
+                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            registerLeverPull = Config.Bind(
+                "Voice Recognition", // Config section
+                "Register Ship lever pull commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
