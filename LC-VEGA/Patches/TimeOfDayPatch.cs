@@ -39,5 +39,15 @@ namespace LC_VEGA.Patches
                 }
             }
         }
+
+        [HarmonyPatch("SetShipLeaveEarlyClientRpc")]
+        [HarmonyPostfix]
+        static void GiveVoteWarning()
+        {
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+            {
+                VEGA.PlayAudio("ShipLeavingEarly");
+            }
+        }
     }
 }
