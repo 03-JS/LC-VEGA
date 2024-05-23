@@ -145,11 +145,13 @@ namespace LC_VEGA
             SaveManager.firstTimeDiversity = true;
             if (File.Exists(Application.persistentDataPath + SaveManager.fileName))
             {
+                mls.LogInfo("File found. Loading values");
                 SaveManager.playedIntro = SaveManager.LoadFromFile(0);
                 SaveManager.firstTimeDiversity = SaveManager.LoadFromFile(1);
             }
             else
             {
+                mls.LogInfo("File not found. Creating it now");
                 SaveManager.SaveToFile();
             }
         }
