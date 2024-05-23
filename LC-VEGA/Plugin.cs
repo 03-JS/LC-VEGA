@@ -140,6 +140,7 @@ namespace LC_VEGA
 
         internal void ManageSaveValues()
         {
+            mls.LogInfo("Looking for: " + Application.persistentDataPath + SaveManager.fileName);
             SaveManager.playedIntro = false;
             SaveManager.firstTimeDiversity = true;
             if (File.Exists(Application.persistentDataPath + SaveManager.fileName))

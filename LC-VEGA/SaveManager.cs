@@ -8,7 +8,7 @@ namespace LC_VEGA
 {
     internal class SaveManager
     {
-        public static string fileName = "VEGA_Interactions.bin";
+        public static string fileName = "\\VEGA_Interactions.bin";
 
         public static bool playedIntro;
         public static bool firstTimeDiversity;
