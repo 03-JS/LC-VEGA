@@ -1903,7 +1903,11 @@ namespace LC_VEGA
             if (Plugin.registerBestiaryEntries.Value)
             {
                 // Vanilla
-                Voice.ListenForPhrases(new string[] { "VEGA, read Hawk entry", "VEGA, read Baboon entry", "VEGA, read Baboon hawk entry" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, read Hawk entry", "VEGA, read Baboon entry", "VEGA, read Baboon hawk entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, read Hawk entry" || recognized.Message != "VEGA, read Baboon entry" || recognized.Message != "VEGA, read Baboon hawk entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(16))
                         {
@@ -1913,372 +1917,538 @@ namespace LC_VEGA
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Bunker spider entry", "VEGA, read Spider entry" }, (message) =>
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Bunker spider entry", "VEGA, read Spider entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(12))
+                    if (recognized.Message != "VEGA, read Bunker spider entry" || recognized.Message != "VEGA, read Spider entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("BunkerSpider");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(12))
+                        {
+                            PlayAudio("BunkerSpider");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Hoarding bug entry", "VEGA, read Loot bug entry", "VEGA, read Yippee bug entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Hoarding bug entry", "VEGA, read Loot bug entry", "VEGA, read Yippee bug entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(4))
+                    if (recognized.Message != "VEGA, read Hoarding bug entry" || recognized.Message != "VEGA, read Loot bug entry" || recognized.Message != "VEGA, read Yippee bug entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("YippeeBug");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(4))
+                        {
+                            PlayAudio("YippeeBug");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Bracken entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Bracken entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(1))
+                    if (recognized.Message != "VEGA, read Bracken entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Bracken");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(1))
+                        {
+                            PlayAudio("Bracken");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Butler entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Butler entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(19))
+                    if (recognized.Message != "VEGA, read Butler entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Butler");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(19))
+                        {
+                            PlayAudio("Butler");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Coil head entry", "VEGA, read Coil entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Coil head entry", "VEGA, read Coil entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(7))
+                    if (recognized.Message != "VEGA, read Coil head entry" || recognized.Message != "VEGA, read Coil entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Coil-Head");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(7))
+                        {
+                            PlayAudio("Coil-Head");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Forest Keeper entry", "VEGA, read Giant entry", "VEGA, read Keeper entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Forest Keeper entry", "VEGA, read Giant entry", "VEGA, read Keeper entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(6))
+                    if (recognized.Message != "VEGA, read Forest Keeper entry" || recognized.Message != "VEGA, read Giant entry" || recognized.Message != "VEGA, read Keeper entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("ForestKeeper");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(6))
+                        {
+                            PlayAudio("ForestKeeper");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Eyeless dog entry", "VEGA, read dog entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Eyeless dog entry", "VEGA, read dog entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(3))
+                    if (recognized.Message != "VEGA, read Eyeless dog entry" || recognized.Message != "VEGA, read dog entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("EyelessDog");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(3))
+                        {
+                            PlayAudio("EyelessDog");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Earth Leviathan entry", "VEGA, read Leviathan entry", "VEGA, read Worm entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Earth Leviathan entry", "VEGA, read Leviathan entry", "VEGA, read Worm entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(9))
+                    if (recognized.Message != "VEGA, read Earth Leviathan entry" || recognized.Message != "VEGA, read Leviathan entry" || recognized.Message != "VEGA, read Worm entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Sandworm");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(9))
+                        {
+                            PlayAudio("Sandworm");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Jester entry", "VEGA, read Jack in the box entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Jester entry", "VEGA, read Jack in the box entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(10))
+                    if (recognized.Message != "VEGA, read Jester entry" || recognized.Message != "VEGA, read Jack in the box entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Jester");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(10))
+                        {
+                            PlayAudio("Jester");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Roaming locusts entry", "VEGA, read Locusts entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Roaming locusts entry", "VEGA, read Locusts entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(15))
+                    if (recognized.Message != "VEGA, read Roaming locusts entry" || recognized.Message != "VEGA, read Locusts entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Locusts");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(15))
+                        {
+                            PlayAudio("Locusts");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Manticoil entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Manticoil entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(13))
+                    if (recognized.Message != "VEGA, read Manticoil entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Manticoil");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(13))
+                        {
+                            PlayAudio("Manticoil");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Nutcracker entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Nutcracker entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(17))
+                    if (recognized.Message != "VEGA, read Nutcracker entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Nutcracker");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(17))
+                        {
+                            PlayAudio("Nutcracker");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Old bird entry", "VEGA, read Bird entry", "VEGA, read Mech entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Old bird entry", "VEGA, read Bird entry", "VEGA, read Mech entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(18))
+                    if (recognized.Message != "VEGA, read Old bird entry" || recognized.Message != "VEGA, read Bird entry" || recognized.Message != "VEGA, read Mech entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("OldBird");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(18))
+                        {
+                            PlayAudio("OldBird");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Circuit bees entry", "VEGA, read Bees entry", "VEGA, read Red Bees entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Circuit bees entry", "VEGA, read Bees entry", "VEGA, read Red Bees entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(14))
+                    if (recognized.Message != "VEGA, read Circuit bees entry" || recognized.Message != "VEGA, read Bees entry" || recognized.Message != "VEGA, read Red Bees entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("RedBees");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(14))
+                        {
+                            PlayAudio("RedBees");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Hygrodere entry", "VEGA, read Slime entry", "VEGA, read Blob entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Hygrodere entry", "VEGA, read Slime entry", "VEGA, read Blob entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(5))
+                    if (recognized.Message != "VEGA, read Hygrodere entry" || recognized.Message != "VEGA, read Slime entry" || recognized.Message != "VEGA, read Blob entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Slime");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(5))
+                        {
+                            PlayAudio("Slime");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Tulip snake entry", "VEGA, read Tulip entry", "VEGA, read Snake entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Tulip snake entry", "VEGA, read Tulip entry", "VEGA, read Snake entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(21))
+                    if (recognized.Message != "VEGA, read Tulip snake entry" || recognized.Message != "VEGA, read Tulip entry" || recognized.Message != "VEGA, read Snake entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Snakes");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(21))
+                        {
+                            PlayAudio("Snakes");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Snare flea entry", "VEGA, read Flea entry", "VEGA, read Centipede entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Snare flea entry", "VEGA, read Flea entry", "VEGA, read Centipede entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(0))
+                    if (recognized.Message != "VEGA, read Snare flea entry" || recognized.Message != "VEGA, read Flea entry" || recognized.Message != "VEGA, read Centipede entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("SnareFlea");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(0))
+                        {
+                            PlayAudio("SnareFlea");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Spore lizard entry", "VEGA, read Lizard entry", "VEGA, read Spore doggy entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Spore lizard entry", "VEGA, read Lizard entry", "VEGA, read Spore doggy entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(11))
+                    if (recognized.Message != "VEGA, read Spore lizard entry" || recognized.Message != "VEGA, read Lizard entry" || recognized.Message != "VEGA, read Spore doggy entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("SporeLizard");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(11))
+                        {
+                            PlayAudio("SporeLizard");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Thumper entry", "VEGA, read Crawler entry", "VEGA, read Halve entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Thumper entry", "VEGA, read Crawler entry", "VEGA, read Halve entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(2))
+                    if (recognized.Message != "VEGA, read Thumper entry" || recognized.Message != "VEGA, read Crawler entry" || recognized.Message != "VEGA, read Halve entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Thumper");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(2))
+                        {
+                            PlayAudio("Thumper");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
+                });
 
                 // Modded
-                Voice.ListenForPhrases(new string[] { "VEGA, read Redwood entry", "VEGA, read Redwood Giant entry" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, read Redwood entry", "VEGA, read Redwood Giant entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Redwood entry" || recognized.Message != "VEGA, read Redwood Giant entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("RedWood Giant");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                        {
+                            PlayAudio("RedWood Giant");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Driftwood entry", "VEGA, read Driftwood Giant entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Driftwood entry", "VEGA, read Driftwood Giant entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Driftwood entry" || recognized.Message != "VEGA, read Driftwood Giant entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("DriftWood Giant");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                        {
+                            PlayAudio("DriftWood Giant");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Slender entry", "VEGA, read Slenderman entry", "VEGA, read Faceless Stalker entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Slender entry", "VEGA, read Slenderman entry", "VEGA, read Faceless Stalker entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Slender entry" || recognized.Message != "VEGA, read Slenderman entry" || recognized.Message != "VEGA, read Faceless Stalker entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Stalker");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                        {
+                            PlayAudio("Stalker");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Football entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Football entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Football entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Football");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                        {
+                            PlayAudio("Football");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Shy guy entry", "VEGA, read SCP-096 entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Shy guy entry", "VEGA, read SCP-096 entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Shy guy entry" || recognized.Message != "VEGA, read SCP-096 entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Shy guy");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                        {
+                            PlayAudio("Shy guy");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Locker entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Locker entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Locker entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Locker");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                        {
+                            PlayAudio("Locker");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Siren Head entry", "VEGA, read Sirenhead entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Siren Head entry", "VEGA, read Sirenhead entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Siren Head entry" || recognized.Message != "VEGA, read Sirenhead entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Siren Head");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                        {
+                            PlayAudio("Siren Head");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Rolling Giant entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Rolling Giant entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Rolling Giant entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Rolling Giant");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                        {
+                            PlayAudio("Rolling Giant");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Peepers entry", "VEGA, read Peeper entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Peepers entry", "VEGA, read Peeper entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Peepers entry" || recognized.Message != "VEGA, read Peeper entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Peepers");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        {
+                            PlayAudio("Peepers");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Shockwave drone entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Shockwave drone entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Shockwave drone entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Shockwave Drone");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                        {
+                            PlayAudio("Shockwave Drone");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Cleaning drone entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Cleaning drone entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Cleaning drone entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Cleaning Drone");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        {
+                            PlayAudio("Cleaning Drone");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Moving turret entry", "VEGA, read Mobile turret entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Moving turret entry", "VEGA, read Mobile turret entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Moving turret entry" || recognized.Message != "VEGA, read Mobile turret entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Moving Turret");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                        {
+                            PlayAudio("Moving Turret");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read The Lost entry", "VEGA, read Maggie entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read The Lost entry", "VEGA, read Maggie entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                    if (recognized.Message != "VEGA, read The Lost entry" || recognized.Message != "VEGA, read Maggie entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Maggie");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                        {
+                            PlayAudio("Maggie");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, read Shrimp entry" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, read Shrimp entry" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                    if (recognized.Message != "VEGA, read Shrimp entry") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Shrimp");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                        {
+                            PlayAudio("Shrimp");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
-                    }
-                }, Plugin.confidence.Value);
+                });
             }
         }
 
@@ -2287,7 +2457,11 @@ namespace LC_VEGA
             if (Plugin.registerCreatureInfo.Value)
             {
                 // Vanilla
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Hawks", "VEGA, info about Baboons", "VEGA, info about Baboon hawks" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Hawks", "VEGA, info about Baboons", "VEGA, info about Baboon hawks" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, info about Hawks" || recognized.Message != "VEGA, info about Baboons" || recognized.Message != "VEGA, info about Baboon hawks") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(16))
                         {
@@ -2297,372 +2471,537 @@ namespace LC_VEGA
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
-                    }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Bunker spiders", "VEGA, info about Spiders" }, (message) =>
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Bunker spiders", "VEGA, info about Spiders" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(12))
+                    if (recognized.Message != "VEGA, info about Bunker spiders" || recognized.Message != "VEGA, info about Spiders") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("BunkerSpiderShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(12))
+                        {
+                            PlayAudio("BunkerSpiderShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Hoarding bugs", "VEGA, info about Loot bugs", "VEGA, info about Yippee bugs" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Hoarding bugs", "VEGA, info about Loot bugs", "VEGA, info about Yippee bugs" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(4))
+                    if (recognized.Message != "VEGA, info about Hoarding bugs" || recognized.Message != "VEGA, info about Loot bugs" || recognized.Message != "VEGA, info about Yippee bugs") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("YippeeBugShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(4))
+                        {
+                            PlayAudio("YippeeBugShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Brackens", "VEGA, info about the Bracken" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Brackens", "VEGA, info about the Bracken" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(1))
+                    if (recognized.Message != "VEGA, info about Brackens" || recognized.Message != "VEGA, info about the Bracken") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("BrackenShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(1))
+                        {
+                            PlayAudio("BrackenShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Butlers" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Butlers" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(19))
+                    if (recognized.Message != "VEGA, info about Butlers") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("ButlerShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(19))
+                        {
+                            PlayAudio("ButlerShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Coil heads", "VEGA, info about Coils" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Coil heads", "VEGA, info about Coils" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(7))
+                    if (recognized.Message != "VEGA, info about Coil heads" || recognized.Message != "VEGA, info about Coils") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Coil-HeadShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(7))
+                        {
+                            PlayAudio("Coil-HeadShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Forest Keepers", "VEGA, info about Giants", "VEGA, info about Keepers" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Forest Keepers", "VEGA, info about Giants", "VEGA, info about Keepers" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(6))
+                    if (recognized.Message != "VEGA, info about Forest Keepers" || recognized.Message != "VEGA, info about Giants" || recognized.Message != "VEGA, info about Keepers") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("ForestKeeperShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(6))
+                        {
+                            PlayAudio("ForestKeeperShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Eyeless dogs", "VEGA, info about dogs" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Eyeless dogs", "VEGA, info about dogs" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(3))
+                    if (recognized.Message != "VEGA, info about Eyeless dogs" || recognized.Message != "VEGA, info about dogs") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("EyelessDogShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(3))
+                        {
+                            PlayAudio("EyelessDogShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Earth Leviathans", "VEGA, info about Leviathans", "VEGA, info about Worms" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Earth Leviathans", "VEGA, info about Leviathans", "VEGA, info about Worms" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(9))
+                    if (recognized.Message != "VEGA, info about Earth Leviathans" || recognized.Message != "VEGA, info about Leviathans" || recognized.Message != "VEGA, info about Worms") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("SandwormShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(9))
+                        {
+                            PlayAudio("SandwormShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Jesters", "VEGA, info about the Jack in the box" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Jesters", "VEGA, info about the Jack in the box" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(10))
+                    if (recognized.Message != "VEGA, info about Jesters" || recognized.Message != "VEGA, info about the Jack in the box") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("JesterShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(10))
+                        {
+                            PlayAudio("JesterShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Roaming locusts", "VEGA, info about Locusts" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Roaming locusts", "VEGA, info about Locusts" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(15))
+                    if (recognized.Message != "VEGA, info about Roaming locusts" || recognized.Message != "VEGA, info about Locusts") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("LocustsShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(15))
+                        {
+                            PlayAudio("LocustsShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Manticoils" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Manticoils" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(13))
+                    if (recognized.Message != "VEGA, info about Manticoils") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("ManticoilShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(13))
+                        {
+                            PlayAudio("ManticoilShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Nutcrackers" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Nutcrackers" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(17))
+                    if (recognized.Message != "VEGA, info about Nutcrackers") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("NutcrackerShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(17))
+                        {
+                            PlayAudio("NutcrackerShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Old birds", "VEGA, info about Birds", "VEGA, info about Mechs" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Old birds", "VEGA, info about Birds", "VEGA, info about Mechs" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(18))
+                    if (recognized.Message != "VEGA, info about Old birds" || recognized.Message != "VEGA, info about Birds" || recognized.Message != "VEGA, info about Mechs") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("OldBirdShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(18))
+                        {
+                            PlayAudio("OldBirdShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Circuit bees", "VEGA, info about Bees", "VEGA, info about Red Bees" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Circuit bees", "VEGA, info about Bees", "VEGA, info about Red Bees" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(14))
+                    if (recognized.Message != "VEGA, info about Circuit bees" || recognized.Message != "VEGA, info about Bees" || recognized.Message != "VEGA, info about Red Bees") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("RedBeesShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(14))
+                        {
+                            PlayAudio("RedBeesShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Hygroderes", "VEGA, info about Slimes", "VEGA, info about Blobs" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Hygroderes", "VEGA, info about Slimes", "VEGA, info about Blobs" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(5))
+                    if (recognized.Message != "VEGA, info about Hygroderes" || recognized.Message != "VEGA, info about Slimes" || recognized.Message != "VEGA, info about Blobs") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("SlimeShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(5))
+                        {
+                            PlayAudio("SlimeShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Tulip snakes", "VEGA, info about Tulips", "VEGA, info about Snakes" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Tulip snakes", "VEGA, info about Tulips", "VEGA, info about Snakes" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(21))
+                    if (recognized.Message != "VEGA, info about Tulip snakes" || recognized.Message != "VEGA, info about Tulips" || recognized.Message != "VEGA, info about Snakes") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("SnakesShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(21))
+                        {
+                            PlayAudio("SnakesShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Snare fleas", "VEGA, info about Fleas", "VEGA, info about Centipedes" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Snare fleas", "VEGA, info about Fleas", "VEGA, info about Centipedes" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(0))
+                    if (recognized.Message != "VEGA, info about Snare fleas" || recognized.Message != "VEGA, info about Fleas" || recognized.Message != "VEGA, info about Centipedes") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("SnareFleaShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(0))
+                        {
+                            PlayAudio("SnareFleaShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Spore lizards", "VEGA, info about Lizards", "VEGA, info about Spore doggies" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Spore lizards", "VEGA, info about Lizards", "VEGA, info about Spore doggies" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(11))
+                    if (recognized.Message != "VEGA, info about Spore lizards" || recognized.Message != "VEGA, info about Lizards" || recognized.Message != "VEGA, info about Spore doggies") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("SporeLizardShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(11))
+                        {
+                            PlayAudio("SporeLizardShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Thumpers", "VEGA, info about Crawlers", "VEGA, info about Halves" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Thumpers", "VEGA, info about Crawlers", "VEGA, info about Halves" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(2))
+                    if (recognized.Message != "VEGA, info about Thumpers" || recognized.Message != "VEGA, info about Crawlers" || recognized.Message != "VEGA, info about Halves") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("ThumperShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(2))
+                        {
+                            PlayAudio("ThumperShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
+                });
 
                 // Modded
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Redwoods", "VEGA, info about Redwood Giants" }, (message) =>
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Redwoods", "VEGA, info about Redwood Giants" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Redwoods" || recognized.Message != "VEGA, info about Redwood Giants") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("RedWood GiantShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                        {
+                            PlayAudio("RedWood GiantShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Driftwoods", "VEGA, info about Driftwood Giants" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Driftwoods", "VEGA, info about Driftwood Giants" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Driftwoods" || recognized.Message != "VEGA, info about Driftwood Giants") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("DriftWood GiantShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                        {
+                            PlayAudio("DriftWood GiantShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Slender", "VEGA, info about Slenderman", "VEGA, info about the Faceless Stalker" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Slender", "VEGA, info about Slenderman", "VEGA, info about the Faceless Stalker" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Slender" || recognized.Message != "VEGA, info about Slenderman" || recognized.Message != "VEGA, info about the Faceless Stalker") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("StalkerShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                        {
+                            PlayAudio("StalkerShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Football" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Football" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Football") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("FootballShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                        {
+                            PlayAudio("FootballShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Shy guy", "VEGA, info about SCP-096" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Shy guy", "VEGA, info about SCP-096" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Shy guy" || recognized.Message != "VEGA, info about SCP-096") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Shy guyShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                        {
+                            PlayAudio("Shy guyShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about the Locker", "VEGA, info about Lockers" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about the Locker", "VEGA, info about Lockers" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about the Locker" || recognized.Message != "VEGA, info about Lockers") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("LockerShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                        {
+                            PlayAudio("LockerShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Siren Head", "VEGA, info about Sirenhead" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Siren Head", "VEGA, info about Sirenhead" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Siren Head" || recognized.Message != "VEGA, info about Sirenhead") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Siren HeadShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                        {
+                            PlayAudio("Siren HeadShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about the Rolling Giant", "VEGA, info about Rolling Giants" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about the Rolling Giant", "VEGA, info about Rolling Giants" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Rolling GiantShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                        {
+                            PlayAudio("Rolling GiantShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Peepers" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Peepers" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Peepers") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("PeepersShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        {
+                            PlayAudio("PeepersShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Shockwave drones" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Shockwave drones" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Shockwave drones") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Shockwave DroneShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                        {
+                            PlayAudio("Shockwave DroneShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Cleaning drones" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Cleaning drones" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Cleaning drones") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Cleaning DroneShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        {
+                            PlayAudio("Cleaning DroneShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Moving turrets", "VEGA, info about Mobile turrets" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Moving turrets", "VEGA, info about Mobile turrets" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Moving turrets" || recognized.Message != "VEGA, info about Mobile turrets") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("Moving TurretShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                        {
+                            PlayAudio("Moving TurretShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about The Lost", "VEGA, info about Maggie" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about The Lost", "VEGA, info about Maggie" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about The Lost" || recognized.Message != "VEGA, info about Maggie") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("MaggieShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                        {
+                            PlayAudio("MaggieShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
-                Voice.ListenForPhrases(new string[] { "VEGA, info about Shrimps" }, (message) =>
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, info about Shrimps" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                    if (recognized.Message != "VEGA, info about Shrimps") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        PlayAudio("ShrimpShort");
+                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                        {
+                            PlayAudio("ShrimpShort");
+                        }
+                        else
+                        {
+                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                        }
                     }
-                    else
-                    {
-                        PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
-                    }
-                }, Plugin.confidence.Value);
+                });
             }
         }
     }
