@@ -945,7 +945,7 @@ namespace LC_VEGA
             {
                 if (item.itemProperties.isScrap && !item.isHeld)
                 {
-                    if (!item.isInElevator && !item.isInShipRoom)
+                    if (!item.isInShipRoom)
                     {
                         scrapLeft++;
                         creditsLeft += item.scrapValue;
@@ -994,7 +994,7 @@ namespace LC_VEGA
             {
                 PlayAudioWithVariant("ScrapScanComplete", Random.Range(1, 4));
             }
-            HUDManager.Instance.DisplayTip(header, scrapOutsideStr + "\n" + scrapInShipStr);
+            HUDManager.Instance.DisplayTip(header, "<size=15>" + scrapOutsideStr + "\n" + scrapInShipStr + "</size>");
         }
 
         internal static void InitializeScannerVariables()
@@ -1194,10 +1194,10 @@ namespace LC_VEGA
             }
             if (Plugin.registerCrewInShip.Value)
             {
-                Voice.RegisterPhrases(new string[] { "VEGA, crew in ship", "VEGA, people in ship", "VEGA, get people in ship", "VEGA, how many people are in the ship?", "VEGA, is anyone in the ship?", "VEGA, is anybody in the ship?" });
+                Voice.RegisterPhrases(new string[] { "VEGA, crew in ship", "VEGA, people in ship", "VEGA, get crew in ship", "VEGA, get people in ship", "VEGA, how many people are in the ship?", "VEGA, is anyone in the ship?", "VEGA, is anybody in the ship?" });
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (recognized.Message != "VEGA, crew in ship" && recognized.Message != "VEGA, people in ship" && recognized.Message != "VEGA, get people in ship" && recognized.Message != "VEGA, how many people are in the ship?" && recognized.Message != "VEGA, is anyone in the ship?" && recognized.Message != "VEGA, is anybody in the ship?") return;
+                    if (recognized.Message != "VEGA, crew in ship" && recognized.Message != "VEGA, people in ship" && recognized.Message != "VEGA, get crew in ship" && recognized.Message != "VEGA, get people in ship" && recognized.Message != "VEGA, how many people are in the ship?" && recognized.Message != "VEGA, is anyone in the ship?" && recognized.Message != "VEGA, is anybody in the ship?") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
