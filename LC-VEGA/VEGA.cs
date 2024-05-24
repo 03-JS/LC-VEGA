@@ -945,12 +945,12 @@ namespace LC_VEGA
             {
                 if (item.itemProperties.isScrap && !item.isHeld)
                 {
-                    if (item.isInFactory)
+                    if (!item.isInElevator && !item.isInShipRoom)
                     {
                         scrapLeft++;
                         creditsLeft += item.scrapValue;
                     }
-                    else if (item.isInShipRoom)
+                    else
                     {
                         scrapInShip++;
                         creditsInShip += item.scrapValue;
@@ -966,11 +966,11 @@ namespace LC_VEGA
             {
                 if (scrapLeft > 1)
                 {
-                    scrapOutsideStr = "There are " + scrapLeft + " items left, worth " + "<color=green>" + creditsChar + creditsLeft + "</color>";
+                    scrapOutsideStr = "There are " + scrapLeft + " items left, worth " + creditsChar + creditsLeft;
                 }
                 else
                 {
-                    scrapOutsideStr = "There is 1 item left, worth " + "<color=green>" + creditsChar + creditsLeft + "</color>";
+                    scrapOutsideStr = "There is 1 item left, worth " + creditsChar + creditsLeft;
                 }
             }
 
@@ -982,11 +982,11 @@ namespace LC_VEGA
             {
                 if (scrapInShip > 1)
                 {
-                    scrapInShipStr = "The ship currently has " + scrapInShip + " items, worth " + "<color=green>" + creditsChar + creditsInShip + "</color>";
+                    scrapInShipStr = "The ship currently has " + scrapInShip + " items, worth " + creditsChar + creditsInShip;
                 }
                 else
                 {
-                    scrapInShipStr = "The ship currently has 1 item, worth " + "<color=green>" + creditsChar + creditsInShip + "</color>";
+                    scrapInShipStr = "The ship currently has 1 item, worth " + creditsChar + creditsInShip;
                 }
             }
 
