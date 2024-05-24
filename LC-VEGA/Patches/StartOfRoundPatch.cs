@@ -39,16 +39,6 @@ namespace LC_VEGA.Patches
                 {
                     VEGA.PlayIntro();
                 }
-                /* 
-                if (Plugin.gameOpened)
-                {
-                    Plugin.gameOpened = false;
-                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                    {
-                        VEGA.PlayIntro(); 
-                    }
-                }
-                */
             }
             VEGA.creditsChar = HUDManager.Instance.totalValueText.text.ToCharArray()[0];
 

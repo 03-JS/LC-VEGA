@@ -1,4 +1,5 @@
-﻿using LC_VEGA.Patches;
+﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
+using LC_VEGA.Patches;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -313,17 +314,26 @@ namespace LC_VEGA
             return closestDoor;
         }
 
-        internal static TerminalAccessibleObject? GetClosestTurret()
+        internal static GameObject? GetClosestTurret()
         {
             Plugin.LogToConsole("Getting closest turret");
+            List<GameObject> turrets = new List<GameObject>();
 
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
-            List<TerminalAccessibleObject> turrets = new List<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
             {
                 if (item.gameObject.GetComponent<Turret>())
                 {
-                    turrets.Add(item);
+                    turrets.Add(item.gameObject);
+                }
+            }
+
+            if (ModChecker.hasToilHead)
+            {
+                FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
+                foreach (var item in toilHeads)
+                {
+                    turrets.Add(item.gameObject);
                 }
             }
 
@@ -333,7 +343,7 @@ namespace LC_VEGA
                 return null;
             }
 
-            TerminalAccessibleObject closestTurret = turrets[0];
+            GameObject closestTurret = turrets[0];
 
             List<float> distances = new List<float>();
             float distanceToPlayer = 0f;
@@ -353,7 +363,7 @@ namespace LC_VEGA
         {
             if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
-                TerminalAccessibleObject? closestTurret = GetClosestTurret();
+                GameObject? closestTurret = GetClosestTurret();
                 if (closestTurret != null)
                 {
                     if (Vector3.Distance(closestTurret.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f)
@@ -361,7 +371,14 @@ namespace LC_VEGA
                         if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 240))
                         {
                             Plugin.LogToConsole("Disabling turret");
-                            closestTurret.CallFunctionFromTerminal();
+                            if (closestTurret.GetComponent<TerminalAccessibleObject>())
+                            {
+                                closestTurret.GetComponent<TerminalAccessibleObject>().CallFunctionFromTerminal();
+                            }
+                            else if (ModChecker.hasToilHead)
+                            {
+                                closestTurret.GetComponent<FollowTerminalAccessibleObjectBehaviour>().CallFunctionFromTerminal();
+                            }
                             if (Plugin.vocalLevel.Value >= VocalLevels.High)
                             {
                                 PlayAudioWithVariant("TurretDisabled", Random.Range(1, 4), 0.7f);
@@ -397,6 +414,17 @@ namespace LC_VEGA
                     turretsExist = true;
                 }
             }
+
+            if (ModChecker.hasToilHead)
+            {
+                FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
+                foreach (var item in toilHeads)
+                {
+                    item.CallFunctionFromTerminal();
+                    turretsExist = true;
+                } 
+            }
+
             if (turretsExist)
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)

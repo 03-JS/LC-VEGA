@@ -19,6 +19,9 @@
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Lethal Company\BepInEx\core\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="com.github.zehsteam.ToilHead">
+      <HintPath>C:\Users\Usuario\AppData\Roaming\r2modmanPlus-local\LethalCompany\profiles\Default\BepInEx\plugins\Zehs-ToilHead\com.github.zehsteam.ToilHead.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
     </Reference>

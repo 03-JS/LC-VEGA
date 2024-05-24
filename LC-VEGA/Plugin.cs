@@ -134,24 +134,25 @@ namespace LC_VEGA
             }
 
             // Other mods
+            ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
             ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
         }
 
         internal void ManageSaveValues()
         {
-            mls.LogInfo("Looking for: " + Application.persistentDataPath + SaveManager.fileName);
+            mls.LogDebug("Looking for: " + Application.persistentDataPath + SaveManager.fileName);
             SaveManager.playedIntro = false;
             SaveManager.firstTimeDiversity = true;
             if (File.Exists(Application.persistentDataPath + SaveManager.fileName))
             {
-                mls.LogInfo("File found. Loading values");
+                mls.LogDebug("File found. Loading values...");
                 SaveManager.playedIntro = SaveManager.LoadFromFile(0);
                 SaveManager.firstTimeDiversity = SaveManager.LoadFromFile(1);
             }
             else
             {
-                mls.LogInfo("File not found. Creating it now");
+                mls.LogDebug("File not found. Creating it now!");
                 SaveManager.SaveToFile();
             }
         }
@@ -382,6 +383,9 @@ namespace LC_VEGA
                     break;
                 case "error":
                     mls.LogError(message);
+                    break;
+                case "debug":
+                    mls.LogDebug(message);
                     break;
                 default:
                     mls.LogInfo(message);
