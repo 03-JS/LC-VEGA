@@ -86,12 +86,11 @@ namespace LC_VEGA
 
             LoadAssets();
             GenerateConfigValues();
-            VEGA.Initialize();
-            // gameOpened = true;
-
-            PatchStuff();
             CheckInstalledMods();
             ManageSaveValues();
+            
+            VEGA.Initialize();
+            PatchStuff();
         }
 
         internal void LoadAssets()

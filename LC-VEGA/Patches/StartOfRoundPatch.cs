@@ -45,16 +45,6 @@ namespace LC_VEGA.Patches
             InstantiateAdvancedScannerItems();
         }
 
-        [HarmonyPatch("Update")]
-        [HarmonyPostfix]
-        static void AdvancedScanner()
-        {
-            if (VEGA.performAdvancedScan)
-            {
-                VEGA.PerformAdvancedScan();
-            }
-        }
-
         internal static GameObject? ConfigureScannerObjs(HUDManager hudManager, GameObject topLeftCorner, Vector2 pos, float yRotOffset = -25f, string defaultText = "")
         {
             if (topLeftCorner == null)

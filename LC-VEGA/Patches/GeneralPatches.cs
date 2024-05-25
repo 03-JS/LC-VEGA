@@ -25,6 +25,16 @@ namespace LC_VEGA.Patches
             SaveManager.SaveToFile();
         }
 
+        [HarmonyPatch(typeof(RoundManager), "Update")]
+        [HarmonyPostfix]
+        static void AdvancedScanner()
+        {
+            if (VEGA.performAdvancedScan)
+            {
+                VEGA.PerformAdvancedScan();
+            }
+        }
+
         [HarmonyPatch(typeof(LungProp), "DisconnectFromMachinery")]
         [HarmonyPostfix]
         static void RadiationWarning()

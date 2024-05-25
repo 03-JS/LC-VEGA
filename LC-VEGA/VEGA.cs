@@ -27,6 +27,8 @@ namespace LC_VEGA
         internal static string enemiesTopText;
         internal static string itemsTopText;
         internal static float scannerRange;
+        internal static bool turretsExist;
+        internal static bool toilDisabled;
 
         public static string[] signals;
         public static string[] weathers =
@@ -314,26 +316,17 @@ namespace LC_VEGA
             return closestDoor;
         }
 
-        internal static GameObject? GetClosestTurret()
+        internal static TerminalAccessibleObject? GetClosestTurret()
         {
             Plugin.LogToConsole("Getting closest turret");
-            List<GameObject> turrets = new List<GameObject>();
+            List<TerminalAccessibleObject> turrets = new List<TerminalAccessibleObject>();
 
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
             {
                 if (item.gameObject.GetComponent<Turret>())
                 {
-                    turrets.Add(item.gameObject);
-                }
-            }
-
-            if (ModChecker.hasToilHead)
-            {
-                FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
-                foreach (var item in toilHeads)
-                {
-                    turrets.Add(item.gameObject);
+                    turrets.Add(item);
                 }
             }
 
@@ -343,7 +336,7 @@ namespace LC_VEGA
                 return null;
             }
 
-            GameObject closestTurret = turrets[0];
+            TerminalAccessibleObject closestTurret = turrets[0];
 
             List<float> distances = new List<float>();
             float distanceToPlayer = 0f;
@@ -359,11 +352,43 @@ namespace LC_VEGA
             return closestTurret;
         }
 
+        internal static FollowTerminalAccessibleObjectBehaviour? GetClosestToil()
+        {
+            Plugin.LogToConsole("Getting closest toil");
+            List<FollowTerminalAccessibleObjectBehaviour> toils = new List<FollowTerminalAccessibleObjectBehaviour>();
+
+            FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
+            foreach (var item in toilHeads)
+            {
+                toils.Add(item);
+            }
+
+            if (toils.Count() == 0)
+            {
+                return null;
+            }
+
+            FollowTerminalAccessibleObjectBehaviour closestToil = toils[0];
+
+            List<float> distances = new List<float>();
+            float distanceToPlayer = 0f;
+            foreach (var toil in toils)
+            {
+                distanceToPlayer = Vector3.Distance(toil.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
+                distances.Add(distanceToPlayer);
+                if (distanceToPlayer <= distances.Min())
+                {
+                    closestToil = toil;
+                }
+            }
+            return closestToil;
+        }
+
         internal static void DisableTurret()
         {
             if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
-                GameObject? closestTurret = GetClosestTurret();
+                TerminalAccessibleObject? closestTurret = GetClosestTurret();
                 if (closestTurret != null)
                 {
                     if (Vector3.Distance(closestTurret.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f)
@@ -373,11 +398,11 @@ namespace LC_VEGA
                             Plugin.LogToConsole("Disabling turret");
                             if (closestTurret.GetComponent<TerminalAccessibleObject>())
                             {
-                                closestTurret.GetComponent<TerminalAccessibleObject>().CallFunctionFromTerminal();
+                                closestTurret.CallFunctionFromTerminal();
                             }
                             else if (ModChecker.hasToilHead)
                             {
-                                closestTurret.GetComponent<FollowTerminalAccessibleObjectBehaviour>().CallFunctionFromTerminal();
+                                closestTurret.CallFunctionFromTerminal();
                             }
                             if (Plugin.vocalLevel.Value >= VocalLevels.High)
                             {
@@ -401,9 +426,41 @@ namespace LC_VEGA
             }
         }
 
+        internal static void DisableToil()
+        {
+            FollowTerminalAccessibleObjectBehaviour? closestToil = GetClosestToil();
+            if (closestToil == null)
+            {
+                toilDisabled = false;
+                return;
+            }
+            if (Vector3.Distance(closestToil.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f)
+            {
+                if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestToil.transform.position, 45, 240))
+                {
+                    Plugin.LogToConsole("Disabling toil turret");
+                    closestToil.CallFunctionFromTerminal();
+                    toilDisabled = true;
+                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                    {
+                        PlayAudioWithVariant("TurretDisabled", Random.Range(1, 4), 0.7f);
+                    }
+                }
+                else
+                {
+                    toilDisabled = false;
+                    PlayAudio("NoVisibleTurret");
+                }
+            }
+            else
+            {
+                toilDisabled = false;
+                PlayAudio("NoTurretNearby");
+            }
+        }
+
         internal static void DisableAllTurrets()
         {
-            bool turretsExist = false;
             Plugin.LogToConsole("Disabling all turrets");
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
@@ -414,17 +471,6 @@ namespace LC_VEGA
                     turretsExist = true;
                 }
             }
-
-            if (ModChecker.hasToilHead)
-            {
-                FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
-                foreach (var item in toilHeads)
-                {
-                    item.CallFunctionFromTerminal();
-                    turretsExist = true;
-                } 
-            }
-
             if (turretsExist)
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
@@ -435,6 +481,17 @@ namespace LC_VEGA
             else
             {
                 PlayAudio("NoTurrets");
+            }
+        }
+
+        internal static void DisableAllToils()
+        {
+            Plugin.LogToConsole("Disabling all toils");
+            FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
+            foreach (var item in toilHeads)
+            {
+                turretsExist = true;
+                item.CallFunctionFromTerminal();
             }
         }
 
@@ -1477,7 +1534,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
-                            DisableTurret();
+                            if (ModChecker.hasToilHead)
+                            {
+                                DisableToil();
+                            }
+                            if (!toilDisabled || !ModChecker.hasToilHead)
+                            {
+                                DisableTurret();
+                            }
                         }
                     }
                 });
@@ -1492,6 +1556,11 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            turretsExist = false;
+                            if (ModChecker.hasToilHead)
+                            {
+                                DisableAllToils();
+                            }
                             DisableAllTurrets();
                         }
                     }
