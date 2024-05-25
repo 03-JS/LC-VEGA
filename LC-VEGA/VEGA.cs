@@ -165,7 +165,7 @@ namespace LC_VEGA
                 {
                     if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
-                        Plugin.LogToConsole("Opening door");
+                        Plugin.LogToConsole("Opening door", "debug");
                         closestDoor.SetDoorLocalClient(true);
                         if (Plugin.vocalLevel.Value >= VocalLevels.High)
                         {
@@ -203,7 +203,7 @@ namespace LC_VEGA
             }
             if (doorsExist)
             {
-                Plugin.LogToConsole("Opening all doors");
+                Plugin.LogToConsole("Opening all doors", "debug");
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
                     PlayAudioWithVariant("AllDoorsOpened", Random.Range(1, 3), 0.7f);
@@ -229,7 +229,7 @@ namespace LC_VEGA
                 {
                     if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
-                        Plugin.LogToConsole("Closing door");
+                        Plugin.LogToConsole("Closing door", "debug");
                         closestDoor.SetDoorLocalClient(false);
                         if (Plugin.vocalLevel.Value >= VocalLevels.High)
                         {
@@ -267,7 +267,7 @@ namespace LC_VEGA
             }
             if (doorsExist)
             {
-                Plugin.LogToConsole("Closing all doors");
+                Plugin.LogToConsole("Closing all doors", "debug");
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
                     PlayAudioWithVariant("AllDoorsClosed", Random.Range(1, 3), 0.7f);
@@ -281,7 +281,7 @@ namespace LC_VEGA
 
         internal static TerminalAccessibleObject? GetClosestSecureDoor()
         {
-            Plugin.LogToConsole("Getting closest secure door");
+            Plugin.LogToConsole("Getting closest secure door", "debug");
 
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             List<TerminalAccessibleObject> secureDoors = new List<TerminalAccessibleObject>();
@@ -318,7 +318,7 @@ namespace LC_VEGA
 
         internal static TerminalAccessibleObject? GetClosestTurret()
         {
-            Plugin.LogToConsole("Getting closest turret");
+            Plugin.LogToConsole("Getting closest turret", "debug");
             List<TerminalAccessibleObject> turrets = new List<TerminalAccessibleObject>();
 
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
@@ -354,7 +354,7 @@ namespace LC_VEGA
 
         internal static FollowTerminalAccessibleObjectBehaviour? GetClosestToil()
         {
-            Plugin.LogToConsole("Getting closest toil");
+            Plugin.LogToConsole("Getting closest toil", "debug");
             List<FollowTerminalAccessibleObjectBehaviour> toils = new List<FollowTerminalAccessibleObjectBehaviour>();
 
             FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
@@ -395,7 +395,7 @@ namespace LC_VEGA
                     {
                         if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 240))
                         {
-                            Plugin.LogToConsole("Disabling turret");
+                            Plugin.LogToConsole("Disabling turret", "debug");
                             if (closestTurret.GetComponent<TerminalAccessibleObject>())
                             {
                                 closestTurret.CallFunctionFromTerminal();
@@ -438,7 +438,7 @@ namespace LC_VEGA
             {
                 if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestToil.transform.position, 45, 240))
                 {
-                    Plugin.LogToConsole("Disabling toil turret");
+                    Plugin.LogToConsole("Disabling toil turret", "debug");
                     closestToil.CallFunctionFromTerminal();
                     toilDisabled = true;
                     if (Plugin.vocalLevel.Value >= VocalLevels.High)
@@ -461,7 +461,7 @@ namespace LC_VEGA
 
         internal static void DisableAllTurrets()
         {
-            Plugin.LogToConsole("Disabling all turrets");
+            Plugin.LogToConsole("Disabling all turrets", "debug");
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
             {
@@ -486,7 +486,7 @@ namespace LC_VEGA
 
         internal static void DisableAllToils()
         {
-            Plugin.LogToConsole("Disabling all toils");
+            Plugin.LogToConsole("Disabling all toils", "debug");
             FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
             foreach (var item in toilHeads)
             {
@@ -497,7 +497,7 @@ namespace LC_VEGA
 
         internal static TerminalAccessibleObject? GetClosestMine()
         {
-            Plugin.LogToConsole("Getting closest landmine");
+            Plugin.LogToConsole("Getting closest landmine", "debug");
 
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             List<TerminalAccessibleObject> mines = new List<TerminalAccessibleObject>();
@@ -540,7 +540,7 @@ namespace LC_VEGA
                 {
                     if (Vector3.Distance(closestMine.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
-                        Plugin.LogToConsole("Disabling landmine");
+                        Plugin.LogToConsole("Disabling landmine", "debug");
                         closestMine.CallFunctionFromTerminal();
                         if (Plugin.vocalLevel.Value >= VocalLevels.High)
                         {
@@ -562,7 +562,7 @@ namespace LC_VEGA
         internal static void DisableAllMines()
         {
             bool minesExist = false;
-            Plugin.LogToConsole("Disabling all landmines");
+            Plugin.LogToConsole("Disabling all landmines", "debug");
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
             {
@@ -587,7 +587,7 @@ namespace LC_VEGA
 
         internal static TerminalAccessibleObject? GetClosestSpikeTrap()
         {
-            Plugin.LogToConsole("Getting closest spike trap");
+            Plugin.LogToConsole("Getting closest spike trap", "debug");
 
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             List<TerminalAccessibleObject> traps = new List<TerminalAccessibleObject>();
@@ -633,7 +633,7 @@ namespace LC_VEGA
                 {
                     if (Vector3.Distance(closestTrap.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                     {
-                        Plugin.LogToConsole("Disabling spike trap");
+                        Plugin.LogToConsole("Disabling spike trap", "debug");
                         closestTrap.CallFunctionFromTerminal();
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {
@@ -655,7 +655,7 @@ namespace LC_VEGA
         internal static void DisableAllSpikeTraps()
         {
             bool trapsExist = false;
-            Plugin.LogToConsole("Disabling all spike traps");
+            Plugin.LogToConsole("Disabling all spike traps", "debug");
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
             {
