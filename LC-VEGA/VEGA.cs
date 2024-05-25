@@ -2497,11 +2497,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Redwood entry" && recognized.Message != "VEGA, read Redwood Giant entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                        try
                         {
-                            PlayAudio("RedWood Giant");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                            {
+                                PlayAudio("RedWood Giant");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2513,11 +2520,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Driftwood entry" && recognized.Message != "VEGA, read Driftwood Giant entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                        try
                         {
-                            PlayAudio("DriftWood Giant");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                            {
+                                PlayAudio("DriftWood Giant");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2529,11 +2543,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Slender entry" && recognized.Message != "VEGA, read Slenderman entry" && recognized.Message != "VEGA, read Faceless Stalker entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Stalker");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                            {
+                                PlayAudio("Stalker");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2545,11 +2566,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Football entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Football");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                            {
+                                PlayAudio("Football");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2561,11 +2589,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Shy guy entry" && recognized.Message != "VEGA, read SCP-096 entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Shy guy");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                            {
+                                PlayAudio("Shy guy");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2577,11 +2612,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Locker entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Locker");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                            {
+                                PlayAudio("Locker");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2593,11 +2635,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Siren Head entry" && recognized.Message != "VEGA, read Sirenhead entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Siren Head");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                            {
+                                PlayAudio("Siren Head");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2609,11 +2658,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Rolling Giant entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Rolling Giant");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                            {
+                                PlayAudio("Rolling Giant");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2625,11 +2681,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Peepers entry" && recognized.Message != "VEGA, read Peeper entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Peepers");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                            {
+                                PlayAudio("Peepers");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2641,11 +2704,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Shockwave drone entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Shockwave Drone");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                            {
+                                PlayAudio("Shockwave Drone");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2657,11 +2727,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Cleaning drone entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Cleaning Drone");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                            {
+                                PlayAudio("Cleaning Drone");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2673,11 +2750,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Moving turret entry" && recognized.Message != "VEGA, read Mobile turret entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Moving Turret");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                            {
+                                PlayAudio("Moving Turret");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2689,11 +2773,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read The Lost entry" && recognized.Message != "VEGA, read Maggie entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Maggie");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                            {
+                                PlayAudio("Maggie");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -2705,11 +2796,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, read Shrimp entry") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Shrimp");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                            {
+                                PlayAudio("Shrimp");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
                         }
@@ -3051,11 +3149,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Redwoods" && recognized.Message != "VEGA, info about Redwood Giants") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                        try
                         {
-                            PlayAudio("RedWood GiantShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
+                            {
+                                PlayAudio("RedWood GiantShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3067,11 +3172,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Driftwoods" && recognized.Message != "VEGA, info about Driftwood Giants") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                        try
                         {
-                            PlayAudio("DriftWood GiantShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
+                            {
+                                PlayAudio("DriftWood GiantShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3083,11 +3195,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Slender" && recognized.Message != "VEGA, info about Slenderman" && recognized.Message != "VEGA, info about the Faceless Stalker") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                        try
                         {
-                            PlayAudio("StalkerShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
+                            {
+                                PlayAudio("StalkerShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3099,11 +3218,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Football") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                        try
                         {
-                            PlayAudio("FootballShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
+                            {
+                                PlayAudio("FootballShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3115,9 +3241,16 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Shy guy" && recognized.Message != "VEGA, info about SCP-096") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                        if (TerminalPatch.scannedEnemyFiles.Any(file => file.creatureName.Equals("Shy guy")))
                         {
-                            PlayAudio("Shy guyShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
+                            {
+                                PlayAudio("Shy guyShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
                         else
                         {
@@ -3131,11 +3264,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about the Locker" && recognized.Message != "VEGA, info about Lockers") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                        try
                         {
-                            PlayAudio("LockerShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
+                            {
+                                PlayAudio("LockerShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3147,11 +3287,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Siren Head" && recognized.Message != "VEGA, info about Sirenhead") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Siren HeadShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
+                            {
+                                PlayAudio("Siren HeadShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3163,11 +3310,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about the Rolling Giant" && recognized.Message != "VEGA, info about Rolling Giants") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Rolling GiantShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
+                            {
+                                PlayAudio("Rolling GiantShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3179,11 +3333,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Peepers") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        try
                         {
-                            PlayAudio("PeepersShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                            {
+                                PlayAudio("PeepersShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3195,11 +3356,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Shockwave drones") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Shockwave DroneShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
+                            {
+                                PlayAudio("Shockwave DroneShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3211,11 +3379,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Cleaning drones") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Cleaning DroneShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
+                            {
+                                PlayAudio("Cleaning DroneShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3227,11 +3402,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Moving turrets" && recognized.Message != "VEGA, info about Mobile turrets") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                        try
                         {
-                            PlayAudio("Moving TurretShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
+                            {
+                                PlayAudio("Moving TurretShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3243,11 +3425,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about The Lost" && recognized.Message != "VEGA, info about Maggie") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                        try
                         {
-                            PlayAudio("MaggieShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
+                            {
+                                PlayAudio("MaggieShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
@@ -3259,11 +3448,18 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about Shrimps") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
-                        if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                        try
                         {
-                            PlayAudio("ShrimpShort");
+                            if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
+                            {
+                                PlayAudio("ShrimpShort");
+                            }
+                            else
+                            {
+                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            }
                         }
-                        else
+                        catch (System.Exception)
                         {
                             PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
                         }
