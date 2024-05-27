@@ -964,16 +964,16 @@ namespace LC_VEGA
             {
                 if (playersInShip.Count > 0)
                 {
-                    PlayAudio("SoloCrewInShip");
+                    // PlayAudio("SoloCrewInShip");
                 }
                 else
                 {
-                    PlayAudio("SoloCrewOutside");
+                    // PlayAudio("SoloCrewOutside");
                 }
             }
             else
             {
-                PlayAudio("GettingCrewInShip");
+                // PlayAudio("GettingCrewInShip");
 
                 yield return new WaitForSeconds(delay);
 
@@ -989,14 +989,14 @@ namespace LC_VEGA
                     for (int i = 0; i < playersInShip.Count; i++)
                     {
                         players++;
-                        body = playersInShip[i] + ", ";
+                        body += playersInShip[i] + ", ";
                         if (i + 1 == playersInShip.Count)
                         {
-                            body = playersInShip[i];
+                            body += playersInShip[i];
                         }
                         else if (players == 4)
                         {
-                            body = playersInShip[i] + ",\n";
+                            body += playersInShip[i] + ",\n";
                             players = 0;
                         }
                     }
@@ -1006,7 +1006,7 @@ namespace LC_VEGA
                 {
                     PlayAudioWithVariant("ReportComplete", Random.Range(2, 4));
                 }
-                HUDManager.Instance.DisplayTip(header, body);
+                HUDManager.Instance.DisplayTip(header, "<size=15>" + body + "</size>");
             }
         }
 
@@ -1017,7 +1017,7 @@ namespace LC_VEGA
             int creditsLeft = 0;
             int creditsInShip = 0;
 
-            PlayAudioWithVariant("GettingScrapLeft", Random.Range(1, 4));
+            // PlayAudioWithVariant("GettingScrapLeft", Random.Range(1, 4));
 
             yield return new WaitForSeconds(delay);
 
@@ -1077,7 +1077,7 @@ namespace LC_VEGA
 
             if (Plugin.vocalLevel.Value >= VocalLevels.High)
             {
-                PlayAudioWithVariant("ScrapScanComplete", Random.Range(1, 4));
+                // PlayAudioWithVariant("ScrapScanComplete", Random.Range(1, 4));
             }
             HUDManager.Instance.DisplayTip(header, "<size=15>" + scrapOutsideStr + "\n" + scrapInShipStr + "</size>");
         }
@@ -1105,7 +1105,7 @@ namespace LC_VEGA
             RegisterDoorCommands();
             RegisterHazardsCommands();
             RegisterTeleportCommands();
-            RegisterScanCommands();
+            RegisterAdvancedScannerCommands();
             RegisterTimeOfDayCommands();
             RegisterRadarBoosterCommands();
             RegisterSignalTranslatorCommands();
@@ -1189,7 +1189,7 @@ namespace LC_VEGA
             }
         }
 
-        internal static void RegisterScanCommands()
+        internal static void RegisterAdvancedScannerCommands()
         {
             if (Plugin.registerAdvancedScanner.Value)
             {

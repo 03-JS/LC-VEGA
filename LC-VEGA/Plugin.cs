@@ -179,7 +179,7 @@ namespace LC_VEGA
                 "Dialogue & Interactions", // Config section
                 "Play intro", // Key of this config
                 true, // Default value
-                "If set to true, VEGA will give you its introduction speech every time you open the game." // Description
+                "If set to true, VEGA will give you its introduction speech the first time you open the game." // Description
             );
             readBestiaryEntries = Config.Bind(
                 "Dialogue & Interactions", // Config section
@@ -203,8 +203,8 @@ namespace LC_VEGA
             );
             detectMasked = Config.Bind(
                 "Advanced Scanner", // Config section
-                "Detected masked employees", // Key of this config
-                true, // Default value
+                "Detected Masked employees", // Key of this config
+                false, // Default value
                 "Determines if the Advanced Scanner should be able to count Masked employees as entities." // Description
             );
 
@@ -213,7 +213,7 @@ namespace LC_VEGA
                 "Voice Recognition", // Config section
                 "Confidence", // Key of this config
                 0.7f, // Default value
-                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. If VEGA doesn't pick you up, try lowering this value.\nApplies after a game restart.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. If VEGA doesn't pick you up, try lowering this value.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             registerMoonsInfo = Config.Bind(
                 "Voice Recognition", // Config section
@@ -335,12 +335,14 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            /* 
             registerLeverPull = Config.Bind(
                 "Voice Recognition", // Config section
                 "Register Ship lever pull commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            */
             registerInteractShipDoors = Config.Bind(
                 "Voice Recognition", // Config section
                 "Register Ship Door commands", // Key of this config

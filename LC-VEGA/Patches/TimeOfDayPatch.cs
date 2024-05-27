@@ -40,6 +40,7 @@ namespace LC_VEGA.Patches
             }
         }
 
+        /*
         [HarmonyPatch("SetShipLeaveEarlyClientRpc")]
         [HarmonyPostfix]
         static void GiveVoteWarning()
@@ -49,5 +50,6 @@ namespace LC_VEGA.Patches
                 VEGA.PlayAudio("ShipLeavingEarly");
             }
         }
+        */
     }
 }
