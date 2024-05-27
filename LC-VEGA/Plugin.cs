@@ -34,6 +34,7 @@ namespace LC_VEGA
         public static ConfigEntry<VocalLevels> vocalLevel;
         public static ConfigEntry<bool> playIntro;
         public static ConfigEntry<bool> readBestiaryEntries;
+        public static ConfigEntry<bool> giveWeatherInfo;
         public static ConfigEntry<bool> ignoreMasterVolume;
         public static ConfigEntry<string> messages;
 
@@ -186,6 +187,12 @@ namespace LC_VEGA
                 "Read Bestiary entries", // Key of this config
                 true, // Default value
                 "If set to true, VEGA will read every bestiary entry you open in the terminal." // Description
+            );
+            giveWeatherInfo = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Give Weather info", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will give you information on a moon's current weather upon landing if you have little to no experience." // Description
             );
             messages = Config.Bind(
                 "Dialogue & Interactions", // Config section

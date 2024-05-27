@@ -75,7 +75,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void GiveWeatherInfo()
         {
-            if (HUDManager.Instance.localPlayerXP <= 150)
+            if (HUDManager.Instance.localPlayerXP <= 150 && Plugin.giveWeatherInfo.Value)
             {
                 float delay = 8f;
                 switch (TimeOfDay.Instance.currentLevelWeather)
