@@ -134,8 +134,8 @@ namespace LC_VEGA
 
             // Other mods
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
-            ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
-            ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
+            // ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
+            // ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
         }
 
         internal void ManageSaveValues()
@@ -179,7 +179,7 @@ namespace LC_VEGA
                 "Dialogue & Interactions", // Config section
                 "Play intro", // Key of this config
                 true, // Default value
-                "If set to true, VEGA will give you its introduction speech the first time you open the game." // Description
+                "If set to true, VEGA will give you its introduction speech the first time you use the mod." // Description
             );
             readBestiaryEntries = Config.Bind(
                 "Dialogue & Interactions", // Config section
