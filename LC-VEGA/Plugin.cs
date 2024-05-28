@@ -237,7 +237,7 @@ namespace LC_VEGA
                 "Voice Recognition", // Config section
                 "Enable VEGA listening automatically", // Key of this config
                 false, // Default value
-                "Makes VEGA listen automatically when joining a game. Only works if manual listening is enabled. Applies after restarting the game." // Description
+                "Makes VEGA listen automatically when joining a game. Only works if Manual Listening is enabled. Applies after restarting the game." // Description
             );
             registerActivation = Config.Bind(
                 "Voice Recognition", // Config section
