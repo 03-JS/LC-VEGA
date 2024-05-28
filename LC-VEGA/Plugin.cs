@@ -210,7 +210,7 @@ namespace LC_VEGA
             );
             detectMasked = Config.Bind(
                 "Advanced Scanner", // Config section
-                "Detected Masked employees", // Key of this config
+                "Detect Masked employees", // Key of this config
                 false, // Default value
                 "Determines if the Advanced Scanner should be able to count Masked employees as entities." // Description
             );
