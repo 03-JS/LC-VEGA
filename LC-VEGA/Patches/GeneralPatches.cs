@@ -50,7 +50,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void AllLights(bool on)
         {
-            Plugin.LogToConsole("POWER -> " + on);
+            Plugin.LogToConsole("POWER -> " + on, "debug");
             VEGA.facilityHasPower = on;
         }
 

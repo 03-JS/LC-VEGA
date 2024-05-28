@@ -33,6 +33,10 @@ namespace LC_VEGA.Patches
             {
                 Plugin.LogToConsole("Unable to create VEGA audio source", "error");
             }
+            if (Plugin.useManualListening.Value && VEGA.listening)
+            {
+                VEGA.PlayListeningSoundOnStart();
+            }
             if (Plugin.playIntro.Value && !SaveManager.playedIntro)
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)

@@ -42,8 +42,13 @@ namespace LC_VEGA
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
         public static ConfigEntry<bool> detectMasked;
 
+        // Manual activation config values
+        public static ConfigEntry<bool> useManualListening;
+        public static ConfigEntry<bool> enableManualListeningAuto;
+
         // Voice commands config values
         public static ConfigEntry<float> confidence;
+        public static ConfigEntry<bool> registerActivation;
         public static ConfigEntry<bool> registerMoonsInfo;
         public static ConfigEntry<bool> registerBestiaryEntries;
         public static ConfigEntry<bool> registerCreatureInfo;
@@ -206,7 +211,7 @@ namespace LC_VEGA
                 "Advanced Scanner", // Config section
                 "Enable the Advanced Scanner automatically", // Key of this config
                 false, // Default value
-                "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often." // Description
+                "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often. Applies after restarting the game." // Description
             );
             detectMasked = Config.Bind(
                 "Advanced Scanner", // Config section
@@ -221,6 +226,24 @@ namespace LC_VEGA
                 "Confidence", // Key of this config
                 0.7f, // Default value
                 new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. If VEGA doesn't pick you up, try lowering this value.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            useManualListening = Config.Bind(
+                "Voice Recognition", // Config section
+                "Manual Listening", // Key of this config
+                false, // Default value
+                "Determines if VEGA should only be able to hear you when you ask him to." // Description
+            );
+            enableManualListeningAuto = Config.Bind(
+                "Voice Recognition", // Config section
+                "Enable VEGA listening automatically", // Key of this config
+                false, // Default value
+                "Makes VEGA listen automatically when joining a game. Only works if manual listening is enabled. Applies after restarting the game." // Description
+            );
+            registerActivation = Config.Bind(
+                "Voice Recognition", // Config section
+                "Register Manual Listening commands", // Key of this config
+                true, // Default value
+                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerMoonsInfo = Config.Bind(
                 "Voice Recognition", // Config section
