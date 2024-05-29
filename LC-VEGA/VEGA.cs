@@ -425,33 +425,26 @@ namespace LC_VEGA
 
         internal static void DisableTurret()
         {
-            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
+            TerminalAccessibleObject? closestTurret = GetClosestTurret();
+            if (closestTurret != null)
             {
-                TerminalAccessibleObject? closestTurret = GetClosestTurret();
-                if (closestTurret != null)
+                if (Vector3.Distance(closestTurret.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f)
                 {
-                    if (Vector3.Distance(closestTurret.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f)
+                    if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 240))
                     {
-                        if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 240))
-                        {
-                            Plugin.LogToConsole("Disabling turret", "debug");
-                            closestTurret.CallFunctionFromTerminal();
-                            turretDisabled = true;
-                        }
-                        else
-                        {
-                            noVisibleTurret = true;
-                        }
+                        Plugin.LogToConsole("Disabling turret", "debug");
+                        closestTurret.CallFunctionFromTerminal();
+                        turretDisabled = true;
                     }
                     else
                     {
-                        noTurretNearby = true;
+                        noVisibleTurret = true;
                     }
                 }
-            }
-            else
-            {
-                PlayAudioWithVariant("IndoorsOnly", Random.Range(1, 4));
+                else
+                {
+                    noTurretNearby = true;
+                }
             }
         }
 
@@ -583,29 +576,22 @@ namespace LC_VEGA
 
         internal static void DisableMine()
         {
-            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
+            TerminalAccessibleObject? closestMine = GetClosestMine();
+            if (closestMine != null)
             {
-                TerminalAccessibleObject? closestMine = GetClosestMine();
-                if (closestMine != null)
+                if (Vector3.Distance(closestMine.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                 {
-                    if (Vector3.Distance(closestMine.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
+                    Plugin.LogToConsole("Disabling landmine", "debug");
+                    closestMine.CallFunctionFromTerminal();
+                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
                     {
-                        Plugin.LogToConsole("Disabling landmine", "debug");
-                        closestMine.CallFunctionFromTerminal();
-                        if (Plugin.vocalLevel.Value >= VocalLevels.High)
-                        {
-                            PlayAudioWithVariant("MineDisabled", Random.Range(1, 4));
-                        }
-                    }
-                    else
-                    {
-                        PlayAudio("NoMineNearby");
+                        PlayAudioWithVariant("MineDisabled", Random.Range(1, 4));
                     }
                 }
-            }
-            else
-            {
-                PlayAudioWithVariant("IndoorsOnly", Random.Range(1, 4));
+                else
+                {
+                    PlayAudio("NoMineNearby");
+                }
             }
         }
 
@@ -676,29 +662,22 @@ namespace LC_VEGA
 
         internal static void DisableSpikeTrap()
         {
-            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
+            TerminalAccessibleObject? closestTrap = GetClosestSpikeTrap();
+            if (closestTrap != null)
             {
-                TerminalAccessibleObject? closestTrap = GetClosestSpikeTrap();
-                if (closestTrap != null)
+                if (Vector3.Distance(closestTrap.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
                 {
-                    if (Vector3.Distance(closestTrap.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
+                    Plugin.LogToConsole("Disabling spike trap", "debug");
+                    closestTrap.CallFunctionFromTerminal();
+                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                     {
-                        Plugin.LogToConsole("Disabling spike trap", "debug");
-                        closestTrap.CallFunctionFromTerminal();
-                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                        {
-                            PlayAudioWithVariant("TrapDisabled", Random.Range(1, 4));
-                        }
-                    }
-                    else
-                    {
-                        PlayAudio("NoTrapNearby");
+                        PlayAudioWithVariant("TrapDisabled", Random.Range(1, 4));
                     }
                 }
-            }
-            else
-            {
-                PlayAudioWithVariant("IndoorsOnly", Random.Range(1, 4));
+                else
+                {
+                    PlayAudio("NoTrapNearby");
+                }
             }
         }
 
@@ -1042,11 +1021,6 @@ namespace LC_VEGA
                         if (i + 1 == playersInShip.Count)
                         {
                             body += playersInShip[i];
-                        }
-                        else if (players == 6)
-                        {
-                            body += playersInShip[i] + ",\n";
-                            players = 0;
                         }
                         else
                         {
