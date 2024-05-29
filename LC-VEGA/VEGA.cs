@@ -368,7 +368,7 @@ namespace LC_VEGA
             {
                 if (audio)
                 {
-                    PlayAudio("NoTurrets"); 
+                    PlayAudio("NoTurrets");
                 }
                 return null;
             }
@@ -1039,15 +1039,18 @@ namespace LC_VEGA
                     for (int i = 0; i < playersInShip.Count; i++)
                     {
                         players++;
-                        body += playersInShip[i] + ", ";
                         if (i + 1 == playersInShip.Count)
                         {
                             body += playersInShip[i];
                         }
-                        else if (players == 4)
+                        else if (players == 6)
                         {
                             body += playersInShip[i] + ",\n";
                             players = 0;
+                        }
+                        else
+                        {
+                            body += playersInShip[i] + ", ";
                         }
                     }
                 }
