@@ -34,10 +34,12 @@ namespace LC_VEGA
         internal static bool turretDisabled;
         internal static bool noVisibleTurret;
         internal static bool noTurretNearby;
+        internal static bool noTurrets;
         internal static float distanceToTurret;
 
         // Toils
         internal static bool toilDisabled;
+        internal static bool noToils;
         internal static float distanceToToil;
 
         public static string[] signals;
@@ -350,7 +352,7 @@ namespace LC_VEGA
             return closestDoor;
         }
 
-        internal static TerminalAccessibleObject? GetClosestTurret(bool audio = true)
+        internal static TerminalAccessibleObject? GetClosestTurret()
         {
             Plugin.LogToConsole("Getting closest turret", "debug");
             List<TerminalAccessibleObject> turrets = new List<TerminalAccessibleObject>();
@@ -366,10 +368,7 @@ namespace LC_VEGA
 
             if (turrets.Count() == 0)
             {
-                if (audio)
-                {
-                    PlayAudio("NoTurrets");
-                }
+                noTurrets = true;
                 return null;
             }
 
@@ -403,6 +402,7 @@ namespace LC_VEGA
 
             if (toils.Count() == 0)
             {
+                noToils = true;
                 return null;
             }
 
@@ -451,7 +451,7 @@ namespace LC_VEGA
         internal static void DisableToil()
         {
             FollowTerminalAccessibleObjectBehaviour? closestToil = GetClosestToil();
-            TerminalAccessibleObject? closestTurret = GetClosestTurret(false);
+            TerminalAccessibleObject? closestTurret = GetClosestTurret();
             if (closestToil == null)
             {
                 toilDisabled = false;
@@ -499,6 +499,10 @@ namespace LC_VEGA
             else if (noTurretNearby)
             {
                 PlayAudio("NoTurretNearby");
+            }
+            else if (noTurrets && noToils)
+            {
+                PlayAudio("NoTurrets");
             }
         }
 
@@ -1014,17 +1018,15 @@ namespace LC_VEGA
                 }
                 else
                 {
-                    int players = 0;
-                    for (int i = 0; i < playersInShip.Count; i++)
+                    foreach (var playerName in playersInShip)
                     {
-                        players++;
-                        if (i + 1 == playersInShip.Count)
+                        if (playersInShip.Last() == playerName)
                         {
-                            body += playersInShip[i];
+                            body += playerName;
                         }
                         else
                         {
-                            body += playersInShip[i] + ", ";
+                            body += playerName + ", ";
                         }
                     }
                 }
@@ -1620,6 +1622,8 @@ namespace LC_VEGA
                             turretDisabled = false;
                             noVisibleTurret = false;
                             noTurretNearby = false;
+                            noTurrets = false;
+                            noToils = false;
                             if (ModChecker.hasToilHead)
                             {
                                 DisableToil();
