@@ -4,6 +4,7 @@ using LobbyCompatibility.Enums;
 using LobbyCompatibility.Features;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace LC_VEGA
@@ -13,7 +14,7 @@ namespace LC_VEGA
         public static bool hasToilHead;
         public static bool hasMalfunctions;
         public static bool hasDiveristy;
-        public static bool hasCodeRebirth;
+        // public static bool hasCodeRebirth;
 
         public static bool CheckForMod(string modGUID)
         {

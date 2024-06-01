@@ -1,5 +1,6 @@
 ﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
+using Malfunctions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -778,6 +779,16 @@ namespace LC_VEGA
         {
             if (performAdvancedScan)
             {
+                if (ModChecker.hasMalfunctions)
+                {
+                    if (State.MalfunctionDistortion.Active || State.MalfunctionPower.Active)
+                    {
+                        itemsText.SetText(itemsTopText + "<color=yellow>Data unavailable</color>");
+                        enemiesText.SetText(enemiesTopText + "<color=yellow>Data unavailable</color>");
+                        return;
+                    }
+                }
+
                 Vector3 playerPosition = StartOfRound.Instance.localPlayerController.transform.position;
 
                 int enemyCount = 0;
@@ -945,7 +956,7 @@ namespace LC_VEGA
 
             if (StartOfRound.Instance.livingPlayers == 1 && deadPlayers == 0)
             {
-                PlayAudio("SoloCrew");
+                PlayAudio("CrewStatusSolo");
             }
             else
             {
@@ -997,16 +1008,16 @@ namespace LC_VEGA
             {
                 if (playersInShip.Count > 0)
                 {
-                    // PlayAudio("SoloCrewInShip");
+                    PlayAudio("CrewInShipSolo");
                 }
                 else
                 {
-                    // PlayAudio("SoloCrewOutside");
+                    PlayAudio("CrewOutsideShipSolo");
                 }
             }
             else
             {
-                // PlayAudio("GettingCrewInShip");
+                PlayAudio("GettingCrewInShip");
 
                 yield return new WaitForSeconds(delay);
 
@@ -1046,7 +1057,7 @@ namespace LC_VEGA
             int creditsLeft = 0;
             int creditsInShip = 0;
 
-            // PlayAudioWithVariant("GettingScrapLeft", Random.Range(1, 4));
+            PlayAudioWithVariant("PerformingScrapScan", Random.Range(1, 4));
 
             yield return new WaitForSeconds(delay);
 
@@ -1106,7 +1117,7 @@ namespace LC_VEGA
 
             if (Plugin.vocalLevel.Value >= VocalLevels.High)
             {
-                // PlayAudioWithVariant("ScrapScanComplete", Random.Range(1, 4));
+                PlayAudioWithVariant("ScrapScanComplete", Random.Range(1, 4));
             }
             HUDManager.Instance.DisplayTip(header, "<size=15>" + scrapOutsideStr + "\n" + scrapInShipStr + "</size>");
         }
@@ -1169,7 +1180,7 @@ namespace LC_VEGA
                             }
                             else
                             {
-                                // PlayAudio("AlreadyActive");
+                                PlayAudio("AlreadyActive");
                             }
                         }
                     }
@@ -1190,7 +1201,7 @@ namespace LC_VEGA
                             }
                             else
                             {
-                                // PlayAudio("AlreadyInactive");
+                                PlayAudio("AlreadyInactive");
                             }
                         }
                     }
@@ -1236,6 +1247,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             CoroutineManager.StartCoroutine(SwitchLights(on: true));
                         }
                     }
@@ -1248,6 +1267,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             CoroutineManager.StartCoroutine(SwitchLights(on: false));
                         }
                     }
@@ -1406,6 +1433,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionTeleporter.Active)
+                                {
+                                    PlayAudio("TeleporterMalfunction");
+                                    return;
+                                }
+                            }
                             ActivateTeleporter();
                         }
                     }
@@ -1421,6 +1456,19 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (State.MalfunctionDistortion.Active)
+                                {
+                                    PlayAudio("CommsMalfunction");
+                                    return;
+                                }
+                            }
                             if (StartOfRound.Instance.mapScreen.targetedPlayer == StartOfRound.Instance.localPlayerController)
                             {
                                 PlayAudio("RadarAlreadyFocused");
@@ -1448,6 +1496,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             OpenSecureDoor();
                         }
                     }
@@ -1460,6 +1516,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             CloseSecureDoor();
                         }
                     }
@@ -1475,6 +1539,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             OpenAllDoors();
                         }
                     }
@@ -1487,6 +1559,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             CloseAllDoors();
                         }
                     }
@@ -1507,6 +1587,19 @@ namespace LC_VEGA
                             HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                             if (shipDoors != null)
                             {
+                                if (ModChecker.hasMalfunctions)
+                                {
+                                    if (State.MalfunctionPower.Active)
+                                    {
+                                        PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                        return;
+                                    }
+                                    if (State.MalfunctionDoor.Active)
+                                    {
+                                        PlayAudio("DoorMalfunction");
+                                        return;
+                                    }
+                                }
                                 InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
                                 component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                                 if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
@@ -1531,6 +1624,14 @@ namespace LC_VEGA
                             HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                             if (shipDoors != null)
                             {
+                                if (ModChecker.hasMalfunctions)
+                                {
+                                    if (State.MalfunctionPower.Active)
+                                    {
+                                        PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                        return;
+                                    }
+                                }
                                 InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
                                 component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                                 if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
@@ -1561,6 +1662,14 @@ namespace LC_VEGA
                         {
                             if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                             {
+                                if (ModChecker.hasMalfunctions)
+                                {
+                                    if (State.MalfunctionPower.Active)
+                                    {
+                                        PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                        return;
+                                    }
+                                }
                                 SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
                                 if (translator == null)
                                 {
@@ -1587,6 +1696,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             InteractWithBooster(ping: true);
                         }
                     }
@@ -1599,6 +1716,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             InteractWithBooster(ping: false);
                         }
                     }
@@ -1619,6 +1744,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             turretDisabled = false;
                             noVisibleTurret = false;
                             noTurretNearby = false;
@@ -1647,6 +1780,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             turretsExist = false;
                             if (ModChecker.hasToilHead)
                             {
@@ -1669,6 +1810,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             DisableMine();
                         }
                     }
@@ -1684,6 +1833,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             DisableAllMines();
                         }
                     }
@@ -1701,6 +1858,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             DisableSpikeTrap();
                         }
                     }
@@ -1716,6 +1881,14 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (State.MalfunctionPower.Active)
+                                {
+                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
                             DisableAllSpikeTraps();
                         }
                     }
@@ -1856,6 +2029,8 @@ namespace LC_VEGA
                 });
 
                 // Modded
+                /*
+                 * Scrapped for now. Will only do vanilla moons in the forseeable future.
                 Voice.RegisterPhrases(new string[] { "VEGA, info about Asteroid 13" });
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2252,6 +2427,7 @@ namespace LC_VEGA
                         }
                     }
                 });
+                */
             }
         }
 

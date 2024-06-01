@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.AssemblyPublicizer;
 using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -126,6 +127,14 @@ namespace LC_VEGA
             harmony.PatchAll(typeof(TimeOfDayPatch));
             harmony.PatchAll(typeof(HUDManagerPatch));
             harmony.PatchAll(typeof(GeneralPatches));
+            if (ModChecker.hasMalfunctions)
+            {
+                harmony.PatchAll(typeof(MalfunctionsPatches)); 
+            }
+            if (ModChecker.hasDiveristy)
+            {
+                harmony.PatchAll(typeof(DiversityPatches));
+            }
         }
 
         internal void CheckInstalledMods()
@@ -140,8 +149,8 @@ namespace LC_VEGA
 
             // Other mods
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
-            // ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
-            // ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
+            ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
+            ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
         }
 
         internal void ManageSaveValues()
@@ -154,6 +163,12 @@ namespace LC_VEGA
                 mls.LogDebug("File found. Loading values...");
                 SaveManager.playedIntro = SaveManager.LoadFromFile(0);
                 SaveManager.firstTimeDiversity = SaveManager.LoadFromFile(1);
+                
+                // This is so reinstalls / reenables of the mod trigger the first time replies as well
+                if (!ModChecker.hasDiveristy && !SaveManager.firstTimeDiversity)
+                {
+                    SaveManager.firstTimeDiversity = true;
+                }
             }
             else
             {
