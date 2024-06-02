@@ -1,10 +1,6 @@
-﻿using GameNetcodeStuff;
-using HarmonyLib;
+﻿using HarmonyLib;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using TMPro;
 using UnityEngine;
 
 namespace LC_VEGA.Patches
@@ -22,7 +18,21 @@ namespace LC_VEGA.Patches
             VEGA.facilityHasPower = false;
             if (Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
-                VEGA.PlayAudio("RadiationSpike");
+                if (ModChecker.hasFacilityMeltdown)
+                {
+                    if (StartOfRound.Instance.localPlayerController.isInsideFactory)
+                    {
+                        VEGA.PlayAudio("FacilityMeltdownInside", 1.5f);
+                    }
+                    else
+                    {
+                        VEGA.PlayAudio("FacilityMeltdownOutside", 1.5f);
+                    }
+                }
+                else
+                {
+                    VEGA.PlayAudio("RadiationSpike");
+                }
             }
         }
 

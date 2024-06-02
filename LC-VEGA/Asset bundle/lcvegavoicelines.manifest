@@ -1,243 +1,255 @@
 ManifestFileVersion: 0
-CRC: 338051024
+CRC: 3539653932
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 050483a3ca32042e6a5a5a01ce9f9fbb
+    Hash: a0e0799c09e757b01579ee1ce6f8a8f0
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 050483a3ca32042e6a5a5a01ce9f9fbb
+    Hash: a0e0799c09e757b01579ee1ce6f8a8f0
 HashAppended: 0
 ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/NutcrackerScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TrapDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/Sundown.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ManticoilShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsAlreadyOff.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/MaggieScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/Noon.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTrapsDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Rainy-1.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/StalkerScan.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/MaggieShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Moons/NoInfoOnMoon-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Slime.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Boombas.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ThumperScan.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shy guy.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SandwormShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BunkerSpiderScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/YippeeBug.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Moving TurretShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/Coil-HeadScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BrackenScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/56-VOW.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsClosed-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SlimeScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Flooded-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTraps.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/GettingLate-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ButlerShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/FootballShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/TeleporterOnCooldown.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/Coil-HeadShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Peepers.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SandwormScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/ForestKeeper.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/Intro.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarSwitch-3.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/DriftWood GiantShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/RedBees.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Rainy-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTurrets.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-1.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/ShrimpScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-4.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/Dawn.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTurretsDisabled-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/8-TIT.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Nutcracker.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/MineDisabled-2.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Siren HeadShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTrapsDisabled-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Coil-Head.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/RedBeesShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/LockerShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/ScannerAlreadyActive.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/RadiationSpike.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Bracken.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-2.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/BoombasShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/PeepersScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Jester.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/Activate.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/RedWood GiantScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/ReportComplete-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/GoodLuck.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTurretsDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Snakes.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Shy guyShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Rolling Giant.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/7-DIN.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Radar booster/NoBoosters.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Locker.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-2.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Siren HeadScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/EyelessDogScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/BaboonHawkShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTrapsDisabled-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/5-EMB.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ThumperShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/Teleport-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SnareFleaScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorOpened-3.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Shy guyScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/EyelessDogShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoMines.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/RedWood Giant.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorOpened-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/Teleport-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoSignalTranslator.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Maggie.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ManticoilScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-2.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Football-unedited.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/None.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/68-ART.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SnakesScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/ReportComplete-2.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Football.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsOpened-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-2.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Moving Turret.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/41-EXP.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarSwitch-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/SporeLizard.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SnakesShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TrapDisabled-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/BrackenShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-1.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Shockwave DroneShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/61-MAR.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/DriftWood Giant.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTrapNearby.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ForestKeeperShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/71-GOR.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/SoloCrew.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/EyelessDog.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsOn.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/Deactivate.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Stormy-2.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/DriftWood GiantScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/20-ADA.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Eclipsed-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-3.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/ShrimpShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/BunkerSpider.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Foggy-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/LocustsShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Rolling GiantScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/BaboonHawk.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SlimeShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/Teleport-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Locusts.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/NutcrackerShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SnareFleaShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-4.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTurretsDisabled-1.wav
-- Assets/LC-VEGA/Voice lines/Mods/Moons/NoInfoOnMoon-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/85-REN.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/YippeeBugScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Manticoil.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/RedBeesScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/OldBirdShort.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/StalkerShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Radar booster/NoBoostersNearby.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Eclipsed-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/GettingCrewStatus.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/JesterShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Butler.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoMineNearby.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Cleaning Drone.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/ShipDoorsClosed.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/GettingLate-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/MineDisabled-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarAlreadyFocused.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/Midnight.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/NoDoorNearby.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/YippeeBugShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/ScannerAlreadyInactive.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/ReportComplete-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/MineDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SporeLizardShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsOff.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/44-LIQ.wav
-- Assets/LC-VEGA/Voice lines/Mods/Moons/NoInfoOnMoon-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsAlreadyOn.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TrapDisabled-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/OldBird.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-3.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shrimp.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoVisibleTurret.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Sandworm.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shockwave Drone.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/RedWood GiantShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/OldBirdScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Foggy-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/BunkerSpiderShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/220-ASS.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/21-OFF.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Time/GettingLate-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTurretNearby.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Rolling GiantShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorOpened-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsOpened-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsClosed-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SporeLizardScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ButlerScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Flooded-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Thumper.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BaboonHawkScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ForestKeeperScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/NoDoors.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/JesterScan.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/SnareFlea.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/PeepersShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-3.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-2.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/4-MARS.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Doors/ShipDoorsOpened.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarSwitch-1.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Cleaning DroneShort.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-3.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Stalker.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Stormy-1.wav
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/LocustsScan.wav
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Siren Head.wav
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Shockwave DroneShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/StalkerScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/YippeeBugScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/RedWood GiantScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Stormy-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/GettingCrewStatus.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/RedBeesScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/MaggieShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Siren Head.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/RadiationSpike.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ButlerScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/TeleporterOnCooldown.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Rainy-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/JesterShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTrapNearby.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/MineDisabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ManticoilShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTrapsDisabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/Midnight.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Rainy-2.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/CommsMalfunctionWarning.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/DriftWood GiantShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SnakesShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/DriftWood Giant.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Nutcracker.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/8-TIT.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/21-OFF.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-4.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/PowerMalfunction-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/20-ADA.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/Teleport-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoSignalTranslator.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Moons/NoInfoOnMoon-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SnareFleaScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/Activate.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/JesterScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorOpened-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/ShipDoorsOpened.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsOpened-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ManticoilScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/PowerMalfunction-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/GettingLate-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/SporeLizard.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Flooded-1.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/NavigationMalfunctionWarning.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/Coil-HeadScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/BoombasShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Radar booster/NoBoosters.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/None.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/VoteCast.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/Sundown.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsAlreadyOn.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TrapDisabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Moons/NoInfoOnMoon-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/BaboonHawk.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/BaboonHawkShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsClosed-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SporeLizardShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/4-MARS.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/RedBeesShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/DoorMalfunction.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/ShrimpScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/BunkerSpiderShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoMines.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsOn.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/7-DIN.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/OldBirdShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/YippeeBugShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/PeepersScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/ShipDoorsClosed.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Football.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SlimeShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/GettingLate-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/BunkerSpider.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/DriftWood GiantScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SlimeScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/NoDoorNearby.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/TeleporterMalfunctionWarning.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Moving Turret.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/NutcrackerShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorOpened-1.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Locker.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/ReportComplete-1.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/DoorMalfunctionWarning.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Siren HeadScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Shy guyScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/Teleport-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/Noon.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Shy guyShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Maggie.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarSwitch-3.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/FootballShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTrapsDisabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/OldBird.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Manticoil.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/LocustsScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/GettingLate-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Radar booster/NoBoostersNearby.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/5-EMB.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/ReportComplete-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BaboonHawkScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarAlreadyFocused.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Foggy-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/LocustsShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shy guy.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarSwitch-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/RedBees.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Eclipsed-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Bracken.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ForestKeeperShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/GoodLuck.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTraps.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/EyelessDogShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SandwormShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Stalker.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTurretNearby.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/85-REN.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-2.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Moving TurretShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BrackenScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Locusts.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Peepers.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SnakesScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/YippeeBug.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Thumper.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTrapsDisabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/EyelessDogScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/220-ASS.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shockwave Drone.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Coil-Head.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/44-LIQ.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/PowerMalfunctionWarning.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/PeepersShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/PowerMalfunction-3.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Moons/NoInfoOnMoon-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-4.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsOff.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/ForestKeeper.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BunkerSpiderScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-1.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/RedWood GiantShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/Coil-HeadShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Flooded-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/SnareFlea.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoProblem-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SnareFleaShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/NutcrackerScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoVisibleTurret.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Rolling GiantShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Snakes.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Stormy-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/MineDisabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/ScannerAlreadyInactive.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ButlerShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-3.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Boombas.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/ShrimpShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoMineNearby.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsClosed-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/AllDoorsOpened-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SandwormScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/LockerShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Time/Dawn.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Football-unedited.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/Teleport-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Sandworm.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Rolling Giant.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarSwitch-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Foggy-1.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/RedWood Giant.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ForestKeeperScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ThumperShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Cleaning Drone.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/LightsAlreadyOff.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/StalkerShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/BrackenShort.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Rolling GiantScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Siren HeadShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/Intro.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/41-EXP.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTurretsDisabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/ReportComplete-3.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Shrimp.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/EyelessDog.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TrapDisabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/71-GOR.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/CrewStatusSolo.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/68-ART.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/56-VOW.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Weather/Eclipsed-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/61-MAR.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Summary/Cleaning DroneShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Butler.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/MaggieScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/HydraulicMalfunctionWarning.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ThumperScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTurretsDisabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/OldBirdScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorOpened-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Doors/NoDoors.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/MineDisabled-1.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Misc/Deactivate.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoTurrets.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Jester.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Slime.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TrapDisabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/TeleporterMalfunction.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/ScannerAlreadyActive.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllTurretsDisabled-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SporeLizardScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-2.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-2.ogg
 Dependencies: []

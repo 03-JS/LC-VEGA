@@ -36,7 +36,7 @@ namespace LC_VEGA.Patches
                                 SaveManager.firstTimeDiversity = false;
                                 VEGA.PlayAudio("FirstTimeReply");
                             }
-                            else if (randomNumber <= 3)
+                            else if (randomNumber <= 2)
                             {
                                 VEGA.PlayAudioWithVariant("Reply", Random.Range(1, 6));
                             }
@@ -49,29 +49,22 @@ namespace LC_VEGA.Patches
                                 SaveManager.firstTimeDiversity = false;
                                 VEGA.PlayAudio("FirstTimeReply");
                             }
-                            else if (randomNumber <= 3)
+                            else if (randomNumber <= 2)
                             {
                                 VEGA.PlayAudioWithVariant("Reply", Random.Range(1, 6));
                             }
                             break;
-                        case "0_Days_Left":
-                        case "0_Days_Left_2":
-                            if ((Plugin.registerAdvancedScanner.Value || Plugin.registerScrapLeft.Value) && randomNumber <= 1)
-                            {
-                                VEGA.PlayAudio("NoDaysLeftReply");
-                            }
-                            break;
-                        case "Attempt_To_Shut_Off_Speaker":
                         case "Turning_Off_Speaker_2":
-                            if (randomNumber <= 5)
+                        case "Attempt_To_Shut_Off_Speaker":
+                            if (randomNumber <= 4)
                             {
                                 VEGA.PlayAudioWithVariant("SilenceReply", Random.Range(1, 4));
                             }
                             break;
                         case "Dog_Spawn_Or_When_Close_to_Ship":
-                            if (randomNumber <= 5)
+                            if (randomNumber <= 4)
                             {
-                                VEGA.PlayAudioWithVariant("SilenceReply", Random.Range(1, 4));
+                                VEGA.PlayAudio("DogsReply");
                             }
                             break;
                         default:

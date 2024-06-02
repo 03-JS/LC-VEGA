@@ -14,7 +14,7 @@ namespace LC_VEGA
         public static bool hasToilHead;
         public static bool hasMalfunctions;
         public static bool hasDiveristy;
-        // public static bool hasCodeRebirth;
+        public static bool hasFacilityMeltdown;
 
         public static bool CheckForMod(string modGUID)
         {

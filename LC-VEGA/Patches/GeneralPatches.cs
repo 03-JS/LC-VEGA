@@ -35,17 +35,6 @@ namespace LC_VEGA.Patches
             }
         }
 
-        [HarmonyPatch(typeof(LungProp), "DisconnectFromMachinery")]
-        [HarmonyPostfix]
-        static void RadiationWarning()
-        {
-            VEGA.facilityHasPower = false;
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-            {
-                VEGA.PlayAudio("RadiationSpike", 6.5f);
-            }
-        }
-
         [HarmonyPatch(typeof(RoundManager), "TurnOnAllLights")]
         [HarmonyPostfix]
         static void AllLights(bool on)

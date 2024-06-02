@@ -151,6 +151,7 @@ namespace LC_VEGA
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
             ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
+            ModChecker.hasFacilityMeltdown = ModChecker.CheckForMod("me.loaforc.facilitymeltdown");
         }
 
         internal void ManageSaveValues()
