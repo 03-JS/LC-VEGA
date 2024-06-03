@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Unity.Netcode;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -50,6 +51,26 @@ namespace LC_VEGA.Patches
             if (!__instance.isInverseTeleporter)
             {
                 VEGA.teleporterCooldownTime = ___cooldownTime;
+            }
+        }
+
+        [HarmonyPatch(typeof(RoundManager), "Update")]
+        [HarmonyPostfix]
+        public static void ReadInput()
+        {
+            if ((VEGA.audioSource.clip.name.Equals("Activate") || VEGA.audioSource.clip.name.Equals("Deactivate")) && VEGA.audioSource.isPlaying) return;
+            if (Plugin.registerActivation.Value && Plugin.useManualListening.Value && Plugin.PlayerInputInstance.Toggle.triggered)
+            {
+                if (!VEGA.listening)
+                {
+                    VEGA.PlayAudio("Activate");
+                }
+                else
+                {
+                    VEGA.PlayAudio("Deactivate");
+                }
+                VEGA.listening = !VEGA.listening;
+                Plugin.LogToConsole("Is VEGA listening -> " + VEGA.listening, "debug");
             }
         }
 

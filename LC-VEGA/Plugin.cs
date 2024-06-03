@@ -20,6 +20,7 @@ namespace LC_VEGA
 {
     [BepInPlugin(modGUID, modName, modVersion)]
     [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.HardDependency)]
+    [BepInDependency("com.rune580.LethalCompanyInputUtils", DependencyFlags.HardDependency)]
     [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
@@ -29,7 +30,7 @@ namespace LC_VEGA
 
         internal static AssetBundle assetBundle;
 
-        // public static bool gameOpened;
+        internal static PlayerInput PlayerInputInstance;
 
         // Dialogue & Interactions config values
         public static ConfigEntry<VocalLevels> vocalLevel;
@@ -90,6 +91,8 @@ namespace LC_VEGA
 
             mls = BepInEx.Logging.Logger.CreateLogSource(modGUID);
             mls.LogInfo("The installation of VEGA has begun");
+
+            PlayerInputInstance = new PlayerInput();
 
             LoadAssets();
             GenerateConfigValues();

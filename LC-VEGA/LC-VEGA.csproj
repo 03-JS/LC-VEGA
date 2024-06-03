@@ -25,8 +25,14 @@
     <Reference Include="Diversity">
       <HintPath>D:\Descargas\Diversity.dll</HintPath>
     </Reference>
+    <Reference Include="LethalCompanyInputUtils">
+      <HintPath>D:\Descargas\LethalCompanyInputUtils.dll</HintPath>
+    </Reference>
     <Reference Include="Malfunctions">
       <HintPath>bin\Debug\netstandard2.1\Malfunctions-publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>D:\Descargas\Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>

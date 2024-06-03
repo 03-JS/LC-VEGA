@@ -10,7 +10,7 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void NotifyPowerMalfunction()
         {
-            if (State.MalfunctionPower.Active)
+            if (State.MalfunctionPower.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
                 VEGA.PlayAudio("PowerMalfunctionWarning");
             }
@@ -20,7 +20,7 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void NotifyNavigationMalfunction()
         {
-            if (State.MalfunctionNavigation.Active)
+            if (State.MalfunctionNavigation.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
                 VEGA.PlayAudio("NavigationMalfunctionWarning");
             }
@@ -30,7 +30,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyAtomicMisalignment()
         {
-            if (State.MalfunctionTeleporter.Active)
+            if (State.MalfunctionTeleporter.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
                 VEGA.PlayAudio("TeleporterMalfunctionWarning");
             }
@@ -40,7 +40,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyCommsMalfunction()
         {
-            if (State.MalfunctionDistortion.Active)
+            if (State.MalfunctionDistortion.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
                 VEGA.PlayAudio("CommsMalfunctionWarning");
             }
@@ -50,7 +50,7 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void NotifyDoorMalfunction()
         {
-            if (State.MalfunctionDoor.Active)
+            if (State.MalfunctionDoor.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
                 VEGA.PlayAudio("DoorMalfunctionWarning");
             }
@@ -60,7 +60,7 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void NotifyHidraulicsMalfunction()
         {
-            if (State.MalfunctionLever.Active)
+            if (State.MalfunctionLever.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
             {
                 VEGA.PlayAudio("HydraulicMalfunctionWarning");
             }
