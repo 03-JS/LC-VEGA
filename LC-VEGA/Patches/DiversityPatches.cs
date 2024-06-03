@@ -24,7 +24,7 @@ namespace LC_VEGA.Patches
                             if (SaveManager.firstTimeDiversity)
                             {
                                 SaveManager.firstTimeDiversity = false;
-                                VEGA.PlayAudio("WelcomeReply");
+                                VEGA.PlayAudio("WelcomeReply", randomSoundAudioClip.audioClips[id].length + 0.25f);
                             }
                             break;
                         case "Reaching_Quota":
@@ -34,11 +34,11 @@ namespace LC_VEGA.Patches
                             if (SaveManager.firstTimeDiversity)
                             {
                                 SaveManager.firstTimeDiversity = false;
-                                VEGA.PlayAudio("FirstTimeReply");
+                                VEGA.PlayAudio("FirstTimeReply", randomSoundAudioClip.audioClips[id].length + 0.25f);
                             }
                             else if (randomNumber <= 2)
                             {
-                                VEGA.PlayAudioWithVariant("Reply", Random.Range(1, 6));
+                                VEGA.PlayAudioWithVariant("Reply", Random.Range(1, 6), randomSoundAudioClip.audioClips[id].length + 0.25f);
                             }
                             break;
                         case "Terminal_Error_2":
@@ -47,24 +47,24 @@ namespace LC_VEGA.Patches
                             if (SaveManager.firstTimeDiversity)
                             {
                                 SaveManager.firstTimeDiversity = false;
-                                VEGA.PlayAudio("FirstTimeReply");
+                                VEGA.PlayAudio("FirstTimeReply", randomSoundAudioClip.audioClips[id].length + 0.25f);
                             }
                             else if (randomNumber <= 2)
                             {
-                                VEGA.PlayAudioWithVariant("Reply", Random.Range(1, 6));
+                                VEGA.PlayAudioWithVariant("Reply", Random.Range(1, 6), randomSoundAudioClip.audioClips[id].length + 0.25f);
                             }
                             break;
                         case "Turning_Off_Speaker_2":
                         case "Attempt_To_Shut_Off_Speaker":
                             if (randomNumber <= 4)
                             {
-                                VEGA.PlayAudioWithVariant("SilenceReply", Random.Range(1, 4));
+                                VEGA.PlayAudioWithVariant("SilenceReply", Random.Range(1, 4), randomSoundAudioClip.audioClips[id].length + 0.25f);
                             }
                             break;
                         case "Dog_Spawn_Or_When_Close_to_Ship":
                             if (randomNumber <= 4)
                             {
-                                VEGA.PlayAudio("DogsReply");
+                                VEGA.PlayAudio("DogsReply", randomSoundAudioClip.audioClips[id].length + 0.25f);
                             }
                             break;
                         default:
