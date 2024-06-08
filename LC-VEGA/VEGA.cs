@@ -1,9 +1,11 @@
 ﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
 using Malfunctions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 using VoiceRecognitionAPI;
@@ -15,6 +17,7 @@ namespace LC_VEGA
     internal class VEGA
     {
         public static AudioSource audioSource;
+        public static AudioSource sfxAudioSource;
         public static List<AudioClip> voiceLines;
         public static bool listening;
         public static bool shouldBeInterrupted;
@@ -34,7 +37,7 @@ namespace LC_VEGA
         internal static bool turretsExist;
         internal static bool turretDisabled;
         internal static bool noVisibleTurret;
-        internal static bool noTurretNearby;
+        // internal static bool noTurretNearby;
         internal static bool noTurrets;
         internal static float distanceToTurret;
 
@@ -42,6 +45,17 @@ namespace LC_VEGA
         internal static bool toilDisabled;
         internal static bool noToils;
         internal static float distanceToToil;
+
+        // Malfunctions
+        internal static Type stateType;
+        internal static PropertyInfo distortionTriggeredProp;
+        internal static bool distortionTriggered;
+        internal static PropertyInfo powerTriggeredProp;
+        internal static bool powerTriggered;
+        internal static PropertyInfo teleporterTriggeredProp;
+        internal static bool teleporterTriggered;
+        internal static PropertyInfo doorTriggeredProp;
+        internal static bool doorTriggered;
 
         public static string[] signals;
         public static string[] weathers =
@@ -95,72 +109,22 @@ namespace LC_VEGA
             "Shrimp"
         };
 
-        public static void PlayIntro()
+        public static void PlayLine(string clipName, float delay = 0.25f, bool checkPlayerStatus = true)
         {
             if (audioSource != null)
             {
-                if (!audioSource.isPlaying)
-                {
-                    Plugin.LogToConsole("Playing intro audio");
-                    foreach (var clip in voiceLines)
-                    {
-                        if (clip.name.Equals("Intro"))
-                        {
-                            audioSource.clip = clip;
-                        }
-                    }
-                    audioSource.PlayDelayed(4.5f);
-                    SaveManager.playedIntro = true;
-                }
-            }
-            else
-            {
-                Plugin.LogToConsole("Unable to play intro audio. The audio source for VEGA does not exist", "error");
-            }
-        }
-
-        public static void PlayListeningSoundOnStart(float delay = 3.5f)
-        {
-            if (audioSource != null)
-            {
+                if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
                 if (!audioSource.isPlaying)
                 {
                     Plugin.LogToConsole("Playing audio");
                     foreach (var clip in voiceLines)
                     {
-                        if (clip.name.Equals("Activate"))
+                        if (clip.name.Equals(clipName))
                         {
                             audioSource.clip = clip;
                         }
                     }
                     audioSource.PlayDelayed(delay);
-                    SaveManager.playedIntro = true;
-                }
-            }
-            else
-            {
-                Plugin.LogToConsole("Unable to play the activation sound effect. The audio source for VEGA does not exist", "error");
-            }
-        }
-
-        public static void PlayAudio(string clipName, float delay = 0.25f)
-        {
-            if (audioSource != null)
-            {
-                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
-                {
-                    if (!audioSource.isPlaying)
-                    {
-                        Plugin.LogToConsole("Playing audio");
-                        foreach (var clip in voiceLines)
-                        {
-                            if (clip.name.Equals(clipName))
-                            {
-                                audioSource.clip = clip;
-                            }
-                        }
-                        audioSource.PlayDelayed(delay);
-                    }
                 }
             }
             else
@@ -169,10 +133,34 @@ namespace LC_VEGA
             }
         }
 
-        public static void PlayAudioWithVariant(string clipName, int range, float delay = 0.25f)
+        public static void PlaySFX(string clipName, float delay = 0.25f, bool checkPlayerStatus = true)
+        {
+            if (sfxAudioSource != null)
+            {
+                if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
+                if (!sfxAudioSource.isPlaying)
+                {
+                    Plugin.LogToConsole("Playing SFX");
+                    foreach (var clip in voiceLines)
+                    {
+                        if (clip.name.Equals(clipName))
+                        {
+                            sfxAudioSource.clip = clip;
+                        }
+                    }
+                    sfxAudioSource.PlayDelayed(delay);
+                }
+            }
+            else
+            {
+                Plugin.LogToConsole("Unable to play SFX. The SFX audio source for VEGA does not exist", "error");
+            }
+        }
+
+        public static void PlayRandomLine(string clipName, int range, float delay = 0.25f)
         {
             clipName += "-" + range;
-            PlayAudio(clipName, delay);
+            PlayLine(clipName, delay);
         }
 
         internal static bool ClientHasMoon(string moonName)
@@ -184,20 +172,20 @@ namespace LC_VEGA
                     return true;
                 }
             }
-            PlayAudioWithVariant("NoInfoOnMoon", Random.Range(1, 4));
+            PlayRandomLine("NoInfoOnMoon", Random.Range(1, 4));
             return false;
         }
 
         internal static void OpenSecureDoor()
         {
+            TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
             if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
                 if (!facilityHasPower)
                 {
-                    PlayAudioWithVariant("NoPower", Random.Range(1, 4));
+                    PlayRandomLine("NoPower", Random.Range(1, 4));
                     return;
                 }
-                TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
                 if (closestDoor != null)
                 {
                     if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
@@ -206,29 +194,24 @@ namespace LC_VEGA
                         closestDoor.SetDoorLocalClient(true);
                         if (Plugin.vocalLevel.Value >= VocalLevels.High)
                         {
-                            PlayAudioWithVariant("DoorOpened", Random.Range(1, 4), 0.7f);
+                            PlayRandomLine("DoorOpened", Random.Range(1, 4), 0.7f);
                         }
                     }
                     else
                     {
-                        PlayAudio("NoDoorNearby");
+                        PlayLine("NoDoorNearby");
                     }
                 }
             }
             else
             {
-                PlayAudioWithVariant("IndoorsOnly", Random.Range(1, 4));
+                PlayRandomLine("IndoorsOnly", Random.Range(1, 4));
             }
         }
 
         internal static void OpenAllDoors()
         {
             bool doorsExist = false;
-            if (!facilityHasPower)
-            {
-                PlayAudioWithVariant("NoPower", Random.Range(1, 4));
-                return;
-            }
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
             {
@@ -240,28 +223,33 @@ namespace LC_VEGA
             }
             if (doorsExist)
             {
+                if (!facilityHasPower)
+                {
+                    PlayRandomLine("NoPower", Random.Range(1, 4));
+                    return;
+                }
                 Plugin.LogToConsole("Opening all doors", "debug");
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    PlayAudioWithVariant("AllDoorsOpened", Random.Range(1, 3), 0.7f);
+                    PlayRandomLine("AllDoorsOpened", Random.Range(1, 3), 0.7f);
                 }
             }
             else
             {
-                PlayAudio("NoDoors");
+                PlayLine("NoDoors");
             }
         }
 
         internal static void CloseSecureDoor()
         {
+            TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
             if (StartOfRound.Instance.localPlayerController.isInsideFactory)
             {
                 if (!facilityHasPower)
                 {
-                    PlayAudioWithVariant("NoPower", Random.Range(1, 4));
+                    PlayRandomLine("NoPower", Random.Range(1, 4));
                     return;
                 }
-                TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
                 if (closestDoor != null)
                 {
                     if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
@@ -270,29 +258,24 @@ namespace LC_VEGA
                         closestDoor.SetDoorLocalClient(false);
                         if (Plugin.vocalLevel.Value >= VocalLevels.High)
                         {
-                            PlayAudioWithVariant("DoorClosed", Random.Range(1, 4), 0.7f);
+                            PlayRandomLine("DoorClosed", Random.Range(1, 4), 0.7f);
                         }
                     }
                     else
                     {
-                        PlayAudio("NoDoorNearby");
+                        PlayLine("NoDoorNearby");
                     }
                 }
             }
             else
             {
-                PlayAudioWithVariant("IndoorsOnly", Random.Range(1, 4));
+                PlayRandomLine("IndoorsOnly", Random.Range(1, 4));
             }
         }
 
         internal static void CloseAllDoors()
         {
             bool doorsExist = false;
-            if (!facilityHasPower)
-            {
-                PlayAudioWithVariant("NoPower", Random.Range(1, 4));
-                return;
-            }
             TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
             foreach (var item in terminalObjects)
             {
@@ -304,15 +287,20 @@ namespace LC_VEGA
             }
             if (doorsExist)
             {
+                if (!facilityHasPower)
+                {
+                    PlayRandomLine("NoPower", Random.Range(1, 4));
+                    return;
+                }
                 Plugin.LogToConsole("Closing all doors", "debug");
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    PlayAudioWithVariant("AllDoorsClosed", Random.Range(1, 3), 0.7f);
+                    PlayRandomLine("AllDoorsClosed", Random.Range(1, 3), 0.7f);
                 }
             }
             else
             {
-                PlayAudio("NoDoors");
+                PlayLine("NoDoors");
             }
         }
 
@@ -332,7 +320,7 @@ namespace LC_VEGA
 
             if (secureDoors.Count() == 0)
             {
-                PlayAudio("NoDoors");
+                PlayLine("NoDoors");
                 return null;
             }
 
@@ -386,6 +374,13 @@ namespace LC_VEGA
                     closestTurret = turret;
                 }
             }
+
+            if (!StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 10000))
+            {
+                noVisibleTurret = true;
+                return null;
+            }
+
             distanceToTurret = distances.Min();
             return closestTurret;
         }
@@ -420,6 +415,13 @@ namespace LC_VEGA
                     closestToil = toil;
                 }
             }
+
+            if (!StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestToil.transform.position, 45, 10000))
+            {
+                noVisibleTurret = true;
+                return null;
+            }
+
             distanceToToil = distances.Min();
             return closestToil;
         }
@@ -429,23 +431,9 @@ namespace LC_VEGA
             TerminalAccessibleObject? closestTurret = GetClosestTurret();
             if (closestTurret != null)
             {
-                if (Vector3.Distance(closestTurret.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f)
-                {
-                    if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 240))
-                    {
-                        Plugin.LogToConsole("Disabling turret", "debug");
-                        closestTurret.CallFunctionFromTerminal();
-                        turretDisabled = true;
-                    }
-                    else
-                    {
-                        noVisibleTurret = true;
-                    }
-                }
-                else
-                {
-                    noTurretNearby = true;
-                }
+                Plugin.LogToConsole("Disabling turret", "debug");
+                closestTurret.CallFunctionFromTerminal();
+                turretDisabled = true;
             }
         }
 
@@ -462,24 +450,15 @@ namespace LC_VEGA
             {
                 distanceToTurret = distanceToToil + 10;
             }
-            if (Vector3.Distance(closestToil.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 51f && distanceToToil < distanceToTurret)
+            if (distanceToToil < distanceToTurret)
             {
-                if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestToil.transform.position, 45, 240))
-                {
-                    Plugin.LogToConsole("Disabling toil turret", "debug");
-                    closestToil.CallFunctionFromTerminal();
-                    toilDisabled = true;
-                    turretDisabled = true;
-                }
-                else
-                {
-                    noVisibleTurret = true;
-                    toilDisabled = false;
-                }
+                Plugin.LogToConsole("Disabling toil turret", "debug");
+                closestToil.CallFunctionFromTerminal();
+                toilDisabled = true;
+                turretDisabled = true;
             }
             else
             {
-                noTurretNearby = true;
                 toilDisabled = false;
             }
         }
@@ -490,20 +469,16 @@ namespace LC_VEGA
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    PlayAudioWithVariant("TurretDisabled", Random.Range(1, 4), 0.7f);
+                    PlayRandomLine("TurretDisabled", Random.Range(1, 4), 0.7f);
                 }
             }
             else if (noVisibleTurret)
             {
-                PlayAudio("NoVisibleTurret");
-            }
-            else if (noTurretNearby)
-            {
-                PlayAudio("NoTurretNearby");
+                PlayLine("NoVisibleTurret");
             }
             else if (noTurrets && noToils)
             {
-                PlayAudio("NoTurrets");
+                PlayLine("NoTurrets");
             }
         }
 
@@ -523,12 +498,12 @@ namespace LC_VEGA
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    PlayAudioWithVariant("AllTurretsDisabled", Random.Range(1, 4), 0.7f);
+                    PlayRandomLine("AllTurretsDisabled", Random.Range(1, 4), 0.7f);
                 }
             }
             else
             {
-                PlayAudio("NoTurrets");
+                PlayLine("NoTurrets");
             }
         }
 
@@ -559,7 +534,7 @@ namespace LC_VEGA
 
             if (mines.Count() == 0)
             {
-                PlayAudio("NoMines");
+                PlayLine("NoMines");
                 return null;
             }
 
@@ -590,12 +565,12 @@ namespace LC_VEGA
                     closestMine.CallFunctionFromTerminal();
                     if (Plugin.vocalLevel.Value >= VocalLevels.High)
                     {
-                        PlayAudioWithVariant("MineDisabled", Random.Range(1, 4));
+                        PlayRandomLine("MineDisabled", Random.Range(1, 4));
                     }
                 }
                 else
                 {
-                    PlayAudio("NoMineNearby");
+                    PlayLine("NoMineNearby");
                 }
             }
         }
@@ -617,12 +592,12 @@ namespace LC_VEGA
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                 {
-                    PlayAudioWithVariant("AllMinesDisabled", Random.Range(1, 4));
+                    PlayRandomLine("AllMinesDisabled", Random.Range(1, 4));
                 }
             }
             else
             {
-                PlayAudio("NoMines");
+                PlayLine("NoMines");
             }
         }
 
@@ -645,7 +620,7 @@ namespace LC_VEGA
 
             if (traps.Count() == 0)
             {
-                PlayAudio("NoTraps");
+                PlayLine("NoTraps");
                 return null;
             }
 
@@ -676,12 +651,12 @@ namespace LC_VEGA
                     closestTrap.CallFunctionFromTerminal();
                     if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                     {
-                        PlayAudioWithVariant("TrapDisabled", Random.Range(1, 4));
+                        PlayRandomLine("TrapDisabled", Random.Range(1, 4));
                     }
                 }
                 else
                 {
-                    PlayAudio("NoTrapNearby");
+                    PlayLine("NoTrapNearby");
                 }
             }
         }
@@ -706,12 +681,12 @@ namespace LC_VEGA
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                 {
-                    PlayAudioWithVariant("AllTrapsDisabled", Random.Range(1, 4));
+                    PlayRandomLine("AllTrapsDisabled", Random.Range(1, 4));
                 }
             }
             else
             {
-                PlayAudio("NoTraps");
+                PlayLine("NoTraps");
             }
         }
 
@@ -724,19 +699,19 @@ namespace LC_VEGA
                 {
                     if (Plugin.vocalLevel.Value >= VocalLevels.High)
                     {
-                        PlayAudioWithVariant("Teleport", Random.Range(1, 4));
+                        PlayRandomLine("Teleport", Random.Range(1, 4));
                     }
                     teleporter.PressTeleportButtonServerRpc();
                 }
                 else
                 {
-                    PlayAudio("TeleporterOnCooldown");
+                    PlayLine("TeleporterOnCooldown");
                     Plugin.LogToConsole("The teleporter is on cooldown!", "warn");
                 }
             }
             else
             {
-                PlayAudioWithVariant("NoTeleporter", Random.Range(1, 4));
+                PlayRandomLine("NoTeleporter", Random.Range(1, 4));
                 // Plugin.LogToConsole("You might need a teleporter for that", "warn");
             }
         }
@@ -750,22 +725,22 @@ namespace LC_VEGA
                 {
                     if (shipLights.areLightsOn)
                     {
-                        PlayAudio("LightsAlreadyOn");
+                        PlayLine("LightsAlreadyOn");
                     }
                     else
                     {
-                        PlayAudio("LightsOn");
+                        PlayLine("LightsOn");
                     }
                 }
                 else
                 {
                     if (!shipLights.areLightsOn)
                     {
-                        PlayAudio("LightsAlreadyOff");
+                        PlayLine("LightsAlreadyOff");
                     }
                     else
                     {
-                        PlayAudio("LightsOff");
+                        PlayLine("LightsOff");
                     }
                 }
 
@@ -781,7 +756,11 @@ namespace LC_VEGA
             {
                 if (ModChecker.hasMalfunctions)
                 {
-                    if (State.MalfunctionDistortion.Active || State.MalfunctionPower.Active)
+                    if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                    if (powerTriggeredProp != null) powerTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                    if (teleporterTriggeredProp != null) teleporterTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+
+                    if (distortionTriggered || powerTriggered)
                     {
                         itemsText.SetText(itemsTopText + "<color=yellow>Data unavailable</color>");
                         enemiesText.SetText(enemiesTopText + "<color=yellow>Data unavailable</color>");
@@ -869,23 +848,23 @@ namespace LC_VEGA
             switch (TimeOfDay.Instance.dayMode)
             {
                 case DayMode.None:
-                    PlayAudio("None");
+                    PlayLine("None");
                     Plugin.LogToConsole("No day mode found", "warn");
                     break;
                 case DayMode.Dawn:
-                    PlayAudio("Dawn");
+                    PlayLine("Dawn");
                     break;
                 case DayMode.Noon:
-                    PlayAudio("Noon");
+                    PlayLine("Noon");
                     break;
                 case DayMode.Sundown:
-                    PlayAudio("Sundown");
+                    PlayLine("Sundown");
                     break;
                 case DayMode.Midnight:
-                    PlayAudio("Midnight");
+                    PlayLine("Midnight");
                     break;
                 default:
-                    PlayAudio("None");
+                    PlayLine("None");
                     Plugin.LogToConsole("No day mode found", "warn");
                     break;
             }
@@ -897,7 +876,7 @@ namespace LC_VEGA
 
             if (boosters.Count() == 0)
             {
-                PlayAudio("NoBoosters");
+                PlayLine("NoBoosters");
                 return null;
             }
 
@@ -937,7 +916,7 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayAudio("NoBoostersNearby");
+                        PlayLine("NoBoostersNearby");
                     }
                 }
             }
@@ -956,11 +935,11 @@ namespace LC_VEGA
 
             if (StartOfRound.Instance.livingPlayers == 1 && deadPlayers == 0)
             {
-                PlayAudio("CrewStatusSolo");
+                PlayLine("CrewStatusSolo");
             }
             else
             {
-                PlayAudio("GettingCrewStatus");
+                PlayLine("GettingCrewStatus");
 
                 yield return new WaitForSeconds(delay);
 
@@ -973,7 +952,7 @@ namespace LC_VEGA
                 }
                 if (StartOfRound.Instance.livingPlayers == 1)
                 {
-                    PlayAudio("GoodLuck", 2.5f);
+                    PlayLine("GoodLuck", 2.5f);
                     livingPlayers = "1 employee alive\n";
                     HUDManager.Instance.DisplayTip(header, livingPlayers + deceasedPlayers, isWarning: true);
                 }
@@ -981,7 +960,7 @@ namespace LC_VEGA
                 {
                     if (Plugin.vocalLevel.Value >= VocalLevels.High)
                     {
-                        PlayAudioWithVariant("ReportComplete", Random.Range(1, 4));
+                        PlayRandomLine("ReportComplete", Random.Range(1, 4));
                     }
                     HUDManager.Instance.DisplayTip(header, livingPlayers + deceasedPlayers);
                 }
@@ -1008,16 +987,16 @@ namespace LC_VEGA
             {
                 if (playersInShip.Count > 0)
                 {
-                    PlayAudio("CrewInShipSolo");
+                    PlayLine("CrewInShipSolo");
                 }
                 else
                 {
-                    PlayAudio("CrewOutsideShipSolo");
+                    PlayLine("CrewOutsideShipSolo");
                 }
             }
             else
             {
-                PlayAudio("GettingCrewInShip");
+                PlayLine("GettingCrewInShip");
 
                 yield return new WaitForSeconds(delay);
 
@@ -1044,20 +1023,21 @@ namespace LC_VEGA
 
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    PlayAudioWithVariant("ReportComplete", Random.Range(2, 4));
+                    PlayRandomLine("ReportComplete", Random.Range(2, 4));
                 }
                 HUDManager.Instance.DisplayTip(header, "<size=15>" + body + "</size>");
             }
         }
 
-        internal static IEnumerator GetScrapLeft(float delay = 5f)
+        internal static IEnumerator GetScrapLeft(string message, float delay = 5f)
         {
             int scrapLeft = 0;
             int scrapInShip = 0;
             int creditsLeft = 0;
             int creditsInShip = 0;
 
-            PlayAudioWithVariant("PerformingScrapScan", Random.Range(1, 4));
+            if (message.ToLower().Contains("item")) PlayLine("PerformingItemScan");
+            PlayLine("PerformingScrapScan");
 
             yield return new WaitForSeconds(delay);
 
@@ -1117,7 +1097,7 @@ namespace LC_VEGA
 
             if (Plugin.vocalLevel.Value >= VocalLevels.High)
             {
-                PlayAudioWithVariant("ScrapScanComplete", Random.Range(1, 4));
+                PlayRandomLine("ScrapScanComplete", Random.Range(1, 4));
             }
             HUDManager.Instance.DisplayTip(header, "<size=15>" + scrapOutsideStr + "\n" + scrapInShipStr + "</size>");
         }
@@ -1128,6 +1108,15 @@ namespace LC_VEGA
             enemiesTopText = "Entities:\n";
             itemsTopText = "Items:\n";
             scannerRange = 29f;
+
+            stateType = Type.GetType("Malfunctions.State, Malfunctions");
+            if (stateType != null)
+            {
+                distortionTriggeredProp = stateType.GetProperty("MalfunctionDistortion");
+                powerTriggeredProp = stateType.GetProperty("MalfunctionPower");
+                teleporterTriggeredProp = stateType.GetProperty("Malfunction");
+                doorTriggeredProp = stateType.GetProperty("Malfunction");
+            }
         }
 
         public static void Initialize()
@@ -1176,11 +1165,11 @@ namespace LC_VEGA
                             {
                                 listening = true;
                                 Plugin.LogToConsole("Is VEGA listening -> " + listening, "debug");
-                                PlayAudio("Activate");
+                                PlaySFX("Activate");
                             }
                             else
                             {
-                                PlayAudio("AlreadyActive");
+                                PlayLine("AlreadyActive");
                             }
                         }
                     }
@@ -1197,11 +1186,11 @@ namespace LC_VEGA
                             {
                                 listening = false;
                                 Plugin.LogToConsole("Is VEGA listening -> " + listening, "debug");
-                                PlayAudio("Deactivate");
+                                PlaySFX("Deactivate");
                             }
                             else
                             {
-                                PlayAudio("AlreadyInactive");
+                                PlayLine("AlreadyInactive");
                             }
                         }
                     }
@@ -1213,10 +1202,10 @@ namespace LC_VEGA
         {
             if (Plugin.registerStop.Value)
             {
-                Voice.RegisterPhrases(new string[] { "VEGA, shut up", "VEGA, stop", "VEGA, stop talking" });
+                Voice.RegisterPhrases(new string[] { "VEGA, shut up", "VEGA, stop", "VEGA, stop talking", "Shut up, VEGA", "Stop, VEGA", "Stop talking, VEGA" });
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (recognized.Message != "VEGA, shut up" && recognized.Message != "VEGA, stop" && recognized.Message != "VEGA, stop talking") return;
+                    if (recognized.Message != "VEGA, shut up" && recognized.Message != "VEGA, stop" && recognized.Message != "VEGA, stop talking" && recognized.Message != "Shut up, VEGA" && recognized.Message != "Stop, VEGA" && recognized.Message != "Stop talking, VEGA") return;
                     if (recognized.Confidence >= Plugin.confidence.Value)
                     {
                         audioSource.Stop();
@@ -1231,7 +1220,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, thank you" && recognized.Message != "VEGA, thanks" && recognized.Message != "Thank you, VEGA" && recognized.Message != "Thanks, VEGA") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudioWithVariant("NoProblem", Random.Range(1, 5));
+                        PlayRandomLine("NoProblem", Random.Range(1, 5));
                     }
                 });
             }
@@ -1249,9 +1238,10 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1269,9 +1259,10 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1294,7 +1285,7 @@ namespace LC_VEGA
                         if (recognized.Message != "VEGA, info about " + condition + " weather") return;
                         if (recognized.Confidence >= Plugin.confidence.Value && listening)
                         {
-                            PlayAudioWithVariant(condition, 2);
+                            PlayRandomLine(condition, 2);
                         }
                     });
                 }
@@ -1313,7 +1304,7 @@ namespace LC_VEGA
                     {
                         if (performAdvancedScan)
                         {
-                            PlayAudio("ScannerAlreadyActive");
+                            PlayLine("ScannerAlreadyActive");
                             return;
                         }
 
@@ -1325,7 +1316,7 @@ namespace LC_VEGA
 
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {
-                            PlayAudioWithVariant("AdvancedScannerEnabled", Random.Range(1, 4));
+                            PlayRandomLine("AdvancedScannerEnabled", Random.Range(1, 4));
                         }
                     }
                 });
@@ -1337,7 +1328,7 @@ namespace LC_VEGA
                     {
                         if (!performAdvancedScan)
                         {
-                            PlayAudio("ScannerAlreadyInactive");
+                            PlayLine("ScannerAlreadyInactive");
                             return;
                         }
 
@@ -1349,7 +1340,7 @@ namespace LC_VEGA
 
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {
-                            PlayAudioWithVariant("AdvancedScannerDisabled", Random.Range(1, 4));
+                            PlayRandomLine("AdvancedScannerDisabled", Random.Range(1, 4));
                         }
                     }
                 });
@@ -1414,7 +1405,7 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
-                            CoroutineManager.StartCoroutine(GetScrapLeft());
+                            CoroutineManager.StartCoroutine(GetScrapLeft(recognized.Message));
                         }
                     }
                 });
@@ -1435,9 +1426,10 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionTeleporter.Active)
+                                if (teleporterTriggeredProp != null) teleporterTriggered = (bool)teleporterTriggeredProp.GetValue(null, null);
+                                if (teleporterTriggered)
                                 {
-                                    PlayAudio("TeleporterMalfunction");
+                                    PlayLine("TeleporterMalfunction");
                                     return;
                                 }
                             }
@@ -1458,26 +1450,28 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (State.MalfunctionDistortion.Active)
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
                                 {
-                                    PlayAudio("CommsMalfunction");
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
                             if (StartOfRound.Instance.mapScreen.targetedPlayer == StartOfRound.Instance.localPlayerController)
                             {
-                                PlayAudio("RadarAlreadyFocused");
+                                PlayLine("RadarAlreadyFocused");
                                 return;
                             }
                             int index = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.transform == StartOfRound.Instance.localPlayerController.transform);
                             StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(index);
                         }
-                        PlayAudioWithVariant("RadarSwitch", Random.Range(1, 4));
+                        PlayRandomLine("RadarSwitch", Random.Range(1, 4));
                     }
                 });
             }
@@ -1498,9 +1492,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1518,9 +1519,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1541,9 +1549,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1561,9 +1576,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1589,14 +1611,16 @@ namespace LC_VEGA
                             {
                                 if (ModChecker.hasMalfunctions)
                                 {
-                                    if (State.MalfunctionPower.Active)
+                                    if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                    if (powerTriggered)
                                     {
-                                        PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                        PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                         return;
                                     }
-                                    if (State.MalfunctionDoor.Active)
+                                    if (doorTriggeredProp != null) doorTriggered = (bool)doorTriggeredProp.GetValue(null, null);
+                                    if (doorTriggered)
                                     {
-                                        PlayAudio("DoorMalfunction");
+                                        PlayLine("DoorMalfunction");
                                         return;
                                     }
                                 }
@@ -1606,7 +1630,7 @@ namespace LC_VEGA
                                 {
                                     if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                                     {
-                                        PlayAudio("ShipDoorsOpened", 0.7f);
+                                        PlayLine("ShipDoorsOpened", 0.7f);
                                     }
                                 }
                             }
@@ -1626,9 +1650,10 @@ namespace LC_VEGA
                             {
                                 if (ModChecker.hasMalfunctions)
                                 {
-                                    if (State.MalfunctionPower.Active)
+                                    if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                    if (powerTriggered)
                                     {
-                                        PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                        PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                         return;
                                     }
                                 }
@@ -1638,7 +1663,7 @@ namespace LC_VEGA
                                 {
                                     if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                                     {
-                                        PlayAudio("ShipDoorsClosed", 0.7f);
+                                        PlayLine("ShipDoorsClosed", 0.7f);
                                     }
                                 }
                             }
@@ -1664,16 +1689,23 @@ namespace LC_VEGA
                             {
                                 if (ModChecker.hasMalfunctions)
                                 {
-                                    if (State.MalfunctionPower.Active)
+                                    if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                    if (powerTriggered)
                                     {
-                                        PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                        PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                        return;
+                                    }
+                                    if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                    if (distortionTriggered)
+                                    {
+                                        PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                         return;
                                     }
                                 }
                                 SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
                                 if (translator == null)
                                 {
-                                    PlayAudio("NoSignalTranslator");
+                                    PlayLine("NoSignalTranslator");
                                     return;
                                 }
                                 HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
@@ -1698,9 +1730,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1718,9 +1757,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1746,19 +1792,27 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
                             turretDisabled = false;
                             noVisibleTurret = false;
-                            noTurretNearby = false;
+                            // noTurretNearby = false;
                             noTurrets = false;
-                            noToils = false;
+                            noToils = true;
                             if (ModChecker.hasToilHead)
                             {
+                                noToils = false;
                                 DisableToil();
                             }
                             if (!toilDisabled || !ModChecker.hasToilHead)
@@ -1782,9 +1836,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1812,9 +1873,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1835,9 +1903,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1860,9 +1935,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1883,9 +1965,16 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (State.MalfunctionPower.Active)
+                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
+                                if (powerTriggered)
                                 {
-                                    PlayAudioWithVariant("PowerMalfunction", Random.Range(1, 4));
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
+                                if (distortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
                                 }
                             }
@@ -1907,7 +1996,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about experimentation") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("41-EXP");
+                        PlayLine("41-EXP");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about assurance" });
@@ -1916,7 +2005,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about assurance") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("220-ASS");
+                        PlayLine("220-ASS");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about vow" });
@@ -1925,7 +2014,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about vow") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("56-VOW");
+                        PlayLine("56-VOW");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about offense" });
@@ -1934,7 +2023,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about offense") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("21-OFF");
+                        PlayLine("21-OFF");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about march" });
@@ -1943,7 +2032,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about march") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("61-MAR");
+                        PlayLine("61-MAR");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about adamance" });
@@ -1952,7 +2041,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about adamance") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("20-ADA");
+                        PlayLine("20-ADA");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about rend" });
@@ -1961,7 +2050,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about rend") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("85-REN");
+                        PlayLine("85-REN");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about dine" });
@@ -1970,7 +2059,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about dine") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("7-DIN");
+                        PlayLine("7-DIN");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about titan" });
@@ -1979,7 +2068,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about titan") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("8-TIT");
+                        PlayLine("8-TIT");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about artifice" });
@@ -1988,7 +2077,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about artifice") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("68-ART");
+                        PlayLine("68-ART");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about embrion" });
@@ -1997,7 +2086,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about embrion") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("5-EMB");
+                        PlayLine("5-EMB");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about liquidation" });
@@ -2006,7 +2095,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about liquidation") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("44-LIQ");
+                        PlayLine("44-LIQ");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about mars" });
@@ -2015,7 +2104,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about mars") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("4-MARS");
+                        PlayLine("4-MARS");
                     }
                 });
                 Voice.RegisterPhrases(new string[] { "VEGA, info about the Company", "VEGA, info about the Company building", "VEGA, info about Gordion" });
@@ -2024,7 +2113,7 @@ namespace LC_VEGA
                     if (recognized.Message != "VEGA, info about the Company" && recognized.Message != "VEGA, info about the Company building" && recognized.Message != "VEGA, info about Gordion") return;
                     if (recognized.Confidence >= Plugin.confidence.Value && listening)
                     {
-                        PlayAudio("71-GOR");
+                        PlayLine("71-GOR");
                     }
                 });
 
@@ -2444,11 +2533,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(16))
                         {
-                            PlayAudio("BaboonHawk");
+                            PlayLine("BaboonHawk");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2460,11 +2549,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(12))
                         {
-                            PlayAudio("BunkerSpider");
+                            PlayLine("BunkerSpider");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2476,11 +2565,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(4))
                         {
-                            PlayAudio("YippeeBug");
+                            PlayLine("YippeeBug");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2492,11 +2581,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(1))
                         {
-                            PlayAudio("Bracken");
+                            PlayLine("Bracken");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2508,11 +2597,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(19))
                         {
-                            PlayAudio("Butler");
+                            PlayLine("Butler");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2524,11 +2613,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(7))
                         {
-                            PlayAudio("Coil-Head");
+                            PlayLine("Coil-Head");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2540,11 +2629,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(6))
                         {
-                            PlayAudio("ForestKeeper");
+                            PlayLine("ForestKeeper");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2556,11 +2645,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(3))
                         {
-                            PlayAudio("EyelessDog");
+                            PlayLine("EyelessDog");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2572,11 +2661,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(9))
                         {
-                            PlayAudio("Sandworm");
+                            PlayLine("Sandworm");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2588,11 +2677,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(10))
                         {
-                            PlayAudio("Jester");
+                            PlayLine("Jester");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2604,11 +2693,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(15))
                         {
-                            PlayAudio("Locusts");
+                            PlayLine("Locusts");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2620,11 +2709,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(13))
                         {
-                            PlayAudio("Manticoil");
+                            PlayLine("Manticoil");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2636,11 +2725,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(17))
                         {
-                            PlayAudio("Nutcracker");
+                            PlayLine("Nutcracker");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2652,11 +2741,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(18))
                         {
-                            PlayAudio("OldBird");
+                            PlayLine("OldBird");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2668,11 +2757,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(14))
                         {
-                            PlayAudio("RedBees");
+                            PlayLine("RedBees");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2684,11 +2773,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(5))
                         {
-                            PlayAudio("Slime");
+                            PlayLine("Slime");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2700,11 +2789,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(21))
                         {
-                            PlayAudio("Snakes");
+                            PlayLine("Snakes");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2716,11 +2805,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(0))
                         {
-                            PlayAudio("SnareFlea");
+                            PlayLine("SnareFlea");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2732,11 +2821,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(11))
                         {
-                            PlayAudio("SporeLizard");
+                            PlayLine("SporeLizard");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2748,11 +2837,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(2))
                         {
-                            PlayAudio("Thumper");
+                            PlayLine("Thumper");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2768,16 +2857,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
                             {
-                                PlayAudio("RedWood Giant");
+                                PlayLine("RedWood Giant");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2791,16 +2880,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
                             {
-                                PlayAudio("DriftWood Giant");
+                                PlayLine("DriftWood Giant");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2814,16 +2903,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
                             {
-                                PlayAudio("Stalker");
+                                PlayLine("Stalker");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2837,16 +2926,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
                             {
-                                PlayAudio("Football");
+                                PlayLine("Football");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2860,16 +2949,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
                             {
-                                PlayAudio("Shy guy");
+                                PlayLine("Shy guy");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2883,16 +2972,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
                             {
-                                PlayAudio("Locker");
+                                PlayLine("Locker");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2906,16 +2995,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
                             {
-                                PlayAudio("Siren Head");
+                                PlayLine("Siren Head");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2929,16 +3018,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
                             {
-                                PlayAudio("Rolling Giant");
+                                PlayLine("Rolling Giant");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2952,16 +3041,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
                             {
-                                PlayAudio("Peepers");
+                                PlayLine("Peepers");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2975,16 +3064,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
                             {
-                                PlayAudio("Shockwave Drone");
+                                PlayLine("Shockwave Drone");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -2998,16 +3087,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
                             {
-                                PlayAudio("Cleaning Drone");
+                                PlayLine("Cleaning Drone");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -3021,16 +3110,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
                             {
-                                PlayAudio("Moving Turret");
+                                PlayLine("Moving Turret");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -3044,16 +3133,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
                             {
-                                PlayAudio("Maggie");
+                                PlayLine("Maggie");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -3067,16 +3156,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
                             {
-                                PlayAudio("Shrimp");
+                                PlayLine("Shrimp");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(1, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(1, 5));
                         }
                     }
                 });
@@ -3096,11 +3185,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(16))
                         {
-                            PlayAudio("BaboonHawkShort");
+                            PlayLine("BaboonHawkShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3112,11 +3201,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(12))
                         {
-                            PlayAudio("BunkerSpiderShort");
+                            PlayLine("BunkerSpiderShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3128,11 +3217,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(4))
                         {
-                            PlayAudio("YippeeBugShort");
+                            PlayLine("YippeeBugShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3144,11 +3233,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(1))
                         {
-                            PlayAudio("BrackenShort");
+                            PlayLine("BrackenShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3160,11 +3249,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(19))
                         {
-                            PlayAudio("ButlerShort");
+                            PlayLine("ButlerShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3176,11 +3265,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(7))
                         {
-                            PlayAudio("Coil-HeadShort");
+                            PlayLine("Coil-HeadShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3192,11 +3281,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(6))
                         {
-                            PlayAudio("ForestKeeperShort");
+                            PlayLine("ForestKeeperShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3208,11 +3297,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(3))
                         {
-                            PlayAudio("EyelessDogShort");
+                            PlayLine("EyelessDogShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3224,11 +3313,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(9))
                         {
-                            PlayAudio("SandwormShort");
+                            PlayLine("SandwormShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3240,11 +3329,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(10))
                         {
-                            PlayAudio("JesterShort");
+                            PlayLine("JesterShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3256,11 +3345,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(15))
                         {
-                            PlayAudio("LocustsShort");
+                            PlayLine("LocustsShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3272,11 +3361,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(13))
                         {
-                            PlayAudio("ManticoilShort");
+                            PlayLine("ManticoilShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3288,11 +3377,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(17))
                         {
-                            PlayAudio("NutcrackerShort");
+                            PlayLine("NutcrackerShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3304,11 +3393,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(18))
                         {
-                            PlayAudio("OldBirdShort");
+                            PlayLine("OldBirdShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3320,11 +3409,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(14))
                         {
-                            PlayAudio("RedBeesShort");
+                            PlayLine("RedBeesShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3336,11 +3425,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(5))
                         {
-                            PlayAudio("SlimeShort");
+                            PlayLine("SlimeShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3352,11 +3441,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(21))
                         {
-                            PlayAudio("SnakesShort");
+                            PlayLine("SnakesShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3368,11 +3457,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(0))
                         {
-                            PlayAudio("SnareFleaShort");
+                            PlayLine("SnareFleaShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3384,11 +3473,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(11))
                         {
-                            PlayAudio("SporeLizardShort");
+                            PlayLine("SporeLizardShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3400,11 +3489,11 @@ namespace LC_VEGA
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(2))
                         {
-                            PlayAudio("ThumperShort");
+                            PlayLine("ThumperShort");
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3420,16 +3509,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("RedWood Giant")).creatureFileID))
                             {
-                                PlayAudio("RedWood GiantShort");
+                                PlayLine("RedWood GiantShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3443,16 +3532,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("DriftWood Giant")).creatureFileID))
                             {
-                                PlayAudio("DriftWood GiantShort");
+                                PlayLine("DriftWood GiantShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3466,16 +3555,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Stalker")).creatureFileID))
                             {
-                                PlayAudio("StalkerShort");
+                                PlayLine("StalkerShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3489,16 +3578,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Football")).creatureFileID))
                             {
-                                PlayAudio("FootballShort");
+                                PlayLine("FootballShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3512,16 +3601,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shy guy")).creatureFileID))
                             {
-                                PlayAudio("Shy guyShort");
+                                PlayLine("Shy guyShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         else
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3535,16 +3624,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Locker")).creatureFileID))
                             {
-                                PlayAudio("LockerShort");
+                                PlayLine("LockerShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3558,16 +3647,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Siren Head")).creatureFileID))
                             {
-                                PlayAudio("Siren HeadShort");
+                                PlayLine("Siren HeadShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3581,16 +3670,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Rolling Giant")).creatureFileID))
                             {
-                                PlayAudio("Rolling GiantShort");
+                                PlayLine("Rolling GiantShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3604,16 +3693,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
                             {
-                                PlayAudio("PeepersShort");
+                                PlayLine("PeepersShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3627,16 +3716,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shockwave Drone")).creatureFileID))
                             {
-                                PlayAudio("Shockwave DroneShort");
+                                PlayLine("Shockwave DroneShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3650,16 +3739,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Peepers")).creatureFileID))
                             {
-                                PlayAudio("Cleaning DroneShort");
+                                PlayLine("Cleaning DroneShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3673,16 +3762,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Moving Turret")).creatureFileID))
                             {
-                                PlayAudio("Moving TurretShort");
+                                PlayLine("Moving TurretShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3696,16 +3785,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Maggie")).creatureFileID))
                             {
-                                PlayAudio("MaggieShort");
+                                PlayLine("MaggieShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });
@@ -3719,16 +3808,16 @@ namespace LC_VEGA
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals("Shrimp")).creatureFileID))
                             {
-                                PlayAudio("ShrimpShort");
+                                PlayLine("ShrimpShort");
                             }
                             else
                             {
-                                PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
                             }
                         }
                         catch (System.Exception)
                         {
-                            PlayAudioWithVariant("NoEntityData", Random.Range(2, 5));
+                            PlayRandomLine("NoEntityData", Random.Range(2, 5));
                         }
                     }
                 });

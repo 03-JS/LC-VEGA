@@ -1,12 +1,9 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Unity.Netcode;
+using System.Reflection;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace LC_VEGA.Patches
 {
@@ -23,6 +20,15 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void SaveValues()
         {
+            Plugin.LogToConsole("Saving...", "debug");
+            if (ModChecker.hasDiversity)
+            {
+                if (!DiversityPatches.firstTimeWelcome || !DiversityPatches.firstTimeReply)
+                {
+                    SaveManager.firstTimeDiversity = false;
+                }
+            }
+            SaveManager.hadDiversity = ModChecker.hasDiversity;
             SaveManager.SaveToFile();
         }
 
@@ -58,27 +64,45 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         public static void ReadInput()
         {
-            if ((VEGA.audioSource.clip.name.Equals("Activate") || VEGA.audioSource.clip.name.Equals("Deactivate")) && VEGA.audioSource.isPlaying) return;
+            if (StartOfRound.Instance.localPlayerController.inTerminalMenu || StartOfRound.Instance.localPlayerController.isTypingChat) return;
+            if ((VEGA.sfxAudioSource.clip.name.Equals("Activate") || VEGA.sfxAudioSource.clip.name.Equals("Deactivate")) && VEGA.sfxAudioSource.isPlaying) return;
             if (Plugin.registerActivation.Value && Plugin.useManualListening.Value && Plugin.PlayerInputInstance.Toggle.triggered)
             {
                 if (!VEGA.listening)
                 {
-                    VEGA.PlayAudio("Activate");
+                    VEGA.PlaySFX("Activate");
                 }
                 else
                 {
-                    VEGA.PlayAudio("Deactivate");
+                    VEGA.PlaySFX("Deactivate");
                 }
                 VEGA.listening = !VEGA.listening;
                 Plugin.LogToConsole("Is VEGA listening -> " + VEGA.listening, "debug");
             }
         }
 
+        [HarmonyPatch(typeof(RoundManager), "Update")]
+        [HarmonyPostfix]
+        static void UpdateVolume()
+        {
+            if (VEGA.audioSource != null)
+            {
+                // VEGA
+                VEGA.audioSource.volume = Plugin.volume.Value; 
+                VEGA.audioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
+
+                // SFXs
+                VEGA.sfxAudioSource.volume = Plugin.volume.Value;
+                VEGA.sfxAudioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
+            }
+        }
+
         [HarmonyPatch(typeof(PlayerControllerB), "KillPlayerClientRpc")]
         [HarmonyPostfix]
-        static void DisableVEGA()
+        static void DisableVEGAOnDeath()
         {
             VEGA.audioSource.Stop();
+            VEGA.sfxAudioSource.Stop();
         }
 
         [HarmonyPatch(typeof(RoundManager), "FinishGeneratingLevel")]
@@ -93,35 +117,35 @@ namespace LC_VEGA.Patches
                     case LevelWeatherType.Rainy:
                         if (!rainyWeatherWarned)
                         {
-                            VEGA.PlayAudioWithVariant("Rainy", 1, delay);
+                            VEGA.PlayRandomLine("Rainy", 1, delay);
                             rainyWeatherWarned = true;
                         }
                         break;
                     case LevelWeatherType.Stormy:
                         if (!stormyWeatherWarned)
                         {
-                            VEGA.PlayAudioWithVariant("Stormy", 1, delay);
+                            VEGA.PlayRandomLine("Stormy", 1, delay);
                             stormyWeatherWarned = true;
                         }
                         break;
                     case LevelWeatherType.Foggy:
                         if (!foggyWeatherWarned)
                         {
-                            VEGA.PlayAudioWithVariant("Foggy", 1, delay);
+                            VEGA.PlayRandomLine("Foggy", 1, delay);
                             foggyWeatherWarned = true;
                         }
                         break;
                     case LevelWeatherType.Flooded:
                         if (!floodedWeatherWarned)
                         {
-                            VEGA.PlayAudioWithVariant("Flooded", 1, delay);
+                            VEGA.PlayRandomLine("Flooded", 1, delay);
                             floodedWeatherWarned = true;
                         }
                         break;
                     case LevelWeatherType.Eclipsed:
                         if (!eclipsedWeatherWarned)
                         {
-                            VEGA.PlayAudioWithVariant("Eclipsed", 1, delay);
+                            VEGA.PlayRandomLine("Eclipsed", 1, delay);
                             eclipsedWeatherWarned = true;
                         }
                         break;

@@ -19,9 +19,14 @@ using static BepInEx.BepInDependency;
 namespace LC_VEGA
 {
     [BepInPlugin(modGUID, modName, modVersion)]
+    [LobbyCompatibility(CompatibilityLevel.ClientOnly, VersionStrictness.None)]
+    [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.HardDependency)]
     [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.HardDependency)]
     [BepInDependency("com.rune580.LethalCompanyInputUtils", DependencyFlags.HardDependency)]
-    [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.SoftDependency)]
+    [BepInDependency("me.loaforc.facilitymeltdown", DependencyFlags.SoftDependency)]
+    [BepInDependency("com.zealsprince.malfunctions", DependencyFlags.SoftDependency)]
+    [BepInDependency("com.github.zehsteam.ToilHead", DependencyFlags.SoftDependency)]
+    [BepInDependency("Chaos.Diversity", DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
         private const string modGUID = "JS03.LC-VEGA";
@@ -37,8 +42,15 @@ namespace LC_VEGA
         public static ConfigEntry<bool> playIntro;
         public static ConfigEntry<bool> readBestiaryEntries;
         public static ConfigEntry<bool> giveWeatherInfo;
-        public static ConfigEntry<bool> ignoreMasterVolume;
         public static ConfigEntry<string> messages;
+
+        // Mod interactions values
+        public static ConfigEntry<bool> malfunctionWarnings;
+        public static ConfigEntry<bool> diversitySpeaker;
+
+        // Sound Settings values
+        public static ConfigEntry<float> volume;
+        public static ConfigEntry<bool> ignoreMasterVolume;
 
         // Advanced Scanner config values
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
@@ -98,7 +110,7 @@ namespace LC_VEGA
             GenerateConfigValues();
             CheckInstalledMods();
             ManageSaveValues();
-            
+
             VEGA.Initialize();
             PatchStuff();
         }
@@ -134,7 +146,7 @@ namespace LC_VEGA
             {
                 harmony.PatchAll(typeof(MalfunctionsPatches)); 
             }
-            if (ModChecker.hasDiveristy)
+            if (ModChecker.hasDiversity)
             {
                 harmony.PatchAll(typeof(DiversityPatches));
             }
@@ -144,17 +156,10 @@ namespace LC_VEGA
         {
             mls.LogInfo("Looking for compatible mods...");
 
-            // BMX Lobby compat
-            if (ModChecker.CheckForMod("BMX.LobbyCompatibility"))
-            {
-                PluginHelper.RegisterPlugin(modGUID, Version.Parse(modVersion), CompatibilityLevel.ClientOnly, VersionStrictness.None);
-            }
-
-            // Other mods
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
-            ModChecker.hasDiveristy = ModChecker.CheckForMod("Chaos.Diversity");
             ModChecker.hasFacilityMeltdown = ModChecker.CheckForMod("me.loaforc.facilitymeltdown");
+            ModChecker.hasDiversity = ModChecker.CheckForMod("Chaos.Diversity");
         }
 
         internal void ManageSaveValues()
@@ -162,14 +167,16 @@ namespace LC_VEGA
             mls.LogDebug("Looking for: " + Application.persistentDataPath + SaveManager.fileName);
             SaveManager.playedIntro = false;
             SaveManager.firstTimeDiversity = true;
+            SaveManager.hadDiversity = false;
             if (File.Exists(Application.persistentDataPath + SaveManager.fileName))
             {
-                mls.LogDebug("File found. Loading values...");
-                SaveManager.playedIntro = SaveManager.LoadFromFile(0);
-                SaveManager.firstTimeDiversity = SaveManager.LoadFromFile(1);
-                
+                mls.LogDebug("File found. Reading values...");
+                SaveManager.playedIntro = SaveManager.GetValueFromIndex(0);
+                SaveManager.firstTimeDiversity = SaveManager.GetValueFromIndex(1);
+                SaveManager.hadDiversity = SaveManager.GetValueFromIndex(2);
+
                 // This is so reinstalls / reenables of the mod trigger the first time replies as well
-                if (!ModChecker.hasDiveristy && !SaveManager.firstTimeDiversity)
+                if (!SaveManager.firstTimeDiversity && !SaveManager.hadDiversity)
                 {
                     SaveManager.firstTimeDiversity = true;
                 }
@@ -194,12 +201,6 @@ namespace LC_VEGA
                 "Medium: Gives you useful info, doesn't talk on most interactions. Recommended for intermediate level players.\n" +
                 "High: The default value. Will speak on every interaction. Recommended for inexperienced players." // Description
             );
-            ignoreMasterVolume = Config.Bind(
-                "Dialogue & Interactions", // Config section
-                "Ignore Master Volume setting", // Key of this config
-                false, // Default value
-                "If set to true, VEGA will ignore the game's master volume setting and always play at the same volume level.\nThis setting only applies before joining a game." // Description
-            );
             playIntro = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Play intro", // Key of this config
@@ -223,6 +224,34 @@ namespace LC_VEGA
                 "Signal Translator messages", // Key of this config
                 "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, JESTER, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, HEROBRINE, FOOTBALL, FIEND, SLENDER, LOCKER, SHY GUY, SIRENHEAD, DRIFTWOOD, WALKER, WATCHER, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS", // Default value
                 "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma and a white space, like so -> 'Message, Another message'\nApplies after a game restart." // Description
+            );
+
+            // Mod Interactions
+            malfunctionWarnings = Config.Bind(
+                "Mod Interactions", // Config section
+                "Malfunction Warnings", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will warn you when a malfunction from the Malfunctions mod happens and will also give you some information about it." // Description
+            );
+            diversitySpeaker = Config.Bind(
+                "Mod Interactions", // Config section
+                "Diversity Speaker", // Key of this config
+                false, // Default value
+                "If set to true, VEGA will sometimes reply to Diversity's speaker." // Description
+            );
+
+            // Sound settings
+            volume = Config.Bind(
+                "Sound Settings", // Config section
+                "Volume", // Key of this config
+                1.0f, // Default value
+                new ConfigDescription("Changes how loud VEGA is.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            ignoreMasterVolume = Config.Bind(
+                "Sound Settings", // Config section
+                "Ignore Master Volume setting", // Key of this config
+                false, // Default value
+                "If set to true, VEGA will ignore the game's master volume setting and always play at the same volume level.\nThis setting only applies before joining a game." // Description
             );
 
             // Advanced Scanner

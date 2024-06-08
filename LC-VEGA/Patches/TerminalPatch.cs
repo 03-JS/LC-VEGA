@@ -49,11 +49,11 @@ namespace LC_VEGA.Patches
                 float delay = 0.85f;
                 if (VEGA.enemies.ContainsKey(___currentNode.creatureFileID))
                 {
-                    VEGA.PlayAudio(VEGA.enemies[___currentNode.creatureFileID], delay);
+                    VEGA.PlayLine(VEGA.enemies[___currentNode.creatureFileID], delay);
                 }
                 else if (VEGA.moddedEnemies.Contains(___currentNode.creatureName))
                 {
-                    VEGA.PlayAudio(___currentNode.creatureName, delay);
+                    VEGA.PlayLine(___currentNode.creatureName, delay);
                 }
             }
         }

@@ -17,9 +17,10 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void Start(StartOfRound __instance)
         {
-            Plugin.LogToConsole("Creating the VEGA audio source");
-            GameObject gameObject = new GameObject("VEGA");
-            VEGA.audioSource = gameObject.AddComponent<AudioSource>();
+            Plugin.LogToConsole("Creating the VEGA audio sources");
+            
+            GameObject audioGameObject = new GameObject("VEGA");
+            VEGA.audioSource = audioGameObject.AddComponent<AudioSource>();
             if (VEGA.audioSource != null)
             {
                 Plugin.LogToConsole("VEGA audio source created successfully");
@@ -27,21 +28,36 @@ namespace LC_VEGA.Patches
                 VEGA.audioSource.bypassEffects = true;
                 VEGA.audioSource.bypassListenerEffects = true;
                 VEGA.audioSource.bypassReverbZones = true;
-                VEGA.audioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
             }
             else
             {
                 Plugin.LogToConsole("Unable to create VEGA audio source", "error");
             }
+
+            GameObject sfxGameObject = new GameObject("VEGA-SFXs");
+            VEGA.sfxAudioSource = sfxGameObject.AddComponent<AudioSource>();
+            if (VEGA.sfxAudioSource != null)
+            {
+                Plugin.LogToConsole("VEGA SFXs audio source created successfully");
+                VEGA.sfxAudioSource.playOnAwake = false;
+                VEGA.sfxAudioSource.bypassEffects = true;
+                VEGA.sfxAudioSource.bypassListenerEffects = true;
+                VEGA.sfxAudioSource.bypassReverbZones = true;
+            }
+            else
+            {
+                Plugin.LogToConsole("Unable to create VEGA SFXs audio source", "error");
+            }
+
             if (Plugin.useManualListening.Value && VEGA.listening)
             {
-                VEGA.PlayListeningSoundOnStart();
+                VEGA.PlaySFX("Activate", 3.5f, false);
             }
             if (Plugin.playIntro.Value && !SaveManager.playedIntro)
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                 {
-                    VEGA.PlayIntro();
+                    VEGA.PlayLine("Intro", 4.5f, false);
                 }
             }
             VEGA.creditsChar = HUDManager.Instance.totalValueText.text.ToCharArray()[0];
@@ -49,7 +65,7 @@ namespace LC_VEGA.Patches
             InstantiateAdvancedScannerItems();
         }
 
-        internal static GameObject? ConfigureScannerObjs(HUDManager hudManager, GameObject topLeftCorner, Vector2 pos, float yRotOffset = -25f, string defaultText = "")
+        internal static GameObject? ConfigureScannerObjs(HUDManager hudManager, GameObject topLeftCorner, Vector2 pos, float yPos = -25f, string defaultText = "")
         {
             if (topLeftCorner == null)
             {
@@ -84,7 +100,7 @@ namespace LC_VEGA.Patches
                 if (weightCounterParentRect != null)
                 {
                     RectTransform textComponentRect = textComponent.GetComponent<RectTransform>();
-                    textComponentRect.localRotation = Quaternion.Euler(weightCounterParentRect.localRotation.x, yRotOffset, weightCounterParentRect.localRotation.z);
+                    textComponentRect.localRotation = Quaternion.Euler(weightCounterParentRect.localRotation.x, yPos, weightCounterParentRect.localRotation.z);
                 }
             }
 
@@ -112,6 +128,21 @@ namespace LC_VEGA.Patches
 
             VEGA.enemiesText = HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>();
             VEGA.itemsText = HUDManagerPatch.items.GetComponent<TextMeshProUGUI>();
+        }
+
+        [HarmonyPatch("ReviveDeadPlayers")]
+        [HarmonyPrefix]
+        static void ResetMalfunctionWarnings()
+        {
+            if (ModChecker.hasMalfunctions)
+            {
+                Plugin.LogToConsole("Resetting malfunction warnings", "debug");
+                MalfunctionsPatches.playPowerWarning = true;
+                MalfunctionsPatches.playTpWarning = true;
+                MalfunctionsPatches.playCommsWarning = true;
+                MalfunctionsPatches.playDoorWarning = true;
+                MalfunctionsPatches.playLeverWarning = true; 
+            }
         }
     }
 }

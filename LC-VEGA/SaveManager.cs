@@ -12,22 +12,36 @@ namespace LC_VEGA
 
         public static bool playedIntro;
         public static bool firstTimeDiversity;
-        // public static bool firstTimeGary;
+        public static bool hadDiversity;
 
         public static void SaveToFile()
         {
             using BinaryWriter writer = new BinaryWriter(File.Open(Application.persistentDataPath + fileName, FileMode.Create));
             writer.Write(playedIntro);
             writer.Write(firstTimeDiversity);
-            // writer.Write(firstTimeGary);
+            writer.Write(hadDiversity);
         }
 
-        public static bool LoadFromFile(int index)
+        public static List<bool> ReadFromFile()
         {
-            using BinaryReader reader = new BinaryReader(File.Open(Application.persistentDataPath + fileName, FileMode.Open));
-            while (reader.BaseStream.Position == index)
+            List<bool> values = new List<bool>();
+            using (FileStream fs = new FileStream(Application.persistentDataPath + fileName, FileMode.Open, FileAccess.Read))
+            using (BinaryReader reader = new BinaryReader(fs))
             {
-                return reader.ReadBoolean();
+                while (fs.Position < fs.Length)
+                {
+                    values.Add(reader.ReadBoolean());
+                }
+            }
+            return values;
+        }
+
+        public static bool GetValueFromIndex(int index)
+        {
+            List<bool> values = ReadFromFile();
+            if (values.Count < index)
+            {
+                return values[index];
             }
             return false;
         }

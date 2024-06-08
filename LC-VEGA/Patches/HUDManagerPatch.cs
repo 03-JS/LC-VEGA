@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -22,16 +21,30 @@ namespace LC_VEGA.Patches
                 {
                     if (StartOfRound.Instance.localPlayerController.isInsideFactory)
                     {
-                        VEGA.PlayAudio("FacilityMeltdownInside", 1.5f);
+                        VEGA.PlayRandomLine("FacilityMeltdownInside", Random.Range(1, 3), 3.65f);
                     }
                     else
                     {
-                        VEGA.PlayAudio("FacilityMeltdownOutside", 1.5f);
+                        VEGA.PlayRandomLine("FacilityMeltdownOutside", Random.Range(1, 3), 3.65f);
                     }
                 }
                 else
                 {
-                    VEGA.PlayAudio("RadiationSpike");
+                    try
+                    {
+                        if (StartOfRound.Instance.localPlayerController.ItemSlots.Any(item => item.GetType() == typeof(LungProp)))
+                        {
+                            VEGA.PlayLine("ApparatusPulled", 3.65f);
+                        }
+                        else
+                        {
+                            VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 3.65f);
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 3.65f);
+                    }
                 }
             }
         }
@@ -46,7 +59,7 @@ namespace LC_VEGA.Patches
                 {
                     if (VEGA.enemies.ContainsKey(enemyID))
                     {
-                        VEGA.PlayAudio(VEGA.enemies[enemyID] + "Scan", 0.7f);
+                        VEGA.PlayLine(VEGA.enemies[enemyID] + "Scan", 0.7f);
                     }
                     else
                     {
@@ -54,7 +67,7 @@ namespace LC_VEGA.Patches
                         {
                             if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName) && !file.creatureName.Equals("Football") && !file.creatureName.Equals("Locker") && !file.creatureName.Equals("Boombas") && !file.creatureName.Contains("Drone") && !file.creatureName.Contains("Turret"))
                             {
-                                VEGA.PlayAudio(file.creatureName + "Scan", 0.7f);
+                                VEGA.PlayLine(file.creatureName + "Scan", 0.7f);
                             }
                         }
                     }

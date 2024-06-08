@@ -25,7 +25,7 @@ namespace LC_VEGA.Patches
                             {
                                 VEGA.warningGiven = true;
                             }
-                            VEGA.PlayAudioWithVariant("GettingLate", Random.Range(1, 4));
+                            VEGA.PlayRandomLine("GettingLate", Random.Range(1, 4));
                         }
                         else
                         {
@@ -49,7 +49,7 @@ namespace LC_VEGA.Patches
             {
                 if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom)
                 {
-                    VEGA.PlayAudio("VoteCast"); 
+                    VEGA.PlayLine("VoteCast"); 
                 }
             }
         }

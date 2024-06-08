@@ -1,18 +1,30 @@
 ﻿using HarmonyLib;
 using Malfunctions;
 using Malfunctions.Patches;
+using UnityEngine.Rendering;
 
 namespace LC_VEGA.Patches
 {
     internal class MalfunctionsPatches
     {
-        [HarmonyPatch(typeof(StartOfRoundPatches), "HandleLevelStart")]
+        public static bool playPowerWarning;
+        public static bool playTpWarning;
+        public static bool playCommsWarning;
+        public static bool playDoorWarning;
+        public static bool playLeverWarning;
+
+        [HarmonyPatch(typeof(StartOfRoundPatches), "HandleRollPower")]
         [HarmonyPrefix]
         static void NotifyPowerMalfunction()
         {
-            if (State.MalfunctionPower.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
             {
-                VEGA.PlayAudio("PowerMalfunctionWarning");
+                if (State.MalfunctionPower.Triggered)
+                {
+                    if (!playPowerWarning) return;
+                    VEGA.PlayLine("PowerMalfunctionWarning");
+                    playPowerWarning = false;
+                }
             }
         }
 
@@ -20,29 +32,39 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void NotifyNavigationMalfunction()
         {
-            if (State.MalfunctionNavigation.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
+            if (State.MalfunctionNavigation.Notified && Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
             {
-                VEGA.PlayAudio("NavigationMalfunctionWarning");
+                VEGA.PlayLine("NavigationMalfunctionWarning");
             }
         }
 
         [HarmonyPatch(typeof(TimeOfDayPatches), "CheckMalfunctionTeleporterTrigger")]
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         static void NotifyAtomicMisalignment()
         {
-            if (State.MalfunctionTeleporter.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
             {
-                VEGA.PlayAudio("TeleporterMalfunctionWarning");
+                if (State.MalfunctionTeleporter.Triggered)
+                {
+                    if (!playTpWarning) return;
+                    VEGA.PlayLine("TeleporterMalfunctionWarning");
+                    playTpWarning = false;
+                }
             }
         }
 
         [HarmonyPatch(typeof(TimeOfDayPatches), "CheckMalfunctionDistortionTrigger")]
-        [HarmonyPostfix]
+        [HarmonyPrefix]
         static void NotifyCommsMalfunction()
         {
-            if (State.MalfunctionDistortion.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
             {
-                VEGA.PlayAudio("CommsMalfunctionWarning");
+                if (State.MalfunctionDistortion.Triggered)
+                {
+                    if (!playCommsWarning) return;
+                    VEGA.PlayLine("CommsMalfunctionWarning");
+                    playCommsWarning = false;
+                } 
             }
         }
 
@@ -50,9 +72,14 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void NotifyDoorMalfunction()
         {
-            if (State.MalfunctionDoor.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
             {
-                VEGA.PlayAudio("DoorMalfunctionWarning");
+                if (State.MalfunctionDoor.Triggered)
+                {
+                    if (!playDoorWarning) return;
+                    VEGA.PlayLine("DoorMalfunctionWarning");
+                    playDoorWarning = false;
+                }
             }
         }
 
@@ -60,9 +87,14 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void NotifyHidraulicsMalfunction()
         {
-            if (State.MalfunctionLever.Active && Plugin.vocalLevel.Value >= VocalLevels.Low)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
             {
-                VEGA.PlayAudio("HydraulicMalfunctionWarning");
+                if (State.MalfunctionLever.Notified)
+                {
+                    if (!playLeverWarning) return;
+                    VEGA.PlayLine("HydraulicMalfunctionWarning");
+                    playLeverWarning = false;
+                }
             }
         }
     }
