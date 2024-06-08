@@ -1,18 +1,13 @@
 ﻿using BepInEx;
-using BepInEx.AssemblyPublicizer;
-using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using LC_VEGA.Patches;
 using LobbyCompatibility.Attributes;
 using LobbyCompatibility.Enums;
-using LobbyCompatibility.Features;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using static BepInEx.BepInDependency;
 
@@ -27,6 +22,7 @@ namespace LC_VEGA
     [BepInDependency("com.zealsprince.malfunctions", DependencyFlags.SoftDependency)]
     [BepInDependency("com.github.zehsteam.ToilHead", DependencyFlags.SoftDependency)]
     [BepInDependency("Chaos.Diversity", DependencyFlags.SoftDependency)]
+    [BepInDependency("TestAccount666.ShipWindows", DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
         private const string modGUID = "JS03.LC-VEGA";
@@ -86,6 +82,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> registerLeverPull;
         public static ConfigEntry<bool> registerInteractShipDoors;
         public static ConfigEntry<bool> registerInteractShipLights;
+        public static ConfigEntry<bool> registerInteractShipShutters;
         public static ConfigEntry<bool> registerWeatherInfo;
         public static ConfigEntry<bool> registerStop;
         public static ConfigEntry<bool> registerThanks;
@@ -150,6 +147,10 @@ namespace LC_VEGA
             {
                 harmony.PatchAll(typeof(DiversityPatches));
             }
+            if (ModChecker.hasShipWindows)
+            {
+                harmony.PatchAll(typeof(ShipWindowsPatches));
+            }
         }
 
         internal void CheckInstalledMods()
@@ -160,6 +161,8 @@ namespace LC_VEGA
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
             ModChecker.hasFacilityMeltdown = ModChecker.CheckForMod("me.loaforc.facilitymeltdown");
             ModChecker.hasDiversity = ModChecker.CheckForMod("Chaos.Diversity");
+            ModChecker.hasShipWindows = ModChecker.CheckForMod("TestAccount666.ShipWindows");
+            ModChecker.hasLGU = ModChecker.CheckForMod("");
         }
 
         internal void ManageSaveValues()
@@ -413,14 +416,6 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
-            /* 
-            registerLeverPull = Config.Bind(
-                "Voice Recognition", // Config section
-                "Register Ship lever pull commands", // Key of this config
-                true, // Default value
-                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
-            );
-            */
             registerInteractShipDoors = Config.Bind(
                 "Voice Recognition", // Config section
                 "Register Ship Door commands", // Key of this config
@@ -432,6 +427,12 @@ namespace LC_VEGA
                 "Register Ship Lights commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            registerInteractShipShutters = Config.Bind(
+                "Voice Recognition", // Config section
+                "Register Ship Shutters commands", // Key of this config
+                true, // Default value
+                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with ShipWindows installed." // Description
             );
             registerWeatherInfo = Config.Bind(
                 "Voice Recognition", // Config section

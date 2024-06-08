@@ -31,6 +31,12 @@
     <Reference Include="Malfunctions">
       <HintPath>bin\Debug\netstandard2.1\Malfunctions-publicized.dll</HintPath>
     </Reference>
+    <Reference Include="MoreShipUpgrades">
+      <HintPath>D:\Descargas\MoreShipUpgrades.dll</HintPath>
+    </Reference>
+    <Reference Include="TestAccount666.ShipWindows">
+      <HintPath>bin\Debug\netstandard2.1\ShipWindows-publicized.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>D:\Descargas\Unity.InputSystem.dll</HintPath>
     </Reference>

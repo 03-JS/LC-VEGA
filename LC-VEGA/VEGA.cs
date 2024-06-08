@@ -1,6 +1,9 @@
 ﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
 using Malfunctions;
+using ShipWindows;
+using ShipWindows.Components;
+using ShipWindows.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -1102,13 +1105,48 @@ namespace LC_VEGA
             HUDManager.Instance.DisplayTip(header, "<size=15>" + scrapOutsideStr + "\n" + scrapInShipStr + "</size>");
         }
 
-        internal static void InitializeScannerVariables()
+        internal static IEnumerator SwitchWindowShutters(bool open)
         {
-            performAdvancedScan = Plugin.enableAdvancedScannerAuto.Value;
-            enemiesTopText = "Entities:\n";
-            itemsTopText = "Items:\n";
-            scannerRange = 29f;
+            ShipWindowShutterSwitch windowSwitch = Object.FindObjectOfType<ShipWindowShutterSwitch>();
+            if (windowSwitch != null)
+            {
+                if (open)
+                {
+                    if (ShipWindowsPatches.opened)
+                    {
+                        PlayLine("ShuttersAlreadyOpen");
+                    }
+                    else
+                    {
+                        PlayLine("OpenShipShutters");
+                    }
+                }
+                else
+                {
+                    if (!ShipWindowsPatches.opened)
+                    {
+                        PlayLine("ShuttersAlreadyClosed");
+                    }
+                    else
+                    {
+                        PlayLine("CloseShipShutters");
+                    }
+                }
 
+                yield return new WaitForSeconds(2f);
+
+                Type shipWindowsNetworkHandlerType = Type.GetType("ShipWindows.Networking.NetworkHandler, ShipWindows");
+                if (shipWindowsNetworkHandlerType != null)
+                {
+                    MethodInfo windowSwitchUsedMethodInfo = shipWindowsNetworkHandlerType.GetMethod("WindowSwitchUsed");
+                    object[] parameters = new object[] { open };
+                    windowSwitchUsedMethodInfo.Invoke(null, parameters);
+                }
+            }
+        }
+
+        internal static void InitializeMalfunctionVariables()
+        {
             stateType = Type.GetType("Malfunctions.State, Malfunctions");
             if (stateType != null)
             {
@@ -1119,12 +1157,21 @@ namespace LC_VEGA
             }
         }
 
+        internal static void InitializeScannerVariables()
+        {
+            performAdvancedScan = Plugin.enableAdvancedScannerAuto.Value;
+            enemiesTopText = "Entities:\n";
+            itemsTopText = "Items:\n";
+            scannerRange = 29f;
+        }
+
         public static void Initialize()
         {
             Plugin.LogToConsole("Initializing VEGA");
             shouldBeInterrupted = false;
             signals = Plugin.messages.Value.Split(", ");
             InitializeScannerVariables();
+            InitializeMalfunctionVariables();
             listening = false;
             if (!Plugin.useManualListening.Value || (Plugin.enableManualListeningAuto.Value && Plugin.useManualListening.Value))
             {
@@ -1225,7 +1272,7 @@ namespace LC_VEGA
                 });
             }
 
-            // Ship's lights
+            // Ship lights
             if (Plugin.registerInteractShipLights.Value)
             {
                 Voice.RegisterPhrases(new string[] { "VEGA, lights on", "VEGA, turn the lights on" });
@@ -1267,6 +1314,41 @@ namespace LC_VEGA
                                 }
                             }
                             CoroutineManager.StartCoroutine(SwitchLights(on: false));
+                        }
+                    }
+                });
+            }
+
+            // Ship shutters (ShipWindows mod)
+            if (Plugin.registerInteractShipShutters.Value)
+            {
+                Voice.RegisterPhrases(new string[] { "VEGA, open shutters", "VEGA, open window shutters", "VEGA, open ship shutters" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, open shutters" && recognized.Message != "VEGA, open window shutters" && recognized.Message != "VEGA, open ship shutters") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            if (ModChecker.hasShipWindows)
+                            {
+                                CoroutineManager.StartCoroutine(SwitchWindowShutters(open: true));
+                            }
+                        }
+                    }
+                });
+                Voice.RegisterPhrases(new string[] { "VEGA, close shutters", "VEGA, close window shutters", "VEGA, close ship shutters" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, close shutters" && recognized.Message != "VEGA, close window shutters" && recognized.Message != "VEGA, close ship shutters") return;
+                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            if (ModChecker.hasShipWindows)
+                            {
+                                CoroutineManager.StartCoroutine(SwitchWindowShutters(open: false));
+                            }
                         }
                     }
                 });

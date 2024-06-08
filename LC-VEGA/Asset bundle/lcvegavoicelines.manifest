@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 3356110034
+CRC: 612085023
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9f889e44d38f60b1d491cbf1cb47bb29
+    Hash: 3a8d8244b92dd0fad97b43006a6b4f6f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 9f889e44d38f60b1d491cbf1cb47bb29
+    Hash: 3a8d8244b92dd0fad97b43006a6b4f6f
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -43,6 +43,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Doors/DoorOpened-1.ogg
 - Assets/LC-VEGA/Vanilla/Reports & Scans/ScrapScanComplete-1.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/AllTrapsDisabled-3.ogg
+- Assets/LC-VEGA/Mods/ShipWindows/OpenShipShutters.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/AllTrapsDisabled-2.ogg
 - Assets/LC-VEGA/Vanilla/Time/GettingLate-3.ogg
 - Assets/LC-VEGA/Vanilla/Apparatus/ApparatusPulled.ogg
@@ -108,6 +109,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Hazards/AllMinesDisabled-1.ogg
 - Assets/LC-VEGA/Mods/Entities/Scan/MaggieScan.ogg
 - Assets/LC-VEGA/Vanilla/Reports & Scans/CrewOutsideShipSolo.ogg
+- Assets/LC-VEGA/Mods/ShipWindows/ShuttersAlreadyOpen.ogg
 - Assets/LC-VEGA/Vanilla/Ship/NoTeleporter-2.ogg
 - Assets/LC-VEGA/Vanilla/Misc/NoPower-2.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Butler.ogg
@@ -133,6 +135,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Reports & Scans/ScrapScanComplete-2.ogg
 - Assets/LC-VEGA/Vanilla/Ship/RadarSwitch-1.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/TurretDisabled-1.ogg
+- Assets/LC-VEGA/Mods/ShipWindows/ShuttersAlreadyClosed.ogg
 - Assets/LC-VEGA/Vanilla/Doors/AllDoorsOpened-1.ogg
 - Assets/LC-VEGA/Vanilla/Misc/IndoorsOnly-1.ogg
 - Assets/LC-VEGA/Mods/Meltdown/FacilityMeltdownOutside.ogg
@@ -236,6 +239,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Ship/RadarAlreadyFocused.ogg
 - Assets/LC-VEGA/Mods/Entities/Bestiary/Shockwave Drone.ogg
 - Assets/LC-VEGA/Vanilla/Time/GettingLate-1.ogg
+- Assets/LC-VEGA/Mods/ShipWindows/CloseShipShutters.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/LocustsScan.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Jester.ogg
 - Assets/LC-VEGA/Vanilla/Reports & Scans/ReportComplete-3.ogg
