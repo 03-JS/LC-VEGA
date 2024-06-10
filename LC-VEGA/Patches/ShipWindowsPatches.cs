@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using ShipWindows;
 using ShipWindows.Networking;
 
 namespace LC_VEGA.Patches
@@ -11,7 +12,10 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void GetShutterState(bool currentState)
         {
-            opened = currentState;
+            if (WindowConfig.enableShutter.Value)
+            {
+                opened = currentState; 
+            }
         }
     }
 }

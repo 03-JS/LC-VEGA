@@ -50,15 +50,10 @@ namespace LC_VEGA
         internal static float distanceToToil;
 
         // Malfunctions
-        internal static Type stateType;
-        internal static PropertyInfo distortionTriggeredProp;
-        internal static bool distortionTriggered;
-        internal static PropertyInfo powerTriggeredProp;
-        internal static bool powerTriggered;
-        internal static PropertyInfo teleporterTriggeredProp;
-        internal static bool teleporterTriggered;
-        internal static PropertyInfo doorTriggeredProp;
-        internal static bool doorTriggered;
+        internal static bool malfunctionPowerTriggered;
+        internal static bool malfunctionTeleporterTriggered;
+        internal static bool malfunctionDistortionTriggered;
+        internal static bool malfunctionDoorTriggered;
 
         public static string[] signals;
         public static string[] weathers =
@@ -759,11 +754,7 @@ namespace LC_VEGA
             {
                 if (ModChecker.hasMalfunctions)
                 {
-                    if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                    if (powerTriggeredProp != null) powerTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                    if (teleporterTriggeredProp != null) teleporterTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-
-                    if (distortionTriggered || powerTriggered)
+                    if (malfunctionDistortionTriggered || malfunctionPowerTriggered)
                     {
                         itemsText.SetText(itemsTopText + "<color=yellow>Data unavailable</color>");
                         enemiesText.SetText(enemiesTopText + "<color=yellow>Data unavailable</color>");
@@ -1108,7 +1099,7 @@ namespace LC_VEGA
         internal static IEnumerator SwitchWindowShutters(bool open)
         {
             ShipWindowShutterSwitch windowSwitch = Object.FindObjectOfType<ShipWindowShutterSwitch>();
-            if (windowSwitch != null)
+            if (windowSwitch != null && WindowConfig.enableShutter.Value)
             {
                 if (open)
                 {
@@ -1145,18 +1136,6 @@ namespace LC_VEGA
             }
         }
 
-        internal static void InitializeMalfunctionVariables()
-        {
-            stateType = Type.GetType("Malfunctions.State, Malfunctions");
-            if (stateType != null)
-            {
-                distortionTriggeredProp = stateType.GetProperty("MalfunctionDistortion");
-                powerTriggeredProp = stateType.GetProperty("MalfunctionPower");
-                teleporterTriggeredProp = stateType.GetProperty("Malfunction");
-                doorTriggeredProp = stateType.GetProperty("Malfunction");
-            }
-        }
-
         internal static void InitializeScannerVariables()
         {
             performAdvancedScan = Plugin.enableAdvancedScannerAuto.Value;
@@ -1171,7 +1150,6 @@ namespace LC_VEGA
             shouldBeInterrupted = false;
             signals = Plugin.messages.Value.Split(", ");
             InitializeScannerVariables();
-            InitializeMalfunctionVariables();
             listening = false;
             if (!Plugin.useManualListening.Value || (Plugin.enableManualListeningAuto.Value && Plugin.useManualListening.Value))
             {
@@ -1285,8 +1263,7 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
@@ -1306,8 +1283,7 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
@@ -1457,6 +1433,11 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (malfunctionPowerTriggered)
+                            {
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                             CoroutineManager.StartCoroutine(GetCrewStatus());
                         }
                     }
@@ -1472,6 +1453,11 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (malfunctionPowerTriggered)
+                            {
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                             CoroutineManager.StartCoroutine(GetCrewInShip());
                         }
                     }
@@ -1487,6 +1473,11 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (malfunctionPowerTriggered)
+                            {
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                             CoroutineManager.StartCoroutine(GetScrapLeft(recognized.Message));
                         }
                     }
@@ -1508,8 +1499,7 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (teleporterTriggeredProp != null) teleporterTriggered = (bool)teleporterTriggeredProp.GetValue(null, null);
-                                if (teleporterTriggered)
+                                if (malfunctionTeleporterTriggered)
                                 {
                                     PlayLine("TeleporterMalfunction");
                                     return;
@@ -1532,14 +1522,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1574,14 +1562,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1601,14 +1587,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1631,14 +1615,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1658,14 +1640,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1693,14 +1673,12 @@ namespace LC_VEGA
                             {
                                 if (ModChecker.hasMalfunctions)
                                 {
-                                    if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                    if (powerTriggered)
+                                    if (malfunctionPowerTriggered)
                                     {
                                         PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                         return;
                                     }
-                                    if (doorTriggeredProp != null) doorTriggered = (bool)doorTriggeredProp.GetValue(null, null);
-                                    if (doorTriggered)
+                                    if (malfunctionDoorTriggered)
                                     {
                                         PlayLine("DoorMalfunction");
                                         return;
@@ -1732,8 +1710,7 @@ namespace LC_VEGA
                             {
                                 if (ModChecker.hasMalfunctions)
                                 {
-                                    if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                    if (powerTriggered)
+                                    if (malfunctionPowerTriggered)
                                     {
                                         PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                         return;
@@ -1771,14 +1748,12 @@ namespace LC_VEGA
                             {
                                 if (ModChecker.hasMalfunctions)
                                 {
-                                    if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                    if (powerTriggered)
+                                    if (malfunctionPowerTriggered)
                                     {
                                         PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                         return;
                                     }
-                                    if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                    if (distortionTriggered)
+                                    if (malfunctionDistortionTriggered)
                                     {
                                         PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                         return;
@@ -1812,14 +1787,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1839,14 +1812,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1874,14 +1845,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1918,14 +1887,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1955,14 +1922,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -1985,14 +1950,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -2017,14 +1980,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;
@@ -2047,14 +2008,12 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
-                                if (powerTriggeredProp != null) powerTriggered = (bool)powerTriggeredProp.GetValue(null, null);
-                                if (powerTriggered)
+                                if (malfunctionPowerTriggered)
                                 {
                                     PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-                                if (distortionTriggeredProp != null) distortionTriggered = (bool)distortionTriggeredProp.GetValue(null, null);
-                                if (distortionTriggered)
+                                if (malfunctionDistortionTriggered)
                                 {
                                     PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                     return;

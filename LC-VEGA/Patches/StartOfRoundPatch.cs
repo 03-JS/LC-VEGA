@@ -136,7 +136,13 @@ namespace LC_VEGA.Patches
         {
             if (ModChecker.hasMalfunctions)
             {
-                Plugin.LogToConsole("Resetting malfunction warnings", "debug");
+                Plugin.LogToConsole("Resetting malfunction values", "debug");
+
+                VEGA.malfunctionPowerTriggered = false;
+                VEGA.malfunctionTeleporterTriggered = false;
+                VEGA.malfunctionDistortionTriggered = false;
+                VEGA.malfunctionDoorTriggered = false;
+
                 MalfunctionsPatches.playPowerWarning = true;
                 MalfunctionsPatches.playTpWarning = true;
                 MalfunctionsPatches.playCommsWarning = true;
