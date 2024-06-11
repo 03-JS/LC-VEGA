@@ -23,6 +23,8 @@ namespace LC_VEGA
     [BepInDependency("com.github.zehsteam.ToilHead", DependencyFlags.SoftDependency)]
     [BepInDependency("Chaos.Diversity", DependencyFlags.SoftDependency)]
     [BepInDependency("TestAccount666.ShipWindows", DependencyFlags.SoftDependency)]
+    [BepInDependency("darmuh.ghostCodes", DependencyFlags.SoftDependency)]
+    [BepInDependency("MoreShipUpgrades", DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
         private const string modGUID = "JS03.LC-VEGA";
@@ -43,6 +45,7 @@ namespace LC_VEGA
         // Mod interactions values
         public static ConfigEntry<bool> malfunctionWarnings;
         public static ConfigEntry<bool> diversitySpeaker;
+        public static ConfigEntry<int> diversitySpeakerReplyChance;
 
         // Sound Settings values
         public static ConfigEntry<float> volume;
@@ -73,13 +76,13 @@ namespace LC_VEGA
         public static ConfigEntry<bool> registerDisableAllSpikeTraps;
         public static ConfigEntry<bool> registerTeleporter;
         public static ConfigEntry<bool> registerRadarSwitch;
+        public static ConfigEntry<bool> registerDiscombobulator;
         public static ConfigEntry<bool> registerCrewStatus;
         public static ConfigEntry<bool> registerCrewInShip;
         public static ConfigEntry<bool> registerScrapLeft;
         public static ConfigEntry<bool> registerRadarBoosters;
         public static ConfigEntry<bool> registerSignalTranslator;
         public static ConfigEntry<bool> registerTime;
-        public static ConfigEntry<bool> registerLeverPull;
         public static ConfigEntry<bool> registerInteractShipDoors;
         public static ConfigEntry<bool> registerInteractShipLights;
         public static ConfigEntry<bool> registerInteractShipShutters;
@@ -139,18 +142,10 @@ namespace LC_VEGA
             harmony.PatchAll(typeof(TimeOfDayPatch));
             harmony.PatchAll(typeof(HUDManagerPatch));
             harmony.PatchAll(typeof(GeneralPatches));
-            if (ModChecker.hasMalfunctions)
-            {
-                harmony.PatchAll(typeof(MalfunctionsPatches)); 
-            }
-            if (ModChecker.hasDiversity)
-            {
-                harmony.PatchAll(typeof(DiversityPatches));
-            }
-            if (ModChecker.hasShipWindows)
-            {
-                harmony.PatchAll(typeof(ShipWindowsPatches));
-            }
+            if (ModChecker.hasMalfunctions) harmony.PatchAll(typeof(MalfunctionsPatches));
+            if (ModChecker.hasDiversity) harmony.PatchAll(typeof(DiversityPatches));
+            if (ModChecker.hasShipWindows) harmony.PatchAll(typeof(ShipWindowsPatches));
+            if (ModChecker.hasLGU) harmony.PatchAll(typeof(LGUPatches));
         }
 
         internal void CheckInstalledMods()
@@ -162,7 +157,7 @@ namespace LC_VEGA
             ModChecker.hasFacilityMeltdown = ModChecker.CheckForMod("me.loaforc.facilitymeltdown");
             ModChecker.hasDiversity = ModChecker.CheckForMod("Chaos.Diversity");
             ModChecker.hasShipWindows = ModChecker.CheckForMod("TestAccount666.ShipWindows");
-            ModChecker.hasLGU = ModChecker.CheckForMod("");
+            ModChecker.hasLGU = ModChecker.CheckForMod("com.malco.lethalcompany.moreshipupgrades");
         }
 
         internal void ManageSaveValues()
@@ -175,8 +170,11 @@ namespace LC_VEGA
             {
                 mls.LogDebug("File found. Reading values...");
                 SaveManager.playedIntro = SaveManager.GetValueFromIndex(0);
+                mls.LogDebug("Has played the intro? -> " + SaveManager.playedIntro);
                 SaveManager.firstTimeDiversity = SaveManager.GetValueFromIndex(1);
+                mls.LogDebug("First time using Diversity? -> " + SaveManager.firstTimeDiversity);
                 SaveManager.hadDiversity = SaveManager.GetValueFromIndex(2);
+                mls.LogDebug("Had Diversity installed? -> " + SaveManager.hadDiversity);
 
                 // This is so reinstalls / reenables of the mod trigger the first time replies as well
                 if (!SaveManager.firstTimeDiversity && !SaveManager.hadDiversity)
@@ -234,13 +232,19 @@ namespace LC_VEGA
                 "Mod Interactions", // Config section
                 "Malfunction Warnings", // Key of this config
                 true, // Default value
-                "If set to true, VEGA will warn you when a malfunction from the Malfunctions mod happens and will also give you some information about it." // Description
+                "If set to true, VEGA will warn you and give you info on a malfunction from the Malfunctions mod when it happens." // Description
             );
             diversitySpeaker = Config.Bind(
                 "Mod Interactions", // Config section
                 "Diversity Speaker", // Key of this config
-                false, // Default value
-                "If set to true, VEGA will sometimes reply to Diversity's speaker." // Description
+                true, // Default value
+                "If set to true, VEGA will reply to Diversity's speaker." // Description
+            );
+            diversitySpeakerReplyChance = Config.Bind(
+                "Mod Interactions", // Config section
+                "Reply chance", // Key of this config
+                40, // Default value
+                new ConfigDescription("Changes how likely it is for VEGA to reply to the Diversity speaker.\n0 means it will never reply, 100 means it will always reply.", new AcceptableValueRange<int>(0, 100)) // Description
             );
 
             // Sound settings
@@ -379,6 +383,12 @@ namespace LC_VEGA
                 "Register Radar Switch commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            registerDiscombobulator = Config.Bind(
+                "Voice Recognition", // Config section
+                "Register Discombobulator upgrade commands", // Key of this config
+                true, // Default value
+                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with Late Game Upgrades installed." // Description
             );
             registerCrewStatus = Config.Bind(
                 "Voice Recognition", // Config section

@@ -1,6 +1,9 @@
 ﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
 using Malfunctions;
+using MoreShipUpgrades.Misc;
+using MoreShipUpgrades.Misc.Upgrades;
+using MoreShipUpgrades.UpgradeComponents.TierUpgrades;
 using ShipWindows;
 using ShipWindows.Components;
 using ShipWindows.Networking;
@@ -11,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using VoiceRecognitionAPI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -1103,25 +1107,11 @@ namespace LC_VEGA
             {
                 if (open)
                 {
-                    if (ShipWindowsPatches.opened)
-                    {
-                        PlayLine("ShuttersAlreadyOpen");
-                    }
-                    else
-                    {
-                        PlayLine("OpenShipShutters");
-                    }
+                    PlayLine("OpenShipShutters");
                 }
                 else
                 {
-                    if (!ShipWindowsPatches.opened)
-                    {
-                        PlayLine("ShuttersAlreadyClosed");
-                    }
-                    else
-                    {
-                        PlayLine("CloseShipShutters");
-                    }
+                    PlayLine("CloseShipShutters");
                 }
 
                 yield return new WaitForSeconds(2f);
@@ -1172,6 +1162,7 @@ namespace LC_VEGA
             RegisterWeatherCommands();
             RegisterReportCommands();
             RegisterActivationCommands();
+            RegisterModdedTerminalCommands();
         }
 
         internal static void RegisterActivationCommands()
@@ -1182,7 +1173,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, activate") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && Plugin.useManualListening.Value)
+                    if (recognized.Confidence > Plugin.confidence.Value && Plugin.useManualListening.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1203,7 +1194,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, deactivate") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && Plugin.useManualListening.Value)
+                    if (recognized.Confidence > Plugin.confidence.Value && Plugin.useManualListening.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1231,7 +1222,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, shut up" && recognized.Message != "VEGA, stop" && recognized.Message != "VEGA, stop talking" && recognized.Message != "Shut up, VEGA" && recognized.Message != "Stop, VEGA" && recognized.Message != "Stop talking, VEGA") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value)
+                    if (recognized.Confidence > Plugin.confidence.Value)
                     {
                         audioSource.Stop();
                     }
@@ -1243,7 +1234,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, thank you" && recognized.Message != "VEGA, thanks" && recognized.Message != "Thank you, VEGA" && recognized.Message != "Thanks, VEGA") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayRandomLine("NoProblem", Random.Range(1, 5));
                     }
@@ -1257,7 +1248,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, lights on" && recognized.Message != "VEGA, turn the lights on") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1277,7 +1268,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, lights out" && recognized.Message != "VEGA, lights off" && recognized.Message != "VEGA, turn the lights off") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1302,12 +1293,17 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, open shutters" && recognized.Message != "VEGA, open window shutters" && recognized.Message != "VEGA, open ship shutters") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasShipWindows)
                             {
+                                if (ShipWindowsPatches.opened)
+                                {
+                                    PlayLine("ShuttersAlreadyOpen");
+                                    return;
+                                }
                                 CoroutineManager.StartCoroutine(SwitchWindowShutters(open: true));
                             }
                         }
@@ -1317,13 +1313,73 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, close shutters" && recognized.Message != "VEGA, close window shutters" && recognized.Message != "VEGA, close ship shutters") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasShipWindows)
                             {
+                                if (!ShipWindowsPatches.opened)
+                                {
+                                    PlayLine("ShuttersAlreadyClosed");
+                                    return;
+                                }
                                 CoroutineManager.StartCoroutine(SwitchWindowShutters(open: false));
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        internal static void RegisterModdedTerminalCommands()
+        {
+            // DISCOMBOBULATE!
+            if (Plugin.registerDiscombobulator.Value && ModChecker.hasLGU)
+            {
+                Voice.RegisterPhrases(new string[] { "VEGA, attack", "VEGA, stun", "VEGA, shock" });
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (recognized.Message != "VEGA, attack" && recognized.Message != "VEGA, stun" && recognized.Message != "VEGA, shock") return;
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (malfunctionPowerTriggered)
+                                {
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                                if (malfunctionDistortionTriggered)
+                                {
+                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
+                            }
+
+                            if (!BaseUpgrade.GetActiveUpgrade("Discombobulator"))
+                            {
+                                PlayRandomLine("NoDiscombobulator", Random.Range(1, 4));
+                                return;
+                            }
+                            if (LGUPatches.flashCooldown > 0f)
+                            {
+                                PlayLine("DiscombobulatorUnavailable");
+                                return;
+                            }
+                            if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom)
+                            {
+                                PlayLine("Discombobulate");
+                            }
+
+                            Type commandParserType = Type.GetType("MoreShipUpgrades.Misc.CommandParser, MoreShipUpgrades");
+                            if (commandParserType != null)
+                            {
+                                MethodInfo atkMethodInfo = commandParserType.GetMethod("ExecuteDiscombobulatorAttack", BindingFlags.NonPublic | BindingFlags.Static);
+                                object[] parameters = new object[] { TerminalPatch.terminalInstance };
+                                atkMethodInfo.Invoke(null, parameters);
                             }
                         }
                     }
@@ -1341,7 +1397,7 @@ namespace LC_VEGA
                     Voice.RegisterCustomHandler((obj, recognized) =>
                     {
                         if (recognized.Message != "VEGA, info about " + condition + " weather") return;
-                        if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                        if (recognized.Confidence > Plugin.confidence.Value && listening)
                         {
                             PlayRandomLine(condition, 2);
                         }
@@ -1358,7 +1414,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, activate scanner" && recognized.Message != "VEGA, activate advanced scanner" && recognized.Message != "VEGA, turn on scanner" && recognized.Message != "VEGA, turn on advanced scanner" && recognized.Message != "VEGA, scan" && recognized.Message != "VEGA, enable scanner" && recognized.Message != "VEGA, enable advanced scanner") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (performAdvancedScan)
                         {
@@ -1382,7 +1438,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, disable scanner" && recognized.Message != "VEGA, disable advanced scanner" && recognized.Message != "VEGA, turn off scanner" && recognized.Message != "VEGA, turn off advanced scanner" && recognized.Message != "VEGA, disable scan") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!performAdvancedScan)
                         {
@@ -1413,7 +1469,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, what's the current time of day?" && recognized.Message != "VEGA, current time of day" && recognized.Message != "VEGA, time of day" && recognized.Message != "VEGA, current time" && recognized.Message != "VEGA, time" && recognized.Message != "VEGA, what time is it?") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         GetDayMode();
                     }
@@ -1429,7 +1485,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, crew status" && recognized.Message != "VEGA, team status" && recognized.Message != "VEGA, crew info" && recognized.Message != "VEGA, team info" && recognized.Message != "VEGA, crew report" && recognized.Message != "VEGA, team report") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1449,7 +1505,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, crew in ship" && recognized.Message != "VEGA, people in ship" && recognized.Message != "VEGA, get crew in ship" && recognized.Message != "VEGA, get people in ship" && recognized.Message != "VEGA, how many people are in the ship?" && recognized.Message != "VEGA, is anyone in the ship?" && recognized.Message != "VEGA, is anybody in the ship?") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1469,7 +1525,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, scrap left" && recognized.Message != "VEGA, items left" && recognized.Message != "VEGA, scan for scrap" && recognized.Message != "VEGA, scan for items") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1493,7 +1549,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, tp" && recognized.Message != "VEGA, activate tp" && recognized.Message != "VEGA, teleport" && recognized.Message != "VEGA, activate teleporter") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1516,7 +1572,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, switch to me" && recognized.Message != "VEGA, switch radar" && recognized.Message != "VEGA, switch radar to me" && recognized.Message != "VEGA, focus" && recognized.Message != "VEGA, focus on me") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1556,7 +1612,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, open secure door" && recognized.Message != "VEGA, open door" && recognized.Message != "VEGA, open the door" && recognized.Message != "VEGA, open the secure door") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1581,7 +1637,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, close secure door" && recognized.Message != "VEGA, close door" && recognized.Message != "VEGA, close the door" && recognized.Message != "VEGA, close the secure door") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1609,7 +1665,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, open all secure doors" && recognized.Message != "VEGA, open all doors") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1634,7 +1690,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, close all secure doors" && recognized.Message != "VEGA, close all doors") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1664,7 +1720,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, open ship doors" && recognized.Message != "VEGA, open the ship's doors" && recognized.Message != "VEGA, open hangar doors") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1684,6 +1740,13 @@ namespace LC_VEGA
                                         return;
                                     }
                                 }
+
+                                if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                                {
+                                    PlayLine("ShipDoorsAlreadyOpen");
+                                    return;
+                                }
+
                                 InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
                                 component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                                 if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
@@ -1701,7 +1764,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, close ship doors" && recognized.Message != "VEGA, close the ship's doors" && recognized.Message != "VEGA, close hangar doors") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1716,6 +1779,13 @@ namespace LC_VEGA
                                         return;
                                     }
                                 }
+
+                                if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                                {
+                                    PlayLine("ShipDoorsAlreadyClosed");
+                                    return;
+                                }
+
                                 InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
                                 component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
                                 if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
@@ -1742,7 +1812,7 @@ namespace LC_VEGA
                     Voice.RegisterCustomHandler((obj, recognized) =>
                     {
                         if (recognized.Message != "VEGA, transmit " + signal && recognized.Message != "VEGA, send " + signal) return;
-                        if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                        if (recognized.Confidence > Plugin.confidence.Value && listening)
                         {
                             if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                             {
@@ -1781,7 +1851,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, ping") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1806,7 +1876,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, flash") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1839,7 +1909,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, disable the turret" && recognized.Message != "VEGA, disable turret") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1881,7 +1951,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, disable all turrets") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1916,7 +1986,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, disable the mine" && recognized.Message != "VEGA, disable mine" && recognized.Message != "VEGA, disable the landmine" && recognized.Message != "VEGA, disable landmine") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1944,7 +2014,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, disable all mines" && recognized.Message != "VEGA, disable all landmines") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -1974,7 +2044,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, disable the trap" && recognized.Message != "VEGA, disable trap" && recognized.Message != "VEGA, disable the spike trap" && recognized.Message != "VEGA, disable spike trap") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -2002,7 +2072,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, disable all traps" && recognized.Message != "VEGA, disable all spike traps") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
@@ -2035,7 +2105,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about experimentation") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("41-EXP");
                     }
@@ -2044,7 +2114,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about assurance") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("220-ASS");
                     }
@@ -2053,7 +2123,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about vow") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("56-VOW");
                     }
@@ -2062,7 +2132,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about offense") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("21-OFF");
                     }
@@ -2071,7 +2141,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about march") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("61-MAR");
                     }
@@ -2080,7 +2150,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about adamance") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("20-ADA");
                     }
@@ -2089,7 +2159,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about rend") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("85-REN");
                     }
@@ -2098,7 +2168,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about dine") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("7-DIN");
                     }
@@ -2107,7 +2177,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about titan") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("8-TIT");
                     }
@@ -2116,7 +2186,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about artifice") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("68-ART");
                     }
@@ -2125,7 +2195,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about embrion") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("5-EMB");
                     }
@@ -2134,7 +2204,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about liquidation") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("44-LIQ");
                     }
@@ -2143,7 +2213,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about mars") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("4-MARS");
                     }
@@ -2152,7 +2222,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about the Company" && recognized.Message != "VEGA, info about the Company building" && recognized.Message != "VEGA, info about Gordion") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         PlayLine("71-GOR");
                     }
@@ -2165,7 +2235,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Asteroid 13") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("57 Asteroid-13"))
                         {
@@ -2177,7 +2247,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Atlantica") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("44 Atlantica"))
                         {
@@ -2189,7 +2259,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Cosmocos") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("42 Cosmocos"))
                         {
@@ -2201,7 +2271,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Desolation") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("48 Desolation"))
                         {
@@ -2213,7 +2283,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Etern") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("154 Etern"))
                         {
@@ -2225,7 +2295,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Fission C") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("25 Fission-C"))
                         {
@@ -2237,7 +2307,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Gloom") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("36 Gloom"))
                         {
@@ -2249,7 +2319,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Gratar") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("147 Gratar"))
                         {
@@ -2261,7 +2331,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Infernis") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("46 Infernis"))
                         {
@@ -2273,7 +2343,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Junic") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("84 Junic"))
                         {
@@ -2285,7 +2355,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Oldred") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("134 Oldred"))
                         {
@@ -2297,7 +2367,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Polarus") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("94 Polarus"))
                         {
@@ -2309,7 +2379,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Acidir") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("76 Acidir"))
                         {
@@ -2321,7 +2391,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Affliction") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("59 Affliction"))
                         {
@@ -2333,7 +2403,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Eve M") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("127 Eve-M"))
                         {
@@ -2345,7 +2415,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Sector 0") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("71 Sector-0"))
                         {
@@ -2357,7 +2427,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Summit") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("290 Summit"))
                         {
@@ -2369,7 +2439,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Penumbra") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("813 Penumbra"))
                         {
@@ -2381,7 +2451,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Argent") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("32 Argent"))
                         {
@@ -2393,7 +2463,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Azure") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("39 Azure"))
                         {
@@ -2405,7 +2475,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Budapest") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("618 Budapest"))
                         {
@@ -2417,7 +2487,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Celestria") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("9 Celestria"))
                         {
@@ -2429,7 +2499,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Crystallum") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("Crystallum"))
                         {
@@ -2441,7 +2511,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Echelon") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("30 Echelon"))
                         {
@@ -2453,7 +2523,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Harloth") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("93 Harloth"))
                         {
@@ -2465,7 +2535,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Maritopia") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("153 Maritopia"))
                         {
@@ -2477,7 +2547,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Nimbus") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("Nimbus"))
                         {
@@ -2489,7 +2559,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Nyx") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("34 Nyx"))
                         {
@@ -2501,7 +2571,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Psych Sanctum") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("111 PsychSanctum"))
                         {
@@ -2513,7 +2583,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Spectralis") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("Spectralis"))
                         {
@@ -2525,7 +2595,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Zenit") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("37 Zenit"))
                         {
@@ -2537,7 +2607,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Calt Prime") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("35 CaltPrime"))
                         {
@@ -2549,7 +2619,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Sanguine") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (ClientHasMoon("Sanguine"))
                         {
@@ -2570,7 +2640,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Hawk entry" && recognized.Message != "VEGA, read Baboon entry" && recognized.Message != "VEGA, read Baboon hawk entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(16))
                         {
@@ -2586,7 +2656,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Bunker spider entry" && recognized.Message != "VEGA, read Spider entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(12))
                         {
@@ -2602,7 +2672,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Hoarding bug entry" && recognized.Message != "VEGA, read Loot bug entry" && recognized.Message != "VEGA, read Yippee bug entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(4))
                         {
@@ -2618,7 +2688,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Bracken entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(1))
                         {
@@ -2634,7 +2704,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Butler entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(19))
                         {
@@ -2650,7 +2720,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Coil head entry" && recognized.Message != "VEGA, read Coil entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(7))
                         {
@@ -2666,7 +2736,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Forest Keeper entry" && recognized.Message != "VEGA, read Giant entry" && recognized.Message != "VEGA, read Keeper entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(6))
                         {
@@ -2682,7 +2752,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Eyeless dog entry" && recognized.Message != "VEGA, read dog entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(3))
                         {
@@ -2698,7 +2768,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Earth Leviathan entry" && recognized.Message != "VEGA, read Leviathan entry" && recognized.Message != "VEGA, read Worm entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(9))
                         {
@@ -2714,7 +2784,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Jester entry" && recognized.Message != "VEGA, read Jack in the box entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(10))
                         {
@@ -2730,7 +2800,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Roaming locusts entry" && recognized.Message != "VEGA, read Locusts entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(15))
                         {
@@ -2746,7 +2816,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Manticoil entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(13))
                         {
@@ -2762,7 +2832,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Nutcracker entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(17))
                         {
@@ -2778,7 +2848,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Old bird entry" && recognized.Message != "VEGA, read Bird entry" && recognized.Message != "VEGA, read Mech entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(18))
                         {
@@ -2794,7 +2864,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Circuit bees entry" && recognized.Message != "VEGA, read Bees entry" && recognized.Message != "VEGA, read Red Bees entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(14))
                         {
@@ -2810,7 +2880,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Hygrodere entry" && recognized.Message != "VEGA, read Slime entry" && recognized.Message != "VEGA, read Blob entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(5))
                         {
@@ -2826,7 +2896,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Tulip snake entry" && recognized.Message != "VEGA, read Tulip entry" && recognized.Message != "VEGA, read Snake entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(21))
                         {
@@ -2842,7 +2912,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Snare flea entry" && recognized.Message != "VEGA, read Flea entry" && recognized.Message != "VEGA, read Centipede entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(0))
                         {
@@ -2858,7 +2928,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Spore lizard entry" && recognized.Message != "VEGA, read Lizard entry" && recognized.Message != "VEGA, read Spore doggy entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(11))
                         {
@@ -2874,7 +2944,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Thumper entry" && recognized.Message != "VEGA, read Crawler entry" && recognized.Message != "VEGA, read Halve entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(2))
                         {
@@ -2892,7 +2962,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Redwood entry" && recognized.Message != "VEGA, read Redwood Giant entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -2915,7 +2985,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Driftwood entry" && recognized.Message != "VEGA, read Driftwood Giant entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -2938,7 +3008,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Slender entry" && recognized.Message != "VEGA, read Slenderman entry" && recognized.Message != "VEGA, read Faceless Stalker entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -2961,7 +3031,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Football entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -2984,7 +3054,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Shy guy entry" && recognized.Message != "VEGA, read SCP-096 entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3007,7 +3077,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Locker entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3030,7 +3100,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Siren Head entry" && recognized.Message != "VEGA, read Sirenhead entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3053,7 +3123,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Rolling Giant entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3076,7 +3146,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Peepers entry" && recognized.Message != "VEGA, read Peeper entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3099,7 +3169,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Shockwave drone entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3122,7 +3192,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Cleaning drone entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3145,7 +3215,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Moving turret entry" && recognized.Message != "VEGA, read Mobile turret entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3168,7 +3238,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read The Lost entry" && recognized.Message != "VEGA, read Maggie entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3191,7 +3261,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, read Shrimp entry") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3222,7 +3292,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Hawks" && recognized.Message != "VEGA, info about Baboons" && recognized.Message != "VEGA, info about Baboon hawks") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(16))
                         {
@@ -3254,7 +3324,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Hoarding bugs" && recognized.Message != "VEGA, info about Loot bugs" && recognized.Message != "VEGA, info about Yippee bugs") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(4))
                         {
@@ -3270,7 +3340,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Brackens" && recognized.Message != "VEGA, info about the Bracken") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(1))
                         {
@@ -3286,7 +3356,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Butlers") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(19))
                         {
@@ -3302,7 +3372,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Coil heads" && recognized.Message != "VEGA, info about Coils") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(7))
                         {
@@ -3318,7 +3388,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Forest Keepers" && recognized.Message != "VEGA, info about Giants" && recognized.Message != "VEGA, info about Keepers") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(6))
                         {
@@ -3334,7 +3404,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Eyeless dogs" && recognized.Message != "VEGA, info about dogs") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(3))
                         {
@@ -3350,7 +3420,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Earth Leviathans" && recognized.Message != "VEGA, info about Leviathans" && recognized.Message != "VEGA, info about Worms") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(9))
                         {
@@ -3366,7 +3436,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Jesters" && recognized.Message != "VEGA, info about the Jack in the box") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(10))
                         {
@@ -3382,7 +3452,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Roaming locusts" && recognized.Message != "VEGA, info about Locusts") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(15))
                         {
@@ -3398,7 +3468,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Manticoils") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(13))
                         {
@@ -3414,7 +3484,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Nutcrackers") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(17))
                         {
@@ -3430,7 +3500,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Old birds" && recognized.Message != "VEGA, info about Birds" && recognized.Message != "VEGA, info about Mechs") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(18))
                         {
@@ -3446,7 +3516,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Circuit bees" && recognized.Message != "VEGA, info about Bees" && recognized.Message != "VEGA, info about Red Bees") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(14))
                         {
@@ -3462,7 +3532,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Hygroderes" && recognized.Message != "VEGA, info about Slimes" && recognized.Message != "VEGA, info about Blobs") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(5))
                         {
@@ -3478,7 +3548,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Tulip snakes" && recognized.Message != "VEGA, info about Tulips" && recognized.Message != "VEGA, info about Snakes") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(21))
                         {
@@ -3494,7 +3564,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Snare fleas" && recognized.Message != "VEGA, info about Fleas" && recognized.Message != "VEGA, info about Centipedes") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(0))
                         {
@@ -3510,7 +3580,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Spore lizards" && recognized.Message != "VEGA, info about Lizards" && recognized.Message != "VEGA, info about Spore doggies") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(11))
                         {
@@ -3526,7 +3596,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Thumpers" && recognized.Message != "VEGA, info about Crawlers" && recognized.Message != "VEGA, info about Halves") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyIDs.Contains(2))
                         {
@@ -3544,7 +3614,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Redwoods" && recognized.Message != "VEGA, info about Redwood Giants") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3567,7 +3637,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Driftwoods" && recognized.Message != "VEGA, info about Driftwood Giants") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3590,7 +3660,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Slender" && recognized.Message != "VEGA, info about Slenderman" && recognized.Message != "VEGA, info about the Faceless Stalker") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3613,7 +3683,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Football") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3636,7 +3706,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Shy guy" && recognized.Message != "VEGA, info about SCP-096") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         if (TerminalPatch.scannedEnemyFiles.Any(file => file.creatureName.Equals("Shy guy")))
                         {
@@ -3659,7 +3729,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about the Locker" && recognized.Message != "VEGA, info about Lockers") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3682,7 +3752,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Siren Head" && recognized.Message != "VEGA, info about Sirenhead") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3705,7 +3775,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about the Rolling Giant" && recognized.Message != "VEGA, info about Rolling Giants") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3728,7 +3798,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Peepers") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3751,7 +3821,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Shockwave drones") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3774,7 +3844,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Cleaning drones") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3797,7 +3867,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Moving turrets" && recognized.Message != "VEGA, info about Mobile turrets") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3820,7 +3890,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about The Lost" && recognized.Message != "VEGA, info about Maggie") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {
@@ -3843,7 +3913,7 @@ namespace LC_VEGA
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (recognized.Message != "VEGA, info about Shrimps") return;
-                    if (recognized.Confidence >= Plugin.confidence.Value && listening)
+                    if (recognized.Confidence > Plugin.confidence.Value && listening)
                     {
                         try
                         {

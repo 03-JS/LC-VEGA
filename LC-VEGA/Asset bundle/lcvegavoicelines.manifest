@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 612085023
+CRC: 655273941
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3a8d8244b92dd0fad97b43006a6b4f6f
+    Hash: ffbc361c3ff4310bf6431be6c21f6ca1
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 3a8d8244b92dd0fad97b43006a6b4f6f
+    Hash: ffbc361c3ff4310bf6431be6c21f6ca1
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -18,6 +18,7 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Manticoil.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/ThumperShort.ogg
+- Assets/LC-VEGA/Mods/LGU/NoDiscombobulator-2.ogg
 - Assets/LC-VEGA/Vanilla/Misc/NoPower-1.ogg
 - Assets/LC-VEGA/Mods/Entities/Scan/DriftWood GiantScan.ogg
 - Assets/LC-VEGA/Vanilla/Ship/NoTeleporter-3.ogg
@@ -45,10 +46,10 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Hazards/AllTrapsDisabled-3.ogg
 - Assets/LC-VEGA/Mods/ShipWindows/OpenShipShutters.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/AllTrapsDisabled-2.ogg
-- Assets/LC-VEGA/Vanilla/Time/GettingLate-3.ogg
+- Assets/LC-VEGA/Vanilla/Doors/ShipDoorsAlreadyOpen.ogg
 - Assets/LC-VEGA/Vanilla/Apparatus/ApparatusPulled.ogg
 - Assets/LC-VEGA/Vanilla/Ship/NoTeleporter-1.ogg
-- Assets/LC-VEGA/Mods/Entities/Scan/Rolling GiantScan.ogg
+- Assets/LC-VEGA/Vanilla/Time/GettingLate-3.ogg
 - Assets/LC-VEGA/Vanilla/Moons/68-ART.ogg
 - Assets/LC-VEGA/Vanilla/Moons/21-OFF.ogg
 - Assets/LC-VEGA/Vanilla/Ship/LightsOn.ogg
@@ -57,6 +58,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Reports & Scans/CrewStatusSolo.ogg
 - Assets/LC-VEGA/Vanilla/Ship/LightsAlreadyOff.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/ForestKeeperScan.ogg
+- Assets/LC-VEGA/Mods/Entities/Scan/Rolling GiantScan.ogg
 - Assets/LC-VEGA/Mods/Diversity/Speaker/Reply-1.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Snakes.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/TrapDisabled-3.ogg
@@ -155,6 +157,7 @@ Assets:
 - Assets/LC-VEGA/Mods/Malfunctions/PowerMalfunction-3.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/ForestKeeperShort.ogg
 - Assets/LC-VEGA/Vanilla/Apparatus/RadiationSpike-1.ogg
+- Assets/LC-VEGA/Mods/LGU/NoDiscombobulator-3.ogg
 - Assets/LC-VEGA/Vanilla/Moons/44-LIQ.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/ThumperScan.ogg
 - Assets/LC-VEGA/Vanilla/Doors/DoorClosed-2.ogg
@@ -178,6 +181,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Doors/ShipDoorsClosed.ogg
 - Assets/LC-VEGA/Vanilla/Ship/Teleport-2.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/Coil-HeadShort.ogg
+- Assets/LC-VEGA/Mods/LGU/NoDiscombobulator-1.ogg
 - Assets/LC-VEGA/Vanilla/Weather/Flooded-2.ogg
 - Assets/LC-VEGA/Vanilla/Time/Sundown.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/TurretDisabled-2.ogg
@@ -219,6 +223,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Time/None.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/BrackenScan.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/MineDisabled-2.ogg
+- Assets/LC-VEGA/Mods/LGU/Discombobulate.ogg
 - Assets/LC-VEGA/Vanilla/Moons/56-VOW.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/BunkerSpiderShort.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/SnareFleaScan.ogg
@@ -242,6 +247,7 @@ Assets:
 - Assets/LC-VEGA/Mods/ShipWindows/CloseShipShutters.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/LocustsScan.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Jester.ogg
+- Assets/LC-VEGA/Mods/LGU/DiscombobulatorUnavailable.ogg
 - Assets/LC-VEGA/Vanilla/Reports & Scans/ReportComplete-3.ogg
 - Assets/LC-VEGA/Vanilla/Advanced Scanner/AdvancedScannerEnabled-1.ogg
 - Assets/LC-VEGA/Vanilla/Moons/85-REN.ogg
@@ -257,11 +263,12 @@ Assets:
 - Assets/LC-VEGA/Mods/Entities/Summary/BoombasShort.ogg
 - Assets/LC-VEGA/Vanilla/Advanced Scanner/AdvancedScannerDisabled-1.ogg
 - Assets/LC-VEGA/Mods/Entities/Bestiary/Football.ogg
-- Assets/LC-VEGA/Vanilla/Weather/Flooded-1.ogg
+- Assets/LC-VEGA/Mods/Diversity/Speaker/QuotaReply.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/ManticoilScan.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/RedBees.ogg
 - Assets/LC-VEGA/Mods/Diversity/Speaker/SilenceReply-2.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/OldBird.ogg
+- Assets/LC-VEGA/Vanilla/Weather/Flooded-1.ogg
 - Assets/LC-VEGA/Mods/Diversity/Speaker/DogsReply.ogg
 - Assets/LC-VEGA/Vanilla/Ship/LightsAlreadyOn.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/RedBeesShort.ogg
@@ -276,6 +283,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Entities/Summary/BaboonHawkShort.ogg
 - Assets/LC-VEGA/Vanilla/Ship/LightsOff.ogg
 - Assets/LC-VEGA/Vanilla/Misc/IndoorsOnly-2.ogg
+- Assets/LC-VEGA/Vanilla/Doors/ShipDoorsAlreadyClosed.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/MineDisabled-1.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/JesterScan.ogg
 - Assets/LC-VEGA/Vanilla/Moons/71-GOR.ogg

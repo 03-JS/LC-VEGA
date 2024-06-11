@@ -39,7 +39,7 @@ namespace LC_VEGA
         public static bool GetValueFromIndex(int index)
         {
             List<bool> values = ReadFromFile();
-            if (values.Count < index)
+            if (values.Count > index)
             {
                 return values[index];
             }

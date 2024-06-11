@@ -46,12 +46,12 @@ namespace LC_VEGA.Patches
         {
             if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.diversitySpeaker.Value)
             {
-                int randomNumber = Random.Range(0, 10);
+                int randomNumber = Random.Range(1, 101);
                 switch (soundType)
                 {
                     case SoundType.SpeakerDogs:
                         VEGA.audioSource.Stop();
-                        if (randomNumber <= 6)
+                        if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
                             VEGA.PlayLine("DogsReply", __result.length + 0.25f);
                         }
@@ -62,26 +62,23 @@ namespace LC_VEGA.Patches
                         {
                             VEGA.PlayLine("WelcomeReply", __result.length + 0.25f);
                         }
-                        if (randomNumber <= 6)
+                        if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
-                            if (__result.name.Equals("Turning_Off_Speaker_2") && randomNumber <= 4)
+                            if (__result.name.Equals("Turning_Off_Speaker_2") && randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                             {
                                 VEGA.PlayLine("Reply-4", __result.length + 0.25f);
                             }
                             VEGA.PlayRandomLine("SilenceReply", Random.Range(1, 4), __result.length + 0.25f);
                         }
                         break;
-                    case SoundType.SpeakerQuota:
                     case SoundType.SpeakerQuotaAgain:
                         VEGA.audioSource.Stop();
-                        if (SaveManager.firstTimeDiversity && firstTimeReply)
+                        if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
-                            firstTimeReply = false;
-                            VEGA.PlayLine("FirstTimeReply", __result.length + 0.25f);
-                        }
-                        else if (randomNumber <= 4)
-                        {
-                            VEGA.PlayRandomLine("Reply", Random.Range(1, 6), __result.length + 0.25f);
+                            if (__result.name.Equals("Reaching_Quota_Again"))
+                            {
+                                VEGA.PlayLine("QuotaReply", __result.length + 0.25f);
+                            }
                         }
                         break;
                     default:
@@ -106,7 +103,7 @@ namespace LC_VEGA.Patches
                             firstTimeReply = false;
                             VEGA.PlayLine("FirstTimeReply", __result.length + 0.25f);
                         }
-                        else if (randomNumber <= 4)
+                        else if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
                             VEGA.PlayRandomLine("Reply", Random.Range(1, 6), __result.length + 0.25f);
                         }
