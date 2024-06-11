@@ -10,11 +10,21 @@ namespace LC_VEGA.Patches
 
         [HarmonyPatch(typeof(NetworkHandler), "WindowSwitchUsed")]
         [HarmonyPostfix]
-        static void GetShutterState(bool currentState)
+        static void GetShutterStateNetHandler(bool currentState)
         {
             if (WindowConfig.enableShutter.Value)
             {
                 opened = currentState; 
+            }
+        }
+
+        [HarmonyPatch(typeof(WindowState), "SetWindowState")]
+        [HarmonyPostfix]
+        static void GetShutterStateFromWindowState(bool closed)
+        {
+            if (WindowConfig.enableShutter.Value)
+            {
+                opened = !closed;
             }
         }
     }

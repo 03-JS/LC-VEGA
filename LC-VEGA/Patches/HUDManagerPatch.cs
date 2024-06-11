@@ -21,11 +21,11 @@ namespace LC_VEGA.Patches
                 {
                     if (StartOfRound.Instance.localPlayerController.isInsideFactory)
                     {
-                        VEGA.PlayRandomLine("FacilityMeltdownInside", Random.Range(1, 3), 3.65f);
+                        VEGA.PlayLine("FacilityMeltdownInside", 3.65f);
                     }
                     else
                     {
-                        VEGA.PlayRandomLine("FacilityMeltdownOutside", Random.Range(1, 3), 3.65f);
+                        VEGA.PlayLine("FacilityMeltdownOutside", 3.65f);
                     }
                 }
                 else
