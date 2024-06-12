@@ -28,7 +28,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "2.0.0";
+        private const string modVersion = "2.0.1";
 
         internal static AssetBundle assetBundle;
 
@@ -117,13 +117,13 @@ namespace LC_VEGA
         internal void LoadAssets()
         {
             mls.LogInfo("Loading assets");
-            VEGA.voiceLines = new List<AudioClip>();
+            VEGA.audioClips = new List<AudioClip>();
             string folderLocation = Instance.Info.Location;
             folderLocation = folderLocation.TrimEnd("LC-VEGA.dll".ToCharArray());
             assetBundle = AssetBundle.LoadFromFile(folderLocation + "lcvegavoicelines");
             if (assetBundle != null)
             {
-                VEGA.voiceLines = assetBundle.LoadAllAssets<AudioClip>().ToList();
+                VEGA.audioClips = assetBundle.LoadAllAssets<AudioClip>().ToList();
                 mls.LogInfo("Assets loaded successfully");
             }
             else

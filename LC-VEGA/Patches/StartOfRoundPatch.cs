@@ -43,6 +43,8 @@ namespace LC_VEGA.Patches
                 VEGA.sfxAudioSource.bypassEffects = true;
                 VEGA.sfxAudioSource.bypassListenerEffects = true;
                 VEGA.sfxAudioSource.bypassReverbZones = true;
+                VEGA.sfxAudioSource.clip = VEGA.audioClips.Find(clip => clip.name == "Deactivate");
+
             }
             else
             {

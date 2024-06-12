@@ -25,7 +25,7 @@ namespace LC_VEGA
     {
         public static AudioSource audioSource;
         public static AudioSource sfxAudioSource;
-        public static List<AudioClip> voiceLines;
+        public static List<AudioClip> audioClips;
         public static bool listening;
         public static bool shouldBeInterrupted;
         public static bool warningGiven;
@@ -119,7 +119,7 @@ namespace LC_VEGA
                 if (!audioSource.isPlaying)
                 {
                     Plugin.LogToConsole("Playing audio");
-                    foreach (var clip in voiceLines)
+                    foreach (var clip in audioClips)
                     {
                         if (clip.name.Equals(clipName))
                         {
@@ -143,7 +143,7 @@ namespace LC_VEGA
                 if (!sfxAudioSource.isPlaying)
                 {
                     Plugin.LogToConsole("Playing SFX");
-                    foreach (var clip in voiceLines)
+                    foreach (var clip in audioClips)
                     {
                         if (clip.name.Equals(clipName))
                         {
@@ -1832,7 +1832,11 @@ namespace LC_VEGA
                                 SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
                                 if (translator == null)
                                 {
-                                    PlayLine("NoSignalTranslator");
+                                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                                    {
+                                        PlayLine("NoSignalTranslator");
+                                    }
+                                    PlayLine("NoSignalTranslatorLow");
                                     return;
                                 }
                                 HUDManager.Instance.UseSignalTranslatorServerRpc(signal);

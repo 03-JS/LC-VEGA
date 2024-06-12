@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 655273941
+CRC: 2896070549
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ffbc361c3ff4310bf6431be6c21f6ca1
+    Hash: aef611cf5df4032f78600b44c3eff8ef
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: ffbc361c3ff4310bf6431be6c21f6ca1
+    Hash: aef611cf5df4032f78600b44c3eff8ef
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -82,6 +82,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Weather/Rainy-1.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/OldBirdScan.ogg
 - Assets/LC-VEGA/Mods/Entities/Bestiary/Stalker.ogg
+- Assets/LC-VEGA/Vanilla/Ship/NoSignalTranslatorLow.ogg
 - Assets/LC-VEGA/Vanilla/Misc/NoPower-3.ogg
 - Assets/LC-VEGA/Vanilla/Doors/DoorOpened-2.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/JesterShort.ogg
