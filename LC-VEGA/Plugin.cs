@@ -216,7 +216,7 @@ namespace LC_VEGA
             );
             giveWeatherInfo = Config.Bind(
                 "Dialogue & Interactions", // Config section
-                "Give Weather info", // Key of this config
+                "Give weather info", // Key of this config
                 true, // Default value
                 "If set to true, VEGA will give you information on a moon's current weather upon landing if you have little to no experience." // Description
             );
