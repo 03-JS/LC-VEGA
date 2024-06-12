@@ -23,7 +23,6 @@ namespace LC_VEGA
     [BepInDependency("com.github.zehsteam.ToilHead", DependencyFlags.SoftDependency)]
     [BepInDependency("Chaos.Diversity", DependencyFlags.SoftDependency)]
     [BepInDependency("TestAccount666.ShipWindows", DependencyFlags.SoftDependency)]
-    [BepInDependency("darmuh.ghostCodes", DependencyFlags.SoftDependency)]
     [BepInDependency("MoreShipUpgrades", DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
