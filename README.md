@@ -95,7 +95,6 @@ VEGA can focus the ship's radar / cameras / minimap on you by saying:
 ### Reports
 #### Crew Status
 ---
-
 You can ask VEGA to give you a status report of your crew that tells you how many players are left with the following command:
 
 - VEGA, crew status / team status / crew info / team info / crew report / team report
@@ -106,7 +105,6 @@ Here's an example of what it can look like:
 
 #### Scrap Scan
 ---
-
 You can ask VEGA to perform a moon wide scrap scan that tells you how many items are inside and how many items you have in the ship as well as the total value for both with the following command:
 
 - VEGA, scrap left / items left / scan for scrap / scan for items
@@ -117,7 +115,6 @@ Here's an example of what it can look like:
 
 #### Who's in the ship?
 ---
-
 You can ask VEGA to give you a report with the names of the people that are in the ship with the following command:
 
 - VEGA, crew in ship / people in ship / get crew in ship / get people in ship / how many people are in the ship? / is anyone in the ship? / is anybody in the ship?
