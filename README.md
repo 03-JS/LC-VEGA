@@ -1,10 +1,10 @@
 # LC-VEGA
-<img src="https://i.imgur.com/te0TBnW.png" alt="demo" width="512"/>
 
+![logo](https://i.imgur.com/te0TBnW.png)
 
 ## Showcase videos
-[<img src="https://i.imgur.com/Wtr3mBP.png" alt="demo" width="1280"/>](https://www.youtube.com/watch?v=rEAtcF38e_Q)
-[![viperianShowcase](https://i.ytimg.com/vi/UJv7HbzkoCQ/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBLKd8MFuoo9hP8LKmY52EnmMskuQ)](https://www.youtube.com/watch?v=UJv7HbzkoCQ)
+[![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q)
+[![viperianShowcase](https://i.imgur.com/RPpE1Wd.png)](https://www.youtube.com/watch?v=UJv7HbzkoCQ)
 
 ## Description
 
