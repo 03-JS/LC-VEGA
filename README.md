@@ -2,8 +2,9 @@
 
 ![logo](https://i.imgur.com/te0TBnW.png)
 
-## Showcase video
-[![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q&t=1s)
+## Showcase videos
+[![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q)
+[![viperianShowcase](https://i.ytimg.com/vi/UJv7HbzkoCQ/hq720.jpg?sqp=-oaymwEXCNAFEJQDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBLKd8MFuoo9hP8LKmY52EnmMskuQ)](https://www.youtube.com/watch?v=UJv7HbzkoCQ)
 
 ## Description
 
@@ -30,6 +31,10 @@ You can ask VEGA to read out a creature's bestiary entry with the command:
 You can also ask him to give you a summary of the creature by saying:
 
 - VEGA, info about [creature's name]
+
+<br>
+
+Some creature mods are compatible with these commands. Check the list of [compatible creature mods](#mods-that-add-new-creatures) that is at the end of the page for more details.
 
 ### Advanced Scanner
 ---
@@ -87,8 +92,10 @@ VEGA can focus the ship's radar / cameras / minimap on you by saying:
 
 - VEGA, focus / focus on me / switch to me / switch radar / switch radar to me
 
-### Crew status
+### Reports
+#### Crew Status
 ---
+
 You can ask VEGA to give you a status report of your crew that tells you how many players are left with the following command:
 
 - VEGA, crew status / team status / crew info / team info / crew report / team report
@@ -96,6 +103,28 @@ You can ask VEGA to give you a status report of your crew that tells you how man
 Here's an example of what it can look like:
 
 ![crewreportexample](https://i.imgur.com/v6VwZ4v.png)
+
+#### Scrap Scan
+---
+
+You can ask VEGA to perform a moon wide scrap scan that tells you how many items are inside and how many items you have in the ship as well as the total value for both with the following command:
+
+- VEGA, scrap left / items left / scan for scrap / scan for items
+
+Here's an example of what it can look like:
+
+![scrapscanexample](https://i.imgur.com/SuH9Xy1.png)
+
+#### Who's in the ship?
+---
+
+You can ask VEGA to give you a report with the names of the people that are in the ship with the following command:
+
+- VEGA, crew in ship / people in ship / get crew in ship / get people in ship / how many people are in the ship? / is anyone in the ship? / is anybody in the ship?
+
+Here's an example of what it can look like:
+
+![crewinshipexample](https://i.imgur.com/Yrj3aKV.png)
 
 ### Radar Boosters
 ---
@@ -143,6 +172,7 @@ This is the defualt set of messages you can send:
 - SNARE
 - FLEA
 - COIL
+- JESTER
 - SLIME
 - THUMPER
 - MIMIC
@@ -153,7 +183,6 @@ This is the defualt set of messages you can send:
 - OLD BIRD
 - HEROBRINE
 - FOOTBALL
-- FURBO
 - FIEND
 - SLENDER
 - LOCKER
@@ -200,9 +229,10 @@ VEGA can give you information on all weather phenomena from the base game by say
 ---
 There are some additional interactions you can have with VEGA, such as being able to thank him or telling him to stop talking.
 
-To tell him to stop talking, you can use the following command:
+To tell him to stop talking, you can use one of the following commands:
 
 - VEGA, shut up / stop / stop talking
+- Shut up, VEGA / Stop, VEGA / Stop talking, VEGA
 
 And to thank him, you can say:
 
@@ -218,6 +248,61 @@ On his own, VEGA can:
 - Read bestiary entries out loud.
 - Give you some information on the current weather of the moon you're going to as you are landing if you have 150 experience points or less.
 
+## Supported mods
+
+VEGA **v2.0 or above** is compatible with some of the most popular and used Lethal Company mods on Thunderstore.
+
+I have separated the list of supported mods into two different categories based on the features VEGA has support for:
+
+### Mods that add new voice commands, features or interactions
+---
+
+- Malfunctions:
+
+    VEGA can warn you and give you information about a malfunction the moment it happens. His capabilities are also affected by them.
+
+- Toil-Head:
+
+    VEGA can disable the turrets on Toil-Heads.
+
+- Lategame Upgrades:
+    
+    You can ask VEGA to use the **Discombobulator** ship upgrade by saying:
+    
+    - VEGA, attack / stun / shock
+    
+- Ship Windows:
+    
+    You can ask VEGA to open or close the ship's shutters with the following commands:
+        
+    - VEGA, open shutters / open window shutters / open ship shutters
+    - VEGA, close shutters / close window shutters / close ship shutters
+    
+- Diversity:
+    
+    VEGA will sometimes reply to some of the speaker lines from Diversity. By default the chance of him replying is 40%. This can be configured.
+    
+- Facility Meltdown:
+    
+    VEGA will give you different warnings when pulling the apparatus.
+
+### Mods that add new creatures
+---
+
+- Giant Specimens
+- Football
+- Locker
+- Peepers
+- Rolling Giant
+- Shy Guy / SCP-096
+- Siren Head
+- Faceless Stalker
+- Moonswept
+- Shockwave Drone
+- Lethal Things (Boombas & Maggie)
+- LC_Office (Shrimp)
+
 ## Credits
 - id Software for creating the original character of VEGA.
 - My friend Nico for helping me test and polish the mod, as well as giving me suggestions and ideas to further improve it.
+- All the people that use the mod and have constantly been giving me ideas, suggestions and support. I appreciate it a lot <3
