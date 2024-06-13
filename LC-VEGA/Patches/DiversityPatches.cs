@@ -20,7 +20,7 @@ namespace LC_VEGA.Patches
             yield return new WaitUntil(() => !quickMenu.isMenuOpen);
             yield return new WaitForSeconds(0.2f);
 
-            VEGA.PlayLine("WelcomeReply", shipIntroSpeechSFX.length + 0.25f, false);
+            VEGA.PlayLine("WelcomeReply", shipIntroSpeechSFX.length + 0.25f, checkPlayerStatus: false, skip: true);
 
             yield return new WaitForSeconds(shipIntroSpeechSFX.length + 0.25f);
 
@@ -50,34 +50,52 @@ namespace LC_VEGA.Patches
                 switch (soundType)
                 {
                     case SoundType.SpeakerDogs:
-                        VEGA.audioSource.Stop();
+                        if (SaveManager.firstTimeDiversity && firstTimeWelcome)
+                        {
+                            firstTimeWelcome = false;
+                            VEGA.PlayLine("WelcomeReply", __result.length + 0.25f, skip: true);
+                            return;
+                        }
                         if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
-                            VEGA.PlayLine("DogsReply", __result.length + 0.25f);
+                            VEGA.PlayLine("DogsReply", __result.length + 0.25f, skip: true);
                         }
                         break;
                     case SoundType.SpeakerShutOff:
-                        VEGA.audioSource.Stop();
-                        if (firstTimeWelcome && SaveManager.firstTimeDiversity)
+                        if (SaveManager.firstTimeDiversity && firstTimeWelcome)
                         {
-                            VEGA.PlayLine("WelcomeReply", __result.length + 0.25f);
+                            firstTimeWelcome = false;
+                            VEGA.PlayLine("WelcomeReply", __result.length + 0.25f, skip: true);
+                            return;
                         }
                         if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
-                            if (__result.name.Equals("Turning_Off_Speaker_2") && randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
+                            if (SaveManager.firstTimeDiversity && firstTimeReply)
                             {
-                                VEGA.PlayLine("Reply-4", __result.length + 0.25f);
+                                firstTimeReply = false;
+                                VEGA.PlayLine("FirstTimeReply", __result.length + 0.25f, skip: true);
+                                return;
                             }
-                            VEGA.PlayRandomLine("SilenceReply", Random.Range(1, 4), __result.length + 0.25f);
+                            if (__result.name.Equals("Turning_Off_Speaker_2"))
+                            {
+                                VEGA.PlayLine("Reply-4", __result.length + 0.25f, skip: true);
+                                return;
+                            }
+                            VEGA.PlayRandomLine("SilenceReply", Random.Range(1, 4), __result.length + 0.25f, skip: true);
                         }
                         break;
                     case SoundType.SpeakerQuotaAgain:
-                        VEGA.audioSource.Stop();
+                        if (SaveManager.firstTimeDiversity && firstTimeWelcome)
+                        {
+                            firstTimeWelcome = false;
+                            VEGA.PlayLine("WelcomeReply", __result.length + 0.25f, skip: true);
+                            return;
+                        }
                         if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
                             if (__result.name.Equals("Reaching_Quota_Again"))
                             {
-                                VEGA.PlayLine("QuotaReply", __result.length + 0.25f);
+                                VEGA.PlayLine("QuotaReply", __result.length + 0.25f, skip: true);
                             }
                         }
                         break;
@@ -93,19 +111,26 @@ namespace LC_VEGA.Patches
         {
             if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.diversitySpeaker.Value)
             {
-                int randomNumber = Random.Range(0, 10);
+                int randomNumber = Random.Range(1, 101);
                 switch (soundType)
                 {
                     case SoundType.SpeakerTerminal:
                         VEGA.audioSource.Stop();
-                        if (SaveManager.firstTimeDiversity && firstTimeReply)
+                        if (SaveManager.firstTimeDiversity && firstTimeWelcome)
                         {
-                            firstTimeReply = false;
-                            VEGA.PlayLine("FirstTimeReply", __result.length + 0.25f);
+                            firstTimeWelcome = false;
+                            VEGA.PlayLine("WelcomeReply", __result.length + 0.25f, skip: true);
+                            return;
                         }
-                        else if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
+                        if (randomNumber <= Plugin.diversitySpeakerReplyChance.Value)
                         {
-                            VEGA.PlayRandomLine("Reply", Random.Range(1, 6), __result.length + 0.25f);
+                            if (SaveManager.firstTimeDiversity && firstTimeReply)
+                            {
+                                firstTimeReply = false;
+                                VEGA.PlayLine("FirstTimeReply", __result.length + 0.25f, skip: true);
+                                return;
+                            }
+                            VEGA.PlayRandomLine("Reply", Random.Range(1, 6), __result.length + 0.25f, skip: true);
                         }
                         break;
                     default:

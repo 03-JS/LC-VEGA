@@ -111,23 +111,22 @@ namespace LC_VEGA
             "Shrimp"
         };
 
-        public static void PlayLine(string clipName, float delay = 0.25f, bool checkPlayerStatus = true)
+        public static void PlayLine(string clipName, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
         {
             if (audioSource != null)
             {
                 if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
-                if (!audioSource.isPlaying)
+                if (!skip && audioSource.isPlaying) return;
+                
+                Plugin.LogToConsole("Playing audio");
+                foreach (var clip in audioClips)
                 {
-                    Plugin.LogToConsole("Playing audio");
-                    foreach (var clip in audioClips)
+                    if (clip.name.Equals(clipName))
                     {
-                        if (clip.name.Equals(clipName))
-                        {
-                            audioSource.clip = clip;
-                        }
+                        audioSource.clip = clip;
                     }
-                    audioSource.PlayDelayed(delay);
                 }
+                audioSource.PlayDelayed(delay);
             }
             else
             {
@@ -135,23 +134,22 @@ namespace LC_VEGA
             }
         }
 
-        public static void PlaySFX(string clipName, float delay = 0.25f, bool checkPlayerStatus = true)
+        public static void PlaySFX(string clipName, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
         {
             if (sfxAudioSource != null)
             {
                 if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
-                if (!sfxAudioSource.isPlaying)
+                if (!skip && sfxAudioSource.isPlaying) return;
+
+                Plugin.LogToConsole("Playing SFX");
+                foreach (var clip in audioClips)
                 {
-                    Plugin.LogToConsole("Playing SFX");
-                    foreach (var clip in audioClips)
+                    if (clip.name.Equals(clipName))
                     {
-                        if (clip.name.Equals(clipName))
-                        {
-                            sfxAudioSource.clip = clip;
-                        }
+                        sfxAudioSource.clip = clip;
                     }
-                    sfxAudioSource.PlayDelayed(delay);
                 }
+                sfxAudioSource.PlayDelayed(delay);
             }
             else
             {
@@ -159,10 +157,10 @@ namespace LC_VEGA
             }
         }
 
-        public static void PlayRandomLine(string clipName, int range, float delay = 0.25f)
+        public static void PlayRandomLine(string clipName, int range, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
         {
             clipName += "-" + range;
-            PlayLine(clipName, delay);
+            PlayLine(clipName, delay, checkPlayerStatus, skip);
         }
 
         internal static bool ClientHasMoon(string moonName)
