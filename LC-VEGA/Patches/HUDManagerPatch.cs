@@ -34,6 +34,7 @@ namespace LC_VEGA.Patches
                     {
                         if (StartOfRound.Instance.localPlayerController.ItemSlots.Any(item => item.GetType() == typeof(LungProp)))
                         {
+                            if (Random.Range(0, 10) == 0) VEGA.PlayRandomLine("ApparatusPulledEasterEgg", Random.Range(1, 3), 3.65f);
                             VEGA.PlayLine("ApparatusPulled", 3.65f);
                         }
                         else
