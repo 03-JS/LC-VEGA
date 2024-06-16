@@ -1,6 +1,6 @@
 # LC-VEGA
 
-![logo](https://i.imgur.com/te0TBnW.png)
+![logo](https://i.imgur.com/GUkudM9.png)
 
 ## Showcase videos
 [![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q)
