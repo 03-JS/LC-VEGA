@@ -117,7 +117,7 @@ namespace LC_VEGA
             {
                 if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
                 if (!skip && audioSource.isPlaying) return;
-                
+
                 Plugin.LogToConsole("Playing audio");
                 foreach (var clip in audioClips)
                 {
@@ -369,13 +369,17 @@ namespace LC_VEGA
             {
                 distanceToPlayer = Vector3.Distance(turret.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
-                if (distanceToPlayer <= distances.Min())
+                if (distanceToPlayer <= distances.Min() && StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(turret.transform.position, 45, 10000))
                 {
                     closestTurret = turret;
                 }
+                else if (distances.Count() > 0)
+                {
+                    distances.Remove(distanceToPlayer);
+                }
             }
 
-            if (!StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestTurret.transform.position, 45, 10000))
+            if (distances.Count() == 0)
             {
                 noVisibleTurret = true;
                 return null;
@@ -410,13 +414,17 @@ namespace LC_VEGA
             {
                 distanceToPlayer = Vector3.Distance(toil.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
-                if (distanceToPlayer <= distances.Min())
+                if (distanceToPlayer <= distances.Min() && StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(toil.transform.position, 45, 10000))
                 {
                     closestToil = toil;
                 }
+                else if (distances.Count() > 0)
+                {
+                    distances.Remove(distanceToPlayer);
+                }
             }
 
-            if (!StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(closestToil.transform.position, 45, 10000))
+            if (distances.Count() == 0)
             {
                 noVisibleTurret = true;
                 return null;
@@ -1553,6 +1561,11 @@ namespace LC_VEGA
                         {
                             if (ModChecker.hasMalfunctions)
                             {
+                                if (malfunctionPowerTriggered)
+                                {
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                    return;
+                                }
                                 if (malfunctionTeleporterTriggered)
                                 {
                                     PlayLine("TeleporterMalfunction");
