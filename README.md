@@ -188,6 +188,7 @@ This is the defualt set of messages you can send:
 - DRIFTWOOD
 - WALKER
 - WATCHER
+- LOST
 - INSIDE
 - TRAPPED
 - LEAVE
