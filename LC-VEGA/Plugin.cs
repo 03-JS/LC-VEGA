@@ -266,7 +266,7 @@ namespace LC_VEGA
                 "Advanced Scanner", // Config section
                 "Range", // Key of this config
                 29f, // Default value
-                new ConfigDescription("Changes how far the Advanced Scanner can reach.", new AcceptableValueRange<float>(1f, 29f)) // Description
+                new ConfigDescription("Changes how far the Advanced Scanner can reach. Requires a restart.", new AcceptableValueRange<float>(1f, 29f)) // Description
             );
             enableAdvancedScannerAuto = Config.Bind(
                 "Advanced Scanner", // Config section
