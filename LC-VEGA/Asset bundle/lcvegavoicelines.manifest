@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 2896070549
+CRC: 3207148190
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: aef611cf5df4032f78600b44c3eff8ef
+    Hash: 3275c1f6f8d341e50866e5588b4101e3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: aef611cf5df4032f78600b44c3eff8ef
+    Hash: 3275c1f6f8d341e50866e5588b4101e3
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -157,12 +157,14 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Coil-Head.ogg
 - Assets/LC-VEGA/Mods/Malfunctions/PowerMalfunction-3.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/ForestKeeperShort.ogg
+- Assets/LC-VEGA/Vanilla/Apparatus/ApparatusPulledEasterEgg-2.ogg
 - Assets/LC-VEGA/Vanilla/Apparatus/RadiationSpike-1.ogg
-- Assets/LC-VEGA/Mods/LGU/NoDiscombobulator-3.ogg
 - Assets/LC-VEGA/Vanilla/Moons/44-LIQ.ogg
+- Assets/LC-VEGA/Mods/LGU/NoDiscombobulator-3.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/ThumperScan.ogg
 - Assets/LC-VEGA/Vanilla/Doors/DoorClosed-2.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/NoMineNearby.ogg
+- Assets/LC-VEGA/Vanilla/Apparatus/ApparatusPulledEasterEgg-1.ogg
 - Assets/LC-VEGA/Mods/Malfunctions/CommsMalfunction-3.ogg
 - Assets/LC-VEGA/Vanilla/Radar booster/NoBoostersNearby.ogg
 - Assets/LC-VEGA/Vanilla/Misc/GoodLuck.ogg

@@ -1137,7 +1137,7 @@ namespace LC_VEGA
             performAdvancedScan = Plugin.enableAdvancedScannerAuto.Value;
             enemiesTopText = "Entities:\n";
             itemsTopText = "Items:\n";
-            scannerRange = 29f;
+            scannerRange = Plugin.scannerRange.Value; // 29m max (default)
         }
 
         public static void Initialize()

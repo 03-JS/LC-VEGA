@@ -51,6 +51,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> ignoreMasterVolume;
 
         // Advanced Scanner config values
+        public static ConfigEntry<float> scannerRange;
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
         public static ConfigEntry<bool> detectMasked;
 
@@ -261,6 +262,12 @@ namespace LC_VEGA
             );
 
             // Advanced Scanner
+            scannerRange = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Range", // Key of this config
+                29f, // Default value
+                new ConfigDescription("Changes how far the Advanced Scanner can reach.", new AcceptableValueRange<float>(1f, 29f)) // Description
+            );
             enableAdvancedScannerAuto = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Enable the Advanced Scanner automatically", // Key of this config
