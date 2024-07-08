@@ -707,7 +707,7 @@ namespace LC_VEGA
             }
         }
 
-        internal static void ActivateTeleporter()
+        internal static IEnumerator ActivateTeleporter()
         {
             if (GameObject.Find("Teleporter(Clone)"))
             {
@@ -717,6 +717,11 @@ namespace LC_VEGA
                     if (Plugin.vocalLevel.Value >= VocalLevels.High)
                     {
                         PlayRandomLine("Teleport", Random.Range(1, 4));
+                    }
+                    if (Plugin.enhancedTeleportCommands.Value && StartOfRound.Instance.mapScreen.targetedPlayer != StartOfRound.Instance.localPlayerController)
+                    {
+                        SwitchRadar(checkMalfunctions: false, checkCurrentTarget: false);
+                        yield return new WaitForSeconds(1f);
                     }
                     teleporter.PressTeleportButtonServerRpc();
                 }
@@ -731,6 +736,35 @@ namespace LC_VEGA
                 PlayRandomLine("NoTeleporter", Random.Range(1, 4));
                 // Plugin.LogToConsole("You might need a teleporter for that", "warn");
             }
+        }
+
+        internal static void SwitchRadar(bool checkMalfunctions = true, bool checkCurrentTarget = true)
+        {
+            if (ModChecker.hasMalfunctions && checkMalfunctions)
+            {
+                if (malfunctionPowerTriggered)
+                {
+                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                    return;
+                }
+                if (malfunctionDistortionTriggered)
+                {
+                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                    return;
+                }
+            }
+
+            if (checkCurrentTarget)
+            {
+                if (StartOfRound.Instance.mapScreen.targetedPlayer == StartOfRound.Instance.localPlayerController)
+                {
+                    PlayLine("RadarAlreadyFocused");
+                    return;
+                }
+            }
+
+            int index = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.transform == StartOfRound.Instance.localPlayerController.transform);
+            StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(index);
         }
 
         internal static IEnumerator SwitchLights(bool on)
@@ -1581,7 +1615,7 @@ namespace LC_VEGA
                                     return;
                                 }
                             }
-                            ActivateTeleporter();
+                            CoroutineManager.StartCoroutine(ActivateTeleporter());
                         }
                     }
                 });
@@ -1596,26 +1630,7 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
-                            if (ModChecker.hasMalfunctions)
-                            {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                            }
-                            if (StartOfRound.Instance.mapScreen.targetedPlayer == StartOfRound.Instance.localPlayerController)
-                            {
-                                PlayLine("RadarAlreadyFocused");
-                                return;
-                            }
-                            int index = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.transform == StartOfRound.Instance.localPlayerController.transform);
-                            StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(index);
+                            SwitchRadar();
                         }
                         PlayRandomLine("RadarSwitch", Random.Range(1, 4));
                     }

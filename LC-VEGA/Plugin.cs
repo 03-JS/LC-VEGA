@@ -28,7 +28,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "2.0.3";
+        private const string modVersion = "2.1.0";
 
         internal static AssetBundle assetBundle;
 
@@ -60,6 +60,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> enableManualListeningAuto;
 
         // Voice commands config values
+        public static ConfigEntry<bool> enhancedTeleportCommands;
         public static ConfigEntry<float> confidence;
         public static ConfigEntry<bool> registerActivation;
         public static ConfigEntry<bool> registerMoonsInfo;
@@ -286,188 +287,194 @@ namespace LC_VEGA
             );
 
             // Voice commands
-            confidence = Config.Bind(
-                "Voice Recognition", // Config section
-                "Confidence", // Key of this config
-                0.7f, // Default value
-                new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. If VEGA doesn't pick you up, try lowering this value.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            enhancedTeleportCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Enhanced Teleport commands", // Key of this config
+                true, // Default value
+                "Makes VEGA perform the radar switch before activating the teleporter." // Description
             );
+            // confidence = Config.Bind(
+            //     "Voice Recognition", // Config section
+            //     "Confidence", // Key of this config
+            //     0.7f, // Default value
+            //     new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. If VEGA doesn't pick you up, try lowering this value.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            // );
             useManualListening = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Manual Listening", // Key of this config
                 false, // Default value
                 "Determines if VEGA should only be able to hear you when you ask him to." // Description
             );
             enableManualListeningAuto = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Enable VEGA listening automatically", // Key of this config
                 false, // Default value
                 "Makes VEGA listen automatically when joining a game. Only works if Manual Listening is set to true. Applies after restarting the game." // Description
             );
             registerActivation = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Manual Listening commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerMoonsInfo = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Moon info commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerBestiaryEntries = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Bestiary entries commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerCreatureInfo = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Creature info commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerAdvancedScanner = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Advanced Scanner commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerInteractSecureDoor = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Open / Close Secure Door commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerInteractAllSecureDoors = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Open / Close All Secure Doors command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
             registerDisableTurret = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Disable Turret command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
             registerDisableAllTurrets = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Disable All Turrets command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
             registerDisableMine = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Disable Mine command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
             registerDisableAllMines = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Disable All Mines command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
             registerDisableSpikeTrap = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Disable Spike Trap command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
             registerDisableAllSpikeTraps = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Disable All Spike Traps command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
             registerTeleporter = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Teleporter commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerRadarSwitch = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Radar Switch commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerDiscombobulator = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Discombobulator upgrade commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with Late Game Upgrades installed." // Description
             );
             registerCrewStatus = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Crew Status commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerCrewInShip = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Crew in ship commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerScrapLeft = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Scrap / items left commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerRadarBoosters = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Radar Booster commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerSignalTranslator = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Signal Translator commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerTime = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Current time of day commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerInteractShipDoors = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Ship Door commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerInteractShipLights = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Ship Lights commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerInteractShipShutters = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Ship Shutters commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with ShipWindows installed." // Description
             );
             registerWeatherInfo = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Weather info commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerStop = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Stop Talking commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
             registerThanks = Config.Bind(
-                "Voice Recognition", // Config section
+                "Voice Commands", // Config section
                 "Register Thank you commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
