@@ -62,27 +62,6 @@ namespace LC_VEGA.Patches
 
         [HarmonyPatch(typeof(RoundManager), "Update")]
         [HarmonyPostfix]
-        public static void ReadInput()
-        {
-            if (StartOfRound.Instance.localPlayerController.inTerminalMenu || StartOfRound.Instance.localPlayerController.isTypingChat) return;
-            if ((VEGA.sfxAudioSource.clip.name.Equals("Activate") || VEGA.sfxAudioSource.clip.name.Equals("Deactivate")) && VEGA.sfxAudioSource.isPlaying) return;
-            if (Plugin.registerActivation.Value && Plugin.useManualListening.Value && Plugin.PlayerInputInstance.Toggle.triggered)
-            {
-                if (!VEGA.listening)
-                {
-                    VEGA.PlaySFX("Activate");
-                }
-                else
-                {
-                    VEGA.PlaySFX("Deactivate");
-                }
-                VEGA.listening = !VEGA.listening;
-                Plugin.LogToConsole("Is VEGA listening -> " + VEGA.listening, "debug");
-            }
-        }
-
-        [HarmonyPatch(typeof(RoundManager), "Update")]
-        [HarmonyPostfix]
         static void UpdateVolume()
         {
             if (VEGA.audioSource != null)
@@ -152,6 +131,30 @@ namespace LC_VEGA.Patches
                     default:
                         break;
                 }
+            }
+        }
+    }
+
+    internal class ReadInputPatch
+    {
+        [HarmonyPatch(typeof(RoundManager), "Update")]
+        [HarmonyPostfix]
+        public static void ReadInput()
+        {
+            if (StartOfRound.Instance.localPlayerController.inTerminalMenu || StartOfRound.Instance.localPlayerController.isTypingChat) return;
+            if ((VEGA.sfxAudioSource.clip.name.Equals("Activate") || VEGA.sfxAudioSource.clip.name.Equals("Deactivate")) && VEGA.sfxAudioSource.isPlaying) return;
+            if (Plugin.registerActivation.Value && Plugin.useManualListening.Value && Plugin.PlayerInputInstance.Toggle.triggered)
+            {
+                if (!VEGA.listening)
+                {
+                    VEGA.PlaySFX("Activate");
+                }
+                else
+                {
+                    VEGA.PlaySFX("Deactivate");
+                }
+                VEGA.listening = !VEGA.listening;
+                Plugin.LogToConsole("Is VEGA listening -> " + VEGA.listening, "debug");
             }
         }
     }

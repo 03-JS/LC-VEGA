@@ -90,6 +90,9 @@ namespace LC_VEGA
         public static ConfigEntry<bool> registerStop;
         public static ConfigEntry<bool> registerThanks;
 
+        // Patch values
+        public static ConfigEntry<bool> patchReadInput;
+
         private readonly Harmony harmony = new Harmony(modGUID);
         private static Plugin Instance;
         internal static ManualLogSource mls;
@@ -142,6 +145,7 @@ namespace LC_VEGA
             harmony.PatchAll(typeof(TimeOfDayPatch));
             harmony.PatchAll(typeof(HUDManagerPatch));
             harmony.PatchAll(typeof(GeneralPatches));
+            if (patchReadInput.Value) harmony.PatchAll(typeof(ReadInputPatch));
             if (ModChecker.hasMalfunctions) harmony.PatchAll(typeof(MalfunctionsPatches));
             if (ModChecker.hasDiversity) harmony.PatchAll(typeof(DiversityPatches));
             if (ModChecker.hasShipWindows) harmony.PatchAll(typeof(ShipWindowsPatches));
@@ -467,6 +471,14 @@ namespace LC_VEGA
                 "Register Thank you commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+
+            // Patches
+            patchReadInput = Config.Bind(
+                "Patches", // Config section
+                "Patch ReadInput", // Key of this config
+                true, // Default value
+                "Enables / disables the code that checks for player input and allows you to make VEGA listen / stop listening by pressing a key." // Description
             );
         }
 
