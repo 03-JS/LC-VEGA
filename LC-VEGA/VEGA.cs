@@ -16,6 +16,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VoiceRecognitionAPI;
+using static UnityEngine.GraphicsBuffer;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -554,11 +555,22 @@ namespace LC_VEGA
             {
                 distanceToPlayer = Vector3.Distance(mine.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
-                if (distanceToPlayer <= distances.Min())
+                if (distanceToPlayer <= distances.Min() && StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(mine.transform.position, 45, 10000))
                 {
                     closestMine = mine;
                 }
+                else if (distances.Count() > 0)
+                {
+                    distances.Remove(distanceToPlayer);
+                }
             }
+
+            if (distances.Count() == 0)
+            {
+                PlayLine("NoVisibleMine");
+                return null;
+            }
+
             return closestMine;
         }
 
@@ -567,18 +579,11 @@ namespace LC_VEGA
             TerminalAccessibleObject? closestMine = GetClosestMine();
             if (closestMine != null)
             {
-                if (Vector3.Distance(closestMine.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
+                Plugin.LogToConsole("Disabling landmine", "debug");
+                closestMine.CallFunctionFromTerminal();
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    Plugin.LogToConsole("Disabling landmine", "debug");
-                    closestMine.CallFunctionFromTerminal();
-                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
-                    {
-                        PlayRandomLine("MineDisabled", Random.Range(1, 4));
-                    }
-                }
-                else
-                {
-                    PlayLine("NoMineNearby");
+                    PlayRandomLine("MineDisabled", Random.Range(1, 4));
                 }
             }
         }
@@ -640,11 +645,22 @@ namespace LC_VEGA
             {
                 distanceToPlayer = Vector3.Distance(trap.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
                 distances.Add(distanceToPlayer);
-                if (distanceToPlayer <= distances.Min())
+                if (distanceToPlayer <= distances.Min() && StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(trap.transform.position, 45, 10000))
                 {
                     closestTrap = trap;
                 }
+                else if (distances.Count() > 0)
+                {
+                    distances.Remove(distanceToPlayer);
+                }
             }
+
+            if (distances.Count() == 0)
+            {
+                PlayLine("NoVisibleTrap");
+                return null;
+            }
+
             return closestTrap;
         }
 
@@ -653,18 +669,11 @@ namespace LC_VEGA
             TerminalAccessibleObject? closestTrap = GetClosestSpikeTrap();
             if (closestTrap != null)
             {
-                if (Vector3.Distance(closestTrap.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
+                Plugin.LogToConsole("Disabling spike trap", "debug");
+                closestTrap.CallFunctionFromTerminal();
+                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                 {
-                    Plugin.LogToConsole("Disabling spike trap", "debug");
-                    closestTrap.CallFunctionFromTerminal();
-                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                    {
-                        PlayRandomLine("TrapDisabled", Random.Range(1, 4));
-                    }
-                }
-                else
-                {
-                    PlayLine("NoTrapNearby");
+                    PlayRandomLine("TrapDisabled", Random.Range(1, 4));
                 }
             }
         }
