@@ -1,12 +1,6 @@
-﻿using GameNetcodeStuff;
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using HarmonyLib;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace LC_VEGA.Patches
 {
@@ -67,16 +61,16 @@ namespace LC_VEGA.Patches
             InstantiateAdvancedScannerItems();
         }
 
-        internal static GameObject? ConfigureScannerObjs(HUDManager hudManager, GameObject topLeftCorner, Vector2 pos, float yPos = -25f, string defaultText = "")
+        internal static GameObject? ConfigureScannerObjs(HUDManager hudManager, GameObject parent, Vector2 pos, float yPos = -25f, string defaultText = "")
         {
-            if (topLeftCorner == null)
+            if (parent == null)
             {
                 Plugin.LogToConsole("'TopLeftCorner' not found", "error");
                 return null;
             }
 
             GameObject obj = new GameObject("VEGAScannerTextObject");
-            obj.transform.SetParent(topLeftCorner.transform, false); // Parent to 'TopLeftCorner'
+            obj.transform.SetParent(parent.transform, false); // Set the parent
             TextMeshProUGUI textComponent = obj.AddComponent<TextMeshProUGUI>();
 
             // Get the weightCounter to clone properties
@@ -123,10 +117,11 @@ namespace LC_VEGA.Patches
         internal static void InstantiateAdvancedScannerItems()
         {
             HUDManager hudManager = HUDManager.Instance;
-            GameObject topLeftCorner = GameObject.Find("Systems/UI/Canvas/IngamePlayerHUD/TopLeftCorner");
+            GameObject parent = GameObject.Find("Systems/UI/Canvas/IngamePlayerHUD/TopLeftCorner");
+            if (ModChecker.hasEladsHUD) parent = CustomHUD.Plugin.instance.HUD.gameObject;
 
-            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, topLeftCorner, new Vector2(45, -180), -22f);
-            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, topLeftCorner, new Vector2(45, -230), -22f);
+            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(45, -180), -22f);
+            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(45, -230), -22f);
 
             VEGA.enemiesText = HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>();
             VEGA.itemsText = HUDManagerPatch.items.GetComponent<TextMeshProUGUI>();

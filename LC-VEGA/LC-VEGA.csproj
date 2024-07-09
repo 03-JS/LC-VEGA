@@ -25,6 +25,9 @@
     <Reference Include="Diversity">
       <HintPath>D:\Descargas\Diversity.dll</HintPath>
     </Reference>
+    <Reference Include="EladsHUD">
+      <HintPath>D:\Descargas\EladsHUD.dll</HintPath>
+    </Reference>
     <Reference Include="LethalCompanyInputUtils">
       <HintPath>D:\Descargas\LethalCompanyInputUtils.dll</HintPath>
     </Reference>

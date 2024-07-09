@@ -34,6 +34,8 @@ namespace LC_VEGA
 
         internal static PlayerInput PlayerInputInstance;
 
+        // Confidence values
+
         // Dialogue & Interactions config values
         public static ConfigEntry<VocalLevels> vocalLevel;
         public static ConfigEntry<bool> playIntro;
@@ -54,6 +56,8 @@ namespace LC_VEGA
         public static ConfigEntry<float> scannerRange;
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
         public static ConfigEntry<bool> detectMasked;
+        public static ConfigEntry<bool> scanItems;
+        public static ConfigEntry<bool> scanEntities;
 
         // Manual activation config values
         public static ConfigEntry<bool> useManualListening;
@@ -163,6 +167,7 @@ namespace LC_VEGA
             ModChecker.hasDiversity = ModChecker.CheckForMod("Chaos.Diversity");
             ModChecker.hasShipWindows = ModChecker.CheckForMod("TestAccount666.ShipWindows");
             ModChecker.hasLGU = ModChecker.CheckForMod("com.malco.lethalcompany.moreshipupgrades");
+            ModChecker.hasEladsHUD = ModChecker.CheckForMod("me.eladnlg.customhud");
         }
 
         internal void ManageSaveValues()
@@ -272,6 +277,18 @@ namespace LC_VEGA
                 "Range", // Key of this config
                 29f, // Default value
                 new ConfigDescription("Changes how far the Advanced Scanner can reach (in meters). Requires a restart.", new AcceptableValueRange<float>(1f, 29f)) // Description
+            );
+            scanEntities = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Scan entities", // Key of this config
+                true, // Default value
+                "Whether the Advanced Scanner scans nearby entities or not." // Description
+            );
+            scanItems = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Scan items", // Key of this config
+                true, // Default value
+                "Whether the Advanced Scanner scans nearby items or not." // Description
             );
             enableAdvancedScannerAuto = Config.Bind(
                 "Advanced Scanner", // Config section

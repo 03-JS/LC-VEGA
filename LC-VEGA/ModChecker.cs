@@ -17,6 +17,7 @@ namespace LC_VEGA
         public static bool hasFacilityMeltdown;
         public static bool hasShipWindows;
         public static bool hasLGU;
+        public static bool hasEladsHUD;
 
         public static bool CheckForMod(string modGUID)
         {

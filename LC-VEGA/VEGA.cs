@@ -809,8 +809,8 @@ namespace LC_VEGA
                 {
                     if (malfunctionDistortionTriggered || malfunctionPowerTriggered)
                     {
-                        itemsText.SetText(itemsTopText + "<color=yellow>Data unavailable</color>");
                         enemiesText.SetText(enemiesTopText + "<color=yellow>Data unavailable</color>");
+                        itemsText.SetText(itemsTopText + "<color=yellow>Data unavailable</color>");
                         return;
                     }
                 }
@@ -826,7 +826,7 @@ namespace LC_VEGA
                     GrabbableObject item = collider.GetComponent<GrabbableObject>();
                     if (item != null)
                     {
-                        if (item.itemProperties.isScrap && !item.isHeld)
+                        if (item.itemProperties.isScrap && !item.isHeld && Plugin.scanItems.Value)
                         {
                             itemCount++;
                             totalWorth += item.scrapValue;
@@ -1471,11 +1471,13 @@ namespace LC_VEGA
                             return;
                         }
 
-                        Plugin.LogToConsole("Activating advanced scanner");
+                        Plugin.LogToConsole("Activating advanced scanner", "debug");
                         performAdvancedScan = true;
 
-                        HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("Enemies:");
-                        HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("Items:");
+                        //if (Plugin.scanEntities.Value) HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("Enemies:");
+                        //if (Plugin.scanItems.Value) HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("Items:");
+
+                        if (!Plugin.scanEntities.Value && !Plugin.scanItems.Value) return;
 
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {
@@ -1495,11 +1497,13 @@ namespace LC_VEGA
                             return;
                         }
 
-                        Plugin.LogToConsole("Deactivating advanced scanner");
+                        Plugin.LogToConsole("Deactivating advanced scanner", "debug");
                         performAdvancedScan = false;
 
                         HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
                         HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
+
+                        if (!Plugin.scanEntities.Value && !Plugin.scanItems.Value) return;
 
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {
