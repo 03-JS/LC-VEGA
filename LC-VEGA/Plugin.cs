@@ -23,7 +23,8 @@ namespace LC_VEGA
     [BepInDependency("com.github.zehsteam.ToilHead", DependencyFlags.SoftDependency)]
     [BepInDependency("Chaos.Diversity", DependencyFlags.SoftDependency)]
     [BepInDependency("TestAccount666.ShipWindows", DependencyFlags.SoftDependency)]
-    [BepInDependency("MoreShipUpgrades", DependencyFlags.SoftDependency)]
+    [BepInDependency("com.malco.lethalcompany.moreshipupgrades", DependencyFlags.SoftDependency)]
+    [BepInDependency("me.eladnlg.customhud", DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
         private const string modGUID = "JS03.LC-VEGA";
