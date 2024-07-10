@@ -44,6 +44,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void ReplyToSpeakerByTypeRandom(SoundType soundType, AudioClip __result)
         {
+            if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom) return;
             if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.diversitySpeaker.Value)
             {
                 int randomNumber = Random.Range(1, 101);
@@ -109,6 +110,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void ReplyToSpeakerByTypeAndId(SoundType soundType, int id, AudioClip __result)
         {
+            if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom) return;
             if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.diversitySpeaker.Value)
             {
                 int randomNumber = Random.Range(1, 101);
