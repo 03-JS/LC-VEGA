@@ -36,12 +36,29 @@ namespace LC_VEGA
         internal static PlayerInput PlayerInputInstance;
 
         // Confidence values
+        public static ConfigEntry<float> gratitudeConfidence;
+        public static ConfigEntry<float> stopConfidence;
+        public static ConfigEntry<float> infoConfidence;
+        public static ConfigEntry<float> manualActivationConfidence;
+        public static ConfigEntry<float> secureDoorsConfidence;
+        public static ConfigEntry<float> turretsConfidence;
+        public static ConfigEntry<float> landminesConfidence;
+        public static ConfigEntry<float> trapsConfidence;
+        public static ConfigEntry<float> signalsConfidence;
+        public static ConfigEntry<float> teleportConfidence;
+        public static ConfigEntry<float> shipConfidence;
+        public static ConfigEntry<float> miscConfidence;
+        public static ConfigEntry<float> upgradesConfidence;
+        public static ConfigEntry<float> crewStatusConfidence;
+        public static ConfigEntry<float> crewInShipConfidence;
+        public static ConfigEntry<float> scrapLeftConfidence;
 
         // Dialogue & Interactions config values
         public static ConfigEntry<VocalLevels> vocalLevel;
         public static ConfigEntry<bool> playIntro;
         public static ConfigEntry<bool> readBestiaryEntries;
         public static ConfigEntry<bool> giveWeatherInfo;
+        public static ConfigEntry<bool> giveApparatusWarnings;
         public static ConfigEntry<string> messages;
 
         // Mod interactions values
@@ -64,35 +81,66 @@ namespace LC_VEGA
 
         // Voice commands config values
         public static ConfigEntry<bool> enhancedTeleportCommands;
-        public static ConfigEntry<float> confidence;
         public static ConfigEntry<bool> registerActivation;
+        public static ConfigEntry<string> manualActivationCommands;
         public static ConfigEntry<bool> registerMoonsInfo;
         public static ConfigEntry<bool> registerBestiaryEntries;
         public static ConfigEntry<bool> registerCreatureInfo;
         public static ConfigEntry<bool> registerAdvancedScanner;
+        public static ConfigEntry<string> activateAdvancedScannerCommands;
+        public static ConfigEntry<string> deactivateAdvancedScannerCommands;
         public static ConfigEntry<bool> registerInteractSecureDoor;
+        public static ConfigEntry<string> openSecureDoorCommands;
+        public static ConfigEntry<string> closeSecureDoorCommands;
         public static ConfigEntry<bool> registerInteractAllSecureDoors;
+        public static ConfigEntry<string> openAllSecureDoorsCommands;
+        public static ConfigEntry<string> closeAllSecureDoorsCommands;
         public static ConfigEntry<bool> registerDisableTurret;
+        public static ConfigEntry<string> disableTurretCommands;
         public static ConfigEntry<bool> registerDisableAllTurrets;
+        public static ConfigEntry<string> disableAllTurretsCommands;
         public static ConfigEntry<bool> registerDisableMine;
+        public static ConfigEntry<string> disableMineCommands;
         public static ConfigEntry<bool> registerDisableAllMines;
+        public static ConfigEntry<string> disableAllMinesCommands;
         public static ConfigEntry<bool> registerDisableSpikeTrap;
+        public static ConfigEntry<string> disableSpikeTrapCommands;
         public static ConfigEntry<bool> registerDisableAllSpikeTraps;
+        public static ConfigEntry<string> disableAllSpikeTrapCommands;
         public static ConfigEntry<bool> registerTeleporter;
+        public static ConfigEntry<string> teleporterCommands;
         public static ConfigEntry<bool> registerRadarSwitch;
+        public static ConfigEntry<string> radarSwitchCommands;
         public static ConfigEntry<bool> registerDiscombobulator;
+        public static ConfigEntry<string> discombobulatorCommands;
         public static ConfigEntry<bool> registerCrewStatus;
+        public static ConfigEntry<string> crewStatusCommands;
         public static ConfigEntry<bool> registerCrewInShip;
+        public static ConfigEntry<string> crewInShipCommands;
         public static ConfigEntry<bool> registerScrapLeft;
+        public static ConfigEntry<string> scrapLeftCommands;
         public static ConfigEntry<bool> registerRadarBoosters;
+        public static ConfigEntry<string> radarPingCommands;
+        public static ConfigEntry<string> radarFlashCommands;
         public static ConfigEntry<bool> registerSignalTranslator;
+        public static ConfigEntry<string> transmitCommands;
         public static ConfigEntry<bool> registerTime;
+        public static ConfigEntry<string> timeCommands;
         public static ConfigEntry<bool> registerInteractShipDoors;
+        public static ConfigEntry<string> openShipDoorsCommands;
+        public static ConfigEntry<string> closeShipDoorsCommands;
         public static ConfigEntry<bool> registerInteractShipLights;
+        public static ConfigEntry<string> lightsOnCommands;
+        public static ConfigEntry<string> lightsOffCommands;
         public static ConfigEntry<bool> registerInteractShipShutters;
+        public static ConfigEntry<string> openShuttersCommands;
+        public static ConfigEntry<string> closeShuttersCommands;
         public static ConfigEntry<bool> registerWeatherInfo;
+        public static ConfigEntry<string> weatherInfoCommands;
         public static ConfigEntry<bool> registerStop;
+        public static ConfigEntry<string> stopCommands;
         public static ConfigEntry<bool> registerThanks;
+        public static ConfigEntry<string> gratitudeCommands;
 
         // Patch values
         public static ConfigEntry<bool> patchReadInput;
@@ -217,6 +265,12 @@ namespace LC_VEGA
                 true, // Default value
                 "If set to true, VEGA will give you its introduction speech the first time you use the mod." // Description
             );
+            giveApparatusWarnings = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Give Apparatus warnings", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will give you brief and informative warnings when the Apparatus is pulled." // Description
+            );
             readBestiaryEntries = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Read Bestiary entries", // Key of this config
@@ -254,6 +308,104 @@ namespace LC_VEGA
                 "Reply chance", // Key of this config
                 40, // Default value
                 new ConfigDescription("Changes how likely it is for VEGA to reply to the Diversity speaker.\n0 means it will never reply, 100 means it will always reply.", new AcceptableValueRange<int>(0, 100)) // Description
+            );
+
+            // Confidence
+            gratitudeConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Gratitude", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Thank you' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            stopConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Stop talking", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Stop talking' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            secureDoorsConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Secure doors", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the voice commands used to interact with secure doors. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            turretsConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Turrets", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable turrets. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            landminesConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Landmines", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable landmines. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            trapsConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Spike traps", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable spike traps. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            signalsConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Signal translator", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the voice commands related to the Signal Translator. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            teleportConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Teleport", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Teleport' and 'Radar Switch' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            shipConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Ship", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to the ship's lights, doors and shutters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            miscConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Miscellaneous", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to the Advanced Scanner and Radar Boosters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            upgradesConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Ship upgrades", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to LGU. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            crewStatusConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Crew status", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Crew status' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            crewInShipConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Crew in ship", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Crew in ship' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            scrapLeftConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Scrap / items left", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Scrap / items left' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            infoConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Info", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to information about Entities, Moons, Weather phenomena and the current Time of day. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
+            manualActivationConfidence = Config.Bind(
+                "Confidence", // Config section
+                "Manual Activation", // Key of this config
+                0.7f, // Default value
+                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Manual Activation' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
 
             // Sound settings
@@ -297,12 +449,6 @@ namespace LC_VEGA
                 true, // Default value
                 "Makes VEGA perform the radar switch before activating the teleporter." // Description
             );
-            // confidence = Config.Bind(
-            //     "Voice Recognition", // Config section
-            //     "Confidence", // Key of this config
-            //     0.7f, // Default value
-            //     new ConfigDescription("Determines how easy / hard it is for VEGA to recognize voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives. If VEGA doesn't pick you up, try lowering this value.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
-            // );
             useManualListening = Config.Bind(
                 "Voice Commands", // Config section
                 "Manual Listening", // Key of this config
