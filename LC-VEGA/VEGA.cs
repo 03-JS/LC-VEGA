@@ -826,7 +826,7 @@ namespace LC_VEGA
                     GrabbableObject item = collider.GetComponent<GrabbableObject>();
                     if (item != null)
                     {
-                        if (item.itemProperties.isScrap && !item.isHeld && Plugin.scanItems.Value)
+                        if (item.itemProperties.isScrap && !item.isHeld)
                         {
                             itemCount++;
                             totalWorth += item.scrapValue;
@@ -1477,8 +1477,6 @@ namespace LC_VEGA
                         //if (Plugin.scanEntities.Value) HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("Enemies:");
                         //if (Plugin.scanItems.Value) HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("Items:");
 
-                        if (!Plugin.scanEntities.Value && !Plugin.scanItems.Value) return;
-
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {
                             PlayRandomLine("AdvancedScannerEnabled", Random.Range(1, 4));
@@ -1502,8 +1500,6 @@ namespace LC_VEGA
 
                         HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
                         HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
-
-                        if (!Plugin.scanEntities.Value && !Plugin.scanItems.Value) return;
 
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {

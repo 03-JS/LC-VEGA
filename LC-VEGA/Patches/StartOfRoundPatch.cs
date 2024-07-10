@@ -12,7 +12,7 @@ namespace LC_VEGA.Patches
         static void Start(StartOfRound __instance)
         {
             Plugin.LogToConsole("Creating the VEGA audio sources");
-            
+
             GameObject audioGameObject = new GameObject("VEGA");
             VEGA.audioSource = audioGameObject.AddComponent<AudioSource>();
             if (VEGA.audioSource != null)
@@ -116,12 +116,33 @@ namespace LC_VEGA.Patches
 
         internal static void InstantiateAdvancedScannerItems()
         {
+            float xPos = 45f;
+            float yRot = 22f;
+            float yEnemies = 180f;
+            float yItems = 230f;
             HUDManager hudManager = HUDManager.Instance;
             GameObject parent = GameObject.Find("Systems/UI/Canvas/IngamePlayerHUD/TopLeftCorner");
-            if (ModChecker.hasEladsHUD) parent = CustomHUD.Plugin.instance.HUD.gameObject;
+            Vector3 customScale = Vector3.zero;
+            if (ModChecker.hasEladsHUD)
+            {
+                customScale = GameObject.Find(CustomHUD.Plugin.instance.HUD.gameObject.name + "(Clone)").transform.localScale;
+                parent = GameObject.Find("CinematicGraphics").transform.parent.gameObject;
+                xPos = 33f;
+                yRot = 5f;
+                yEnemies = (140f * customScale.y) + 35f;
+                yItems = (190f * customScale.y) + 35f;
+            }
 
-            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(45, -180), -22f);
-            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(45, -230), -22f);
+            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), -yRot);
+            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yItems), -yRot);
+
+            if (ModChecker.hasEladsHUD)
+            {
+                HUDManagerPatch.enemies.transform.localScale = customScale * 1.15f;
+                HUDManagerPatch.enemies.GetComponent<RectTransform>().sizeDelta = new Vector2(400f, 45f);
+                HUDManagerPatch.items.transform.localScale = customScale * 1.15f;
+                HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta = new Vector2(400f, 35f);
+            }
 
             VEGA.enemiesText = HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>();
             VEGA.itemsText = HUDManagerPatch.items.GetComponent<TextMeshProUGUI>();
@@ -144,7 +165,7 @@ namespace LC_VEGA.Patches
                 MalfunctionsPatches.playTpWarning = true;
                 MalfunctionsPatches.playCommsWarning = true;
                 MalfunctionsPatches.playDoorWarning = true;
-                MalfunctionsPatches.playLeverWarning = true; 
+                MalfunctionsPatches.playLeverWarning = true;
             }
         }
     }
