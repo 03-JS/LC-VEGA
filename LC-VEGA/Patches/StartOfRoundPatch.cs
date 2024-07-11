@@ -126,7 +126,7 @@ namespace LC_VEGA.Patches
             Vector3 customScale = Vector3.zero;
             if (ModChecker.hasEladsHUD)
             {
-                customScale = GameObject.Find(CustomHUD.Plugin.instance.HUD.gameObject.name + "(Clone)").transform.localScale;
+                customScale = GameObject.Find("PlayerInfo(Clone)").transform.localScale;
                 parent = GameObject.Find("CinematicGraphics").transform.parent.gameObject;
                 xPos = 33f;
                 yRot = 5f;

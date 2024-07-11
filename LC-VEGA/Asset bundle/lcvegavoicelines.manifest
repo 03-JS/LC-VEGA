@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 3207148190
+CRC: 1021250725
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3275c1f6f8d341e50866e5588b4101e3
+    Hash: 1e7afcd381eb71b44e39c14c8fb6b0be
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 3275c1f6f8d341e50866e5588b4101e3
+    Hash: 1e7afcd381eb71b44e39c14c8fb6b0be
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -106,6 +106,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Bracken.ogg
 - Assets/LC-VEGA/Mods/Entities/Bestiary/Boombas.ogg
 - Assets/LC-VEGA/Vanilla/Time/Dawn.ogg
+- Assets/LC-VEGA/Vanilla/Hazards/NoVisibleMine.ogg
 - Assets/LC-VEGA/Vanilla/Weather/Stormy-1.ogg
 - Assets/LC-VEGA/Mods/Malfunctions/TeleporterMalfunction.ogg
 - Assets/LC-VEGA/Vanilla/Hazards/AllTurretsDisabled-3.ogg
@@ -150,6 +151,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Doors/NoDoors.ogg
 - Assets/LC-VEGA/Mods/Entities/Summary/Shy guyShort.ogg
 - Assets/LC-VEGA/Mods/Entities/Summary/MaggieShort.ogg
+- Assets/LC-VEGA/Vanilla/Hazards/NoVisibleTrap.ogg
 - Assets/LC-VEGA/Mods/Diversity/Speaker/SilenceReply-3.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Thumper.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/LocustsShort.ogg
@@ -163,7 +165,6 @@ Assets:
 - Assets/LC-VEGA/Mods/LGU/NoDiscombobulator-3.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/ThumperScan.ogg
 - Assets/LC-VEGA/Vanilla/Doors/DoorClosed-2.ogg
-- Assets/LC-VEGA/Vanilla/Hazards/NoMineNearby.ogg
 - Assets/LC-VEGA/Vanilla/Apparatus/ApparatusPulledEasterEgg-1.ogg
 - Assets/LC-VEGA/Mods/Malfunctions/CommsMalfunction-3.ogg
 - Assets/LC-VEGA/Vanilla/Radar booster/NoBoostersNearby.ogg
@@ -197,7 +198,6 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Moons/8-TIT.ogg
 - Assets/LC-VEGA/Mods/Entities/Summary/Moving TurretShort.ogg
 - Assets/LC-VEGA/Vanilla/Reports & Scans/GettingCrewInShip.ogg
-- Assets/LC-VEGA/Vanilla/Hazards/NoTrapNearby.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/BunkerSpiderScan.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/SandwormScan.ogg
 - Assets/LC-VEGA/Mods/Entities/Bestiary/Shy guy.ogg

@@ -328,7 +328,7 @@ namespace LC_VEGA
             TerminalAccessibleObject closestDoor = secureDoors[0];
 
             List<float> distances = new List<float>();
-            float distanceToPlayer = 0f;
+            float distanceToPlayer;
             foreach (var door in secureDoors)
             {
                 distanceToPlayer = Vector3.Distance(door.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
@@ -365,7 +365,7 @@ namespace LC_VEGA
             TerminalAccessibleObject closestTurret = turrets[0];
 
             List<float> distances = new List<float>();
-            float distanceToPlayer = 0f;
+            float distanceToPlayer;
             foreach (var turret in turrets)
             {
                 distanceToPlayer = Vector3.Distance(turret.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
@@ -410,7 +410,7 @@ namespace LC_VEGA
             FollowTerminalAccessibleObjectBehaviour closestToil = toils[0];
 
             List<float> distances = new List<float>();
-            float distanceToPlayer = 0f;
+            float distanceToPlayer;
             foreach (var toil in toils)
             {
                 distanceToPlayer = Vector3.Distance(toil.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
@@ -550,7 +550,7 @@ namespace LC_VEGA
             TerminalAccessibleObject closestMine = mines[0];
 
             List<float> distances = new List<float>();
-            float distanceToPlayer = 0f;
+            float distanceToPlayer;
             foreach (var mine in mines)
             {
                 distanceToPlayer = Vector3.Distance(mine.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
@@ -640,7 +640,7 @@ namespace LC_VEGA
             TerminalAccessibleObject closestTrap = traps[0];
 
             List<float> distances = new List<float>();
-            float distanceToPlayer = 0f;
+            float distanceToPlayer;
             foreach (var trap in traps)
             {
                 distanceToPlayer = Vector3.Distance(trap.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
@@ -929,7 +929,7 @@ namespace LC_VEGA
 
             RadarBoosterItem bobbie = boosters[0];
             List<float> distances = new List<float>();
-            float distanceToPlayer = 0f;
+            float distanceToPlayer;
             foreach (var item in boosters)
             {
                 distanceToPlayer = Vector3.Distance(item.transform.position, StartOfRound.Instance.localPlayerController.transform.position);
@@ -1089,8 +1089,8 @@ namespace LC_VEGA
             yield return new WaitForSeconds(delay);
 
             string header = "SCRAP SCAN RESULTS:";
-            string scrapOutsideStr = "";
-            string scrapInShipStr = "";
+            string scrapOutsideStr;
+            string scrapInShipStr;
             GrabbableObject[] items = Object.FindObjectsOfType<GrabbableObject>();
 
             foreach (var item in items)
@@ -1212,7 +1212,6 @@ namespace LC_VEGA
             RegisterReportCommands();
             RegisterActivationCommands();
             RegisterModdedTerminalCommands();
-            // stub
         }
 
         internal static void RegisterActivationCommands()
@@ -1242,12 +1241,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.stopListeningCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.stopListeningCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, deactivate" });
-                Voice.RegisterPhrases(phrases);
+                Voice.RegisterPhrases(phrases_1);
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (recognized.Message != "VEGA, deactivate") return;
+                    // if (recognized.Message != "VEGA, deactivate") return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.manualActivationConfidence.Value && Plugin.useManualListening.Value)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1327,13 +1327,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.lightsOffCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.lightsOffCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, lights out", "VEGA, lights off", "VEGA, turn the lights off" });
-                Voice.RegisterPhrases(phrases);
+                Voice.RegisterPhrases(phrases_1);
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     // if (recognized.Message != "VEGA, lights out" && recognized.Message != "VEGA, lights off" && recognized.Message != "VEGA, turn the lights off") return;
-                    if (!phrases.Contains(recognized.Message)) return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1378,13 +1378,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.closeShuttersCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.closeShuttersCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, close shutters", "VEGA, close window shutters", "VEGA, close ship shutters" });
                 Voice.RegisterPhrases(new string[] { "VEGA, close shutters", "VEGA, close window shutters", "VEGA, close ship shutters" });
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     // if (recognized.Message != "VEGA, close shutters" && recognized.Message != "VEGA, close window shutters" && recognized.Message != "VEGA, close ship shutters") return;
-                    if (!phrases.Contains(recognized.Message)) return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1512,13 +1512,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.deactivateAdvancedScannerCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.deactivateAdvancedScannerCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, disable scanner", "VEGA, disable advanced scanner", "VEGA, turn off scanner", "VEGA, turn off advanced scanner", "VEGA, disable scan" });
-                Voice.RegisterPhrases(phrases);
+                Voice.RegisterPhrases(phrases_1);
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     // if (recognized.Message != "VEGA, disable scanner" && recognized.Message != "VEGA, disable advanced scanner" && recognized.Message != "VEGA, turn off scanner" && recognized.Message != "VEGA, turn off advanced scanner" && recognized.Message != "VEGA, disable scan") return;
-                    if (!phrases.Contains(recognized.Message)) return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
                         if (!performAdvancedScan)
@@ -1721,13 +1721,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.closeSecureDoorCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.closeSecureDoorCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, close secure door", "VEGA, close door", "VEGA, close the door", "VEGA, close the secure door" });
-                Voice.RegisterPhrases(phrases);
+                Voice.RegisterPhrases(phrases_1);
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     // if (recognized.Message != "VEGA, close secure door" && recognized.Message != "VEGA, close door" && recognized.Message != "VEGA, close the door" && recognized.Message != "VEGA, close the secure door") return;
-                    if (!phrases.Contains(recognized.Message)) return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1780,13 +1780,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.closeAllSecureDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.closeAllSecureDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" });
                 Voice.RegisterPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" });
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     // if (recognized.Message != "VEGA, close all secure doors" && recognized.Message != "VEGA, close all doors") return;
-                    if (!phrases.Contains(recognized.Message)) return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1860,13 +1860,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.closeShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.closeShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, close ship doors", "VEGA, close the ship's doors", "VEGA, close hangar doors" });
-                Voice.RegisterPhrases(phrases);
+                Voice.RegisterPhrases(phrases_1);
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     // if (recognized.Message != "VEGA, close ship doors" && recognized.Message != "VEGA, close the ship's doors" && recognized.Message != "VEGA, close hangar doors") return;
-                    if (!phrases.Contains(recognized.Message)) return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1982,13 +1982,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                phrases = Plugin.radarFlashCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases_1 = Plugin.radarFlashCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                 // Voice.RegisterPhrases(new string[] { "VEGA, flash" });
-                Voice.RegisterPhrases(phrases);
+                Voice.RegisterPhrases(phrases_1);
                 Voice.RegisterCustomHandler((obj, recognized) =>
                 {
                     // if (recognized.Message != "VEGA, flash") return;
-                    if (!phrases.Contains(recognized.Message)) return;
+                    if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
