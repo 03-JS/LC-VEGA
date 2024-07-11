@@ -54,6 +54,7 @@ namespace LC_VEGA.Patches
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                 {
                     VEGA.PlayLine("Intro", 4.5f, false);
+                    SaveManager.playedIntro = true;
                 }
             }
             VEGA.creditsChar = HUDManager.Instance.totalValueText.text.ToCharArray()[0];

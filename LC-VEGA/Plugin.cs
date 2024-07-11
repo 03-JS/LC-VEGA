@@ -82,7 +82,8 @@ namespace LC_VEGA
         // Voice commands config values
         public static ConfigEntry<bool> enhancedTeleportCommands;
         public static ConfigEntry<bool> registerActivation;
-        public static ConfigEntry<string> manualActivationCommands;
+        public static ConfigEntry<string> startListeningCommands;
+        public static ConfigEntry<string> stopListeningCommands;
         public static ConfigEntry<bool> registerMoonsInfo;
         public static ConfigEntry<bool> registerBestiaryEntries;
         public static ConfigEntry<bool> registerCreatureInfo;
@@ -106,7 +107,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> registerDisableSpikeTrap;
         public static ConfigEntry<string> disableSpikeTrapCommands;
         public static ConfigEntry<bool> registerDisableAllSpikeTraps;
-        public static ConfigEntry<string> disableAllSpikeTrapCommands;
+        public static ConfigEntry<string> disableAllSpikeTrapsCommands;
         public static ConfigEntry<bool> registerTeleporter;
         public static ConfigEntry<string> teleporterCommands;
         public static ConfigEntry<bool> registerRadarSwitch;
@@ -123,7 +124,7 @@ namespace LC_VEGA
         public static ConfigEntry<string> radarPingCommands;
         public static ConfigEntry<string> radarFlashCommands;
         public static ConfigEntry<bool> registerSignalTranslator;
-        public static ConfigEntry<string> transmitCommands;
+        // public static ConfigEntry<string> transmitCommands;
         public static ConfigEntry<bool> registerTime;
         public static ConfigEntry<string> timeCommands;
         public static ConfigEntry<bool> registerInteractShipDoors;
@@ -136,7 +137,6 @@ namespace LC_VEGA
         public static ConfigEntry<string> openShuttersCommands;
         public static ConfigEntry<string> closeShuttersCommands;
         public static ConfigEntry<bool> registerWeatherInfo;
-        public static ConfigEntry<string> weatherInfoCommands;
         public static ConfigEntry<bool> registerStop;
         public static ConfigEntry<string> stopCommands;
         public static ConfigEntry<bool> registerThanks;
@@ -379,7 +379,7 @@ namespace LC_VEGA
             );
             crewStatusConfidence = Config.Bind(
                 "Confidence", // Config section
-                "Crew status", // Key of this config
+                "Crew Status", // Key of this config
                 0.7f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Crew status' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
@@ -467,6 +467,18 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            startListeningCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Start listening commands", // Key of this config
+                "VEGA, activate", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            stopListeningCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Stop listening commands", // Key of this config
+                "VEGA, deactivate", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerMoonsInfo = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Moon info commands", // Key of this config
@@ -491,11 +503,35 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            activateAdvancedScannerCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Activate Advanced Scanner commands", // Key of this config
+                "VEGA, activate scanner/VEGA, activate advanced scanner/VEGA, turn on scanner/VEGA, turn on advanced scanner/VEGA, scan/VEGA, enable scanner/VEGA, enable advanced scanner", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            deactivateAdvancedScannerCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Deactivate Advanced Scanner commands", // Key of this config
+                "VEGA, disable scanner/VEGA, disable advanced scanner/VEGA, turn off scanner/VEGA, turn off advanced scanner/VEGA, disable scan", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerInteractSecureDoor = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Open / Close Secure Door commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            openSecureDoorCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Open secure door commands", // Key of this config
+                "VEGA, open secure door/VEGA, open door/VEGA, open the door/VEGA, open the secure door", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            closeSecureDoorCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Close secure door commands", // Key of this config
+                "VEGA, close secure door/VEGA, close door/VEGA, close the door/VEGA, close the secure door", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerInteractAllSecureDoors = Config.Bind(
                 "Voice Commands", // Config section
@@ -503,11 +539,29 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
+            openAllSecureDoorsCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Open all secure door commands", // Key of this config
+                "VEGA, open all secure doors/VEGA, open all doors", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            closeAllSecureDoorsCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Close all secure door commands", // Key of this config
+                "VEGA, close all secure doors/VEGA, close all doors", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerDisableTurret = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Disable Turret command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
+            );
+            disableTurretCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Disable turret commands", // Key of this config
+                "VEGA, disable turret/VEGA, disable the turret", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerDisableAllTurrets = Config.Bind(
                 "Voice Commands", // Config section
@@ -515,11 +569,23 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
+            disableAllTurretsCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Disable all turrets commands", // Key of this config
+                "VEGA, disable all turrets", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerDisableMine = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Disable Mine command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
+            );
+            disableMineCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Disable landmine commands", // Key of this config
+                "VEGA, disable the mine/VEGA, disable mine/VEGA, disable the landmine/VEGA, disable landmine", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerDisableAllMines = Config.Bind(
                 "Voice Commands", // Config section
@@ -527,11 +593,23 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
+            disableAllMinesCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Disable all landmines commands", // Key of this config
+                "VEGA, disable all mines/VEGA, disable all landmines", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerDisableSpikeTrap = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Disable Spike Trap command", // Key of this config
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
+            );
+            disableSpikeTrapCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Disable spike trap commands", // Key of this config
+                "VEGA, disable the trap/VEGA, disable trap/VEGA, disable the spike trap/VEGA, disable spike trap", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerDisableAllSpikeTraps = Config.Bind(
                 "Voice Commands", // Config section
@@ -539,11 +617,23 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want this voice command to be registered. Will apply after restarting the game." // Description
             );
+            disableAllSpikeTrapsCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Disable all spike traps commands", // Key of this config
+                "VEGA, disable all traps/VEGA, disable all spike traps", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerTeleporter = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Teleporter commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            teleporterCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Teleporter commands", // Key of this config
+                "VEGA, teleport/VEGA, activate teleporter/VEGA, tp/VEGA, activate tp", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerRadarSwitch = Config.Bind(
                 "Voice Commands", // Config section
@@ -551,11 +641,23 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            radarSwitchCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Radar Switch commands", // Key of this config
+                "VEGA, switch to me/VEGA, switch radar/VEGA, switch radar to me/VEGA, focus/VEGA, focus on me", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerDiscombobulator = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Discombobulator upgrade commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with Late Game Upgrades installed." // Description
+            );
+            discombobulatorCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Discombobulator commands", // Key of this config
+                "VEGA, attack/VEGA, stun/VEGA, shock", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerCrewStatus = Config.Bind(
                 "Voice Commands", // Config section
@@ -563,11 +665,23 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            crewStatusCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Crew Status commands", // Key of this config
+                "VEGA, crew status/VEGA, team status/VEGA, crew info/VEGA, team info/VEGA, crew report/VEGA, team report", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerCrewInShip = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Crew in ship commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            crewInShipCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Crew in ship commands", // Key of this config
+                "VEGA, crew in ship/VEGA, people in ship/VEGA, get crew in ship/VEGA, get people in ship/VEGA, how many people are in the ship/VEGA, is anyone in the ship/VEGA, is anybody in the ship?", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerScrapLeft = Config.Bind(
                 "Voice Commands", // Config section
@@ -575,11 +689,29 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            scrapLeftCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Scrap / items left commands", // Key of this config
+                "VEGA, scrap left/VEGA, items left/VEGA, scan for scrap/VEGA, scan for items", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerRadarBoosters = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Radar Booster commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            radarPingCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Radar Booster ping commands", // Key of this config
+                "VEGA, ping", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            radarFlashCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Radar Booster flash commands", // Key of this config
+                "VEGA, flash", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerSignalTranslator = Config.Bind(
                 "Voice Commands", // Config section
@@ -587,11 +719,23 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            // transmitCommands = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Transmit / send commands", // Key of this config
+            //     "VEGA, transmit /VEGA, send ", // Default value
+            //     "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            // );
             registerTime = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Current time of day commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            timeCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Current time commands", // Key of this config
+                "VEGA, what's the current time of day/VEGA, current time of day/VEGA, time of day/VEGA, current time/VEGA, time/VEGA, what time is it?", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerInteractShipDoors = Config.Bind(
                 "Voice Commands", // Config section
@@ -599,17 +743,53 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            openShipDoorsCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Open ship doors commands", // Key of this config
+                "VEGA, open ship doors/VEGA, open the ship's doors/VEGA, open hangar doors", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            closeShipDoorsCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Close ship doors commands", // Key of this config
+                "VEGA, close ship doors/VEGA, close the ship's doors/VEGA, close hangar doors", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerInteractShipLights = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Ship Lights commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            lightsOnCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Ship Lights on commands", // Key of this config
+                "VEGA, lights on/VEGA, turn the lights on", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            lightsOffCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Ship Lights off commands", // Key of this config
+                "VEGA, lights out/VEGA, lights off/VEGA, turn the lights off", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerInteractShipShutters = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Ship Shutters commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with ShipWindows installed." // Description
+            );
+            openShuttersCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Open Ship Shutters commands", // Key of this config
+                "VEGA, open shutters/VEGA, open window shutters/VEGA, open ship shutters", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            closeShuttersCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Close Ship Shutters commands", // Key of this config
+                "VEGA, close shutters/VEGA, close window shutters/VEGA, close ship shutters", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerWeatherInfo = Config.Bind(
                 "Voice Commands", // Config section
@@ -623,11 +803,23 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            stopCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Stop talking commands", // Key of this config
+                "VEGA, shut up/VEGA, stop/VEGA, stop talking/Shut up, VEGA/Stop, VEGA/Stop talking, VEGA", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerThanks = Config.Bind(
                 "Voice Commands", // Config section
-                "Register Thank you commands", // Key of this config
+                "Register gratitude commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            gratitudeCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Gratitude commands", // Key of this config
+                "VEGA, thank you/VEGA, thanks/Thank you, VEGA/Thanks, VEGA", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
 
             // Patches
