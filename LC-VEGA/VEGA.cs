@@ -1919,9 +1919,11 @@ namespace LC_VEGA
                     // Voice.RegisterPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal });
                     foreach (var phrase in phrases)
                     {
-                        fullCommands.Add(phrase + " " + signal);
+                        string fullCommand = phrase + " " + signal;
+                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
+                        fullCommands.Add(fullCommand);
                     }
-                    Voice.RegisterPhrases(fullCommands.ToArray());
+                    Voice.RegisterPhrases(phrases);
                     Voice.RegisterCustomHandler((obj, recognized) =>
                     {
                         // if (recognized.Message != "VEGA, transmit " + signal && recognized.Message != "VEGA, send " + signal) return;
