@@ -1914,7 +1914,7 @@ namespace LC_VEGA
             {
                 foreach (var signal in signals)
                 {
-                    string[] phrases = Plugin.openShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    string[] phrases = Plugin.transmitCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                     // Voice.RegisterPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal });
                     for (int i = 0; i < phrases.Length; i++)
                     {
