@@ -1912,19 +1912,20 @@ namespace LC_VEGA
         {
             if (Plugin.registerSignalTranslator.Value)
             {
+                List<string> fullCommands = new List<string>();
                 foreach (var signal in signals)
                 {
                     string[] phrases = Plugin.transmitCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                     // Voice.RegisterPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal });
-                    for (int i = 0; i < phrases.Length; i++)
+                    foreach (var phrase in phrases)
                     {
-                        phrases[i] = phrases[i] + " " +  signal;
+                        fullCommands.Add(phrase + " " + signal);
                     }
                     Voice.RegisterPhrases(phrases);
                     Voice.RegisterCustomHandler((obj, recognized) =>
                     {
                         // if (recognized.Message != "VEGA, transmit " + signal && recognized.Message != "VEGA, send " + signal) return;
-                        if (!phrases.Contains(recognized.Message)) return;
+                        if (!fullCommands.Contains(recognized.Message)) return;
                         if (recognized.Confidence > Plugin.signalsConfidence.Value && listening)
                         {
                             if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
