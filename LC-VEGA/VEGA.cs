@@ -1921,7 +1921,7 @@ namespace LC_VEGA
                     {
                         fullCommands.Add(phrase + " " + signal);
                     }
-                    Voice.RegisterPhrases(phrases);
+                    Voice.RegisterPhrases(fullCommands.ToArray());
                     Voice.RegisterCustomHandler((obj, recognized) =>
                     {
                         // if (recognized.Message != "VEGA, transmit " + signal && recognized.Message != "VEGA, send " + signal) return;
