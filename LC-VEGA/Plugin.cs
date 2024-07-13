@@ -124,7 +124,7 @@ namespace LC_VEGA
         public static ConfigEntry<string> radarPingCommands;
         public static ConfigEntry<string> radarFlashCommands;
         public static ConfigEntry<bool> registerSignalTranslator;
-        // public static ConfigEntry<string> transmitCommands;
+        public static ConfigEntry<string> transmitCommands;
         public static ConfigEntry<bool> registerTime;
         public static ConfigEntry<string> timeCommands;
         public static ConfigEntry<bool> registerInteractShipDoors;
@@ -253,10 +253,10 @@ namespace LC_VEGA
                 "Dialogue & Interactions", // Config section
                 "Vocal Level", // Key of this config
                 VocalLevels.High, // Default value
-                "Changes how often VEGA speaks.\n" +
+                "Changes how often VEGA speaks and the length of his answers.\n" +
                 "None: Will only speak when asked to.\n" +
-                "Low: Gives you useful info, doesn't talk on most interactions and new enemy scans. Recommended for more experienced players.\n" +
-                "Medium: Gives you useful info, doesn't talk on most interactions. Recommended for intermediate level players.\n" +
+                "Low: Talks as often as the Medium option, but gives you shorter answers. Recommended for players who already have experience with VEGA.\n" +
+                "Medium: Gives you useful info, doesn't talk on every interaction. Recommended for experienced players.\n" +
                 "High: The default value. Will speak on every interaction. Recommended for inexperienced players." // Description
             );
             playIntro = Config.Bind(
@@ -719,12 +719,12 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
-            // transmitCommands = Config.Bind(
-            //     "Voice Commands", // Config section
-            //     "Transmit / send commands", // Key of this config
-            //     "VEGA, transmit /VEGA, send ", // Default value
-            //     "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
-            // );
+            transmitCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Transmit / send commands", // Key of this config
+                "VEGA, transmit/VEGA, send", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
             registerTime = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Current time of day commands", // Key of this config

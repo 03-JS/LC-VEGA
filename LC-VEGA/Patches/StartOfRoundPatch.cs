@@ -32,7 +32,7 @@ namespace LC_VEGA.Patches
             VEGA.sfxAudioSource = sfxGameObject.AddComponent<AudioSource>();
             if (VEGA.sfxAudioSource != null)
             {
-                Plugin.LogToConsole("VEGA SFXs audio source created successfully");
+                Plugin.LogToConsole("VEGA-SFXs audio source created successfully");
                 VEGA.sfxAudioSource.playOnAwake = false;
                 VEGA.sfxAudioSource.bypassEffects = true;
                 VEGA.sfxAudioSource.bypassListenerEffects = true;

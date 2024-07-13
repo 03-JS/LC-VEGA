@@ -15,7 +15,7 @@ namespace LC_VEGA.Patches
         static void PlayRadiationWarning()
         {
             VEGA.facilityHasPower = false;
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.giveApparatusWarnings.Value)
             {
                 if (ModChecker.hasFacilityMeltdown)
                 {

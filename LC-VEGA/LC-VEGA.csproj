@@ -32,7 +32,7 @@
       <HintPath>bin\Debug\netstandard2.1\Malfunctions-publicized.dll</HintPath>
     </Reference>
     <Reference Include="MoreShipUpgrades">
-      <HintPath>bin\Debug\netstandard2.1\MoreShipUpgrades-publicized.dll</HintPath>
+      <HintPath>D:\Descargas\MoreShipUpgrades-publicized.dll</HintPath>
     </Reference>
     <Reference Include="TestAccount666.ShipWindows">
       <HintPath>bin\Debug\netstandard2.1\ShipWindows-publicized.dll</HintPath>

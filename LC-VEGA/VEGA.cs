@@ -200,7 +200,8 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayLine("NoDoorNearby");
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoDoorNearby");
+                        PlayLine("NoDoorNearbyLow");
                     }
                 }
             }
@@ -923,7 +924,8 @@ namespace LC_VEGA
 
             if (boosters.Count() == 0)
             {
-                PlayLine("NoBoosters");
+                if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoBoosters");
+                PlayLine("NoBoostersLow");
                 return null;
             }
 
@@ -963,7 +965,8 @@ namespace LC_VEGA
                     }
                     else
                     {
-                        PlayLine("NoBoostersNearby");
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoBoostersNearby");
+                        PlayLine("NoBoostersNearbyLow");
                     }
                 }
             }
@@ -1911,10 +1914,17 @@ namespace LC_VEGA
             {
                 foreach (var signal in signals)
                 {
-                    Voice.RegisterPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal });
+                    string[] phrases = Plugin.openShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    // Voice.RegisterPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal });
+                    for (int i = 0; i < phrases.Length; i++)
+                    {
+                        phrases[i] = phrases[i] + " " +  signal;
+                    }
+                    Voice.RegisterPhrases(phrases);
                     Voice.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (recognized.Message != "VEGA, transmit " + signal && recognized.Message != "VEGA, send " + signal) return;
+                        // if (recognized.Message != "VEGA, transmit " + signal && recognized.Message != "VEGA, send " + signal) return;
+                        if (!phrases.Contains(recognized.Message)) return;
                         if (recognized.Confidence > Plugin.signalsConfidence.Value && listening)
                         {
                             if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1935,10 +1945,7 @@ namespace LC_VEGA
                                 SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
                                 if (translator == null)
                                 {
-                                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
-                                    {
-                                        PlayLine("NoSignalTranslator");
-                                    }
+                                    if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoSignalTranslator");
                                     PlayLine("NoSignalTranslatorLow");
                                     return;
                                 }
