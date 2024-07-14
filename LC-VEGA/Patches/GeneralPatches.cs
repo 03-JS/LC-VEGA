@@ -143,7 +143,7 @@ namespace LC_VEGA.Patches
         {
             if (StartOfRound.Instance.localPlayerController.inTerminalMenu || StartOfRound.Instance.localPlayerController.isTypingChat) return;
             if ((VEGA.sfxAudioSource.clip.name.Equals("Activate") || VEGA.sfxAudioSource.clip.name.Equals("Deactivate")) && VEGA.sfxAudioSource.isPlaying) return;
-            if (Plugin.registerActivation.Value && Plugin.useManualListening.Value && Plugin.PlayerInputInstance.Toggle.triggered)
+            if (Plugin.registerActivation.Value && Plugin.useManualListening.Value && Plugin.PlayerInputInstance.Activation.triggered)
             {
                 if (!VEGA.listening)
                 {

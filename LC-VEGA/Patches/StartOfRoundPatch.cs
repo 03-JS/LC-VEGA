@@ -66,7 +66,7 @@ namespace LC_VEGA.Patches
         {
             if (parent == null)
             {
-                Plugin.LogToConsole("'TopLeftCorner' not found", "error");
+                Plugin.LogToConsole("Parent object not found", "error");
                 return null;
             }
 
@@ -117,25 +117,28 @@ namespace LC_VEGA.Patches
 
         internal static void InstantiateAdvancedScannerItems()
         {
-            float xPos = 45f;
-            float yRot = 22f;
-            float yEnemies = 180f;
-            float yItems = 230f;
             HUDManager hudManager = HUDManager.Instance;
             GameObject parent = GameObject.Find("Systems/UI/Canvas/IngamePlayerHUD/TopLeftCorner");
-            Vector3 customScale = Vector3.zero;
+            float configScale = Plugin.scale.Value;
+            Vector3 customScale = parent.transform.localScale * configScale;
+            float xPos = Plugin.xPosition.Value;
+            float yEnemies = Plugin.yPosition.Value;
+            float yItems = yEnemies + 50 * customScale.y;
+            float yRot = Plugin.tilt.Value;
             if (ModChecker.hasEladsHUD)
             {
-                customScale = GameObject.Find("PlayerInfo(Clone)").transform.localScale;
+                customScale = GameObject.Find("PlayerInfo(Clone)").transform.localScale * configScale;
                 parent = GameObject.Find("CinematicGraphics").transform.parent.gameObject;
-                xPos = 33f;
-                yRot = 5f;
-                yEnemies = (140f * customScale.y) + 35f;
-                yItems = (190f * customScale.y) + 35f;
+                xPos = Plugin.xPosition.Value - 12f; // 33f default
+                yRot = Plugin.tilt.Value - 17f; // 5f default
+                yEnemies = Plugin.yPosition.Value - 40f; // 140 base default
+                yItems = yEnemies + 50 * customScale.y; // 190 base default
             }
-
+            
             HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), -yRot);
+            HUDManagerPatch.enemies.transform.localScale = customScale;
             HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yItems), -yRot);
+            HUDManagerPatch.items.transform.localScale = customScale;
 
             if (ModChecker.hasEladsHUD)
             {

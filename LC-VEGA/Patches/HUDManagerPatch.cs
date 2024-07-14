@@ -56,7 +56,7 @@ namespace LC_VEGA.Patches
         {
             if (!___terminalScript.scannedEnemyIDs.Contains(enemyID))
             {
-                if (Plugin.vocalLevel.Value >= VocalLevels.Medium)
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
                     if (VEGA.enemies.ContainsKey(enemyID))
                     {
@@ -69,6 +69,32 @@ namespace LC_VEGA.Patches
                             if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName) && !file.creatureName.Equals("Football") && !file.creatureName.Equals("Locker") && !file.creatureName.Equals("Boombas") && !file.creatureName.Contains("Drone") && !file.creatureName.Contains("Turret"))
                             {
                                 VEGA.PlayLine(file.creatureName + "Scan", 0.7f);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        [HarmonyPatch("ScanNewCreatureServerRpc")]
+        [HarmonyPrefix]
+        static void PlayNewEnemyID(int enemyID, ref Terminal ___terminalScript)
+        {
+            if (!___terminalScript.scannedEnemyIDs.Contains(enemyID) && Plugin.remoteEntityID.Value)
+            {
+                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                {
+                    if (VEGA.enemies.ContainsKey(enemyID))
+                    {
+                        VEGA.PlayLine(VEGA.enemies[enemyID] + "ID", 0.7f);
+                    }
+                    else
+                    {
+                        foreach (var file in ___terminalScript.enemyFiles)
+                        {
+                            if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName))
+                            {
+                                VEGA.PlayLine(file.creatureName + "ID", 0.7f);
                             }
                         }
                     }

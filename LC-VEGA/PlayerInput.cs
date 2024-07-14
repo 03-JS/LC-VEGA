@@ -1,11 +1,13 @@
 ﻿using LethalCompanyInputUtils.Api;
+using LethalCompanyInputUtils.BindingPathEnums;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace LC_VEGA
 {
     internal class PlayerInput : LcInputActions
     {
-        [InputAction("<Keyboard>/x", Name = "Manual Listening")]
-        public InputAction Toggle { get; set; }
+        [InputAction(KeyboardControl.X, Name = "Manual Listening")]
+        public InputAction Activation { get; set; }
     }
 }

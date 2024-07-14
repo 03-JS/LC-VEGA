@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using LC_VEGA.Patches;
+using LethalCompanyInputUtils.BindingPathEnums;
 using LobbyCompatibility.Attributes;
 using LobbyCompatibility.Enums;
 using System.Collections.Generic;
@@ -57,6 +58,7 @@ namespace LC_VEGA
         public static ConfigEntry<VocalLevels> vocalLevel;
         public static ConfigEntry<bool> playIntro;
         public static ConfigEntry<bool> readBestiaryEntries;
+        public static ConfigEntry<bool> remoteEntityID;
         public static ConfigEntry<bool> giveWeatherInfo;
         public static ConfigEntry<bool> giveApparatusWarnings;
         public static ConfigEntry<string> messages;
@@ -74,10 +76,19 @@ namespace LC_VEGA
         public static ConfigEntry<float> scannerRange;
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
         public static ConfigEntry<bool> detectMasked;
+        public static ConfigEntry<float> scale;
+        public static ConfigEntry<float> tilt;
+        public static ConfigEntry<float> xPosition;
+        public static ConfigEntry<float> yPosition;
+        public static ConfigEntry<Colors> clearTextColor;
+        public static ConfigEntry<Colors> entitiesNearbyTextColor;
+        public static ConfigEntry<Colors> itemsNearbyTextColor;
+        public static ConfigEntry<Colors> dataUnavailableTextColor;
 
         // Manual activation config values
         public static ConfigEntry<bool> useManualListening;
         public static ConfigEntry<bool> enableManualListeningAuto;
+        public static ConfigEntry<KeyboardControl> defaultKey;
 
         // Voice commands config values
         public static ConfigEntry<bool> enhancedTeleportCommands;
@@ -85,8 +96,11 @@ namespace LC_VEGA
         public static ConfigEntry<string> startListeningCommands;
         public static ConfigEntry<string> stopListeningCommands;
         public static ConfigEntry<bool> registerMoonsInfo;
+        public static ConfigEntry<string> moonsInfoCommands;
         public static ConfigEntry<bool> registerBestiaryEntries;
+        public static ConfigEntry<string> bestiaryEntriesCommands;
         public static ConfigEntry<bool> registerCreatureInfo;
+        public static ConfigEntry<string> creatureInfoCommands;
         public static ConfigEntry<bool> registerAdvancedScanner;
         public static ConfigEntry<string> activateAdvancedScannerCommands;
         public static ConfigEntry<string> deactivateAdvancedScannerCommands;
@@ -254,10 +268,10 @@ namespace LC_VEGA
                 "Vocal Level", // Key of this config
                 VocalLevels.High, // Default value
                 "Changes how often VEGA speaks and the length of his answers.\n" +
-                "None: Will only speak when asked to.\n" +
-                "Low: Talks as often as the Medium option, but gives you shorter answers. Recommended for players who already have experience with VEGA.\n" +
-                "Medium: Gives you useful info, doesn't talk on every interaction. Recommended for experienced players.\n" +
-                "High: The default value. Will speak on every interaction. Recommended for inexperienced players." // Description
+                "High: The default value. Will speak on every interaction. Recommended for inexperienced players.\n" +
+                "Medium: Gives you useful info, doesn't speak on every interaction. Recommended for experienced players.\n" +
+                "Low: Speaks as often as the Medium option, but gives you shorter answers. Recommended for players who already have experience with VEGA.\n" +
+                "None: Will only speak when asked to." // Description
             );
             playIntro = Config.Bind(
                 "Dialogue & Interactions", // Config section
@@ -276,6 +290,12 @@ namespace LC_VEGA
                 "Read Bestiary entries", // Key of this config
                 true, // Default value
                 "If set to true, VEGA will read every bestiary entry you open in the terminal." // Description
+            );
+            remoteEntityID = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Remote Entity Identification", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will give you the name of every new entity your crew scans." // Description
             );
             giveWeatherInfo = Config.Bind(
                 "Dialogue & Interactions", // Config section
@@ -441,6 +461,74 @@ namespace LC_VEGA
                 false, // Default value
                 "Determines if the Advanced Scanner should be able to count Masked employees as entities." // Description
             );
+            xPosition = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Horizontal position", // Key of this config
+                45f, // Default value
+                "The horizontal position of the Advanced Scanner on the screen." // Description
+            );
+            yPosition = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Vertical position", // Key of this config
+                180f, // Default value
+                "The vertical position of the Advanced Scanner on the screen." // Description
+            );
+            scale = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Scale", // Key of this config
+                1f, // Default value
+                "The size of the Advanced Scanner on the screen." // Description
+            );
+            tilt = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Tilt", // Key of this config
+                22f, // Default value
+                "The inclination of the Advanced Scanner on the screen." // Description
+            );
+            clearTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Clear color", // Key of this config
+                Colors.Blue, // Default value
+                "Changes the color of the text under both sections of the scanner when no entities or items are within its range." // Description
+            );
+            entitiesNearbyTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Entities nearby color", // Key of this config
+                Colors.Red, // Default value
+                "Changes the color of the text under the Entities section of the scanner when entities are within the scanner's range." // Description
+            );
+            itemsNearbyTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Items nearby color", // Key of this config
+                Colors.Green, // Default value
+                "Changes the color of the text under the Items section of the scanner when items are within the scanner's range." // Description
+            );
+            dataUnavailableTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Data unavailable color", // Key of this config
+                Colors.Yellow, // Default value
+                "Changes the color of the text under both sections of the scanner when a Communications or Power malfunction happen." // Description
+            );
+
+            // Manual Listening
+            useManualListening = Config.Bind(
+                "Manual Listening", // Config section
+                "Enabled", // Key of this config
+                false, // Default value
+                "Manual Listening determines if VEGA should only be able to hear you when you ask him to." // Description
+            );
+            enableManualListeningAuto = Config.Bind(
+                "Manual Listening", // Config section
+                "Enable VEGA listening automatically", // Key of this config
+                false, // Default value
+                "Makes VEGA listen automatically when joining a game. Only works if Manual Listening is set to true. Applies after restarting the game." // Description
+            );
+            defaultKey = Config.Bind(
+                "Manual Listening", // Config section
+                "Default key", // Key of this config
+                KeyboardControl.X, // Default value
+                "They key bind that will be assigned by default to make VEGA listen / stop listening." // Description
+            );
 
             // Voice commands
             enhancedTeleportCommands = Config.Bind(
@@ -448,18 +536,6 @@ namespace LC_VEGA
                 "Enhanced Teleport commands", // Key of this config
                 true, // Default value
                 "Makes VEGA perform the radar switch before activating the teleporter." // Description
-            );
-            useManualListening = Config.Bind(
-                "Voice Commands", // Config section
-                "Manual Listening", // Key of this config
-                false, // Default value
-                "Determines if VEGA should only be able to hear you when you ask him to." // Description
-            );
-            enableManualListeningAuto = Config.Bind(
-                "Voice Commands", // Config section
-                "Enable VEGA listening automatically", // Key of this config
-                false, // Default value
-                "Makes VEGA listen automatically when joining a game. Only works if Manual Listening is set to true. Applies after restarting the game." // Description
             );
             registerActivation = Config.Bind(
                 "Voice Commands", // Config section
@@ -485,17 +561,39 @@ namespace LC_VEGA
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            moonsInfoCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Moon info commands", // Key of this config
+                "VEGA, info about", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
+                "IMPORTANT: Moon info commands will always have the moon's name at the end!" // Description
+            );
             registerBestiaryEntries = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Bestiary entries commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
             );
+            bestiaryEntriesCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Bestiary entries commands", // Key of this config
+                "VEGA, read", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
+                "IMPORTANT: Bestiary entries commands will always end with the name of the creature + entry, like so:\n" +
+                "VEGA, read Bracken entry" // Description
+            );
             registerCreatureInfo = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Creature info commands", // Key of this config
                 true, // Default value
                 "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            creatureInfoCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Creature info commands", // Key of this config
+                "VEGA, info about", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
+                "IMPORTANT: Creature info commands will always have the creature's name at the end!" // Description
             );
             registerAdvancedScanner = Config.Bind(
                 "Voice Commands", // Config section
@@ -723,7 +821,8 @@ namespace LC_VEGA
                 "Voice Commands", // Config section
                 "Transmit / send commands", // Key of this config
                 "VEGA, transmit/VEGA, send", // Default value
-                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
+                "IMPORTANT: Transmit / send commands will always have the message at the end!" // Description
             );
             registerTime = Config.Bind(
                 "Voice Commands", // Config section
