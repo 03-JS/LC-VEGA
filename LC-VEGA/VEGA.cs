@@ -33,7 +33,7 @@ namespace LC_VEGA
         public static bool shouldBeInterrupted;
         public static bool warningGiven;
         public static bool facilityHasPower;
-        public static bool performAdvancedScan;
+        public static bool advancedScannerActive;
         public static float teleporterCooldownTime;
         public static TextMeshProUGUI enemiesText;
         public static TextMeshProUGUI itemsText;
@@ -53,15 +53,19 @@ namespace LC_VEGA
             "<color=blue>",
             "<color=green>",
             "<color=yellow>",
-            "<color=#ffa500>",
-            "<color=#ffc0cb>",
-            "<color=#800080>",
-            "<color=#ff00ff>",
-            "<color=#00ffff>",
-            "<color=#dc143c>",
-            "<color=#ffffff>",
-            "<color=#808080>",
-            "<color=#000000>"
+            "<color=#ffa500>", // Orange
+            "<color=#ffc0cb>", // Pink
+            "<color=#800080>", // Purple
+            "<color=#ff00ff>", // Magenta
+            "<color=#00ffff>", // Cyan
+            "<color=#dc143c>", // Crimson
+            "<color=#ffffff>", // White
+            "<color=#808080>", // Gray
+            "<color=#000000>", // Black
+            "<color=#E20C96>", // LunxaraPink
+            "<color=#6700BD>", // LunxaraPurple
+            "<color=#01B5F0>", // LunxaraBlue
+            "<color=#02F296>" // LyraGreen
         };
 
         // Turrets
@@ -84,6 +88,8 @@ namespace LC_VEGA
         internal static bool malfunctionDoorTriggered;
 
         public static string[] signals;
+
+        // Names of weather phenomena
         public static string[] weathers =
         {
             "Foggy",
@@ -93,6 +99,7 @@ namespace LC_VEGA
             "Eclipsed"
         };
 
+        // Names of the AudioClips paired with their respective IDs in the terminal
         public static Dictionary<int, string> enemies = new Dictionary<int, string>()
         {
             { 0, "SnareFlea" },
@@ -114,9 +121,13 @@ namespace LC_VEGA
             { 17, "Nutcracker" },
             { 18, "OldBird" },
             { 19, "Butler" },
-            { 21, "Snakes" }
+            { 21, "Snakes" },
+            { 22, "VainShroud" },
+            { 23, "KidnapperFox" },
+            { 24, "Barber" }
         };
 
+        // Creature file names
         public static string[] moddedEnemies =
         {
             "RedWood Giant",
@@ -135,6 +146,7 @@ namespace LC_VEGA
             "Shrimp"
         };
 
+        // Names people may use for vanilla creatures
         private static readonly string[] vanillaEntityNames =
         {
             "Baboon Hawk",
@@ -192,6 +204,7 @@ namespace LC_VEGA
             "Fox"
         };
 
+        // Names people may use for modded creatures
         private static readonly string[] moddedEntityNames =
         {
             "Redwood Giant",
@@ -218,6 +231,7 @@ namespace LC_VEGA
             "Shrimp"
         };
 
+        // Names of moons
         private static readonly string[] moonNames =
         {
             "Experimentation",
@@ -978,6 +992,7 @@ namespace LC_VEGA
                         yield return new WaitForSeconds(1f);
                     }
                     teleporter.PressTeleportButtonServerRpc();
+                    if (Plugin.sendTeleporterChatMessage.Value) SendChatMessage("has activated the teleporter");
                 }
                 else
                 {
@@ -1057,7 +1072,7 @@ namespace LC_VEGA
 
         public static void PerformAdvancedScan()
         {
-            if (performAdvancedScan)
+            if (advancedScannerActive)
             {
                 if (ModChecker.hasMalfunctions)
                 {
@@ -1431,13 +1446,36 @@ namespace LC_VEGA
             }
         }
 
+        private static string GetSpecialNameColors(string name)
+        {
+            return name switch
+            {
+                "JS0" => "<color=#e91640>",
+                "Lunxara" => "<color=#6700bd>",
+                "Mina" => "<color=#a11010>",
+                "Suachi" => "<color=#79e5cb>",
+                "Nico" => "<color=#ffffff>",
+                "xVenatoRx" => "<color=#ff8000>",
+                "Jowyck" => "<color=#00ffff>",
+                _ => "<color=red>"
+            };
+        }
+
+        public static void SendChatMessage(string message)
+        {
+            string playerUsername = StartOfRound.Instance.localPlayerController.playerUsername;
+            string nameColor = GetSpecialNameColors(playerUsername);
+            // string nameColorClose = nameColor != "" ? "</color> " : " ";
+            HUDManager.Instance.AddTextToChatOnServer(nameColor + playerUsername + "</color> " + message);
+        }
+
         internal static void InitializeScannerVariables()
         {
-            performAdvancedScan = Plugin.enableAdvancedScannerAuto.Value;
+            advancedScannerActive = Plugin.enableAdvancedScannerAuto.Value;
             clearTextColor = advancedScannerHTMLColors[(int)Plugin.clearTextColor.Value];
             dataUnavailableTextColor = advancedScannerHTMLColors[(int)Plugin.dataUnavailableTextColor.Value];
             enemiesTopText = "Entities:\n";
-            enemiesTextColor =  advancedScannerHTMLColors[(int)Plugin.entitiesNearbyTextColor.Value];
+            enemiesTextColor = advancedScannerHTMLColors[(int)Plugin.entitiesNearbyTextColor.Value];
             itemsTopText = "Items:\n";
             itemsTextColor = advancedScannerHTMLColors[(int)Plugin.itemsNearbyTextColor.Value];
             scannerRange = Plugin.scannerRange.Value; // 29m max (default)
@@ -1716,6 +1754,8 @@ namespace LC_VEGA
                                 object[] parameters = new object[] { TerminalPatch.terminalInstance };
                                 atkMethodInfo.Invoke(null, parameters);
                             }
+
+                            if (Plugin.sendDiscombobulatorChatMessage.Value) SendChatMessage("used the Discombobulator");
                         }
                     }
                 });
@@ -1754,14 +1794,14 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
-                        if (performAdvancedScan)
+                        if (advancedScannerActive)
                         {
                             PlayLine("ScannerAlreadyActive");
                             return;
                         }
 
                         Plugin.LogToConsole("Activating advanced scanner", "debug");
-                        performAdvancedScan = true;
+                        advancedScannerActive = true;
 
                         //if (Plugin.scanEntities.Value) HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("Enemies:");
                         //if (Plugin.scanItems.Value) HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("Items:");
@@ -1781,14 +1821,14 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
-                        if (!performAdvancedScan)
+                        if (!advancedScannerActive)
                         {
                             PlayLine("ScannerAlreadyInactive");
                             return;
                         }
 
                         Plugin.LogToConsole("Deactivating advanced scanner", "debug");
-                        performAdvancedScan = false;
+                        advancedScannerActive = false;
 
                         HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
                         HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
@@ -1943,6 +1983,7 @@ namespace LC_VEGA
                             SwitchRadar();
                         }
                         PlayRandomLine("RadarSwitch", Random.Range(1, 4));
+                        if (Plugin.sendRadarSwitchChatMessage.Value) SendChatMessage("performed a radar switch");
                     }
                 });
             }
@@ -2169,7 +2210,6 @@ namespace LC_VEGA
         {
             if (Plugin.registerSignalTranslator.Value)
             {
-                List<string> fullCommands = new List<string>();
                 foreach (var signal in signals)
                 {
                     string[] phrases = Plugin.transmitCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
@@ -2178,7 +2218,6 @@ namespace LC_VEGA
                     {
                         string fullCommand = phrase + " " + signal;
                         phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                        fullCommands.Add(fullCommand);
                     }
                     Voice.RegisterPhrases(phrases);
                     Voice.RegisterCustomHandler((obj, recognized) =>
@@ -2210,6 +2249,7 @@ namespace LC_VEGA
                                     return;
                                 }
                                 HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
+                                if (Plugin.sendSignalTranslatorChatMessage.Value) SendChatMessage("is transmitting a signal");
                             }
                         }
                     });

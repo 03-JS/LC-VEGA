@@ -26,6 +26,10 @@ namespace LC_VEGA
         Crimson = 9,
         White = 10,
         Gray = 11,
-        Black = 12
+        Black = 12,
+        LunxaraPink = 13,
+        LunxaraPurple = 14,
+        LunxaraBlue = 15,
+        LyraGreen = 16
     }
 }

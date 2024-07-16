@@ -9,6 +9,7 @@ using LobbyCompatibility.Enums;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using static BepInEx.BepInDependency;
 
@@ -62,6 +63,10 @@ namespace LC_VEGA
         public static ConfigEntry<bool> giveWeatherInfo;
         public static ConfigEntry<bool> giveApparatusWarnings;
         public static ConfigEntry<string> messages;
+        public static ConfigEntry<bool> sendRadarSwitchChatMessage;
+        public static ConfigEntry<bool> sendSignalTranslatorChatMessage;
+        public static ConfigEntry<bool> sendTeleporterChatMessage;
+        public static ConfigEntry<bool> sendDiscombobulatorChatMessage;
 
         // Mod interactions values
         public static ConfigEntry<bool> malfunctionWarnings;
@@ -78,6 +83,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> detectMasked;
         public static ConfigEntry<float> scale;
         public static ConfigEntry<float> tilt;
+        public static ConfigEntry<TextAlignmentOptions> alignment;
         public static ConfigEntry<float> xPosition;
         public static ConfigEntry<float> yPosition;
         public static ConfigEntry<Colors> clearTextColor;
@@ -88,7 +94,9 @@ namespace LC_VEGA
         // Manual activation config values
         public static ConfigEntry<bool> useManualListening;
         public static ConfigEntry<bool> enableManualListeningAuto;
-        public static ConfigEntry<KeyboardControl> defaultKey;
+
+        // Patch values
+        public static ConfigEntry<bool> patchReadInput;
 
         // Voice commands config values
         public static ConfigEntry<bool> enhancedTeleportCommands;
@@ -155,9 +163,6 @@ namespace LC_VEGA
         public static ConfigEntry<string> stopCommands;
         public static ConfigEntry<bool> registerThanks;
         public static ConfigEntry<string> gratitudeCommands;
-
-        // Patch values
-        public static ConfigEntry<bool> patchReadInput;
 
         private readonly Harmony harmony = new Harmony(modGUID);
         private static Plugin Instance;
@@ -279,12 +284,6 @@ namespace LC_VEGA
                 true, // Default value
                 "If set to true, VEGA will give you its introduction speech the first time you use the mod." // Description
             );
-            giveApparatusWarnings = Config.Bind(
-                "Dialogue & Interactions", // Config section
-                "Give Apparatus warnings", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will give you brief and informative warnings when the Apparatus is pulled." // Description
-            );
             readBestiaryEntries = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Read Bestiary entries", // Key of this config
@@ -297,6 +296,12 @@ namespace LC_VEGA
                 true, // Default value
                 "If set to true, VEGA will give you the name of every new entity your crew scans." // Description
             );
+            giveApparatusWarnings = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Give Apparatus warnings", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will give you brief and informative warnings when the Apparatus is pulled." // Description
+            );
             giveWeatherInfo = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Give weather info", // Key of this config
@@ -308,6 +313,24 @@ namespace LC_VEGA
                 "Signal Translator messages", // Key of this config
                 "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, JESTER, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, HEROBRINE, FOOTBALL, FIEND, SLENDER, LOCKER, SHY GUY, SIRENHEAD, DRIFTWOOD, WALKER, WATCHER, LOST, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS", // Default value
                 "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma and a white space, like so -> 'Message, Another message'\nApplies after a game restart." // Description
+            );
+            sendRadarSwitchChatMessage = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Send Radar Switch chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you used the Radar Switch command." // Description
+            );
+            sendSignalTranslatorChatMessage = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Send Signal Translator chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you used VEGA to transmit a signal." // Description
+            );
+            sendTeleporterChatMessage = Config.Bind(
+                "Dialogue & Interactions", // Config section
+                "Send Teleporter chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you asked VEGA to activate the teleporter." // Description
             );
 
             // Mod Interactions
@@ -328,6 +351,12 @@ namespace LC_VEGA
                 "Reply chance", // Key of this config
                 40, // Default value
                 new ConfigDescription("Changes how likely it is for VEGA to reply to the Diversity speaker.\n0 means it will never reply, 100 means it will always reply.", new AcceptableValueRange<int>(0, 100)) // Description
+            );
+            sendDiscombobulatorChatMessage = Config.Bind(
+                "Mod Interactions", // Config section
+                "Send Discombobulator chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you made use of the Discombobulator through VEGA." // Description
             );
 
             // Confidence
@@ -485,6 +514,12 @@ namespace LC_VEGA
                 22f, // Default value
                 "The inclination of the Advanced Scanner on the screen." // Description
             );
+            alignment = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Alignment", // Key of this config
+                TextAlignmentOptions.Left, // Default value
+                "The alignment of the Advanced Scanner on the screen." // Description
+            );
             clearTextColor = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Clear color", // Key of this config
@@ -523,11 +558,13 @@ namespace LC_VEGA
                 false, // Default value
                 "Makes VEGA listen automatically when joining a game. Only works if Manual Listening is set to true. Applies after restarting the game." // Description
             );
-            defaultKey = Config.Bind(
-                "Manual Listening", // Config section
-                "Default key", // Key of this config
-                KeyboardControl.X, // Default value
-                "They key bind that will be assigned by default to make VEGA listen / stop listening." // Description
+
+            // Patches
+            patchReadInput = Config.Bind(
+                "Patches", // Config section
+                "Patch ReadInput", // Key of this config
+                true, // Default value
+                "Enables / disables the code that checks for player input and allows you to make VEGA listen / stop listening by pressing a key." // Description
             );
 
             // Voice commands
@@ -919,14 +956,6 @@ namespace LC_VEGA
                 "Gratitude commands", // Key of this config
                 "VEGA, thank you/VEGA, thanks/Thank you, VEGA/Thanks, VEGA", // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
-            );
-
-            // Patches
-            patchReadInput = Config.Bind(
-                "Patches", // Config section
-                "Patch ReadInput", // Key of this config
-                true, // Default value
-                "Enables / disables the code that checks for player input and allows you to make VEGA listen / stop listening by pressing a key." // Description
             );
         }
 

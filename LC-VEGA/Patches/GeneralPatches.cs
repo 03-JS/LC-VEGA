@@ -36,7 +36,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void AdvancedScanner()
         {
-            if (VEGA.performAdvancedScan)
+            if (VEGA.advancedScannerActive)
             {
                 VEGA.PerformAdvancedScan();
             }

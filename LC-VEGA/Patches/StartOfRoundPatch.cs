@@ -62,7 +62,7 @@ namespace LC_VEGA.Patches
             InstantiateAdvancedScannerItems();
         }
 
-        internal static GameObject? ConfigureScannerObjs(HUDManager hudManager, GameObject parent, Vector2 pos, float yPos = -25f, string defaultText = "")
+        internal static GameObject? ConfigureScannerObjs(HUDManager hudManager, GameObject parent, Vector2 pos, TextAlignmentOptions alignment, float yPos = -25f, string defaultText = "")
         {
             if (parent == null)
             {
@@ -110,8 +110,9 @@ namespace LC_VEGA.Patches
             // Move the text to the position we want
             rectTransform.anchoredPosition = pos;
 
-            // Set the default text
+            // Set the default text & its alingment
             textComponent.SetText(defaultText);
+            textComponent.alignment = alignment;
             return obj;
         }
 
@@ -135,9 +136,9 @@ namespace LC_VEGA.Patches
                 yItems = yEnemies + 50 * customScale.y; // 190 base default
             }
             
-            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), -yRot);
+            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), Plugin.alignment.Value, -yRot);
             HUDManagerPatch.enemies.transform.localScale = customScale;
-            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yItems), -yRot);
+            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yItems), Plugin.alignment.Value, -yRot);
             HUDManagerPatch.items.transform.localScale = customScale;
 
             if (ModChecker.hasEladsHUD)
