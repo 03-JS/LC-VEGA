@@ -1,24 +1,16 @@
 ﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
-using LethalCompanyInputUtils.BindingPathEnums;
-using Malfunctions;
-using MoreShipUpgrades.Misc;
 using MoreShipUpgrades.Misc.Upgrades;
-using MoreShipUpgrades.UpgradeComponents.TierUpgrades;
 using ShipWindows;
 using ShipWindows.Components;
-using ShipWindows.Networking;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using VoiceRecognitionAPI;
-using static UnityEngine.GraphicsBuffer;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -38,6 +30,63 @@ namespace LC_VEGA
         public static TextMeshProUGUI enemiesText;
         public static TextMeshProUGUI itemsText;
         public static char creditsChar;
+        
+        // Default set of usernames and their respective colors in chat messages
+        private static Dictionary<string, string> nameColorPairs = new Dictionary<string, string>()
+        {
+            { "JS0", "#b51b3e" }, // Opera-san Red
+            { "Dorimon Pls", "#ff0000" }, // Red
+            { "Lunxara", "#6700bd" }, // Lunxara Purple
+            { "Mina", "#a11010" }, // BLOOD (IS FUEL)
+            { "Suachi", "#79e5cb" }, // Suachi Teal
+            { "Nico", "#ffffff" }, // Literally just white
+            { "xVenatoRx", "#ff8000" }, // McLaren Papaya
+            { "Jowyck", "#00ffff" } // Cyan
+        };
+        
+        internal static string[] htmlColors =
+        {
+            "", // Custom
+            "<color=red>",
+            "<color=#ff4d4d>", // Light Red
+            "<color=#b30000>", // Dark Red
+            "<color=#b51b3e>", // Opera-san Red
+            "<color=>#a11010", // Blood
+            "<color=#dc143c>", // Crimson
+            "<color=blue>",
+            "<color=#6666ff>", // Light Blue
+            "<color=#0000b3>", // Dark Blue
+            "<color=#0848ad>", // Lunxara Blue
+            "<color=#00ffff>", // Cyan
+            "<color=#79e5cb>", // Suachi Teal
+            "<color=green>",
+            "<color=#00cc00>", // Light Green
+            "<color=#004d00>", // Dark Green
+            "<color=#02F296>", // Lyra Green
+            "<color=#00ff00>", // Lime
+            "<color=yellow>",
+            "<color=#ffff66>", // Light Yellow
+            "<color=#cccc00>", // Dark Yellow
+            "<color=#ffd700>", // Gold
+            "<color=#ffa500>", // Orange
+            "<color=#ffc966>", // Light Orange
+            "<color=#cc8500>", // Dark Orange
+            "<color=#ff8000>", // Papaya Orange
+            "<color=#ffc0cb>", // Pink
+            "<color=#ffe6ea>", // Light Pink
+            "<color=#ff8095>", // Dark Pink
+            "<color=#e20c96>", // Lunxara Pink
+            "<color=#800080>", // Purple
+            "<color=#b300b3>", // Light Purple
+            "<color=#4d004d>", // Dark Purple
+            "<color=#6700BD>", // Lunxara Purple
+            "<color=#ff00ff>", // Magenta
+            "<color=#ffffff>", // White
+            "<color=#808080>", // Gray
+            "<color=#b3b3b3>", // Light Gray
+            "<color=#4d4d4d>", // Dark Gray
+            "<color=#000000>" // Black
+        };
 
         // Advanced Scanner
         internal static string enemiesTopText;
@@ -47,26 +96,6 @@ namespace LC_VEGA
         internal static string clearTextColor;
         internal static string dataUnavailableTextColor;
         internal static float scannerRange;
-        internal static string[] advancedScannerHTMLColors =
-        {
-            "<color=red>",
-            "<color=blue>",
-            "<color=green>",
-            "<color=yellow>",
-            "<color=#ffa500>", // Orange
-            "<color=#ffc0cb>", // Pink
-            "<color=#800080>", // Purple
-            "<color=#ff00ff>", // Magenta
-            "<color=#00ffff>", // Cyan
-            "<color=#dc143c>", // Crimson
-            "<color=#ffffff>", // White
-            "<color=#808080>", // Gray
-            "<color=#000000>", // Black
-            "<color=#E20C96>", // LunxaraPink
-            "<color=#6700BD>", // LunxaraPurple
-            "<color=#01B5F0>", // LunxaraBlue
-            "<color=#02F296>" // LyraGreen
-        };
 
         // Turrets
         internal static bool turretsExist;
@@ -1446,38 +1475,68 @@ namespace LC_VEGA
             }
         }
 
-        private static string GetSpecialNameColors(string name)
+        private static void AddNameColors()
         {
-            return name switch
+            string[] players = Plugin.playerNameColors.Value.Split(", ", StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in players)
             {
-                "JS0" => "<color=#e91640>",
-                "Lunxara" => "<color=#6700bd>",
-                "Mina" => "<color=#a11010>",
-                "Suachi" => "<color=#79e5cb>",
-                "Nico" => "<color=#ffffff>",
-                "xVenatoRx" => "<color=#ff8000>",
-                "Jowyck" => "<color=#00ffff>",
-                _ => "<color=red>"
-            };
+                string[] strings = item.Split(": ");
+                string username = strings[0];
+                string hex = strings[1];
+                if (nameColorPairs.ContainsKey(username))
+                {
+                    nameColorPairs[username] = hex;
+                }
+                else
+                {
+                    nameColorPairs.Add(username, hex);
+                }
+            }
+        }
+
+        private static string GetNameColor(string name)
+        {
+            return nameColorPairs.ContainsKey(name) ? nameColorPairs[name] : "";
         }
 
         public static void SendChatMessage(string message)
         {
             string playerUsername = StartOfRound.Instance.localPlayerController.playerUsername;
-            string nameColor = GetSpecialNameColors(playerUsername);
-            // string nameColorClose = nameColor != "" ? "</color> " : " ";
-            HUDManager.Instance.AddTextToChatOnServer(nameColor + playerUsername + "</color> " + message);
+            string nameColor = GetNameColor(playerUsername);
+            nameColor = StringHasHexCode(nameColor) ? $"<color={nameColor}>" : "";
+            string nameColorClose = nameColor != "" ? "</color>" : "";
+            HUDManager.Instance.AddTextToChatOnServer($"{nameColor}{playerUsername}{nameColorClose} {message}");
+        }
+
+        private static bool StringHasHexCode(string color)
+        {
+            if (color.Length == 7 && color.Contains("#")) return true;
+            return false;
+        }
+
+        private static string SetCustomScannerColor(int length)
+        {
+            string[] colorCodes = Plugin.customColorCodes.Value.Split(", ");
+            if (colorCodes.Length >= length)
+            {
+                if (StringHasHexCode(colorCodes[length - 1]))
+                {
+                    return $"<color={colorCodes[length-1]}>";
+                }
+            }
+            return "";
         }
 
         internal static void InitializeScannerVariables()
         {
             advancedScannerActive = Plugin.enableAdvancedScannerAuto.Value;
-            clearTextColor = advancedScannerHTMLColors[(int)Plugin.clearTextColor.Value];
-            dataUnavailableTextColor = advancedScannerHTMLColors[(int)Plugin.dataUnavailableTextColor.Value];
+
+            clearTextColor = Plugin.clearTextColor.Value == Colors.Custom ? SetCustomScannerColor(1) : htmlColors[(int)Plugin.clearTextColor.Value];
+            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value == Colors.Custom ? SetCustomScannerColor(4) : htmlColors[(int)Plugin.dataUnavailableTextColor.Value];
             enemiesTopText = "Entities:\n";
-            enemiesTextColor = advancedScannerHTMLColors[(int)Plugin.entitiesNearbyTextColor.Value];
+            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value == Colors.Custom ? SetCustomScannerColor(2) : htmlColors[(int)Plugin.entitiesNearbyTextColor.Value];
             itemsTopText = "Items:\n";
-            itemsTextColor = advancedScannerHTMLColors[(int)Plugin.itemsNearbyTextColor.Value];
+            itemsTextColor = Plugin.itemsNearbyTextColor.Value == Colors.Custom ? SetCustomScannerColor(3) : htmlColors[(int)Plugin.itemsNearbyTextColor.Value];
             scannerRange = Plugin.scannerRange.Value; // 29m max (default)
         }
 
@@ -1487,6 +1546,7 @@ namespace LC_VEGA
             shouldBeInterrupted = false;
             signals = Plugin.messages.Value.Split(", ");
             InitializeScannerVariables();
+            AddNameColors();
             listening = false;
             if (!Plugin.useManualListening.Value || (Plugin.enableManualListeningAuto.Value && Plugin.useManualListening.Value))
             {

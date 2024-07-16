@@ -63,15 +63,18 @@ namespace LC_VEGA
         public static ConfigEntry<bool> giveWeatherInfo;
         public static ConfigEntry<bool> giveApparatusWarnings;
         public static ConfigEntry<string> messages;
-        public static ConfigEntry<bool> sendRadarSwitchChatMessage;
-        public static ConfigEntry<bool> sendSignalTranslatorChatMessage;
-        public static ConfigEntry<bool> sendTeleporterChatMessage;
-        public static ConfigEntry<bool> sendDiscombobulatorChatMessage;
 
         // Mod interactions values
         public static ConfigEntry<bool> malfunctionWarnings;
         public static ConfigEntry<bool> diversitySpeaker;
         public static ConfigEntry<int> diversitySpeakerReplyChance;
+
+        // Text chat
+        public static ConfigEntry<string> playerNameColors;
+        public static ConfigEntry<bool> sendRadarSwitchChatMessage;
+        public static ConfigEntry<bool> sendSignalTranslatorChatMessage;
+        public static ConfigEntry<bool> sendTeleporterChatMessage;
+        public static ConfigEntry<bool> sendDiscombobulatorChatMessage;
 
         // Sound Settings values
         public static ConfigEntry<float> volume;
@@ -90,6 +93,7 @@ namespace LC_VEGA
         public static ConfigEntry<Colors> entitiesNearbyTextColor;
         public static ConfigEntry<Colors> itemsNearbyTextColor;
         public static ConfigEntry<Colors> dataUnavailableTextColor;
+        public static ConfigEntry<string> customColorCodes;
 
         // Manual activation config values
         public static ConfigEntry<bool> useManualListening;
@@ -314,24 +318,6 @@ namespace LC_VEGA
                 "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, JESTER, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, HEROBRINE, FOOTBALL, FIEND, SLENDER, LOCKER, SHY GUY, SIRENHEAD, DRIFTWOOD, WALKER, WATCHER, LOST, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS", // Default value
                 "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma and a white space, like so -> 'Message, Another message'\nApplies after a game restart." // Description
             );
-            sendRadarSwitchChatMessage = Config.Bind(
-                "Dialogue & Interactions", // Config section
-                "Send Radar Switch chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you used the Radar Switch command." // Description
-            );
-            sendSignalTranslatorChatMessage = Config.Bind(
-                "Dialogue & Interactions", // Config section
-                "Send Signal Translator chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you used VEGA to transmit a signal." // Description
-            );
-            sendTeleporterChatMessage = Config.Bind(
-                "Dialogue & Interactions", // Config section
-                "Send Teleporter chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you asked VEGA to activate the teleporter." // Description
-            );
 
             // Mod Interactions
             malfunctionWarnings = Config.Bind(
@@ -352,8 +338,34 @@ namespace LC_VEGA
                 40, // Default value
                 new ConfigDescription("Changes how likely it is for VEGA to reply to the Diversity speaker.\n0 means it will never reply, 100 means it will always reply.", new AcceptableValueRange<int>(0, 100)) // Description
             );
+
+            // Text Chat
+            playerNameColors = Config.Bind(
+                "Text Chat", // Config section
+                "Player name colors", // Key of this config
+                "", // Default value
+                "Allows you to change the color of people's usernames in VEGA's chat messages using hex codes. The format is:\n'username: hex code, otherusername: hex code'" // Description
+            );
+            sendRadarSwitchChatMessage = Config.Bind(
+                "Text Chat", // Config section
+                "Send Radar Switch chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you used the Radar Switch command." // Description
+            );
+            sendSignalTranslatorChatMessage = Config.Bind(
+                "Text Chat", // Config section
+                "Send Signal Translator chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you used VEGA to transmit a signal." // Description
+            );
+            sendTeleporterChatMessage = Config.Bind(
+                "Text Chat", // Config section
+                "Send Teleporter chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you asked VEGA to activate the teleporter." // Description
+            );
             sendDiscombobulatorChatMessage = Config.Bind(
-                "Mod Interactions", // Config section
+                "Text Chat", // Config section
                 "Send Discombobulator chat message", // Key of this config
                 true, // Default value
                 "If set to true, VEGA will send a message in the text chat that lets everyone know you made use of the Discombobulator through VEGA." // Description
@@ -543,6 +555,13 @@ namespace LC_VEGA
                 "Data unavailable color", // Key of this config
                 Colors.Yellow, // Default value
                 "Changes the color of the text under both sections of the scanner when a Communications or Power malfunction happen." // Description
+            );
+            customColorCodes = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Custom color codes", // Key of this config
+                "#0000ff, #ff0000, #008000, #ffff00", // Default value
+                "Allows you to introduce your own custom color codes for the Clear, Entities, Items and Data unavailable color options." +
+                "\nMake sure you separate the different values with a comma and a blank space." // Description
             );
 
             // Manual Listening
