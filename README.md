@@ -217,6 +217,11 @@ To interact with the lights, you need to say:
 - VEGA, lights out / lights off / turn the lights off
 - VEGA, lights on / turn the lights on
 
+To interact with the magnet that was added in v56, you have to say:
+
+- VEGA, activate magnet / enable magnet / turn on magnet
+- VEGA, deactivate magnet / disable magnet / turn off magnet
+
 ### Weather
 ---
 VEGA can give you information on all weather phenomena from the base game by saying:
