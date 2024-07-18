@@ -37,8 +37,8 @@ namespace LC_VEGA
             { "JS0", "#b51b3e" }, // Opera-san Red
             { "Dorimon Pls", "#ff0000" }, // Red
             { "Lunxara", "#6700bd" }, // Lunxara Purple
-            { "Mina", "#a11010" }, // BLOOD (IS FUEL)
-            { "Suachi", "#79e5cb" }, // Suachi Teal
+            { "Mina", "#a11010" }, // BLOOD (FUEL)
+            { "Sua", "#79e5cb" }, // Suachi Teal
             { "Nico", "#ffffff" }, // Literally just white
             { "xVenatoRx", "#ff8000" }, // McLaren Papaya
             { "Jowyck", "#00ffff" } // Cyan
@@ -1756,6 +1756,37 @@ namespace LC_VEGA
                                 }
                                 CoroutineManager.StartCoroutine(SwitchWindowShutters(open: false));
                             }
+                        }
+                    }
+                });
+            }
+
+            // Ship magnet for the CC
+            if (Plugin.registerInteractShipMagnet.Value)
+            {
+                string[] phrases = Plugin.magnetOnCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                Voice.RegisterPhrases(phrases);
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (!phrases.Contains(recognized.Message)) return;
+                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            StartOfRound.Instance.SetMagnetOnServerRpc(true);
+                        }
+                    }
+                });
+                string[] phrases_1 = Plugin.magnetOffCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                Voice.RegisterPhrases(phrases_1);
+                Voice.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (!phrases_1.Contains(recognized.Message)) return;
+                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    {
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        {
+                            StartOfRound.Instance.SetMagnetOnServerRpc(false);
                         }
                     }
                 });

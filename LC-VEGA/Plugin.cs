@@ -3,7 +3,6 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using LC_VEGA.Patches;
-using LethalCompanyInputUtils.BindingPathEnums;
 using LobbyCompatibility.Attributes;
 using LobbyCompatibility.Enums;
 using System.Collections.Generic;
@@ -159,6 +158,9 @@ namespace LC_VEGA
         public static ConfigEntry<bool> registerInteractShipLights;
         public static ConfigEntry<string> lightsOnCommands;
         public static ConfigEntry<string> lightsOffCommands;
+        public static ConfigEntry<bool> registerInteractShipMagnet;
+        public static ConfigEntry<string> magnetOnCommands;
+        public static ConfigEntry<string> magnetOffCommands;
         public static ConfigEntry<bool> registerInteractShipShutters;
         public static ConfigEntry<string> openShuttersCommands;
         public static ConfigEntry<string> closeShuttersCommands;
@@ -225,6 +227,7 @@ namespace LC_VEGA
             if (ModChecker.hasDiversity) harmony.PatchAll(typeof(DiversityPatches));
             if (ModChecker.hasShipWindows) harmony.PatchAll(typeof(ShipWindowsPatches));
             if (ModChecker.hasLGU) harmony.PatchAll(typeof(LGUPatches));
+            if (ModChecker.hasFacilityMeltdown) harmony.PatchAll(typeof(FacilityMeltdownPatches));
         }
 
         internal void CheckInstalledMods()
@@ -926,6 +929,24 @@ namespace LC_VEGA
                 "Voice Commands", // Config section
                 "Ship Lights off commands", // Key of this config
                 "VEGA, lights out/VEGA, lights off/VEGA, turn the lights off", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            registerInteractShipMagnet = Config.Bind(
+                "Voice Commands", // Config section
+                "Register Ship Magnet commands", // Key of this config
+                true, // Default value
+                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            );
+            magnetOnCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Activate Magnet commands", // Key of this config
+                "VEGA, activate magnet/VEGA, enable magnet/VEGA, turn magnet on", // Default value
+                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            );
+            magnetOffCommands = Config.Bind(
+                "Voice Commands", // Config section
+                "Deactivate Magnet commands", // Key of this config
+                "VEGA, deactivate magnet/VEGA, disable magnet/VEGA, turn magnet off", // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerInteractShipShutters = Config.Bind(

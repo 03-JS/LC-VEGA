@@ -25,6 +25,9 @@
     <Reference Include="Diversity">
       <HintPath>D:\Descargas\Diversity.dll</HintPath>
     </Reference>
+    <Reference Include="FacilityMeltdown">
+      <HintPath>..\..\..\..\..\Users\Usuario\AppData\Roaming\com.kesomannen.gale\lethal-company\profiles\Chamba Project\BepInEx\plugins\loaforc-FacilityMeltdown\FacilityMeltdown\FacilityMeltdown.dll</HintPath>
+    </Reference>
     <Reference Include="LethalCompanyInputUtils">
       <HintPath>D:\Descargas\LethalCompanyInputUtils.dll</HintPath>
     </Reference>

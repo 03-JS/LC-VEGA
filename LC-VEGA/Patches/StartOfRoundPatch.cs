@@ -173,5 +173,12 @@ namespace LC_VEGA.Patches
                 MalfunctionsPatches.playLeverWarning = true;
             }
         }
+
+        [HarmonyPatch("ShipHasLeft")]
+        [HarmonyPrefix]
+        static void StopMeltdownCountdown()
+        {
+            if (VEGA.audioSource.clip.name == "Countdown" && VEGA.audioSource.isPlaying) VEGA.audioSource.Stop();
+        }
     }
 }
