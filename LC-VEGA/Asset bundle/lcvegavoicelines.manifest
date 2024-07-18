@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 323563022
+CRC: 25075823
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d5b0bbf4bef418590ee3c1ffb513a652
+    Hash: adfcdee91e2e14d8f4eff5ba074e9f5b
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: d5b0bbf4bef418590ee3c1ffb513a652
+    Hash: adfcdee91e2e14d8f4eff5ba074e9f5b
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -188,6 +188,7 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Hazards/NoVisibleTrap.ogg
 - Assets/LC-VEGA/Mods/Diversity/Speaker/SilenceReply-3.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Thumper.ogg
+- Assets/LC-VEGA/Vanilla/Ship/MagnetAlreadyActive.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/LocustsShort.ogg
 - Assets/LC-VEGA/Mods/Entities/Bestiary/Cleaning Drone.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Coil-Head.ogg
@@ -246,10 +247,11 @@ Assets:
 - Assets/LC-VEGA/Vanilla/Doors/DoorClosed-1.ogg
 - Assets/LC-VEGA/Vanilla/Ship/DeactivateMagnet-1.ogg
 - Assets/LC-VEGA/Mods/Entities/Scan/Shy guyScan.ogg
-- Assets/LC-VEGA/Mods/Malfunctions/CommsMalfunction-1.ogg
+- Assets/LC-VEGA/Vanilla/Ship/MagnetAlreadyInactive.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Scan/BunkerSpiderScan.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Bestiary/Sandworm.ogg
 - Assets/LC-VEGA/Vanilla/Moons/20-ADA.ogg
+- Assets/LC-VEGA/Mods/Malfunctions/CommsMalfunction-1.ogg
 - Assets/LC-VEGA/Vanilla/Entities/Summary/ButlerShort.ogg
 - Assets/LC-VEGA/Mods/Malfunctions/CommsMalfunction-2.ogg
 - Assets/LC-VEGA/Mods/Entities/Summary/ShrimpShort.ogg

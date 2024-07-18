@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -135,7 +136,7 @@ namespace LC_VEGA.Patches
                 yEnemies = Plugin.yPosition.Value - 40f; // 140 base default
                 yItems = yEnemies + 50 * customScale.y; // 190 base default
             }
-            
+
             HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), Plugin.alignment.Value, -yRot);
             HUDManagerPatch.enemies.transform.localScale = customScale;
             HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yItems), Plugin.alignment.Value, -yRot);
@@ -159,18 +160,7 @@ namespace LC_VEGA.Patches
         {
             if (ModChecker.hasMalfunctions)
             {
-                Plugin.LogToConsole("Resetting malfunction values", "debug");
-
-                VEGA.malfunctionPowerTriggered = false;
-                VEGA.malfunctionTeleporterTriggered = false;
-                VEGA.malfunctionDistortionTriggered = false;
-                VEGA.malfunctionDoorTriggered = false;
-
-                MalfunctionsPatches.playPowerWarning = true;
-                MalfunctionsPatches.playTpWarning = true;
-                MalfunctionsPatches.playCommsWarning = true;
-                MalfunctionsPatches.playDoorWarning = true;
-                MalfunctionsPatches.playLeverWarning = true;
+                VEGA.ResetMalfunctionValues();
             }
         }
 
@@ -178,7 +168,12 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void StopMeltdownCountdown()
         {
-            if (VEGA.audioSource.clip.name == "Countdown" && VEGA.audioSource.isPlaying) VEGA.audioSource.Stop();
+            if (VEGA.audioSource.clip.name == "Countdown" && VEGA.audioSource.isPlaying && ModChecker.hasFacilityMeltdown)
+            {
+                FacilityMeltdownPatches.index = 0;
+                FacilityMeltdownPatches.condition = 60;
+                VEGA.audioSource.Stop();
+            }
         }
     }
 }

@@ -67,6 +67,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> malfunctionWarnings;
         public static ConfigEntry<bool> diversitySpeaker;
         public static ConfigEntry<int> diversitySpeakerReplyChance;
+        public static ConfigEntry<bool> meltdownTimer;
 
         // Text chat
         public static ConfigEntry<string> playerNameColors;
@@ -227,7 +228,7 @@ namespace LC_VEGA
             if (ModChecker.hasDiversity) harmony.PatchAll(typeof(DiversityPatches));
             if (ModChecker.hasShipWindows) harmony.PatchAll(typeof(ShipWindowsPatches));
             if (ModChecker.hasLGU) harmony.PatchAll(typeof(LGUPatches));
-            if (ModChecker.hasFacilityMeltdown) harmony.PatchAll(typeof(FacilityMeltdownPatches));
+            if (ModChecker.hasFacilityMeltdown && meltdownTimer.Value) harmony.PatchAll(typeof(FacilityMeltdownPatches));
         }
 
         internal void CheckInstalledMods()
@@ -328,6 +329,12 @@ namespace LC_VEGA
                 "Malfunction Warnings", // Key of this config
                 true, // Default value
                 "If set to true, VEGA will warn you and give you info on a malfunction from the Malfunctions mod when it happens." // Description
+            );
+            meltdownTimer = Config.Bind(
+                "Mod Interactions", // Config section
+                "Facility Meltdown timer", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will tell you how much time you have left before the explosion happens when there's a minute or less left." // Description
             );
             diversitySpeaker = Config.Bind(
                 "Mod Interactions", // Config section

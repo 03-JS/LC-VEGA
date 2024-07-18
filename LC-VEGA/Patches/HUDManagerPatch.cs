@@ -10,6 +10,8 @@ namespace LC_VEGA.Patches
         public static GameObject? enemies;
         public static GameObject? items;
 
+        private static bool localPlayerScanned = false;
+
         [HarmonyPatch("RadiationWarningHUD")]
         [HarmonyPostfix]
         static void PlayRadiationWarning()
@@ -74,15 +76,16 @@ namespace LC_VEGA.Patches
                     }
                 }
             }
+            localPlayerScanned = true;
         }
 
         [HarmonyPatch("ScanNewCreatureServerRpc")]
         [HarmonyPrefix]
         static void PlayNewEnemyID(int enemyID, ref Terminal ___terminalScript)
         {
-            if (!___terminalScript.scannedEnemyIDs.Contains(enemyID) && Plugin.remoteEntityID.Value)
+            if (Plugin.remoteEntityID.Value && !localPlayerScanned)
             {
-                if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                 {
                     if (VEGA.enemies.ContainsKey(enemyID))
                     {
@@ -99,6 +102,7 @@ namespace LC_VEGA.Patches
                         }
                     }
                 }
+                localPlayerScanned = false;
             }
         }
     }

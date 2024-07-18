@@ -31,6 +31,22 @@ namespace LC_VEGA.Patches
             SaveManager.hadDiversity = ModChecker.hasDiversity;
             SaveManager.SaveToFile();
         }
+        
+        [HarmonyPatch(typeof(GameNetworkManager), "Disconnect")]
+        [HarmonyPostfix]
+        static void ResetModValuesOnDisconnect()
+        {
+            if (ModChecker.hasMalfunctions)
+            {
+                VEGA.ResetMalfunctionValues();
+            }
+            if (ModChecker.hasFacilityMeltdown)
+            {
+                FacilityMeltdownPatches.index = 0;
+                FacilityMeltdownPatches.playedCountdown = false;
+                FacilityMeltdownPatches.condition = 60;
+            }
+        }
 
         [HarmonyPatch(typeof(RoundManager), "Update")]
         [HarmonyPostfix]
@@ -131,6 +147,16 @@ namespace LC_VEGA.Patches
                     default:
                         break;
                 }
+            }
+        }
+        
+        [HarmonyPatch(typeof(RoundManager), "FinishGeneratingLevel")]
+        [HarmonyPostfix]
+        static void ResetCountdown()
+        {
+            if (ModChecker.hasFacilityMeltdown)
+            {
+                FacilityMeltdownPatches.playedCountdown = false;
             }
         }
     }

@@ -30,7 +30,7 @@ namespace LC_VEGA
         public static TextMeshProUGUI enemiesText;
         public static TextMeshProUGUI itemsText;
         public static char creditsChar;
-        
+
         // Default set of usernames and their respective colors in chat messages
         private static Dictionary<string, string> nameColorPairs = new Dictionary<string, string>()
         {
@@ -43,7 +43,7 @@ namespace LC_VEGA
             { "xVenatoRx", "#ff8000" }, // McLaren Papaya
             { "Jowyck", "#00ffff" } // Cyan
         };
-        
+
         internal static string[] htmlColors =
         {
             "", // Custom
@@ -1063,6 +1063,7 @@ namespace LC_VEGA
 
             int index = StartOfRound.Instance.mapScreen.radarTargets.FindIndex(target => target.transform == StartOfRound.Instance.localPlayerController.transform);
             StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(index);
+            if (Plugin.sendRadarSwitchChatMessage.Value) SendChatMessage("performed a radar switch");
         }
 
         internal static IEnumerator SwitchLights(bool on)
@@ -1521,10 +1522,26 @@ namespace LC_VEGA
             {
                 if (StringHasHexCode(colorCodes[length - 1]))
                 {
-                    return $"<color={colorCodes[length-1]}>";
+                    return $"<color={colorCodes[length - 1]}>";
                 }
             }
             return "";
+        }
+
+        public static void ResetMalfunctionValues()
+        {
+            Plugin.LogToConsole("Resetting malfunction values", "debug");
+
+            malfunctionPowerTriggered = false;
+            malfunctionTeleporterTriggered = false;
+            malfunctionDistortionTriggered = false;
+            malfunctionDoorTriggered = false;
+
+            MalfunctionsPatches.playPowerWarning = true;
+            MalfunctionsPatches.playTpWarning = true;
+            MalfunctionsPatches.playCommsWarning = true;
+            MalfunctionsPatches.playDoorWarning = true;
+            MalfunctionsPatches.playLeverWarning = true;
         }
 
         internal static void InitializeScannerVariables()
@@ -1773,7 +1790,13 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (StartOfRound.Instance.magnetOn)
+                            {
+                                PlayLine("MagnetAlreadyActive");
+                                return;
+                            }
                             StartOfRound.Instance.SetMagnetOnServerRpc(true);
+                            if (Plugin.vocalLevel.Value >= VocalLevels.Low) PlayRandomLine("ActivateMagnet", Random.Range(1, 3)); 
                         }
                     }
                 });
@@ -1786,7 +1809,13 @@ namespace LC_VEGA
                     {
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
+                            if (!StartOfRound.Instance.magnetOn)
+                            {
+                                PlayLine("MagnetAlreadyInactive");
+                                return;
+                            }
                             StartOfRound.Instance.SetMagnetOnServerRpc(false);
+                            if (Plugin.vocalLevel.Value >= VocalLevels.Low) PlayRandomLine("DeactivateMagnet", Random.Range(1, 3));
                         }
                     }
                 });
@@ -1893,9 +1922,6 @@ namespace LC_VEGA
 
                         Plugin.LogToConsole("Activating advanced scanner", "debug");
                         advancedScannerActive = true;
-
-                        //if (Plugin.scanEntities.Value) HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("Enemies:");
-                        //if (Plugin.scanItems.Value) HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("Items:");
 
                         if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                         {
@@ -2074,7 +2100,6 @@ namespace LC_VEGA
                             SwitchRadar();
                         }
                         PlayRandomLine("RadarSwitch", Random.Range(1, 4));
-                        if (Plugin.sendRadarSwitchChatMessage.Value) SendChatMessage("performed a radar switch");
                     }
                 });
             }

@@ -1,9 +1,7 @@
 ﻿using FacilityMeltdown.MeltdownSequence.Behaviours;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace LC_VEGA.Patches
@@ -17,19 +15,25 @@ namespace LC_VEGA.Patches
             { 30, "30SecLeft" },
             { 10, "Countdown" }
         };
-        private static int index;
-        private static int condition;
+        public static int index;
+        public static int condition = 60;
+        public static bool playedCountdown;
 
         [HarmonyPatch(typeof(MeltdownHandler), "Update")]
         [HarmonyPostfix]
         static void PlayTimerAudios(ref float ___meltdownTimer, ref bool ___meltdownStarted, ref GameObject ___explosion)
         {
             if (!___meltdownStarted || ___explosion != null) return;
-            if (___meltdownTimer <= condition)
+            if (___meltdownTimer <= condition && !playedCountdown)
             {
-                condition = timeClipPairs.Keys.ToArray()[index];
-                VEGA.PlayLine(timeClipPairs[index]);
+                VEGA.PlayLine(timeClipPairs[condition], 0f);
+                if (condition == 10)
+                {
+                    playedCountdown = true;
+                    return;
+                }
                 index++;
+                condition = timeClipPairs.Keys.ToList()[index];
             }
         }
     }
