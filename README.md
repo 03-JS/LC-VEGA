@@ -349,7 +349,16 @@ I have separated the list of supported mods into two different categories based 
 - Lethal Things (Boombas & Maggie)
 - LC_Office (Shrimp)
 
-## Credits
+<br>
+
+<details>
+
+<summary><b>Credits</b></summary>
+
+<br>
+
 - id Software for creating the original character of VEGA.
 - My friend Nico for helping me test and polish the mod, as well as giving me suggestions and ideas to further improve it.
 - All the people that use the mod and have constantly been giving me ideas, suggestions and support. I appreciate it a lot <3
+
+</details>
