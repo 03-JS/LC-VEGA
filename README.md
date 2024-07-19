@@ -349,6 +349,8 @@ I have separated the list of supported mods into two different categories based 
 - Lethal Things (Boombas & Maggie)
 - LC_Office (Shrimp)
 
+</details>
+
 <br>
 
 <details>
