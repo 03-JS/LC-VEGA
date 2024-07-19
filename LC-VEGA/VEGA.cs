@@ -284,6 +284,7 @@ namespace LC_VEGA
         {
             if (audioSource != null)
             {
+                if (StartOfRound.Instance.localPlayerController == null) return;
                 if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
                 if (!skip && audioSource.isPlaying) return;
 
@@ -1601,6 +1602,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.manualActivationConfidence.Value && Plugin.useManualListening.Value)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (!listening)
@@ -1625,6 +1627,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.manualActivationConfidence.Value && Plugin.useManualListening.Value)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (listening)
@@ -1656,7 +1659,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.stopConfidence.Value)
                     {
-                        audioSource.Stop();
+                        audioSource?.Stop();
                     }
                 });
             }
@@ -1688,6 +1691,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -1711,6 +1715,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -1739,6 +1744,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasShipWindows)
@@ -1762,6 +1768,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasShipWindows)
@@ -1788,6 +1795,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (StartOfRound.Instance.magnetOn)
@@ -1796,7 +1804,7 @@ namespace LC_VEGA
                                 return;
                             }
                             StartOfRound.Instance.SetMagnetOnServerRpc(true);
-                            if (Plugin.vocalLevel.Value >= VocalLevels.Low) PlayRandomLine("ActivateMagnet", Random.Range(1, 3)); 
+                            if (Plugin.vocalLevel.Value >= VocalLevels.Low) PlayRandomLine("ActivateMagnet", Random.Range(1, 3));
                         }
                     }
                 });
@@ -1807,6 +1815,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (!StartOfRound.Instance.magnetOn)
@@ -1836,6 +1845,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.upgradesConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -1914,18 +1924,22 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
-                        if (advancedScannerActive)
+                        if (StartOfRound.Instance.localPlayerController == null) return;
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
-                            PlayLine("ScannerAlreadyActive");
-                            return;
-                        }
+                            if (advancedScannerActive)
+                            {
+                                PlayLine("ScannerAlreadyActive");
+                                return;
+                            }
 
-                        Plugin.LogToConsole("Activating advanced scanner", "debug");
-                        advancedScannerActive = true;
+                            Plugin.LogToConsole("Activating advanced scanner", "debug");
+                            advancedScannerActive = true;
 
-                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                        {
-                            PlayRandomLine("AdvancedScannerEnabled", Random.Range(1, 4));
+                            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                            {
+                                PlayRandomLine("AdvancedScannerEnabled", Random.Range(1, 4));
+                            }
                         }
                     }
                 });
@@ -1938,21 +1952,25 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
-                        if (!advancedScannerActive)
+                        if (StartOfRound.Instance.localPlayerController == null) return;
+                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
-                            PlayLine("ScannerAlreadyInactive");
-                            return;
-                        }
+                            if (!advancedScannerActive)
+                            {
+                                PlayLine("ScannerAlreadyInactive");
+                                return;
+                            }
 
-                        Plugin.LogToConsole("Deactivating advanced scanner", "debug");
-                        advancedScannerActive = false;
+                            Plugin.LogToConsole("Deactivating advanced scanner", "debug");
+                            advancedScannerActive = false;
 
-                        HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
-                        HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
+                            HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
+                            HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
 
-                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                        {
-                            PlayRandomLine("AdvancedScannerDisabled", Random.Range(1, 4));
+                            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                            {
+                                PlayRandomLine("AdvancedScannerDisabled", Random.Range(1, 4));
+                            }
                         }
                     }
                 });
@@ -1991,6 +2009,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.crewStatusConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (malfunctionPowerTriggered)
@@ -2014,6 +2033,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.crewInShipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (malfunctionPowerTriggered)
@@ -2037,6 +2057,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.scrapLeftConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (malfunctionPowerTriggered)
@@ -2064,6 +2085,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.teleportConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2095,6 +2117,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.teleportConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             SwitchRadar();
@@ -2119,6 +2142,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2147,6 +2171,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2178,6 +2203,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2206,6 +2232,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2239,6 +2266,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
@@ -2286,6 +2314,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
@@ -2342,6 +2371,7 @@ namespace LC_VEGA
                         if (!recognized.Message.Contains(signal)) return;
                         if (recognized.Confidence > Plugin.signalsConfidence.Value && listening)
                         {
+                            if (StartOfRound.Instance.localPlayerController == null) return;
                             if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                             {
                                 if (ModChecker.hasMalfunctions)
@@ -2386,6 +2416,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2414,6 +2445,7 @@ namespace LC_VEGA
                     if (!phrases_1.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2450,6 +2482,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.turretsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2495,6 +2528,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.turretsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2533,6 +2567,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.landminesConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2564,6 +2599,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.landminesConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2597,6 +2633,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.trapsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)
@@ -2628,6 +2665,7 @@ namespace LC_VEGA
                     if (!phrases.Contains(recognized.Message)) return;
                     if (recognized.Confidence > Plugin.trapsConfidence.Value && listening)
                     {
+                        if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                         {
                             if (ModChecker.hasMalfunctions)

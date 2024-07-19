@@ -23,8 +23,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void PlayTimerAudios(ref float ___meltdownTimer, ref bool ___meltdownStarted, ref GameObject ___explosion)
         {
-            if (Plugin.vocalLevel.Value == VocalLevels.None) return;
-            if (!___meltdownStarted || ___explosion != null) return;
+            if (!___meltdownStarted || ___explosion != null || Plugin.vocalLevel.Value == VocalLevels.None || !Plugin.meltdownTimer.Value) return;
             if (___meltdownTimer <= condition && !playedCountdown)
             {
                 VEGA.PlayLine(timeClipPairs[condition], 0f);

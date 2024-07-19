@@ -228,7 +228,7 @@ namespace LC_VEGA
             if (ModChecker.hasDiversity) harmony.PatchAll(typeof(DiversityPatches));
             if (ModChecker.hasShipWindows) harmony.PatchAll(typeof(ShipWindowsPatches));
             if (ModChecker.hasLGU) harmony.PatchAll(typeof(LGUPatches));
-            if (ModChecker.hasFacilityMeltdown && meltdownTimer.Value) harmony.PatchAll(typeof(FacilityMeltdownPatches));
+            if (ModChecker.hasFacilityMeltdown) harmony.PatchAll(typeof(FacilityMeltdownPatches));
         }
 
         internal void CheckInstalledMods()
