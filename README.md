@@ -2,15 +2,29 @@
 
 ![logo](https://i.imgur.com/GUkudM9.png)
 
-## Showcase videos
-[![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q)
-[![viperianShowcase](https://i.imgur.com/RPpE1Wd.png)](https://www.youtube.com/watch?v=UJv7HbzkoCQ)
-
 ## Description
 
 VEGA is a sentient AI from the modern DOOM games that can assist you in many different ways through voice commands. You can ask him to do almost anything, and can even give you info about moons, creatures and a lot more.
 
-## What can I ask VEGA to do?
+<details>
+
+<summary><b>Showcase videos</b></summary>
+
+<br>
+
+[![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q)
+
+[![viperianShowcase](https://i.imgur.com/RPpE1Wd.png)](https://www.youtube.com/watch?v=UJv7HbzkoCQ)
+
+</details>
+
+<br>
+
+<details>
+
+<summary><b>What can I ask VEGA to do?</b></summary>
+
+<br>
 
 VEGA is able to perform a very wide variety of actions. From disabling hazards, opening doors, to even giving you an Advanced Scanner that can detect nearby items and entities.
 
@@ -40,7 +54,7 @@ Some creature mods are compatible with these commands. Check the list of [compat
 ---
 VEGA is capable of adding two trackers to your helmet's display that will give you information on how many items and creatures are near you in real time, similarly to the ship's minimap. The item tracker doesn't just give you the number of nearby items however, it also displays how much they are worth in total. Also, items held by you or other players do not get tracked by the Advanced Scanner.
 
-![advancedScannergif](https://github.com/03-JS/LC-VEGA/blob/master/GIFs/Advanced%20Scanner%20example.gif?raw=true)
+![advancedScannergif](https://i.imgur.com/07hOUo0.gif)
 
 To activate the Advanced Scanner, use the following command:
 
@@ -82,7 +96,7 @@ VEGA is capable of using the ship's teleporter. To have him do so, you just have
 
 - VEGA, tp / teleport / activate tp / activate teleporter
 
-![VEGAusingteleporter](https://github.com/03-JS/LC-VEGA/blob/master/GIFs/LC-VEGA%20TP.gif?raw=true)
+![VEGAusingteleporter](https://i.imgur.com/84Ctfcq.gif)
 
 I heavily recommend you always use the [Radar Switch](#radar-switch) command before asking him to use the teleporter if you aren't playing solo, as you could otherwise accidentally teleport someone else back to the ship.
 
@@ -201,7 +215,7 @@ You can add your own custom messages in the configuration file under the **Dialo
 ---
 You can ask VEGA what the current time of day is by saying:
 
-- VEGA, time / time of day / current time / current time of day / what's the current time of day?
+- VEGA, time / time of day / current time / current time of day / what time is it? / what's the current time of day?
 
 ### Ship
 ---
@@ -242,7 +256,15 @@ And to thank him, you can say:
 - VEGA, thank you / thanks
 - Thank you, VEGA / Thanks, VEGA
 
-## What can VEGA do by himself?
+</details>
+
+<br>
+
+<details>
+
+<summary><b>What can VEGA do by himself?</b></summary>
+
+<br>
 
 On his own, VEGA can:
 - Let you know it's getting late when inside a moon's facility.
@@ -251,7 +273,29 @@ On his own, VEGA can:
 - Read bestiary entries out loud.
 - Give you some information on the current weather of the moon you're going to as you are landing if you have 150 experience points or less.
 
-## Supported mods
+</details>
+
+<br>
+
+<details>
+
+<summary><b>Replacing VEGA's audio files</b></summary>
+
+<br>
+
+To be able to replace VEGA's voice lines and other sounds, you can download a SoundAPI template that has everything you need to be able to create a basic audio replacement pack for VEGA as well as all of VEGA's audio files in [**here**](https://github.com/03-JS/LC-VEGA/releases/tag/SoundAPI_Template).
+
+Feel free to do whatever you want with both the template and the audio files. You can use them and upload them wherever you want, you can edit them, improve them, anything. Go crazy.
+
+</details>
+
+<br>
+
+<details>
+
+<summary><b>Supported Mods</b></summary>
+
+<br>
 
 VEGA **v2.0 or above** is compatible with some of the most popular and used Lethal Company mods on Thunderstore.
 
