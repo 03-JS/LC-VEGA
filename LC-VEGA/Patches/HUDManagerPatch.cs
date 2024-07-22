@@ -102,8 +102,8 @@ namespace LC_VEGA.Patches
                         }
                     }
                 }
-                localPlayerScanned = false;
             }
+            localPlayerScanned = false;
         }
     }
 }
