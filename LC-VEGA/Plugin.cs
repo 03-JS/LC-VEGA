@@ -17,7 +17,7 @@ namespace LC_VEGA
     [BepInPlugin(modGUID, modName, modVersion)]
     [LobbyCompatibility(CompatibilityLevel.ClientOnly, VersionStrictness.None)]
     [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.HardDependency)]
-    [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.HardDependency)]
+    [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.SoftDependency)]
     [BepInDependency("com.rune580.LethalCompanyInputUtils", DependencyFlags.HardDependency)]
     [BepInDependency("me.loaforc.facilitymeltdown", DependencyFlags.SoftDependency)]
     [BepInDependency("com.zealsprince.malfunctions", DependencyFlags.SoftDependency)]
@@ -81,14 +81,19 @@ namespace LC_VEGA
         public static ConfigEntry<bool> ignoreMasterVolume;
 
         // Advanced Scanner config values
+        public static ConfigEntry<DisplayModes> infoDisplayMode;
         public static ConfigEntry<float> scannerRange;
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
         public static ConfigEntry<bool> detectMasked;
+        public static ConfigEntry<Layouts> layout;
         public static ConfigEntry<float> scale;
-        public static ConfigEntry<float> tilt;
+        public static ConfigEntry<float> entitiesTilt;
+        public static ConfigEntry<float> itemsTilt;
         public static ConfigEntry<TextAlignmentOptions> alignment;
-        public static ConfigEntry<float> xPosition;
-        public static ConfigEntry<float> yPosition;
+        public static ConfigEntry<float> horizontalPosition;
+        public static ConfigEntry<float> verticalPosition;
+        public static ConfigEntry<float> horizontalGap;
+        public static ConfigEntry<float> verticalGap;
         public static ConfigEntry<Colors> clearTextColor;
         public static ConfigEntry<Colors> entitiesNearbyTextColor;
         public static ConfigEntry<Colors> itemsNearbyTextColor;
@@ -235,6 +240,7 @@ namespace LC_VEGA
         {
             mls.LogInfo("Looking for compatible mods...");
 
+            ModChecker.hasVoiceRecognitionAPI = ModChecker.CheckForMod("me.loaforc.voicerecognitionapi");
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
             ModChecker.hasFacilityMeltdown = ModChecker.CheckForMod("me.loaforc.facilitymeltdown");
@@ -494,6 +500,12 @@ namespace LC_VEGA
             );
 
             // Advanced Scanner
+            infoDisplayMode = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Info display mode", // Key of this config
+                DisplayModes.Full, // Default value
+                "Changes how the Advanced Scanner displays information." // Description
+            );
             scannerRange = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Range", // Key of this config
@@ -512,17 +524,35 @@ namespace LC_VEGA
                 false, // Default value
                 "Determines if the Advanced Scanner should be able to count Masked employees as entities." // Description
             );
-            xPosition = Config.Bind(
+            layout = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Layout", // Key of this config
+                Layouts.Custom, // Default value
+                "Changes the layout of the Advanced Scanner on the screen." // Description
+            );
+            horizontalPosition = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Horizontal position", // Key of this config
                 45f, // Default value
                 "The horizontal position of the Advanced Scanner on the screen." // Description
             );
-            yPosition = Config.Bind(
+            verticalPosition = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Vertical position", // Key of this config
                 180f, // Default value
                 "The vertical position of the Advanced Scanner on the screen." // Description
+            );
+            horizontalGap = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Horizontal gap", // Key of this config
+                0f, // Default value
+                "The horizontal gap between the nearby Entities and Items on the screen." // Description
+            );
+            verticalGap = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Vertical gap", // Key of this config
+                50f, // Default value
+                "The vertical gap between the nearby Entities and Items on the screen." // Description
             );
             scale = Config.Bind(
                 "Advanced Scanner", // Config section
@@ -530,17 +560,23 @@ namespace LC_VEGA
                 1f, // Default value
                 "The size of the Advanced Scanner on the screen." // Description
             );
-            tilt = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Tilt", // Key of this config
-                22f, // Default value
-                "The inclination of the Advanced Scanner on the screen." // Description
-            );
             alignment = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Alignment", // Key of this config
                 TextAlignmentOptions.Left, // Default value
                 "The alignment of the Advanced Scanner on the screen." // Description
+            );
+            entitiesTilt = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Entities tilt", // Key of this config
+                22f, // Default value
+                "The inclination of the Entities component on the screen." // Description
+            );
+            itemsTilt = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Items tilt", // Key of this config
+                22f, // Default value
+                "The inclination of the Items component on the screen." // Description
             );
             clearTextColor = Config.Bind(
                 "Advanced Scanner", // Config section

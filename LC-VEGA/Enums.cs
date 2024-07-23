@@ -12,6 +12,22 @@ namespace LC_VEGA
         High = 3
     }
 
+    public enum DisplayModes
+    {
+        Full = 0,
+        Compact = 1
+    }
+
+    public enum Layouts
+    {
+        Custom = 0,
+        TopLeft = 1,
+        TopRight = 2,
+        TopCentered = 3,
+        AboveHotbar = 4,
+        BottomCentered = 5
+    }
+
     public enum Colors
     {
         Custom = 0,

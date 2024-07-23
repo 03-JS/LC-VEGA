@@ -123,23 +123,25 @@ namespace LC_VEGA.Patches
             GameObject parent = GameObject.Find("Systems/UI/Canvas/IngamePlayerHUD/TopLeftCorner");
             float configScale = Plugin.scale.Value;
             Vector3 customScale = parent.transform.localScale * configScale;
-            float xPos = Plugin.xPosition.Value;
-            float yEnemies = Plugin.yPosition.Value;
-            float yItems = yEnemies + 50 * customScale.y;
-            float yRot = Plugin.tilt.Value;
+            float xPos = Plugin.horizontalPosition.Value;
+            float yEnemies = Plugin.verticalPosition.Value;
+            float yItems = yEnemies + Plugin.verticalGap.Value * customScale.y; // 50f default gap
+            float entitiesTilt = Plugin.entitiesTilt.Value;
+            float itemsTilt = Plugin.itemsTilt.Value;
             if (ModChecker.hasEladsHUD)
             {
                 customScale = GameObject.Find("PlayerInfo(Clone)").transform.localScale * configScale;
                 parent = GameObject.Find("CinematicGraphics").transform.parent.gameObject;
-                xPos = Plugin.xPosition.Value - 12f; // 33f default
-                yRot = Plugin.tilt.Value - 17f; // 5f default
-                yEnemies = Plugin.yPosition.Value - 40f; // 140 base default
-                yItems = yEnemies + 50 * customScale.y; // 190 base default
+                xPos = Plugin.horizontalPosition.Value - 12f; // 33f default
+                entitiesTilt = Plugin.entitiesTilt.Value - 17f; // 5f default
+                itemsTilt = Plugin.itemsTilt.Value - 17f; // 5f default
+                yEnemies = Plugin.verticalPosition.Value - 40f; // 140 base default
+                yItems = yEnemies + Plugin.verticalGap.Value * customScale.y; // 190 base default
             }
 
-            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), Plugin.alignment.Value, -yRot);
+            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), Plugin.alignment.Value, -entitiesTilt);
             HUDManagerPatch.enemies.transform.localScale = customScale;
-            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yItems), Plugin.alignment.Value, -yRot);
+            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos + Plugin.horizontalGap.Value, -yItems), Plugin.alignment.Value, -itemsTilt);
             HUDManagerPatch.items.transform.localScale = customScale;
 
             if (ModChecker.hasEladsHUD)
@@ -150,8 +152,8 @@ namespace LC_VEGA.Patches
                 HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta = new Vector2(400f, 35f);
             }
 
-            VEGA.enemiesText = HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>();
-            VEGA.itemsText = HUDManagerPatch.items.GetComponent<TextMeshProUGUI>();
+            VEGA.entitiesTextComponent = HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>();
+            VEGA.itemsTextComponent = HUDManagerPatch.items.GetComponent<TextMeshProUGUI>();
         }
 
         [HarmonyPatch("ReviveDeadPlayers")]

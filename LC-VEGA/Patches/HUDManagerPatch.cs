@@ -11,6 +11,7 @@ namespace LC_VEGA.Patches
         public static GameObject? items;
 
         private static bool localPlayerScanned = false;
+        private static int timesExecuted;
 
         [HarmonyPatch("RadiationWarningHUD")]
         [HarmonyPostfix]
@@ -75,14 +76,21 @@ namespace LC_VEGA.Patches
                         }
                     }
                 }
+                localPlayerScanned = true;
             }
-            localPlayerScanned = true;
+            if (StartOfRound.Instance.localPlayerController.IsHost) timesExecuted = 0;
         }
 
-        [HarmonyPatch("ScanNewCreatureServerRpc")]
+        [HarmonyPatch("ScanNewCreatureClientRpc")]
         [HarmonyPrefix]
         static void PlayNewEnemyID(int enemyID, ref Terminal ___terminalScript)
         {
+            if (timesExecuted > 0 && StartOfRound.Instance.localPlayerController.IsHost)
+            {
+                timesExecuted = 0;
+                return;
+            }
+            Plugin.LogToConsole($"Did the local player scan? -> {localPlayerScanned}");
             if (Plugin.remoteEntityID.Value && !localPlayerScanned)
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)
@@ -104,6 +112,7 @@ namespace LC_VEGA.Patches
                 }
             }
             localPlayerScanned = false;
+            if (StartOfRound.Instance.localPlayerController.IsHost) timesExecuted++;
         }
     }
 }
