@@ -361,6 +361,7 @@ I have separated the list of supported mods into two different categories based 
 
 - id Software for creating the original character of VEGA.
 - My friend Nico and Mina for helping me test and polish the mod, as well as giving me suggestions and ideas to further improve it.
+- JacuJ for showing me how to properly compress the audio files and showing me how to do it.
 - All the people that use the mod and have constantly been giving me ideas, suggestions and support. I appreciate it a lot <3
 
 </details>
