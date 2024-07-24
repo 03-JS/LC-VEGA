@@ -85,15 +85,17 @@ namespace LC_VEGA
         public static ConfigEntry<float> scannerRange;
         public static ConfigEntry<bool> enableAdvancedScannerAuto;
         public static ConfigEntry<bool> detectMasked;
-        public static ConfigEntry<Layouts> layout;
         public static ConfigEntry<float> scale;
-        public static ConfigEntry<float> entitiesTilt;
-        public static ConfigEntry<float> itemsTilt;
-        public static ConfigEntry<TextAlignmentOptions> alignment;
         public static ConfigEntry<float> horizontalPosition;
         public static ConfigEntry<float> verticalPosition;
         public static ConfigEntry<float> horizontalGap;
         public static ConfigEntry<float> verticalGap;
+        public static ConfigEntry<float> entitiesTextLength;
+        public static ConfigEntry<float> itemsTextLength;
+        public static ConfigEntry<float> entitiesTilt;
+        public static ConfigEntry<float> itemsTilt;
+        public static ConfigEntry<TextAlignmentOptions> entitiesAlignment;
+        public static ConfigEntry<TextAlignmentOptions> itemsAlignment;
         public static ConfigEntry<Colors> clearTextColor;
         public static ConfigEntry<Colors> entitiesNearbyTextColor;
         public static ConfigEntry<Colors> itemsNearbyTextColor;
@@ -355,38 +357,6 @@ namespace LC_VEGA
                 new ConfigDescription("Changes how likely it is for VEGA to reply to the Diversity speaker.\n0 means it will never reply, 100 means it will always reply.", new AcceptableValueRange<int>(0, 100)) // Description
             );
 
-            // Text Chat
-            playerNameColors = Config.Bind(
-                "Text Chat", // Config section
-                "Player name colors", // Key of this config
-                "", // Default value
-                "Allows you to change the color of people's usernames in VEGA's chat messages using hex codes. The format is:\n'username: hex code, otherusername: hex code'" // Description
-            );
-            sendRadarSwitchChatMessage = Config.Bind(
-                "Text Chat", // Config section
-                "Send Radar Switch chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you used the Radar Switch command." // Description
-            );
-            sendSignalTranslatorChatMessage = Config.Bind(
-                "Text Chat", // Config section
-                "Send Signal Translator chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you used VEGA to transmit a signal." // Description
-            );
-            sendTeleporterChatMessage = Config.Bind(
-                "Text Chat", // Config section
-                "Send Teleporter chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you asked VEGA to activate the teleporter." // Description
-            );
-            sendDiscombobulatorChatMessage = Config.Bind(
-                "Text Chat", // Config section
-                "Send Discombobulator chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you made use of the Discombobulator through VEGA." // Description
-            );
-
             // Confidence
             gratitudeConfidence = Config.Bind(
                 "Confidence", // Config section
@@ -492,123 +462,22 @@ namespace LC_VEGA
                 1.0f, // Default value
                 new ConfigDescription("Changes how loud VEGA is.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
+            volume.SettingChanged += (obj, args) =>
+            {
+                if (VEGA.audioSource != null) VEGA.audioSource.volume = volume.Value;
+                if (VEGA.sfxAudioSource != null) VEGA.sfxAudioSource.volume = volume.Value;
+            };
             ignoreMasterVolume = Config.Bind(
                 "Sound Settings", // Config section
                 "Ignore Master Volume setting", // Key of this config
                 false, // Default value
                 "If set to true, VEGA will ignore the game's master volume setting and always play at the same volume level.\nThis setting only applies before joining a game." // Description
             );
-
-            // Advanced Scanner
-            infoDisplayMode = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Info display mode", // Key of this config
-                DisplayModes.Full, // Default value
-                "Changes how the Advanced Scanner displays information." // Description
-            );
-            scannerRange = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Range", // Key of this config
-                29f, // Default value
-                new ConfigDescription("Changes how far the Advanced Scanner can reach (in meters). Requires a restart.", new AcceptableValueRange<float>(1f, 29f)) // Description
-            );
-            enableAdvancedScannerAuto = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Enable the Advanced Scanner automatically", // Key of this config
-                false, // Default value
-                "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often. Applies after restarting the game." // Description
-            );
-            detectMasked = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Detect Masked employees", // Key of this config
-                false, // Default value
-                "Determines if the Advanced Scanner should be able to count Masked employees as entities." // Description
-            );
-            layout = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Layout", // Key of this config
-                Layouts.Custom, // Default value
-                "Changes the layout of the Advanced Scanner on the screen." // Description
-            );
-            horizontalPosition = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Horizontal position", // Key of this config
-                45f, // Default value
-                "The horizontal position of the Advanced Scanner on the screen." // Description
-            );
-            verticalPosition = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Vertical position", // Key of this config
-                180f, // Default value
-                "The vertical position of the Advanced Scanner on the screen." // Description
-            );
-            horizontalGap = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Horizontal gap", // Key of this config
-                0f, // Default value
-                "The horizontal gap between the nearby Entities and Items on the screen." // Description
-            );
-            verticalGap = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Vertical gap", // Key of this config
-                50f, // Default value
-                "The vertical gap between the nearby Entities and Items on the screen." // Description
-            );
-            scale = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Scale", // Key of this config
-                1f, // Default value
-                "The size of the Advanced Scanner on the screen." // Description
-            );
-            alignment = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Alignment", // Key of this config
-                TextAlignmentOptions.Left, // Default value
-                "The alignment of the Advanced Scanner on the screen." // Description
-            );
-            entitiesTilt = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Entities tilt", // Key of this config
-                22f, // Default value
-                "The inclination of the Entities component on the screen." // Description
-            );
-            itemsTilt = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Items tilt", // Key of this config
-                22f, // Default value
-                "The inclination of the Items component on the screen." // Description
-            );
-            clearTextColor = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Clear color", // Key of this config
-                Colors.Blue, // Default value
-                "Changes the color of the text under both sections of the scanner when no entities or items are within its range." // Description
-            );
-            entitiesNearbyTextColor = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Entities nearby color", // Key of this config
-                Colors.Red, // Default value
-                "Changes the color of the text under the Entities section of the scanner when entities are within the scanner's range." // Description
-            );
-            itemsNearbyTextColor = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Items nearby color", // Key of this config
-                Colors.Green, // Default value
-                "Changes the color of the text under the Items section of the scanner when items are within the scanner's range." // Description
-            );
-            dataUnavailableTextColor = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Data unavailable color", // Key of this config
-                Colors.Yellow, // Default value
-                "Changes the color of the text under both sections of the scanner when a Communications or Power malfunction happen." // Description
-            );
-            customColorCodes = Config.Bind(
-                "Advanced Scanner", // Config section
-                "Custom color codes", // Key of this config
-                "#0000ff, #ff0000, #008000, #ffff00", // Default value
-                "Allows you to introduce your own custom color codes for the Clear, Entities, Items and Data unavailable color options." +
-                "\nMake sure you separate the different values with a comma and a blank space." // Description
-            );
+            ignoreMasterVolume.SettingChanged += (obj, args) =>
+            {
+                if (VEGA.audioSource != null) VEGA.audioSource.ignoreListenerVolume = ignoreMasterVolume.Value;
+                if (VEGA.sfxAudioSource != null) VEGA.sfxAudioSource.ignoreListenerVolume = ignoreMasterVolume.Value;
+            };
 
             // Manual Listening
             useManualListening = Config.Bind(
@@ -621,7 +490,272 @@ namespace LC_VEGA
                 "Manual Listening", // Config section
                 "Enable VEGA listening automatically", // Key of this config
                 false, // Default value
-                "Makes VEGA listen automatically when joining a game. Only works if Manual Listening is set to true. Applies after restarting the game." // Description
+                "Makes VEGA listen automatically when joining a game. Only works if Manual Listening is set to true." // Description
+            );
+            enableManualListeningAuto.SettingChanged += (obj, args) =>
+            {
+                if (!VEGA.listening)
+                {
+                    VEGA.PlaySFX("Activate");
+                }
+                else
+                {
+                    VEGA.PlaySFX("Deactivate");
+                }
+                VEGA.listening = enableManualListeningAuto.Value;
+            };
+
+            // Advanced Scanner
+            scannerRange = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Range", // Key of this config
+                29f, // Default value
+                new ConfigDescription("Changes how far the Advanced Scanner can reach (in meters).", new AcceptableValueRange<float>(1f, 29f)) // Description
+            );
+            scannerRange.SettingChanged += (obj, args) =>
+            {
+                VEGA.scannerRange = scannerRange.Value;
+            };
+            enableAdvancedScannerAuto = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Enable the Advanced Scanner automatically", // Key of this config
+                false, // Default value
+                "Enables VEGA's Advanced Scanner automatically when joining a game. Useful if you always want to have it on and don't want to repeat the voice command often." // Description
+            );
+            enableAdvancedScannerAuto.SettingChanged += (obj, args) =>
+            {
+                VEGA.advancedScannerActive = enableAdvancedScannerAuto.Value;
+                if (!VEGA.advancedScannerActive)
+                {
+                    if (HUDManagerPatch.entities != null) HUDManagerPatch.entities.GetComponent<TextMeshProUGUI>().SetText("");
+                    if (HUDManagerPatch.items != null) HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
+                }
+            };
+            detectMasked = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Detect Masked employees", // Key of this config
+                false, // Default value
+                "Determines if the Advanced Scanner should be able to count Masked employees as entities." // Description
+            );
+            infoDisplayMode = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Info display mode", // Key of this config
+                DisplayModes.Default, // Default value
+                "Changes how the Advanced Scanner displays information." // Description
+            );
+            infoDisplayMode.SettingChanged += (obj, args) =>
+            {
+                VEGA.UpdateScannerDisplayMode();
+            };
+            scale = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Scale", // Key of this config
+                1f, // Default value
+                "The size of the Advanced Scanner on the screen." // Description
+            );
+            scale.SettingChanged += (obj, args) =>
+            {
+                HUDManagerPatch.UpdateScannerPosAndScale();
+            };
+            horizontalPosition = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Horizontal position", // Key of this config
+                45f, // Default value
+                "The horizontal position of the Advanced Scanner on the screen." // Description
+            );
+            horizontalPosition.SettingChanged += (obj, args) =>
+            {
+                HUDManagerPatch.UpdateScannerPosAndScale();
+            };
+            verticalPosition = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Vertical position", // Key of this config
+                180f, // Default value
+                "The vertical position of the Advanced Scanner on the screen." // Description
+            );
+            verticalPosition.SettingChanged += (obj, args) =>
+            {
+                HUDManagerPatch.UpdateScannerPosAndScale();
+            };
+            horizontalGap = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Horizontal gap", // Key of this config
+                0f, // Default value
+                "The horizontal gap between the nearby Entities and Items on the screen." // Description
+            );
+            horizontalGap.SettingChanged += (obj, args) =>
+            {
+                HUDManagerPatch.UpdateScannerPosAndScale();
+            };
+            verticalGap = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Vertical gap", // Key of this config
+                50f, // Default value
+                "The vertical gap between the nearby Entities and Items on the screen." // Description
+            );
+            verticalGap.SettingChanged += (obj, args) =>
+            {
+                HUDManagerPatch.UpdateScannerPosAndScale();
+            };
+            entitiesTextLength = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Entities text length", // Key of this config
+                200f, // Default value
+                "Determines how much text fits in a single line in the Entities section of the scanner." // Description
+            );
+            entitiesTextLength.SettingChanged += (obj, args) =>
+            {
+                float entitiesLength = ModChecker.hasEladsHUD ? entitiesTextLength.Value + 100f : entitiesTextLength.Value;
+                if (HUDManagerPatch.entities != null) HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta = new Vector2(entitiesLength, HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta.y);
+            };
+            itemsTextLength = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Items text length", // Key of this config
+                200f, // Default value
+                "Determines how much text fits in a single line in the Items section of the scanner." // Description
+            );
+            itemsTextLength.SettingChanged += (obj, args) =>
+            {
+                float itemsLength = ModChecker.hasEladsHUD ? itemsTextLength.Value + 100f : itemsTextLength.Value;
+                if (HUDManagerPatch.items != null) HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta = new Vector2(itemsLength, HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta.y);
+            };
+            entitiesAlignment = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Entities text alignment", // Key of this config
+                TextAlignmentOptions.Left, // Default value
+                "The alignment of the Entities section of the scanner." // Description
+            );
+            entitiesAlignment.SettingChanged += (obj, args) =>
+            {
+                if (VEGA.entitiesTextComponent != null) VEGA.entitiesTextComponent.alignment = entitiesAlignment.Value;
+            };
+            itemsAlignment = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Items text alignment", // Key of this config
+                TextAlignmentOptions.Left, // Default value
+                "The alignment of the Advanced Scanner on the screen." // Description
+            );
+            itemsAlignment.SettingChanged += (obj, args) =>
+            {
+                if (VEGA.itemsTextComponent != null) VEGA.itemsTextComponent.alignment = itemsAlignment.Value;
+            };
+            entitiesTilt = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Entities tilt", // Key of this config
+                22f, // Default value
+                "The inclination of the Entities component on the screen." // Description
+            );
+            entitiesTilt.SettingChanged += (obj, args) =>
+            {
+                if (VEGA.entitiesTextComponent != null)
+                {
+                    RectTransform rectTransform = VEGA.entitiesTextComponent.GetComponent<RectTransform>();
+                    float tilt = ModChecker.hasEladsHUD ? entitiesTilt.Value - 17f : entitiesTilt.Value;
+                    rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, -tilt, rectTransform.localRotation.z);
+                }
+            };
+            itemsTilt = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Items tilt", // Key of this config
+                22f, // Default value
+                "The inclination of the Items component on the screen." // Description
+            );
+            itemsTilt.SettingChanged += (obj, args) =>
+            {
+                if (VEGA.itemsTextComponent != null)
+                {
+                    RectTransform rectTransform = VEGA.itemsTextComponent.GetComponent<RectTransform>();
+                    float tilt = ModChecker.hasEladsHUD ? itemsTilt.Value - 17f : itemsTilt.Value;
+                    rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, -tilt, rectTransform.localRotation.z); 
+                }
+            };
+            clearTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Clear color", // Key of this config
+                Colors.Blue, // Default value
+                "Changes the color of the text under both sections of the scanner when no entities or items are within its range." // Description
+            );
+            clearTextColor.SettingChanged += (obj, args) =>
+            {
+                VEGA.UpdateScannerColors();
+            };
+            entitiesNearbyTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Entities nearby color", // Key of this config
+                Colors.Red, // Default value
+                "Changes the color of the text under the Entities section of the scanner when entities are within the scanner's range." // Description
+            );
+            entitiesNearbyTextColor.SettingChanged += (obj, args) =>
+            {
+                VEGA.UpdateScannerColors();
+            };
+            itemsNearbyTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Items nearby color", // Key of this config
+                Colors.Green, // Default value
+                "Changes the color of the text under the Items section of the scanner when items are within the scanner's range." // Description
+            );
+            itemsNearbyTextColor.SettingChanged += (obj, args) =>
+            {
+                VEGA.UpdateScannerColors();
+            };
+            dataUnavailableTextColor = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Data unavailable color", // Key of this config
+                Colors.Yellow, // Default value
+                "Changes the color of the text under both sections of the scanner when a Communications or Power malfunction happen." // Description
+            );
+            dataUnavailableTextColor.SettingChanged += (obj, args) =>
+            {
+                VEGA.UpdateScannerColors();
+            };
+            customColorCodes = Config.Bind(
+                "Advanced Scanner", // Config section
+                "Custom color codes", // Key of this config
+                "#0000ff, #ff0000, #008000, #ffff00", // Default value
+                "Allows you to introduce your own custom color codes for the Clear, Entities, Items and Data unavailable color options." +
+                "\nMake sure you separate the different values with a comma and a blank space." // Description
+            );
+            customColorCodes.SettingChanged += (obj, args) =>
+            {
+                VEGA.UpdateScannerColors();
+            };
+
+            // Text Chat
+            playerNameColors = Config.Bind(
+                "Text Chat", // Config section
+                "Player name colors", // Key of this config
+                "", // Default value
+                "Allows you to change the color of people's usernames in VEGA's chat messages using hex codes. The format is:\n'username: hex code, otherusername: hex code'" // Description
+            );
+            playerNameColors.SettingChanged += (obj, args) =>
+            {
+                VEGA.RestoreNameColors();
+                VEGA.AddNameColors();
+            };
+            sendRadarSwitchChatMessage = Config.Bind(
+                "Text Chat", // Config section
+                "Send Radar Switch chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you used the Radar Switch command." // Description
+            );
+            sendSignalTranslatorChatMessage = Config.Bind(
+                "Text Chat", // Config section
+                "Send Signal Translator chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you used VEGA to transmit a signal." // Description
+            );
+            sendTeleporterChatMessage = Config.Bind(
+                "Text Chat", // Config section
+                "Send Teleporter chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you asked VEGA to activate the teleporter." // Description
+            );
+            sendDiscombobulatorChatMessage = Config.Bind(
+                "Text Chat", // Config section
+                "Send Discombobulator chat message", // Key of this config
+                true, // Default value
+                "If set to true, VEGA will send a message in the text chat that lets everyone know you made use of the Discombobulator through VEGA." // Description
             );
 
             // Patches

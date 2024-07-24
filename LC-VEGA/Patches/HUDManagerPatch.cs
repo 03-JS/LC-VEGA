@@ -7,11 +7,29 @@ namespace LC_VEGA.Patches
     [HarmonyPatch(typeof(HUDManager))]
     internal class HUDManagerPatch
     {
-        public static GameObject? enemies;
+        public static GameObject? entities;
         public static GameObject? items;
 
         private static bool localPlayerScanned = false;
         private static int timesExecuted;
+
+        public static void UpdateScannerPosAndScale()
+        {
+            if (entities == null || items == null) return;
+            GameObject parent = GameObject.Find("Systems/UI/Canvas/IngamePlayerHUD/TopLeftCorner");
+            if (parent == null) return;
+            Plugin.LogToConsole($"{Plugin.scale.Value}", "debug");
+            Vector3 customScale = parent.transform.localScale * Plugin.scale.Value;
+            if (ModChecker.hasEladsHUD) customScale = GameObject.Find("PlayerInfo(Clone)").transform.localScale * Plugin.scale.Value;
+            float xPos = !ModChecker.hasEladsHUD ? Plugin.horizontalPosition.Value : Plugin.horizontalPosition.Value - 12f;
+            float yEntities = !ModChecker.hasEladsHUD ? Plugin.verticalPosition.Value : Plugin.verticalPosition.Value - 40f;
+            float yItems = yEntities + Plugin.verticalGap.Value * customScale.y;
+            entities.GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, -yEntities);
+            entities.transform.localScale = ModChecker.hasEladsHUD ? customScale * 1.15f : customScale;
+            items.GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos + Plugin.horizontalGap.Value, -yItems);
+            items.transform.localScale = ModChecker.hasEladsHUD ? customScale * 1.15f : customScale;
+            Plugin.LogToConsole("Position and scale values of the Advanced Scanner updated", "debug");
+        }
 
         [HarmonyPatch("RadiationWarningHUD")]
         [HarmonyPostfix]
@@ -61,7 +79,7 @@ namespace LC_VEGA.Patches
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    if (VEGA.enemies.ContainsKey(enemyID))
+                    if (VEGA.enemies.ContainsKey(enemyID) && enemyID != 20)
                     {
                         VEGA.PlayLine(VEGA.enemies[enemyID] + "Scan", 0.7f);
                     }
@@ -90,7 +108,7 @@ namespace LC_VEGA.Patches
                 timesExecuted = 0;
                 return;
             }
-            Plugin.LogToConsole($"Did the local player scan? -> {localPlayerScanned}");
+            Plugin.LogToConsole($"Did the local player scan? -> {localPlayerScanned}", "debug");
             if (Plugin.remoteEntityID.Value && !localPlayerScanned)
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)

@@ -31,7 +31,7 @@ namespace LC_VEGA.Patches
             SaveManager.hadDiversity = ModChecker.hasDiversity;
             SaveManager.SaveToFile();
         }
-        
+
         [HarmonyPatch(typeof(GameNetworkManager), "Disconnect")]
         [HarmonyPostfix]
         static void ResetModValuesOnDisconnect()
@@ -73,22 +73,6 @@ namespace LC_VEGA.Patches
             if (!__instance.isInverseTeleporter)
             {
                 VEGA.teleporterCooldownTime = ___cooldownTime;
-            }
-        }
-
-        [HarmonyPatch(typeof(RoundManager), "Update")]
-        [HarmonyPostfix]
-        static void UpdateVolume()
-        {
-            if (VEGA.audioSource != null)
-            {
-                // VEGA
-                VEGA.audioSource.volume = Plugin.volume.Value; 
-                VEGA.audioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
-
-                // SFXs
-                VEGA.sfxAudioSource.volume = Plugin.volume.Value;
-                VEGA.sfxAudioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
             }
         }
 
@@ -149,7 +133,7 @@ namespace LC_VEGA.Patches
                 }
             }
         }
-        
+
         [HarmonyPatch(typeof(RoundManager), "FinishGeneratingLevel")]
         [HarmonyPostfix]
         static void ResetCountdown()

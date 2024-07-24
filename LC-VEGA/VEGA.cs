@@ -8,7 +8,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using VoiceRecognitionAPI;
@@ -26,7 +25,6 @@ namespace LC_VEGA
         public static bool shouldBeInterrupted;
         public static bool warningGiven;
         public static bool facilityHasPower;
-        public static bool advancedScannerActive;
         public static float teleporterCooldownTime;
         public static TextMeshProUGUI entitiesTextComponent;
         public static TextMeshProUGUI itemsTextComponent;
@@ -52,7 +50,7 @@ namespace LC_VEGA
             "<color=#ff4d4d>", // Light Red
             "<color=#b30000>", // Dark Red
             "<color=#b51b3e>", // Opera-san Red
-            "<color=>#a11010", // Blood
+            "<color=#a11010>", // Blood
             "<color=#dc143c>", // Crimson
             "<color=blue>",
             "<color=#6666ff>", // Light Blue
@@ -90,6 +88,7 @@ namespace LC_VEGA
         };
 
         // Advanced Scanner
+        public static bool advancedScannerActive;
         internal static string enemiesTopText;
         internal static string enemiesTextColor;
         internal static string itemsTopText;
@@ -155,6 +154,7 @@ namespace LC_VEGA
             { 17, "Nutcracker" },
             { 18, "OldBird" },
             { 19, "Butler" },
+            { 20, "Hornets" },
             { 21, "Snakes" },
             { 22, "VainShroud" },
             { 23, "KidnapperFox" },
@@ -306,7 +306,7 @@ namespace LC_VEGA
             }
             else
             {
-                Plugin.LogToConsole("Unable to play audio. The audio source for VEGA does not exist", "error");
+                Plugin.LogToConsole("Unable to play audio. The audio source for VEGA does not exist", "warn");
             }
         }
 
@@ -330,7 +330,7 @@ namespace LC_VEGA
             }
             else
             {
-                Plugin.LogToConsole("Unable to play SFX. The SFX audio source for VEGA does not exist", "error");
+                Plugin.LogToConsole("Unable to play SFX. The SFX audio source for VEGA does not exist", "warn");
             }
         }
 
@@ -1482,7 +1482,7 @@ namespace LC_VEGA
             }
         }
 
-        private static void AddNameColors()
+        internal static void AddNameColors()
         {
             string[] players = Plugin.playerNameColors.Value.Split(", ", StringSplitOptions.RemoveEmptyEntries);
             foreach (var item in players)
@@ -1499,6 +1499,21 @@ namespace LC_VEGA
                     nameColorPairs.Add(username, hex);
                 }
             }
+        }
+
+        internal static void RestoreNameColors()
+        {
+            nameColorPairs = new Dictionary<string, string>()
+            {
+                { "JS0", "#b51b3e" }, // Opera-san Red
+                { "Dorimon Pls", "#ff0000" }, // Red
+                { "Lunxara", "#6700bd" }, // Lunxara Purple
+                { "Mina", "#a11010" }, // BLOOD (FUEL)
+                { "Sua", "#79e5cb" }, // Suachi Teal
+                { "Nico", "#ffffff" }, // Literally just white
+                { "xVenatoRx", "#ff8000" }, // McLaren Papaya
+                { "Jowyck", "#00ffff" } // Cyan
+            };
         }
 
         private static string GetNameColor(string name)
@@ -1550,75 +1565,36 @@ namespace LC_VEGA
             MalfunctionsPatches.playLeverWarning = true;
         }
 
-        private static void SyncScannerConfigWithPresets()
+        public static void UpdateScannerDisplayMode()
         {
-            switch (Plugin.layout.Value)
-            {
-                case Layouts.Custom:
-                    return;
-                case Layouts.TopLeft:
-                    Plugin.horizontalPosition.BoxedValue = Plugin.horizontalPosition.DefaultValue;
-                    Plugin.verticalPosition.BoxedValue = Plugin.verticalPosition.DefaultValue;
-                    Plugin.horizontalGap.BoxedValue = Plugin.horizontalGap.DefaultValue;
-                    Plugin.verticalGap.BoxedValue = Plugin.verticalGap.DefaultValue;
-                    Plugin.alignment.BoxedValue = Plugin.alignment.DefaultValue;
-                    Plugin.entitiesTilt.BoxedValue = 22f;
-                    Plugin.itemsTilt.BoxedValue = 22f;
-                    break;
-                case Layouts.TopRight:
-                    Plugin.horizontalPosition.BoxedValue = Plugin.horizontalPosition.DefaultValue;
-                    Plugin.verticalPosition.BoxedValue = Plugin.verticalPosition.DefaultValue;
-                    Plugin.horizontalGap.BoxedValue = Plugin.horizontalGap.DefaultValue;
-                    Plugin.verticalGap.BoxedValue = Plugin.verticalGap.DefaultValue;
-                    Plugin.alignment.BoxedValue = TextAlignmentOptions.Right;
-                    Plugin.entitiesTilt.BoxedValue = -22f;
-                    Plugin.itemsTilt.BoxedValue = -22f;
-                    break;
-                case Layouts.TopCentered:
-                    Plugin.horizontalPosition.BoxedValue = Plugin.horizontalPosition.DefaultValue;
-                    Plugin.verticalPosition.BoxedValue = Plugin.verticalPosition.DefaultValue;
-                    Plugin.horizontalGap.BoxedValue = Plugin.horizontalGap.DefaultValue;
-                    Plugin.verticalGap.BoxedValue = Plugin.verticalGap.DefaultValue;
-                    Plugin.alignment.BoxedValue = TextAlignmentOptions.Center;
-                    Plugin.entitiesTilt.BoxedValue = 0f;
-                    Plugin.itemsTilt.BoxedValue = 0f;
-                    break;
-                case Layouts.AboveHotbar:
-                    Plugin.horizontalPosition.BoxedValue = Plugin.horizontalPosition.DefaultValue;
-                    Plugin.verticalPosition.BoxedValue = Plugin.verticalPosition.DefaultValue;
-                    Plugin.horizontalGap.BoxedValue = Plugin.horizontalGap.DefaultValue;
-                    Plugin.verticalGap.BoxedValue = Plugin.verticalGap.DefaultValue;
-                    Plugin.alignment.BoxedValue = TextAlignmentOptions.Center;
-                    Plugin.entitiesTilt.BoxedValue = 0f;
-                    Plugin.itemsTilt.BoxedValue = 0f;
-                    break;
-                case Layouts.BottomCentered:
-                    Plugin.horizontalPosition.BoxedValue = Plugin.horizontalPosition.DefaultValue;
-                    Plugin.verticalPosition.BoxedValue = Plugin.verticalPosition.DefaultValue;
-                    Plugin.horizontalGap.BoxedValue = Plugin.horizontalGap.DefaultValue;
-                    Plugin.verticalGap.BoxedValue = Plugin.verticalGap.DefaultValue;
-                    Plugin.alignment.BoxedValue = TextAlignmentOptions.Center;
-                    Plugin.entitiesTilt.BoxedValue = 0f;
-                    Plugin.itemsTilt.BoxedValue = 0f;
-                    break;
-                default:
-                    break;
-            }
+            oneEntityText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? "1 entity nearby</color>" : "1 nearby</color>";
+            entitiesText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? " entities nearby</color>" : " nearby</color>";
+            oneItemText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? "1 item nearby, worth " : "1 nearby, ";
+            itemsText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? " items nearby, worth " : " nearby, ";
+            enemiesTopText = Plugin.infoDisplayMode.Value == DisplayModes.OneLine || Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine ? "Entities: " : "Entities:\n";
+            itemsTopText = Plugin.infoDisplayMode.Value == DisplayModes.OneLine || Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine ? "Items: " : "Items:\n";
+        }
+
+        public static void UpdateScannerColors()
+        {
+            clearTextColor = Plugin.clearTextColor.Value == Colors.Custom ? SetCustomScannerColor(1) : htmlColors[(int)Plugin.clearTextColor.Value];
+            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value == Colors.Custom ? SetCustomScannerColor(4) : htmlColors[(int)Plugin.dataUnavailableTextColor.Value];
+            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value == Colors.Custom ? SetCustomScannerColor(2) : htmlColors[(int)Plugin.entitiesNearbyTextColor.Value];
+            itemsTextColor = Plugin.itemsNearbyTextColor.Value == Colors.Custom ? SetCustomScannerColor(3) : htmlColors[(int)Plugin.itemsNearbyTextColor.Value];
         }
 
         internal static void InitializeScannerVariables()
         {
             advancedScannerActive = Plugin.enableAdvancedScannerAuto.Value;
-            SyncScannerConfigWithPresets();
             clearTextColor = Plugin.clearTextColor.Value == Colors.Custom ? SetCustomScannerColor(1) : htmlColors[(int)Plugin.clearTextColor.Value];
             dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value == Colors.Custom ? SetCustomScannerColor(4) : htmlColors[(int)Plugin.dataUnavailableTextColor.Value];
-            enemiesTopText = "Entities:\n";
-            oneEntityText = Plugin.infoDisplayMode.Value == DisplayModes.Full ? "1 entity nearby</color>" : "1 nearby</color>";
-            entitiesText = Plugin.infoDisplayMode.Value == DisplayModes.Full ? " entities nearby</color>" : " nearby</color>";
+            enemiesTopText = Plugin.infoDisplayMode.Value == DisplayModes.OneLine || Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine ? "Entities: " : "Entities:\n";
+            oneEntityText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? "1 entity nearby</color>" : "1 nearby</color>";
+            entitiesText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? " entities nearby</color>" : " nearby</color>";
             enemiesTextColor = Plugin.entitiesNearbyTextColor.Value == Colors.Custom ? SetCustomScannerColor(2) : htmlColors[(int)Plugin.entitiesNearbyTextColor.Value];
-            itemsTopText = "Items:\n";
-            oneItemText = Plugin.infoDisplayMode.Value == DisplayModes.Full ? "1 item nearby, worth " : "1 nearby, ";
-            itemsText = Plugin.infoDisplayMode.Value == DisplayModes.Full ? " items nearby, worth " : " nearby, ";
+            itemsTopText = Plugin.infoDisplayMode.Value == DisplayModes.OneLine || Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine ? "Items: " : "Items:\n";
+            oneItemText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? "1 item nearby, worth " : "1 nearby, ";
+            itemsText = Plugin.infoDisplayMode.Value == DisplayModes.Default || Plugin.infoDisplayMode.Value == DisplayModes.OneLine ? " items nearby, worth " : " nearby, ";
             itemsTextColor = Plugin.itemsNearbyTextColor.Value == Colors.Custom ? SetCustomScannerColor(3) : htmlColors[(int)Plugin.itemsNearbyTextColor.Value];
             scannerRange = Plugin.scannerRange.Value; // 29m max (default)
         }
@@ -1635,7 +1611,7 @@ namespace LC_VEGA
             {
                 listening = true;
             }
-            Plugin.LogToConsole("Is VEGA listening -> " + listening, "debug");
+            Plugin.LogToConsole("Is VEGA listening? -> " + listening, "debug");
 
             if (ModChecker.hasVoiceRecognitionAPI) RegisterAllCommands();
         }
@@ -1875,7 +1851,7 @@ namespace LC_VEGA
                                 return;
                             }
                             StartOfRound.Instance.SetMagnetOnServerRpc(true);
-                            if (Plugin.vocalLevel.Value >= VocalLevels.Low) PlayRandomLine("ActivateMagnet", Random.Range(1, 3));
+                            if (Plugin.vocalLevel.Value >= VocalLevels.Low && StartOfRound.Instance.magnetOn) PlayRandomLine("ActivateMagnet", Random.Range(1, 3));
                         }
                     }
                 });
@@ -1895,7 +1871,7 @@ namespace LC_VEGA
                                 return;
                             }
                             StartOfRound.Instance.SetMagnetOnServerRpc(false);
-                            if (Plugin.vocalLevel.Value >= VocalLevels.Low) PlayRandomLine("DeactivateMagnet", Random.Range(1, 3));
+                            if (Plugin.vocalLevel.Value >= VocalLevels.Low && !StartOfRound.Instance.magnetOn) PlayRandomLine("DeactivateMagnet", Random.Range(1, 3));
                         }
                     }
                 });
@@ -2035,7 +2011,7 @@ namespace LC_VEGA
                             Plugin.LogToConsole("Deactivating advanced scanner", "debug");
                             advancedScannerActive = false;
 
-                            HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>().SetText("");
+                            HUDManagerPatch.entities.GetComponent<TextMeshProUGUI>().SetText("");
                             HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
 
                             if (Plugin.vocalLevel.Value >= VocalLevels.Low)

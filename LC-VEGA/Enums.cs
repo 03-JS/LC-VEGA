@@ -14,8 +14,10 @@ namespace LC_VEGA
 
     public enum DisplayModes
     {
-        Full = 0,
-        Compact = 1
+        Default = 0,
+        Compact = 1,
+        OneLine = 2,
+        CompactOneLine = 3
     }
 
     public enum Layouts

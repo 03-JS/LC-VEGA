@@ -19,6 +19,8 @@ namespace LC_VEGA.Patches
             if (VEGA.audioSource != null)
             {
                 Plugin.LogToConsole("VEGA audio source created successfully");
+                VEGA.audioSource.volume = Plugin.volume.Value;
+                VEGA.audioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
                 VEGA.audioSource.playOnAwake = false;
                 VEGA.audioSource.bypassEffects = true;
                 VEGA.audioSource.bypassListenerEffects = true;
@@ -34,6 +36,8 @@ namespace LC_VEGA.Patches
             if (VEGA.sfxAudioSource != null)
             {
                 Plugin.LogToConsole("VEGA-SFXs audio source created successfully");
+                VEGA.sfxAudioSource.volume = Plugin.volume.Value;
+                VEGA.sfxAudioSource.ignoreListenerVolume = Plugin.ignoreMasterVolume.Value;
                 VEGA.sfxAudioSource.playOnAwake = false;
                 VEGA.sfxAudioSource.bypassEffects = true;
                 VEGA.sfxAudioSource.bypassListenerEffects = true;
@@ -125,7 +129,6 @@ namespace LC_VEGA.Patches
             Vector3 customScale = parent.transform.localScale * configScale;
             float xPos = Plugin.horizontalPosition.Value;
             float yEnemies = Plugin.verticalPosition.Value;
-            float yItems = yEnemies + Plugin.verticalGap.Value * customScale.y; // 50f default gap
             float entitiesTilt = Plugin.entitiesTilt.Value;
             float itemsTilt = Plugin.itemsTilt.Value;
             if (ModChecker.hasEladsHUD)
@@ -136,23 +139,20 @@ namespace LC_VEGA.Patches
                 entitiesTilt = Plugin.entitiesTilt.Value - 17f; // 5f default
                 itemsTilt = Plugin.itemsTilt.Value - 17f; // 5f default
                 yEnemies = Plugin.verticalPosition.Value - 40f; // 140 base default
-                yItems = yEnemies + Plugin.verticalGap.Value * customScale.y; // 190 base default
             }
+            float yItems = yEnemies + Plugin.verticalGap.Value * customScale.y; // 50f default gap
 
-            HUDManagerPatch.enemies = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), Plugin.alignment.Value, -entitiesTilt);
-            HUDManagerPatch.enemies.transform.localScale = customScale;
-            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos + Plugin.horizontalGap.Value, -yItems), Plugin.alignment.Value, -itemsTilt);
-            HUDManagerPatch.items.transform.localScale = customScale;
+            HUDManagerPatch.entities = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos, -yEnemies), Plugin.entitiesAlignment.Value, -entitiesTilt);
+            HUDManagerPatch.entities.transform.localScale = ModChecker.hasEladsHUD ? customScale * 1.15f : customScale;
+            HUDManagerPatch.items = ConfigureScannerObjs(hudManager, parent, new Vector2(xPos + Plugin.horizontalGap.Value, -yItems), Plugin.itemsAlignment.Value, -itemsTilt);
+            HUDManagerPatch.items.transform.localScale = ModChecker.hasEladsHUD ? customScale * 1.15f : customScale;
 
-            if (ModChecker.hasEladsHUD)
-            {
-                HUDManagerPatch.enemies.transform.localScale = customScale * 1.15f;
-                HUDManagerPatch.enemies.GetComponent<RectTransform>().sizeDelta = new Vector2(400f, 45f);
-                HUDManagerPatch.items.transform.localScale = customScale * 1.15f;
-                HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta = new Vector2(400f, 35f);
-            }
+            float entitiesLength = ModChecker.hasEladsHUD ? Plugin.entitiesTextLength.Value + 100f : Plugin.entitiesTextLength.Value;
+            HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta = new Vector2(entitiesLength, HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta.y);
+            float itemsLength = ModChecker.hasEladsHUD ? Plugin.itemsTextLength.Value + 100f : Plugin.itemsTextLength.Value;
+            HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta = new Vector2(itemsLength, HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta.y);
 
-            VEGA.entitiesTextComponent = HUDManagerPatch.enemies.GetComponent<TextMeshProUGUI>();
+            VEGA.entitiesTextComponent = HUDManagerPatch.entities.GetComponent<TextMeshProUGUI>();
             VEGA.itemsTextComponent = HUDManagerPatch.items.GetComponent<TextMeshProUGUI>();
         }
 
