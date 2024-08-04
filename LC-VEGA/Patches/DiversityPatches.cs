@@ -31,7 +31,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void ReplyToIntro(StartOfRound __instance)
         {
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.diversitySpeaker.Value && __instance.shipIntroSpeechSFX.name.Contains("Welcome_"))
+            if (Plugin.diversitySpeaker.Value && __instance.shipIntroSpeechSFX.name.Contains("Welcome_"))
             {
                 if (SaveManager.firstTimeDiversity && firstTimeWelcome)
                 {
@@ -48,7 +48,7 @@ namespace LC_VEGA.Patches
             {
                 if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom) return; 
             }
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.diversitySpeaker.Value)
+            if (Plugin.diversitySpeaker.Value)
             {
                 int randomNumber = Random.Range(1, 101);
                 switch (soundType)
@@ -117,7 +117,7 @@ namespace LC_VEGA.Patches
             {
                 if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom) return;
             }
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.diversitySpeaker.Value)
+            if (Plugin.diversitySpeaker.Value)
             {
                 int randomNumber = Random.Range(1, 101);
                 switch (soundType)

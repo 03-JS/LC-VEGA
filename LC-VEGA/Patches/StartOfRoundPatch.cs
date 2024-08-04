@@ -170,12 +170,16 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void StopMeltdownCountdown()
         {
-            if (VEGA.audioSource.clip == null) return;
-            if (VEGA.audioSource.clip.name == "Countdown" && VEGA.audioSource.isPlaying && ModChecker.hasFacilityMeltdown)
+            if (ModChecker.hasFacilityMeltdown)
             {
                 FacilityMeltdownPatches.index = 0;
                 FacilityMeltdownPatches.condition = 60;
-                VEGA.audioSource.Stop();
+                FacilityMeltdownPatches.playedCountdown = true;
+                if (VEGA.audioSource.clip == null) return;
+                if (VEGA.audioSource.clip.name == "Countdown" && VEGA.audioSource.isPlaying)
+                {
+                    VEGA.audioSource.Stop();
+                }
             }
         }
     }

@@ -289,7 +289,7 @@ namespace LC_VEGA
                 "Dialogue & Interactions", // Config section
                 "Vocal Level", // Key of this config
                 VocalLevels.High, // Default value
-                "Changes how often VEGA speaks and the length of his answers.\n" +
+                "Changes how often VEGA speaks and the length of his answers. Interactions that have their own toggle will not be affected by this.\n" +
                 "High: The default value. Will speak on every interaction. Recommended for inexperienced players.\n" +
                 "Medium: Gives you useful info, doesn't speak on every interaction. Recommended for experienced players.\n" +
                 "Low: Speaks as often as the Medium option, but gives you shorter answers. Recommended for players who already have experience with VEGA.\n" +

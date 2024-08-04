@@ -16,7 +16,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyPowerMalfunction()
         {
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
+            if (Plugin.malfunctionWarnings.Value)
             {
                 VEGA.malfunctionPowerTriggered = State.MalfunctionPower.Triggered;
                 if (State.MalfunctionPower.Triggered)
@@ -32,7 +32,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyNavigationMalfunction()
         {
-            if (State.MalfunctionNavigation.Notified && Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
+            if (State.MalfunctionNavigation.Notified && Plugin.malfunctionWarnings.Value)
             {
                 VEGA.PlayLine("NavigationMalfunctionWarning", 3.65f);
             }
@@ -42,7 +42,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyAtomicMisalignment()
         {
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
+            if (Plugin.malfunctionWarnings.Value)
             {
                 VEGA.malfunctionTeleporterTriggered = State.MalfunctionTeleporter.Triggered;
                 if (State.MalfunctionTeleporter.Triggered)
@@ -58,7 +58,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyCommsMalfunction()
         {
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
+            if (Plugin.malfunctionWarnings.Value)
             {
                 VEGA.malfunctionDistortionTriggered = State.MalfunctionDistortion.Triggered;
                 if (State.MalfunctionDistortion.Triggered)
@@ -74,7 +74,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyDoorMalfunction()
         {
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
+            if (Plugin.malfunctionWarnings.Value)
             {
                 VEGA.malfunctionDoorTriggered = State.MalfunctionDoor.Triggered;
                 if (State.MalfunctionDoor.Triggered)
@@ -90,7 +90,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void NotifyHidraulicsMalfunction()
         {
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.malfunctionWarnings.Value)
+            if (Plugin.malfunctionWarnings.Value)
             {
                 if (State.MalfunctionLever.Notified)
                 {

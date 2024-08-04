@@ -36,7 +36,7 @@ namespace LC_VEGA.Patches
         static void PlayRadiationWarning()
         {
             VEGA.facilityHasPower = false;
-            if (Plugin.vocalLevel.Value >= VocalLevels.Low && Plugin.giveApparatusWarnings.Value)
+            if (Plugin.giveApparatusWarnings.Value)
             {
                 if (ModChecker.hasFacilityMeltdown)
                 {
@@ -111,20 +111,17 @@ namespace LC_VEGA.Patches
             Plugin.LogToConsole($"Did the local player scan? -> {localPlayerScanned}", "debug");
             if (Plugin.remoteEntityID.Value && !localPlayerScanned)
             {
-                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                if (VEGA.enemies.ContainsKey(enemyID))
                 {
-                    if (VEGA.enemies.ContainsKey(enemyID))
+                    VEGA.PlayLine(VEGA.enemies[enemyID] + "ID", 0.7f);
+                }
+                else
+                {
+                    foreach (var file in ___terminalScript.enemyFiles)
                     {
-                        VEGA.PlayLine(VEGA.enemies[enemyID] + "ID", 0.7f);
-                    }
-                    else
-                    {
-                        foreach (var file in ___terminalScript.enemyFiles)
+                        if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName))
                         {
-                            if (file.creatureFileID == enemyID && VEGA.moddedEnemies.Contains(file.creatureName))
-                            {
-                                VEGA.PlayLine(file.creatureName + "ID", 0.7f);
-                            }
+                            VEGA.PlayLine(file.creatureName + "ID", 0.7f);
                         }
                     }
                 }
