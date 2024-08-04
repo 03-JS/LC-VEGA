@@ -111,6 +111,7 @@ namespace LC_VEGA
 
         // Voice commands config values
         public static ConfigEntry<bool> enhancedTeleportCommands;
+        public static ConfigEntry<bool> enhancedHazardDisabling;
         public static ConfigEntry<bool> registerActivation;
         public static ConfigEntry<string> startListeningCommands;
         public static ConfigEntry<string> stopListeningCommands;
@@ -772,6 +773,12 @@ namespace LC_VEGA
                 "Enhanced Teleport commands", // Key of this config
                 true, // Default value
                 "Makes VEGA perform the radar switch before activating the teleporter." // Description
+            );
+            enhancedHazardDisabling = Config.Bind(
+                "Voice Commands", // Config section
+                "Enhanced Hazard Disabling commands", // Key of this config
+                true, // Default value
+                "Makes VEGA disable all visible turrets / landmines / spike traps when using their respective commands." // Description
             );
             registerActivation = Config.Bind(
                 "Voice Commands", // Config section

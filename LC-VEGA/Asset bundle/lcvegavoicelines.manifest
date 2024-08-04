@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1649333688
+CRC: 490014793
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 869730c65feddc30dedebdadc2840f20
+    Hash: 2567ea1f8b61912dfd2c4683944b8629
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 869730c65feddc30dedebdadc2840f20
+    Hash: 2567ea1f8b61912dfd2c4683944b8629
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -271,7 +271,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/ScannerAlreadyActive.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/EyelessDogScan.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/ID/StalkerID.ogg
-- Assets/LC-VEGA/Voice lines/Vanilla/Moons/7-DIN.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-3.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Radar booster/NoBoostersNearby.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/OldBirdShort.ogg
@@ -286,9 +286,9 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BaboonHawkScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/ID/EyelessDogID.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/ID/BoombasID.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/ID/HornetsID.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Diversity/Speaker/Reply-3.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/ID/SlimeID.ogg
-- Assets/LC-VEGA/Voice lines/Vanilla/Hazards/AllMinesDisabled-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Ship/Teleport-3.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Malfunctions/HydraulicMalfunctionWarning.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/No data/NoEntityData-3.ogg
@@ -318,6 +318,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Rolling GiantScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/ScannerAlreadyInactive.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Doors/DoorClosed-3.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Moons/7-DIN.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/RedWood Giant.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/VainShroudShort.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoVisibleTurret.ogg

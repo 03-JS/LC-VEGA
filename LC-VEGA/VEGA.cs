@@ -622,7 +622,7 @@ namespace LC_VEGA
                 }
             }
 
-            if (secureDoors.Count() == 0)
+            if (secureDoors.Count == 0)
             {
                 PlayLine("NoDoors");
                 return null;
@@ -659,7 +659,7 @@ namespace LC_VEGA
                 }
             }
 
-            if (turrets.Count() == 0)
+            if (turrets.Count == 0)
             {
                 noTurrets = true;
                 return null;
@@ -677,13 +677,13 @@ namespace LC_VEGA
                 {
                     closestTurret = turret;
                 }
-                else if (distances.Count() > 0)
+                else if (distances.Count > 0)
                 {
                     distances.Remove(distanceToPlayer);
                 }
             }
 
-            if (distances.Count() == 0)
+            if (distances.Count == 0)
             {
                 noVisibleTurret = true;
                 return null;
@@ -691,6 +691,41 @@ namespace LC_VEGA
 
             distanceToTurret = distances.Min();
             return closestTurret;
+        }
+
+        internal static void DisableVisibleTurrets()
+        {
+            List<TerminalAccessibleObject> turrets = new List<TerminalAccessibleObject>();
+            TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
+            foreach (var item in terminalObjects)
+            {
+                if (item.gameObject.GetComponent<Turret>())
+                {
+                    turrets.Add(item);
+                }
+            }
+
+            if (turrets.Count == 0)
+            {
+                noTurrets = true;
+                return;
+            }
+
+            List<TerminalAccessibleObject> visibleTurrets = new List<TerminalAccessibleObject>();
+            foreach (var turret in turrets)
+            {
+                if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(turret.transform.position, 45, 10000))
+                {
+                    visibleTurrets.Add(turret);
+                    turret.CallFunctionFromTerminal();
+                    turretDisabled = true;
+                }
+            }
+
+            if (visibleTurrets.Count == 0)
+            {
+                noVisibleTurret = true;
+            }
         }
 
         internal static FollowTerminalAccessibleObjectBehaviour? GetClosestToil()
@@ -704,7 +739,7 @@ namespace LC_VEGA
                 toils.Add(item);
             }
 
-            if (toils.Count() == 0)
+            if (toils.Count == 0)
             {
                 noToils = true;
                 return null;
@@ -722,13 +757,13 @@ namespace LC_VEGA
                 {
                     closestToil = toil;
                 }
-                else if (distances.Count() > 0)
+                else if (distances.Count > 0)
                 {
                     distances.Remove(distanceToPlayer);
                 }
             }
 
-            if (distances.Count() == 0)
+            if (distances.Count == 0)
             {
                 noVisibleTurret = true;
                 return null;
@@ -738,8 +773,45 @@ namespace LC_VEGA
             return closestToil;
         }
 
+        internal static void DisableVisibleToils()
+        {
+            List<FollowTerminalAccessibleObjectBehaviour> toils = new List<FollowTerminalAccessibleObjectBehaviour>();
+            FollowTerminalAccessibleObjectBehaviour[] toilHeads = Object.FindObjectsOfType<FollowTerminalAccessibleObjectBehaviour>();
+            foreach (var item in toilHeads)
+            {
+                toils.Add(item);
+            }
+
+            if (toils.Count == 0)
+            {
+                noToils = true;
+                return;
+            }
+
+            List<FollowTerminalAccessibleObjectBehaviour> visibleToils = new List<FollowTerminalAccessibleObjectBehaviour>();
+            foreach (var toil in toils)
+            {
+                if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(toil.transform.position, 45, 10000))
+                {
+                    visibleToils.Add(toil);
+                    toil.CallFunctionFromTerminal();
+                    toilDisabled = true;
+                }
+            }
+
+            if (visibleToils.Count == 0)
+            {
+                noVisibleTurret = true;
+            }
+        }
+
         internal static void DisableTurret()
         {
+            if (Plugin.enhancedHazardDisabling.Value)
+            {
+                DisableVisibleTurrets();
+                return;
+            }
             TerminalAccessibleObject? closestTurret = GetClosestTurret();
             if (closestTurret != null)
             {
@@ -751,6 +823,11 @@ namespace LC_VEGA
 
         internal static void DisableToil()
         {
+            if (Plugin.enhancedHazardDisabling.Value)
+            {
+                DisableVisibleToils();
+                return;
+            }
             FollowTerminalAccessibleObjectBehaviour? closestToil = GetClosestToil();
             TerminalAccessibleObject? closestTurret = GetClosestTurret();
             if (closestToil == null)
@@ -781,7 +858,7 @@ namespace LC_VEGA
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    PlayRandomLine("TurretDisabled", Random.Range(1, 4), 0.7f);
+                    PlayRandomLine(Plugin.enhancedHazardDisabling.Value ? "TurretsDisabled" : "TurretDisabled", Random.Range(1, 4), 0.7f);
                 }
             }
             else if (noVisibleTurret)
@@ -844,7 +921,7 @@ namespace LC_VEGA
                 }
             }
 
-            if (mines.Count() == 0)
+            if (mines.Count == 0)
             {
                 PlayLine("NoMines");
                 return null;
@@ -862,13 +939,13 @@ namespace LC_VEGA
                 {
                     closestMine = mine;
                 }
-                else if (distances.Count() > 0)
+                else if (distances.Count > 0)
                 {
                     distances.Remove(distanceToPlayer);
                 }
             }
 
-            if (distances.Count() == 0)
+            if (distances.Count == 0)
             {
                 PlayLine("NoVisibleMine");
                 return null;
@@ -877,8 +954,53 @@ namespace LC_VEGA
             return closestMine;
         }
 
+        internal static void DisableVisibleMines()
+        {
+            List<TerminalAccessibleObject> mines = new List<TerminalAccessibleObject>();
+            TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
+            foreach (var item in terminalObjects)
+            {
+                if (item.gameObject.GetComponent<Landmine>())
+                {
+                    mines.Add(item);
+                }
+            }
+
+            if (mines.Count == 0)
+            {
+                PlayLine("NoMines");
+                return;
+            }
+
+            List<TerminalAccessibleObject> visibleMines = new List<TerminalAccessibleObject>();
+            foreach (var mine in mines)
+            {
+                if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(mine.transform.position, 45, 10000))
+                {
+                    visibleMines.Add(mine);
+                    mine.CallFunctionFromTerminal();
+                }
+            }
+
+            if (visibleMines.Count == 0)
+            {
+                PlayLine("NoVisibleMine");
+                return;
+            }
+
+            if (Plugin.vocalLevel.Value >= VocalLevels.High)
+            {
+                PlayRandomLine("MinesDisabled", Random.Range(1, 4));
+            }
+        }
+
         internal static void DisableMine()
         {
+            if (Plugin.enhancedHazardDisabling.Value)
+            {
+                DisableVisibleMines();
+                return;
+            }
             TerminalAccessibleObject? closestMine = GetClosestMine();
             if (closestMine != null)
             {
@@ -934,7 +1056,7 @@ namespace LC_VEGA
                 }
             }
 
-            if (traps.Count() == 0)
+            if (traps.Count == 0)
             {
                 PlayLine("NoTraps");
                 return null;
@@ -952,13 +1074,13 @@ namespace LC_VEGA
                 {
                     closestTrap = trap;
                 }
-                else if (distances.Count() > 0)
+                else if (distances.Count > 0)
                 {
                     distances.Remove(distanceToPlayer);
                 }
             }
 
-            if (distances.Count() == 0)
+            if (distances.Count == 0)
             {
                 PlayLine("NoVisibleTrap");
                 return null;
@@ -967,8 +1089,56 @@ namespace LC_VEGA
             return closestTrap;
         }
 
+        internal static void DisableVisibleSpikeTraps()
+        {
+            List<TerminalAccessibleObject> traps = new List<TerminalAccessibleObject>();
+            TerminalAccessibleObject[] terminalObjects = Object.FindObjectsOfType<TerminalAccessibleObject>();
+            foreach (var item in terminalObjects)
+            {
+                if (item.gameObject.transform.parent != null)
+                {
+                    if (item.gameObject.transform.parent.name.Equals("Container"))
+                    {
+                        traps.Add(item);
+                    }
+                }
+            }
+
+            if (traps.Count == 0)
+            {
+                PlayLine("NoTraps");
+                return;
+            }
+
+            List<TerminalAccessibleObject> visibleTraps = new List<TerminalAccessibleObject>();
+            foreach (var trap in traps)
+            {
+                if (StartOfRound.Instance.localPlayerController.HasLineOfSightToPosition(trap.transform.position, 45, 10000))
+                {
+                    visibleTraps.Add(trap);
+                    trap.CallFunctionFromTerminal();
+                }
+            }
+
+            if (visibleTraps.Count == 0)
+            {
+                PlayLine("NoVisibleTrap");
+                return;
+            }
+
+            if (Plugin.vocalLevel.Value >= VocalLevels.High)
+            {
+                PlayRandomLine("TrapsDisabled", Random.Range(1, 4));
+            }
+        }
+
         internal static void DisableSpikeTrap()
         {
+            if (Plugin.enhancedHazardDisabling.Value)
+            {
+                DisableVisibleSpikeTraps();
+                return;
+            }
             TerminalAccessibleObject? closestTrap = GetClosestSpikeTrap();
             if (closestTrap != null)
             {
