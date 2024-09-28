@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 490014793
+CRC: 1412893638
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2567ea1f8b61912dfd2c4683944b8629
+    Hash: 7d0f1acf82ed99f628236ebfecad64ee
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 2567ea1f8b61912dfd2c4683944b8629
+    Hash: 7d0f1acf82ed99f628236ebfecad64ee
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -21,7 +21,6 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ButlerScan.ogg
 - Assets/LC-VEGA/SFXs/Deactivate.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Misc/Intro.ogg
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-1.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Malfunctions/CommsMalfunction-1.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Reports & Scans/PerformingItemScan.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Siren Head.ogg
@@ -208,7 +207,6 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Mods/Diversity/Speaker/WelcomeReply.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TurretDisabled-3.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Ship/RadarSwitch-1.ogg
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-3.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Moons/61-MAR.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Weather/Stormy-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Doors/NoDoorNearby.ogg
@@ -236,10 +234,10 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Weather/Eclipsed-1.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/ID/Shockwave DroneID.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Misc/NoPower-3.ogg
-- Assets/LC-VEGA/Voice lines/Vanilla/Misc/IndoorsOnly-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/JesterScan.ogg
-- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/PowerMalfunctionWarning.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/BunkerSpiderScan.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Malfunctions/PowerMalfunctionWarning.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Manticoil.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Diversity/Speaker/Reply-1.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Weather/Flooded-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/SandwormShort.ogg
@@ -263,7 +261,6 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/NutcrackerScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SlimeScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Reports & Scans/CrewInShipSolo.ogg
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Manticoil.ogg
 - Assets/LC-VEGA/Voice lines/Mods/LGU/Discombobulate.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Diversity/Speaker/FirstTimeReply.ogg
 - Assets/LC-VEGA/Voice lines/Mods/ShipWindows/ShuttersAlreadyClosed.ogg

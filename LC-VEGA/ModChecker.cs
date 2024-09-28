@@ -4,8 +4,7 @@ using LobbyCompatibility.Enums;
 using LobbyCompatibility.Features;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace LC_VEGA
 {
@@ -32,6 +31,12 @@ namespace LC_VEGA
                 }
             }
             return false;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        public static void RegisterPlugin(string modGUID, string modVersion)
+        {
+            PluginHelper.RegisterPlugin(modGUID, Version.Parse(modVersion), CompatibilityLevel.ClientOnly, VersionStrictness.None);
         }
     }
 }

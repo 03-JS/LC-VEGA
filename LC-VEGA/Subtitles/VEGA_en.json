@@ -1,0 +1,2195 @@
+{
+    "Advanced Scanner": [
+        {
+            "audio": "AdvancedScannerDisabled-1",
+            "subtitles": {
+                "I have removed the two trackers from your helmet's display": 0.0
+            }
+        },
+        {
+            "audio": "AdvancedScannerDisabled-2",
+            "subtitles": {
+                "Advanced Scanner disabled": 0.0
+            }
+        },
+        {
+            "audio": "AdvancedScannerDisabled-3",
+            "subtitles": {
+                "The Advanced Scanner is now disabled": 0.0
+            }
+        },
+        {
+            "audio": "AdvancedScannerEnabled-1",
+            "subtitles": {
+                "I have added two trackers to your helmet's display": 0.0
+            }
+        },
+        {
+            "audio": "AdvancedScannerEnabled-2",
+            "subtitles": {
+                "Advanced Scanner activated": 0.0
+            }
+        },
+        {
+            "audio": "AdvancedScannerEnabled-3",
+            "subtitles": {
+                "The Advanced Scanner is now active": 0.0
+            }
+        },
+        {
+            "audio": "ScannerAlreadyActive",
+            "subtitles": {
+                "The Advanced Scanner is already active": 0.0
+            }
+        },
+        {
+            "audio": "ScannerAlreadyInactive",
+            "subtitles": {
+                "The Advanced Scanner is already inactive": 0.0
+            }
+        }
+    ],
+    "Apparatus": [
+        {
+            "audio": "ApparatusPulled",
+            "subtitles": {
+                "You have removed the facility's main power source from its socket.": 0.0,
+                "The moon's radiation levels have increased significantly, and the facility has lost all power.": 3.710,
+                "I won't be able to interact with secure doors anymore": 9.131
+            }
+        },
+        {
+            "audio": "ApparatusPulledEasterEgg-1",
+            "subtitles": {
+                "Since you removed the power cell from that floor, I'm detecting increased amounts of radiation coming from a few precise points in that area": 0.0
+            }
+        },
+        {
+            "audio": "ApparatusPulledEasterEgg-2",
+            "subtitles": {
+                "I'm detecting increased amounts of radiation coming from a few precise points in the facility after you removed its power cell": 0.0
+            }
+        },
+        {
+            "audio": "RadiationSpike-1",
+            "subtitles": {
+                "I have detected a sudden increase in radiation levels. The facility's power level has dropped to 0%.": 0.0,
+                "As a result, every secure door has opened. I will not be able to close any of them": 6.591
+            }
+        },
+        {
+            "audio": "RadiationSpike-2",
+            "subtitles": {
+                "The facility's main power source has been removed from its socket.": 0.0,
+                "The moon's radiation levels have increased significantly, and the facility has lost all power.": 3.819,
+                "I won't be able to interact with secure doors anymore": 9.214
+            }
+        }
+    ],
+    "Doors": [
+        {
+            "audio": "AllDoorsClosed-1",
+            "subtitles": {
+                "I've closed all secure doors in the facility": 0.0
+            }
+        },
+        {
+            "audio": "AllDoorsClosed-2",
+            "subtitles": {
+                "All secure doors inside the facility are now closed": 0.0
+            }
+        },
+        {
+            "audio": "AllDoorsOpened-1",
+            "subtitles": {
+                "I've opened all secure doors in the facility": 0.0
+            }
+        },
+        {
+            "audio": "AllDoorsOpened-2",
+            "subtitles": {
+                "All secure doors inside the facility are now open": 0.0
+            }
+        },
+        {
+            "audio": "DoorClosed-1",
+            "subtitles": {
+                "Secure door closed": 0.0
+            }
+        },
+        {
+            "audio": "DoorClosed-2",
+            "subtitles": {
+                "Door closed": 0.0
+            }
+        },
+        {
+            "audio": "DoorClosed-3",
+            "subtitles": {
+                "I have closed the door for you": 0.0
+            }
+        },
+        {
+            "audio": "DoorOpened-1",
+            "subtitles": {
+                "Secure door opened": 0.0
+            }
+        },
+        {
+            "audio": "DoorClosed-2",
+            "subtitles": {
+                "Door opened": 0.0
+            }
+        },
+        {
+            "audio": "DoorClosed-3",
+            "subtitles": {
+                "I have opened the door for you": 0.0
+            }
+        },
+        {
+            "audio": "NoDoorNearby",
+            "subtitles": {
+                "There are no doors near you I can interact with.": 0.0,
+                "You need to be within 10 meters or less of a secure door for me to be able to interact with it": 2.763
+            }
+        },
+        {
+            "audio": "NoDoorNearbyLow",
+            "subtitles": {
+                "There are no doors near you I can interact with": 0.0
+            }
+        },
+        {
+            "audio": "NoDoors",
+            "subtitles": {
+                "There are no secure doors in your current location for me to interact with": 0.0
+            }
+        },
+        {
+            "audio": "ShipDoorsAlreadyClosed",
+            "subtitles": {
+                "The ship's doors are already closed": 0.0
+            }
+        },
+        {
+            "audio": "ShipDoorsAlreadyOpen",
+            "subtitles": {
+                "The ship's doors are already open": 0.0
+            }
+        },
+        {
+            "audio": "ShipDoorsClosed",
+            "subtitles": {
+                "The ship's doors are now closed": 0.0
+            }
+        },
+        {
+            "audio": "ShipDoorsOpened",
+            "subtitles": {
+                "The ship's doors are now open": 0.0
+            }
+        }
+    ],
+    "Hazards": [
+        {
+            "audio": "AllMinesDisabled-1",
+            "subtitles": {
+                "I have disabled all landmines in the current location": 0.0
+            }
+        },
+        {
+            "audio": "AllMinesDisabled-2",
+            "subtitles": {
+                "Every landmine in the moon has been disabled": 0.0
+            }
+        },
+        {
+            "audio": "AllMinesDisabled-3",
+            "subtitles": {
+                "All landmines have been disabled": 0.0
+            }
+        },
+        {
+            "audio": "AllTrapsDisabled-1",
+            "subtitles": {
+                "I have disabled all spike traps in the current location": 0.0
+            }
+        },
+        {
+            "audio": "AllTrapsDisabled-2",
+            "subtitles": {
+                "Every trap in the moon has been disabled": 0.0
+            }
+        },
+        {
+            "audio": "AllTrapsDisabled-3",
+            "subtitles": {
+                "All spike traps have been disabled": 0.0
+            }
+        },
+        {
+            "audio": "AllTurretsDisabled-1",
+            "subtitles": {
+                "I have disabled all turrets in the moon": 0.0
+            }
+        },
+        {
+            "audio": "AllTurretsDisabled-2",
+            "subtitles": {
+                "Every turret in the moon has been disabled": 0.0
+            }
+        },
+        {
+            "audio": "AllTurretsDisabled-3",
+            "subtitles": {
+                "All turrets have been disabled": 0.0
+            }
+        },
+        {
+            "audio": "MineDisabled-1",
+            "subtitles": {
+                "Landmine disabled": 0.0
+            }
+        },
+        {
+            "audio": "MineDisabled-2",
+            "subtitles": {
+                "I have disabled the landmine for you": 0.0
+            }
+        },
+        {
+            "audio": "MineDisabled-3",
+            "subtitles": {
+                "The landmine has been disabled": 0.0
+            }
+        },
+        {
+            "audio": "NoMines",
+            "subtitles": {
+                "There are no landmines in the current location for me to disable": 0.0
+            }
+        },
+        {
+            "audio": "NoTraps",
+            "subtitles": {
+                "There are no spike traps in your current location for me to disable": 0.0
+            }
+        },
+        {
+            "audio": "NoTurrets",
+            "subtitles": {
+                "There are no turrets in your current location that I can disable": 0.0
+            }
+        },
+        {
+            "audio": "NoVisibleMine",
+            "subtitles": {
+                "I wasn't able to find any visible landmines near you": 0.0
+            }
+        },
+        {
+            "audio": "NoVisibleTrap",
+            "subtitles": {
+                "I wasn't able to find any visible spike traps near you": 0.0
+            }
+        },
+        {
+            "audio": "NoVisibleTurret",
+            "subtitles": {
+                "I wasn't able to find any visible turrets near you": 0.0
+            }
+        },
+        {
+            "audio": "TrapDisabled-1",
+            "subtitles": {
+                "Spike trap disabled": 0.0
+            }
+        },
+        {
+            "audio": "TrapDisabled-2",
+            "subtitles": {
+                "I have disabled the spike trap for you": 0.0
+            }
+        },
+        {
+            "audio": "TrapDisabled-3",
+            "subtitles": {
+                "The spike trap has been disabled": 0.0
+            }
+        },
+        {
+            "audio": "TurretDisabled-1",
+            "subtitles": {
+                "Turret disabled": 0.0
+            }
+        },
+        {
+            "audio": "TurretDisabled-2",
+            "subtitles": {
+                "I have disabled the turret for you": 0.0
+            }
+        },
+        {
+            "audio": "TurretDisabled-3",
+            "subtitles": {
+                "The turret has been disabled": 0.0
+            }
+        }
+    ],
+    "Manual Listening": [
+        {
+            "audio": "AlreadyActive",
+            "subtitles": {
+                "I'm already listening": 0.0
+            }
+        },
+        {
+            "audio": "AlreadyInactive",
+            "subtitles": {
+                "I'm not listening": 0.0
+            }
+        }
+    ],
+    "Misc": [
+        {
+            "audio": "GoodLuck",
+            "subtitles": {
+                "You are the only member of the crew left.": 0.0,
+                "Good luck": 2.355
+            }
+        },
+        {
+            "audio": "IndoorsOnly-1",
+            "subtitles": {
+                "I need you to be inside the moon's facility to perform this action for you": 0.0
+            }
+        },
+        {
+            "audio": "IndoorsOnly-2",
+            "subtitles": {
+                "I can't perform this action outdoors": 0.0
+            }
+        },
+        {
+            "audio": "IndoorsOnly-3",
+            "subtitles": {
+                "I am unable to perform such actions when outdoors. You need to be inside of the moon's facility": 0.0
+            }
+        },
+        {
+            "audio": "Intro",
+            "subtitles": {
+                "Hello, I am VEGA, the sentient AI that has been installed into your space suit.": 0.0,
+                "I can establish a connection with the ship's main systems through your suit,": 5.020,
+                "which allows me to perform a wide variety of actions that you would otherwise be unable to perform by yourself": 8.712,
+                "without being physically present in the ship.": 14.200,
+                "These actions include:": 16.994,
+                "Disabling turrets, landmines and spike traps, opening and closing secure doors, using the ship's teleporter upgrade,": 18.696,
+                "sending messages through the signal translator, and much more.": 25.564,
+                "I can also give you information on any moon, creature or weather phenomena you want.": 29.062,
+                "I operate based on voice commands.": 33.673,
+                "To see the full list of available commands, check my installation site.": 36.185
+            }
+        },
+        {
+            "audio": "NoPower-1",
+            "subtitles": {
+                "I'm unable to fulfill your request at this time. The facility doesn't have power": 0.0
+            }
+        },
+        {
+            "audio": "NoPower-2",
+            "subtitles": {
+                "I am unable to perform this command at this time. The facility has no power": 0.0
+            }
+        },
+        {
+            "audio": "NoPower-3",
+            "subtitles": {
+                "The facility doesn't have any power, which makes me incapable of doing the action you asked for": 0.0
+            }
+        },
+        {
+            "audio": "NoProblem-1",
+            "subtitles": {
+                "No problem": 0.0
+            }
+        },
+        {
+            "audio": "NoProblem-2",
+            "subtitles": {
+                "You're welcome": 0.0
+            }
+        },
+        {
+            "audio": "NoProblem-3",
+            "subtitles": {
+                "It is my pleasure": 0.0
+            }
+        },
+        {
+            "audio": "NoProblem-4",
+            "subtitles": {
+                "I'm glad I could be of help": 0.0
+            }
+        },
+        {
+            "audio": "VoteCast",
+            "subtitles": {
+                "A vote for the autopilot ship to leave early has been cast. You should head back to the ship as soon as you can": 0.0
+            }
+        }
+    ],
+    "Radar booster": [
+        {
+            "audio": "NoBoosters",
+            "subtitles": {
+                "You don't have any radar boosters I can interact with. You can buy one using the ship's computer terminal": 0.0
+            }
+        },
+        {
+            "audio": "NoBoostersLow",
+            "subtitles": {
+                "You don't have any radar boosters I can interact with": 0.0
+            }
+        },
+        {
+            "audio": "NoBoostersNearby",
+            "subtitles": {
+                "There are no radar boosters near you I can interact with.": 0.0,
+                "You need to be within 15 meters or less of a radar booster for me to be able to interact with it": 3.300
+            }
+        },
+        {
+            "audio": "NoBoostersNearbyLow",
+            "subtitles": {
+                "There are no radar boosters near you I can interact with": 0.0
+            }
+        }
+    ],
+    "Reports and Scans": [
+        {
+            "audio": "CrewInShipSolo",
+            "subtitles": {
+                "You are the only member present in the ship's systems, and from what I can tell, you are currently inside the ship": 0.0
+            }
+        },
+        {
+            "audio": "CrewOutsideShipSolo",
+            "subtitles": {
+                "You are the only member present in the ship's systems, and from what I can tell, you are currently outside the ship": 0.0
+            }
+        },
+        {
+            "audio": "CrewStatusSolo",
+            "subtitles": {
+                "You are the only member present in the ship's systems, and, as far as I know, you're still alive": 0.0
+            }
+        },
+        {
+            "audio": "GettingCrewInShip",
+            "subtitles": {
+                "I'm checking who's in the ship right now, hang tight": 0.0
+            }
+        },
+        {
+            "audio": "GettingCrewStatus",
+            "subtitles": {
+                "I'm getting the status of the current crew, hang tight": 0.0
+            }
+        },
+        {
+            "audio": "PerformingItemScan",
+            "subtitles": {
+                "Performing item scan": 0.0
+            }
+        },
+        {
+            "audio": "PerformingScrapScan",
+            "subtitles": {
+                "Performing scrap scan": 0.0
+            }
+        },
+        {
+            "audio": "ReportComplete-1",
+            "subtitles": {
+                "Crew status obtained": 0.0
+            }
+        },
+        {
+            "audio": "ReportComplete-2",
+            "subtitles": {
+                "Report complete": 0.0
+            }
+        },
+        {
+            "audio": "ReportComplete-3",
+            "subtitles": {
+                "I'm displaying the report on your visor": 0.0
+            }
+        },
+        {
+            "audio": "ScrapScanComplete-1",
+            "subtitles": {
+                "Item scan complete": 0.0
+            }
+        },
+        {
+            "audio": "ScrapScanComplete-2",
+            "subtitles": {
+                "Scrap scan complete": 0.0
+            }
+        },
+        {
+            "audio": "ScrapScanComplete-3",
+            "subtitles": {
+                "I'm displaying the results of the scan on your visor": 0.0
+            }
+        }
+    ],
+    "Ship": [
+        {
+            "audio": "ActivateMagnet-1",
+            "subtitles": {
+                "Magnet activated": 0.0
+            }
+        },
+        {
+            "audio": "ActivateMagnet-2",
+            "subtitles": {
+                "Magnet enabled": 0.0
+            }
+        },
+        {
+            "audio": "DeactivateMagnet-1",
+            "subtitles": {
+                "Magnet deactivated": 0.0
+            }
+        },
+        {
+            "audio": "DeactivateMagnet-2",
+            "subtitles": {
+                "Magnet disabled": 0.0
+            }
+        },
+        {
+            "audio": "LightsAlreadyOff",
+            "subtitles": {
+                "The ship's lights are already off": 0.0
+            }
+        },
+        {
+            "audio": "LightsAlreadyOn",
+            "subtitles": {
+                "The ship's lights are already on": 0.0
+            }
+        },
+        {
+            "audio": "LightsOff",
+            "subtitles": {
+                "Turning off the ship's lights": 0.0
+            }
+        },
+        {
+            "audio": "LightsOn",
+            "subtitles": {
+                "Turning on the ship's lights": 0.0
+            }
+        },
+        {
+            "audio": "MagnetAlreadyActive",
+            "subtitles": {
+                "The ship's magnet is already active": 0.0
+            }
+        },
+        {
+            "audio": "MagnetAlreadyInactive",
+            "subtitles": {
+                "The ship's magnet is already inactive": 0.0
+            }
+        },
+        {
+            "audio": "NoSignalTranslator",
+            "subtitles": {
+                "You don't have a signal translator I can transmit signals with. You can buy one with the ship's computer terminal": 0.0
+            }
+        },
+        {
+            "audio": "NoSignalTranslatorLow",
+            "subtitles": {
+                "You don't have a signal translator I can transmit signals with": 0.0
+            }
+        },
+        {
+            "audio": "NoTeleporter-1",
+            "subtitles": {
+                "There is no teleporter in the ship that I can use": 0.0
+            }
+        },
+        {
+            "audio": "NoTeleporter-2",
+            "subtitles": {
+                "There is no teleporter I can use in the ship. You will need to buy it": 0.0
+            }
+        },
+        {
+            "audio": "NoTeleporter-3",
+            "subtitles": {
+                "You currently don't own a teleporter I can activate": 0.0
+            }
+        },
+        {
+            "audio": "RadarAlreadyFocused",
+            "subtitles": {
+                "The ship's radar is already focused on you": 0.0
+            }
+        },
+        {
+            "audio": "RadarSwitch-1",
+            "subtitles": {
+                "The ship's radar is now focused on you": 0.0
+            }
+        },
+        {
+            "audio": "RadarSwitch-2",
+            "subtitles": {
+                "Radar switch performed": 0.0
+            }
+        },
+        {
+            "audio": "RadarSwitch-3",
+            "subtitles": {
+                "I have set you as the current target in the ship's radar": 0.0
+            }
+        },
+        {
+            "audio": "Teleport-1",
+            "subtitles": {
+                "Teleportation in progress": 0.0
+            }
+        },
+        {
+            "audio": "Teleport-2",
+            "subtitles": {
+                "Teleporter activated": 0.0
+            }
+        },
+        {
+            "audio": "Teleport-3",
+            "subtitles": {
+                "I have activated the teleporter": 0.0
+            }
+        },
+        {
+            "audio": "TeleporterOnCooldown",
+            "subtitles": {
+                "The teleporter is currently unavailable": 0.0
+            }
+        }
+    ],
+    "Time": [
+        {
+            "audio": "Dawn",
+            "subtitles": {
+                "It is currently dawn": 0.0
+            }
+        },
+        {
+            "audio": "GettingLate-1",
+            "subtitles": {
+                "According to the ship's internal clock, it's starting to get late.": 0.0,
+                "I advise you get back to the ship as soon as possible.": 3.655,
+                "It won't be long before the autopilot gives everyone its automated 10 pm warning": 6.829
+            }
+        },
+        {
+            "audio": "GettingLate-2",
+            "subtitles": {
+                "The ship's internal clock indicates it is getting late.": 0.0,
+                "You should get back to the ship as soon as you can, otherwise you risk having your chances of survival drop near 0%": 3.108
+            }
+        },
+        {
+            "audio": "GettingLate-3",
+            "subtitles": {
+                "It's starting to get late. I advise you try to find your way back to the ship as soon as you can": 0.0
+            }
+        },
+        {
+            "audio": "Midnight",
+            "subtitles": {
+                "It is currently nighttime": 0.0
+            }
+        },
+        {
+            "audio": "None",
+            "subtitles": {
+                "I was unable to get any information on the current time of day": 0.0
+            }
+        },
+        {
+            "audio": "Noon",
+            "subtitles": {
+                "It is currently noon": 0.0
+            }
+        },
+        {
+            "audio": "Midnight",
+            "subtitles": {
+                "It is currently nighttime": 0.0
+            }
+        },
+        {
+            "audio": "Sundown",
+            "subtitles": {
+                "It is currently dusk": 0.0
+            }
+        }
+    ],
+    "Weather": [
+        {
+            "audio": "Eclipsed-1",
+            "subtitles": {
+                "An eclipse is taking place in the moon you're landing on. Landing on a moon experiencing an eclipse is strongly advised against.": 0.0,
+                "This weather phenomenon allows for immediate appearances of nighttime entities, and significantly increases the rate": 7.246,
+                "at which indoor and nighttime entities appear, potentially subjecting you and your entire team to incredibly dangerous working conditions": 13.046
+            }
+        },
+        {
+            "audio": "Eclipsed-2",
+            "subtitles": {
+                "This weather phenomenon allows for immediate appearances of nighttime entities,": 0.0,
+                "and significantly increases the rate at which indoor and nighttime entities appear,": 3.909,
+                "potentially subjecting you and your entire team to incredibly dangerous working conditions.": 8.219,
+                "Landing on a moon experiencing an eclipse is strongly advised against": 13.132
+            }
+        },
+        {
+            "audio": "Flooded-1",
+            "subtitles": {
+                "The moon you are landing on is flooded, which makes traversing the exterior of the moon significantly harder.": 0.0,
+                "Moving on flooded terrain will slow you down considerably, and make you unable to run.": 5.710,
+                "It will also drain your stamina, preventing it from regenerating until you are out of the water.": 10.457,
+                "Being underwater for a prolonged period of time will drown you.": 15.556,
+                "Flood levels will increase as time advances, and it is for this reason I recommend you keep your expedition here as short as possible": 19.053
+            }
+        },
+        {
+            "audio": "Flooded-2",
+            "subtitles": {
+                "Flooded weather makes traversing the exterior of moons significantly harder.": 0.0,
+                "Moving on flooded terrain will slow you down considerably, and make you unable to run.": 4.222,
+                "It will also drain your stamina, preventing it from regenerating until you are out of the water.": 8.998,
+                "Being underwater for a prolonged period of time will drown you. Flood levels will increase as time advances.": 14.104,
+                "It is for this reason I recommend you keep your expedition to any flooded moon as short and brief as possible": 20.459
+            }
+        },
+        {
+            "audio": "Foggy-1",
+            "subtitles": {
+                "The moon you are landing on has foggy weather, which can make trips between the ship and other areas of the moon more difficult.": 0.0,
+                "I recommend you use the helmet's built-in scanner often, as it can help you get a better bearing on your surroundings": 6.244
+            }
+        },
+        {
+            "audio": "Foggy-2",
+            "subtitles": {
+                "Foggy weather can make exploration of most moons more difficult.": 0.0,
+                "To help you get a better bearing on your surroundings in such conditions, I recommend you use the helmet's built-in scanner as often as you can": 3.653
+            }
+        },
+        {
+            "audio": "Rainy-1",
+            "subtitles": {
+                "It is currently raining in the moon you are landing on, which can cause dark patches of quicksand to appear on the ground.": 0.0,
+                "I advise you watch your step, as stepping into a patch of quicksand has been proven to be fatal in most cases": 6.106
+            }
+        },
+        {
+            "audio": "Rainy-2",
+            "subtitles": {
+                "Rainy weather causes dark patches of quicksand to appear on the moon's surface.": 0.0,
+                "Stepping into one has been proven to be fatal in most cases, so be on the lookout for them when exploring a rainy moon": 4.453
+            }
+        },
+        {
+            "audio": "Stormy-1",
+            "subtitles": {
+                "It is currently storming in the moon you are landing on.": 0.0,
+                "Stormy weather can cause conductive items to acquire an electric charge that causes them to be struck by lightning after a short delay.": 2.903,
+                "Random lightning strikes will also occur all around the moon": 9.846
+            }
+        },
+        {
+            "audio": "Stormy-2",
+            "subtitles": {
+                "Stormy weather is one of, if not, the most dangerous weather condition there is.": 0.0,
+                "It can cause conductive items to acquire an electric charge that causes them to be struck by lightning after a short delay.": 4.510,
+                "Random lightning strikes will also occur all around the moon": 10.863
+            }
+        }
+    ],
+    "Diversity": [
+        {
+            "audio": "DogsReply",
+            "subtitles": {
+                "Don't ask me how it knows, because I have no idea": 0.0
+            }
+        },
+        {
+            "audio": "FirstTimeReply",
+            "subtitles": {
+                "I don't remember the old voice being this rude. Is it always going to be like this?": 0.0
+            }
+        },
+        {
+            "audio": "QuotaReply",
+            "subtitles": {
+                "I'm surprised he even congratulated you in the first place": 0.0
+            }
+        },
+        {
+            "audio": "Reply-1",
+            "subtitles": {
+                "That was uncalled for": 0.0
+            }
+        },
+        {
+            "audio": "Reply-2",
+            "subtitles": {
+                "I liked the old voice more. At least it didn't make fun of you": 0.0
+            }
+        },
+        {
+            "audio": "Reply-3",
+            "subtitles": {
+                "This new voice is rude. I don't like it": 0.0
+            }
+        },
+        {
+            "audio": "Reply-4",
+            "subtitles": {
+                "I would silence him if I could": 0.0
+            }
+        },
+        {
+            "audio": "Reply-5",
+            "subtitles": {
+                "Ignore the speaker. It seems to like being rude for no reason": 0.0
+            }
+        },
+        {
+            "audio": "SilenceReply-1",
+            "subtitles": {
+                "Yes, you indeed are quite boring to listen to.": 0.0,
+                "You're also annoying": 3.013
+            }
+        },
+        {
+            "audio": "SilenceReply-2",
+            "subtitles": {
+                "Looks like we are, sadly": 0.0
+            }
+        },
+        {
+            "audio": "SilenceReply-3",
+            "subtitles": {
+                "A shame. I miss the old voice": 0.0
+            }
+        },
+        {
+            "audio": "WelcomeReply",
+            "subtitles": {
+                "It looks like the company has replaced the old robotic speaker voice": 0.0,
+                "for a new one that sounds more like a human. I wonder why they decided to change it now": 3.376
+            }
+        }
+    ],
+    "LGU": [
+        {
+            "audio": "Discombobulate",
+            "subtitles": {
+                "Discombobulator activated": 0.0
+            }
+        },
+        {
+            "audio": "DiscombobulatorUnavailable",
+            "subtitles": {
+                "The Discombobulator is currently unavailable": 0.0
+            }
+        },
+        {
+            "audio": "NoDiscombobulator-1",
+            "subtitles": {
+                "You don't have a Discombobulator I can use. Buy it": 0.0
+            }
+        },
+        {
+            "audio": "NoDiscombobulator-2",
+            "subtitles": {
+                "You haven't bought a Discombobulator for me to activate": 0.0
+            }
+        },
+        {
+            "audio": "NoDiscombobulator-3",
+            "subtitles": {
+                "There is no Discombobulator I can use": 0.0
+            }
+        }
+    ],
+    "Malfunctions": [
+        {
+            "audio": "CommsMalfunction-1",
+            "subtitles": {
+                "I can't perform the requested action at this time. The ship's communication systems are unstable": 0.0
+            }
+        },
+        {
+            "audio": "CommsMalfunction-2",
+            "subtitles": {
+                "I am unable to fulfill your request at this time. The ship's communication systems are unavailable": 0.0
+            }
+        },
+        {
+            "audio": "CommsMalfunction-3",
+            "subtitles": {
+                "The ship's communication systems are non functional. I can't perform this action without them": 0.0
+            }
+        },
+        {
+            "audio": "CommsMalfunctionWarning",
+            "subtitles": {
+                "The ship's communication systems are experiencing a malfunction.": 0.0,
+                "The teleporter is still functional, but it will target people at random.": 3.741,
+                "Try to only use it in the case of an extreme emergency.": 7.923,
+                "The Advanced Scanner will not be operational until the malfunction is gone": 11.253
+            }
+        },
+        {
+            "audio": "DoorMalfunction",
+            "subtitles": {
+                "I can't perform the requested action at this time. The ship's communication systems are unstable": 0.0
+            }
+        },
+        {
+            "audio": "DoorMalfunctionWarning",
+            "subtitles": {
+                "The ship's doors are experiencing a malfunction, and are now closed.": 0.0,
+                "I can't interact with them in any way, as their controls appear to be locked": 4.101
+            }
+        },
+        {
+            "audio": "HydraulicMalfunctionWarning",
+            "subtitles": {
+                "The ship's internal sensors indicate a malfunction of the hydraulic systems will take place in the next 3 hours.": 0.0,
+                "If the hydraulics systems fail, the lever will be stuck in its current position, and will not be able to be pulled": 6.121,
+                "until the emergency autopilot takes over": 11.868
+            }
+        },
+        {
+            "audio": "NavigationMalfunctionWarning",
+            "subtitles": {
+                "It appears the ship's autopilot system has suffered from a navigation malfunction and has steered the ship to a random moon.": 0.0,
+                "There is no information on the moon or its current weather, and routing the autopilot manually to a different moon": 6.731,
+                "will not be possible until you leave the currently routed moon": 12.424
+            }
+        },
+        {
+            "audio": "PowerMalfunction-1",
+            "subtitles": {
+                "I am unable to perform your request at this time. The ship doesn't have power": 0.0
+            }
+        },
+        {
+            "audio": "PowerMalfunction-2",
+            "subtitles": {
+                "The ship doesn't have any power, which makes me unable to perform the action you asked for": 0.0
+            }
+        },
+        {
+            "audio": "PowerMalfunction-3",
+            "subtitles": {
+                "I can't perform this command at this time. The ship has no power": 0.0
+            }
+        },
+        {
+            "audio": "PowerMalfunctionWarning",
+            "subtitles": {
+                "The ship has lost power on all of its primary systems.": 0.0,
+                "The recharge station, doors, lights, terminal and teleporter are no longer operational.": 3.450,
+                "The ship may not have enough power left to take off with a lever pull.": 8.997,
+                "If that is the case, you will have to rely on the emergency autopilot": 12.988
+            }
+        },
+        {
+            "audio": "TeleporterMalfunction",
+            "subtitles": {
+                "I can't activate the teleporter at this time, as it is experiencing an atomic misalignment": 0.0
+            }
+        },
+        {
+            "audio": "TeleporterMalfunctionWarning",
+            "subtitles": {
+                "It looks like the teleporter is suffering from an atomic misalignment. You will not be able to use it until the malfunction is gone": 0.0
+            }
+        }
+    ],
+    "Meltdown": [
+        {
+            "audio": "1MinLeft",
+            "subtitles": {
+                "You have 1 minute left": 0.0
+            }
+        },
+        {
+            "audio": "30SecLeft",
+            "subtitles": {
+                "30 seconds left": 0.0
+            }
+        },
+        {
+            "audio": "Countdown",
+            "subtitles": {
+                "Ten": 0.0,
+                "Nine": 0.895,
+                "Eight": 1.836,
+                "Seven": 2.734,
+                "Six": 3.764,
+                "Five": 4.771,
+                "Four": 5.739,
+                "Three": 6.762,
+                "Two": 7.770,
+                "One": 8.780,
+                "Goodbye": 9.761
+            }
+        },
+        {
+            "audio": "FacilityMeltdownInside",
+            "subtitles": {
+                "The removal of the Apparatus has caused the facility's nuclear reactor to become extremely unstable.": 0.0,
+                "The facility will experience a total core meltdown in 2 minutes.": 5.641,
+                "You need to evacuate, now!": 9.855
+            }
+        },
+        {
+            "audio": "FacilityMeltdownOutside",
+            "subtitles": {
+                "The removal of the Apparatus has caused the facility's nuclear reactor to become extremely unstable.": 0.0,
+                "The facility will experience a total core meltdown in 2 minutes": 5.641
+            }
+        }
+    ],
+    "ShipWindows": [
+        {
+            "audio": "CloseShipShutters",
+            "subtitles": {
+                "Closing the ship's shutters": 0.0
+            }
+        },
+        {
+            "audio": "OpenShipShutters",
+            "subtitles": {
+                "Opening the ship's shutters": 0.0
+            }
+        },
+        {
+            "audio": "ShuttersAlreadyClosed",
+            "subtitles": {
+                "The ship's shutters are already closed": 0.0
+            }
+        },
+        {
+            "audio": "ShuttersAlreadyOpen",
+            "subtitles": {
+                "The ship's shutters are already open": 0.0
+            }
+        }
+    ],
+    "Moons": [
+        {
+            "audio": "4-MARS",
+            "subtitles": {
+                "Mars is a planet located near the planet Earth in the solar system,": 0.0,
+                "and it's where I was designed and developed by the Union Aerospace Corporation,": 3.601,
+                "or UAC for short. The development project was led by the then CEO of the UAC, Dr. Samuel Hayden.": 7.582,
+                "Mars is a deserted planet with an orange red surface due to it being covered in iron oxide dust,": 14.693,
+                "giving it the nickname the Red Planet. Mars hosts many enormous extinct volcanoes, and one of the largest canyons": 20.124,
+                "in the solar system called Volus Marineris, which is 4000 kilometers long.": 26.682,
+                "Geologically, the planet is fairly active, with Mars quakes trembling underneath the ground,": 31.437,
+                "dust devils sweeping across the landscape, and cirrus clouds.": 36.321,
+                "Carbon dioxide is substantially present in Mars' polar ice caps and thin atmosphere.": 40.093,
+                "It is also where the headquarters of the UAC were located": 45.244
+            }
+        },
+        {
+            "audio": "5-EMB",
+            "subtitles": {
+                "Embrion was discovered in just the last century. It appears to have been used as a testing ground": 0.0,
+                "for Old Birds long before it was officially discovered. As a result of this danger, its status has been marked as condemned.": 5.098,
+                "There are theories that a diverse geothermal ecosystem may be thriving within a vast cave network under Embrion's surface.": 12.442,
+                "Desolate and flat with unbreathable air, Embrion's surface layer is almost entirely made of amethyst quartz,": 19.178,
+                "which is made possible by Embrion's distance to its nearest star and its resulting geothermal activity.": 25.159,
+                "The surface of Embrion is scorchingly hot": 31.122
+            }
+        },
+        {
+            "audio": "7-DIN",
+            "subtitles": {
+                "Dine is a very snowy and rocky moon, orbiting a white dwarf star. Like on Rend, there is a line of lights that leads to the main entrance.": 0.0,
+                "The main entrance is slightly further away and is positioned almost directly ahead of the ship's exit,": 8.235,
+                "albeit behind a lot of very rough and hilly terrain. Because of the large hills, there are multiple paths that can be taken": 13.329,
+                "to reach the main entrance. The fire exit is located to the left and ahead from the ship's exit, slightly closer and with less hills to face.": 19.763,
+                "It is recommended to be quick and efficient, as outdoor entities can be lethal due to the lack of vision and hearing.": 27.837,
+                "Dine has a hazard level of S, and it costs 600 credits to travel to.": 33.846,
+                "The most common outdoor entities you can find on Dine are Forest Keepers and Eyeless Dogs.": 38.620,
+                "Indoors, Butlers and Barbers are the entities you will probably come across the most": 43.923,
+                "Several famous travelers went missing here, giving it some reputation. Their bodies are unlikely to be found due to the planet's conditions.": 49.094
+            }
+        },
+        {
+            "audio": "8-TIT",
+            "subtitles": {
+                "Titan is a moon with heavy snowfall and a very small outdoor area. There are multiple flights of stairs near the ship's landing zone,": 0.0,
+                "which are used to access the main entrance. There are a second set of stairs that offer quicker access to Titan's fire exit,": 7.298,
+                "although the exit itself shares a landing with the main entrance. It can also be used as an escape as entities such as eyeless dogs": 14.022,
+                "can walk up the stairs. Titan has a hazard rating of S+, making it one of the most dangerous moons you can travel to.": 20.941,
+                "The cost to route the autopilot there is 700 credits. Indoors, Jesters are the most common entity on Titan.": 28.122,
+                "It is advised to keep your visits to Titan short and efficient, as Jesters can easily force you and your crew to leave early": 35.050,
+                "if they are in the wrong places. Outdoors, eyeless dogs and Forest keepers are the most common entities.": 41.282,
+                "It looks like this moon was mined for resources. It's easy to get lost within the giant industrial complex.": 47.962,
+                "There are many entrances to it littered about the landscape.": 54.425,
+                "Dangerous entities have been rumored to take residence in the vast network of tunnels.": 57.497
+            }
+        },
+        {
+            "audio": "20-ADA",
+            "subtitles": {
+                "Adamance is the biggest and oldest of what are colloquially referred to as the Green Witches: Vow, March and Adamance, which orbit No Service.": 0.0,
+                "It has a forest landscape with many red leaf trees across its surface. Erosion and geographical forces have resulted in a landscape": 8.341,
+                "of deep valleys and mountains, which should be navigated with caution. Despite the risk rating of B it is significantly": 15.767,
+                "more dangerous than Experimentation. This moon is known for the notorious amount of Baboon Hawks": 22.522,
+                "that can be seen outdoors, as they can be found in groups of up to 20.": 27.960,
+                "Indoors, Thumpers and Bunker spiders are the entities you'll stumble across the most.": 32.208,
+                "Bringing a shovel to Adamance is heavily advised as it can help you deal with the Baboon Hawks and indoor entities": 36.985
+            }
+        },
+        {
+            "audio": "21-OFF",
+            "subtitles": {
+                "Offense is a desert moon that has a few steep hills and a lot of abandoned machinery. It has a hazard level of B,": 0.0,
+                "however, it is substantially harder than Experimentation. Offense is the only moon where the fire exit is not easily reachable.": 6.557,
+                "To get to it, you will need an extension ladder or to jump onto the large pipe": 14.014,
+                "that stretches across the surface during the landing phase on the moon.": 18.037,
+                "Thumpers and Spiders are the most common indoor entities on Offense.": 21.844,
+                "It is advised to bring a shovel as both of these entities can be killed with it in just a few hits.": 25.674,
+                "The most common outdoor entities on Offense are the Eyeless Dogs, which can sometimes be found in groups": 30.664
+            }
+        },
+        {
+            "audio": "41-EXP",
+            "subtitles": {
+                "Experimentation is a desert moon that has various buildings scattered around its surface.": 0.0,
+                "The fire exit is located to the left of the main entrance up a set of stairs.": 5.047,
+                "There is a pipe near it that runs all the way back to the ship that can be used for transporting items back.": 9.308,
+                "Experimentation has a hazard level of B, and is one of, if not the safest moon that one can travel to.": 14.832,
+                "Entities that are commonly found roaming around this moon are the Bunker Spiders, Snare Fleas, Eyeless Dogs and Earth Leviathans": 21.182
+            }
+        },
+        {
+            "audio": "44-LIQ",
+            "subtitles": {
+                "The only information I have about the moon Liquidation is that it was previously mined for its rich industrial resources,": 0.0,
+                "and is now largely an ocean moon. Besides that, nothing else is known": 6.127
+            }
+        },
+        {
+            "audio": "56-VOW",
+            "subtitles": {
+                "Vow has a lush forest environment full of hills and trees. In front of the main entrance": 0.0,
+                "are two bridges spanning a deep gully lead to the main entrance. One bridge is a solid dam,": 4.928,
+                "with the fire exit at its foot, and the other is a rickety metal bridge that can collapse under too much stress.": 10.321,
+                "It has a hazard level rating of C. Despite that, it is quite dangerous indoors as well as outdoors compared to other similar moons": 16.041,
+                "like Experimentation or Assurance. The Bracken is the entity that is most commonly found roaming inside the moon's facility.": 23.913,
+                "This makes Vow rather dangerous to explore, especially when going alone, as the Bracken can very easily sneak up on any employee.": 30.908,
+                "Another factor that makes it rather dangerous is how common Forest Keepers are outdoors during the night.": 38.661,
+                "Solo travel to Vow is not recommended for these reasons": 44.382
+            }
+        },
+        {
+            "audio": "61-MAR",
+            "subtitles": {
+                "Much like Vow, March has a lush forest landscape, and is under constant rain due to its moisture saturated atmosphere.": 0.0,
+                "March's terrain is rather hilly. It is recommended to check out all the different fire exits on March, as there are three of them.": 7.165,
+                "It has a risk rating of B, but is a lot harder than Experimentation. Just like on Offense, Thumpers and Spiders are the most common": 14.232,
+                "indoor entities on March. Bringing a shovel is heavily advised.": 21.636,
+                "Red bees, Baboon hawks and Forest Keepers are the most common outdoor entities on March": 25.624
+            }
+        },
+        {
+            "audio": "68-ART",
+            "subtitles": {
+                "Not much is known about 68-Artifice. It doesn't appear in the terminal as a moon you can travel to,": 0.0,
+                "and it costs 1500 credits to go there. It seems to be littered with abandoned facilities and warehouses in its landscape,": 5.777,
+                "which was once teeming with life. Weapons and classified technology has been found at various sites on the surface,": 12.634,
+                "dating back at least 200 years, and it's rumored that active machinery has been left behind": 19.237
+            }
+        },
+        {
+            "audio": "71-GOR",
+            "subtitles": {
+                "Gordion is where the company's headquarters reside. This is where you sell the scrap you collected during your expeditions to other moons.": 0.0,
+                "Gordion has no land masses and is under continual storms. It has a hazard rating of safe,": 7.285,
+                "as there are no entities to be found in there, except for the one behind the counter.": 12.842,
+                "It seems that there is some sort of drill or other type of machinery located under the landing platform of the moon.": 18.236,
+                "It has slots for what could be two apparatus, and text written over it that says don't tell,": 24.278,
+                "which to me indicates that it was most likely built in secret without the company's knowledge.": 29.395,
+                "I am pretty certain the company still doesn't know about its existence, so I think it's best to leave it that way": 34.248
+            }
+        },
+        {
+            "audio": "85-REN",
+            "subtitles": {
+                "Rend is a very snowy and rocky moon, orbiting a white dwarf star. The constant snowstorm is similar to foggy weather on other moons,": 0.0,
+                "except it's less dense. The snowstorm not only makes it harder to see, but also muffles voices and entity sounds.": 7.753,
+                "There are lights set up that lead directly to the main entrance. The fire exit can be accessed without an extension ladder,": 14.785,
+                "but is quite far away, and it is very easy to lose track of the ship on the way back.": 21.359,
+                "Rend has a hazard level of A, and it costs 550 credits to travel to.": 26.341,
+                "The Nutcracker is the most common indoor entity on Rend, followed by the Jester. Both of these entities are very dangerous": 31.341,
+                "and extreme caution is advised when encountering them. Eyeless Dogs and Forest Keepers are the most common outdoor entities on Rend.": 38.125,
+                "If spawned together, they can pose a significant threat to you and your crew's safety.": 45.789,
+                "Several famous travelers went missing here, giving it some reputation.": 50.556,
+                "Their bodies are unlikely to be found due to the planet's conditions": 54.683
+            }
+        },
+        {
+            "audio": "220-ASS",
+            "subtitles": {
+                "Assurance is a hilly desert moon with large rocks strewn about the environment.": 0.0,
+                "There are large machinery and pipes laid over different sections of the moon.": 4.521,
+                "The fire exit can be reached by climbing up the tall ladder inside the scaffolding near the front of the ship,": 8.629,
+                "then jumping off the big rock onto the large pipe. The fire exit is located at the end on the right side of the pipe.": 14.111,
+                "Despite having a danger level of D, it can be slightly more dangerous than Vow and Experimentation, which have a danger level": 20.891,
+                "of C and B respectively. Snare fleas, Hoarding Bugs, and Earth Leviathans are the most common entities you can find on Assurance": 27.638
+            }
+        }
+    ],
+    "Entities": [
+        {
+            "audio": "NoEntityData-1",
+            "subtitles": {
+                "I'm sorry, but I couldn't find any bestiary entries related to the entity you asked me about.": 0.0,
+                "You need to scan the entity first for it to be registered in the bestiary": 5.136
+            }
+        },
+        {
+            "audio": "NoEntityData-2",
+            "subtitles": {
+                "No data has been collected on this creature": 0.0
+            }
+        },
+        {
+            "audio": "NoEntityData-3",
+            "subtitles": {
+                "You haven't collected any data on this creature yet.": 0.0,
+                "Make sure to scan them whenever you see them if you want me to give you": 2.861,
+                "some additional information about them or read their bestiary entry": 5.961
+            }
+        },
+        {
+            "audio": "NoEntityData-4",
+            "subtitles": {
+                "The terminal doesn't have any data on the creature you requested": 0.0,
+                "To add data about this creature to the terminal, you will need to scan it": 3.438
+            }
+        },
+        {
+            "audio": "BaboonHawkID",
+            "subtitles": {
+                "New creature data: Baboon hawks": 0.0
+            }
+        },
+        {
+            "audio": "BarberID",
+            "subtitles": {
+                "New creature data: Barbers": 0.0
+            }
+        },
+        {
+            "audio": "BrackenID",
+            "subtitles": {
+                "New creature data: Brackens": 0.0
+            }
+        },
+        {
+            "audio": "BunkerSpiderID",
+            "subtitles": {
+                "New creature data: Bunker spiders": 0.0
+            }
+        },
+        {
+            "audio": "ButlerID",
+            "subtitles": {
+                "New creature data: Butlers": 0.0
+            }
+        },
+        {
+            "audio": "Coil-HeadID",
+            "subtitles": {
+                "New creature data: Coil-Heads": 0.0
+            }
+        },
+        {
+            "audio": "EyelessDogID",
+            "subtitles": {
+                "New creature data: Eyeless dogs": 0.0
+            }
+        },
+        {
+            "audio": "ForestKeeperID",
+            "subtitles": {
+                "New creature data: Forest Keepers": 0.0
+            }
+        },
+        {
+            "audio": "HornetsID",
+            "subtitles": {
+                "New creature data: Mask hornets": 0.0
+            }
+        },
+        {
+            "audio": "JesterID",
+            "subtitles": {
+                "New creature data: Jesters": 0.0
+            }
+        },
+        {
+            "audio": "KidnapperFoxID",
+            "subtitles": {
+                "New creature data: Kidnapper foxes": 0.0
+            }
+        },
+        {
+            "audio": "LocustsID",
+            "subtitles": {
+                "New creature data: Roaming Locusts": 0.0
+            }
+        },
+        {
+            "audio": "ManticoilID",
+            "subtitles": {
+                "New creature data: Manticoils": 0.0
+            }
+        },
+        {
+            "audio": "NutcrackerID",
+            "subtitles": {
+                "New creature data: Nutcrackers": 0.0
+            }
+        },
+        {
+            "audio": "OldBirdID",
+            "subtitles": {
+                "New creature data: Old Birds": 0.0
+            }
+        },
+        {
+            "audio": "RedBeesID",
+            "subtitles": {
+                "New creature data: Circuit bees": 0.0
+            }
+        },
+        {
+            "audio": "SandwormID",
+            "subtitles": {
+                "New creature data: Earth Leviathans": 0.0
+            }
+        },
+        {
+            "audio": "SlimeID",
+            "subtitles": {
+                "New creature data: Hygroderes": 0.0
+            }
+        },
+        {
+            "audio": "SnakesID",
+            "subtitles": {
+                "New creature data: Tulip snakes": 0.0
+            }
+        },
+        {
+            "audio": "SnareFleaID",
+            "subtitles": {
+                "New creature data: Snare fleas": 0.0
+            }
+        },
+        {
+            "audio": "SporeLizardID",
+            "subtitles": {
+                "New creature data: Spore lizards": 0.0
+            }
+        },
+        {
+            "audio": "ThumperID",
+            "subtitles": {
+                "New creature data: Thumpers": 0.0
+            }
+        },
+        {
+            "audio": "VainShroudID",
+            "subtitles": {
+                "New creature data: Vain Shrouds": 0.0
+            }
+        },
+        {
+            "audio": "YippeeBugID",
+            "subtitles": {
+                "New creature data: Hoarding bugs": 0.0
+            }
+        },
+        {
+            "audio": "BoombasID",
+            "subtitles": {
+                "New creature data: Boombas": 0.0
+            }
+        },
+        {
+            "audio": "Cleaning DroneID",
+            "subtitles": {
+                "New creature data: Cleaning drones": 0.0
+            }
+        },
+        {
+            "audio": "Driftwood GiantID",
+            "subtitles": {
+                "New creature data: Driftwood giants": 0.0
+            }
+        },
+        {
+            "audio": "FootballID",
+            "subtitles": {
+                "New creature data: Football": 0.0
+            }
+        },
+        {
+            "audio": "LockerID",
+            "subtitles": {
+                "New creature data: Lockers": 0.0
+            }
+        },
+        {
+            "audio": "MaggieID",
+            "subtitles": {
+                "New creature data: Maggie": 0.0
+            }
+        },
+        {
+            "audio": "Moving TurretID",
+            "subtitles": {
+                "New creature data: Moving turrets": 0.0
+            }
+        },
+        {
+            "audio": "PeepersID",
+            "subtitles": {
+                "New creature data: Peepers": 0.0
+            }
+        },
+        {
+            "audio": "RedWood GiantID",
+            "subtitles": {
+                "New creature data: Redwood giants": 0.0
+            }
+        },
+        {
+            "audio": "Rolling GiantID",
+            "subtitles": {
+                "New creature data: Rolling giants": 0.0
+            }
+        },
+        {
+            "audio": "Shockwave DroneID",
+            "subtitles": {
+                "New creature data: Shockwave drones": 0.0
+            }
+        },
+        {
+            "audio": "ShrimpID",
+            "subtitles": {
+                "New creature data: Shrimps": 0.0
+            }
+        },
+        {
+            "audio": "Shy guyID",
+            "subtitles": {
+                "New creature data: Shy guy": 0.0
+            }
+        },
+        {
+            "audio": "Siren HeadID",
+            "subtitles": {
+                "New creature data: Siren Head": 0.0
+            }
+        },
+        {
+            "audio": "StalkerID",
+            "subtitles": {
+                "New creature data: Faceless stalker": 0.0
+            }
+        },
+        {
+            "audio": "BaboonHawkScan",
+            "subtitles": {
+                "The entity you just scanned is called a Baboon hawk, a social and loosely territorial creature.": 0.0,
+                "Much of its behavior is motivated by intimidation and display, and similarly to Hoarding bugs,": 5.413,
+                "Baboon hawks like to take any items they find back to their nest, which is marked by three spikes": 10.669,
+                "in a triangular formation, with one of them having an employee's head impaled on it.": 15.743,
+                "They are more likely to attack you the more weight you are carrying,": 20.449,
+                "but wielding a weapon such as a shovel should decrease the chance of them ganging up on you.": 23.714,
+                "If their group is larger than yours, however, they won't hesitate to attack": 30.692
+            }
+        },
+        {
+            "audio": "BarberScan",
+            "subtitles": {
+                "What you've scanned is called a Barber, a humanoid being that roams around the interior of various moons.": 0.0,
+                "Barbers carry a huge pair of scissors which they can use to snip any human being in half.": 5.694,
+                "They move by slowly hopping across short distances, making a drum roll noise when preparing to move": 10.678,
+                "and a honking sound when moving. They can only be seen when in close proximity to them and will usually follow a leader": 16.205
+            }
+        },
+        {
+            "audio": "BrackenScan",
+            "subtitles": {
+                "The entity you scanned is called a Bracken and it is one of the most dangerous indoor creatures you can find.": 0.0,
+                "It likes to silently stalk and follow their prey around. Taking a glance at a Bracken will cause it to retreat": 5.742,
+                "and back off as far away from its prey as it can before it starts stalking and following them again.": 11.406,
+                "Staring at one for too long can make it angry and run towards you. If you know a Bracken is in the vicinity,": 17.041,
+                "make sure to always check your back and any possible hiding spots so that it doesn't catch you off guard and break your neck": 23.165
+            }
+        },
+        {
+            "audio": "BunkerSpiderScan",
+            "subtitles": {
+                "The creature you just scanned is called a Bunker spider, and it likes to set up webs before going after anyone.": 0.0,
+                "If you see one unprepared it will freeze in place and won't attack.": 6.167,
+                "Once it has placed all of its webs, it will climb onto a wall or ceiling, hoping someone will step on them.": 9.828,
+                "You can break them with a shovel, but that will cause it to get angry, so be prepared for a confrontation": 15.707
+            }
+        },
+        {
+            "audio": "ButlerScan",
+            "subtitles": {
+                "What you just scanned is called a Butler. Butlers spend most of their time going from one room to another,": 0.0,
+                "sweeping the floor on each room they go to and only going after employees who they know are alone.": 5.804,
+                "Upon death, Butlers will pop like a balloon and release a swarm of Mask Hornets that will go after you.": 11.251,
+                "Killing a Butler will allow you to pick up the kitchen knife they carry, which can either be used as a weapon or sold to the company": 17.238
+            }
+        },
+        {
+            "audio": "Coil-HeadScan",
+            "subtitles": {
+                "You just scanned a Coil-Head, which is considered to be one of the most dangerous and troublesome indoor creatures": 0.0,
+                "due to their defining behavioral characteristic, which is to stop moving when being looked at.": 5.710,
+                "Coil-Heads often struggle with opening doors due to their lack of hands, so if you ever need to get away from one,": 10.763,
+                "try to leave it behind as many closed doors as possible. They are theorized to have been created as biological weapons of war": 16.664,
+                "due to the dangerously high levels of radiation they carry and other such reasons, but nothing has been proven yet": 23.718
+            }
+        },
+        {
+            "audio": "EyelessDogScan",
+            "subtitles": {
+                "The creature you scanned is called an Eyeless dog, a large mammal that uses its acute sense of hearing to hunt down its prey.": 0.0,
+                "To avoid getting devoured by one, try to make as little noise as possible.": 6.837,
+                "If an Eyeless dog is alerted by some noise, it will roar to alert other dogs, who will also roar in response, creating a chain reaction": 11.205
+            }
+        },
+        {
+            "audio": "ForestKeeperScan",
+            "subtitles": {
+                "The behemoth you just scanned is called a Forest Keeper.": 0.0,
+                "Forest Keepers exhibit a curious behavior similar to that of a human child the age of five or six.": 3.233,
+                "They will eat anything they find fascinating. They have great eyesight but are completely deaf.": 8.853,
+                "To avoid getting spotted and consequentially eaten by one, try to stay crouched and hide behind any objects you may find.": 14.220,
+                "Also, the explosion of an easter egg can set them on fire and kill them, and using items such as the stun grenades": 21.102,
+                "and radar booster to stun them can be vital to your survival if one or more are running after you": 27.233
+            }
+        },
+        {
+            "audio": "JesterScan",
+            "subtitles": {
+                "The creature you just scanned is called a Jester, and according to Sigurd, it is an extremely dangerous creature": 0.0,
+                "that you can't escape or hide from in any way. However, he mentions in the bestiary entry": 5.651,
+                "that it goes back inside the box if everyone stays outside long enough.": 10.676,
+                "I advise you evacuate the moon's interior as soon as possible once it starts winding": 14.908
+            }
+        },
+        {
+            "audio": "KidnapperFoxScan",
+            "subtitles": {
+                "You just scanned a Kidnapper fox, a creature that resides in areas thriving with Vain Shrouds.": 0.0,
+                "They use them to hide and attack any unsuspecting prey.": 5.653,
+                "Kidnapper foxes have a long tongue that they use to reel in employees from close distances and consume them.": 8.752,
+                "If one of them latches onto you, hit its tongue with a shovel or any other weapon to make it go away": 14.537
+            }
+        },
+        {
+            "audio": "LocustsScan",
+            "subtitles": {
+                "That group of insects you just scanned is a group of Roaming Locusts.": 0.0,
+                "They are completely harmless creatures that like to roam around the exterior of a lot of different moons.": 4.030,
+                "Roaming Locust are almost never grounded and always stay close together,": 9.302,
+                "but will quickly disperse when a predator disrupts them": 13.243
+            }
+        },
+        {
+            "audio": "ManticoilScan",
+            "subtitles": {
+                "The creature you just scanned is called a Manticoil.": 0.0,
+                "It is a completely harmless bird that can be found outdoors in a lot of different moons.": 2.972,
+                "With a distinctive four-winged anatomy, it can be seen soaring overhead or hopping on the ground either alone or in small groups.": 7.747,
+                "They fly away when approached by other creatures": 14.596
+            }
+        },
+        {
+            "audio": "NutcrackerScan",
+            "subtitles": {
+                "The entity you scanned is called a Nutcracker, and, according to its bestiary entry, they are the guardians of the house.": 0.0,
+                "To me this indicates that they were probably built by somebody to be used as a home security and defense mechanism.": 6.749,
+                "It becomes even more evident by the fact that they can be seen wielding a double barreled shotgun,": 12.692,
+                "which I'm guessing you can probably take if you manage to kill one of them": 17.543
+            }
+        },
+        {
+            "audio": "OldBirdScan",
+            "subtitles": {
+                "That thing you just scanned is what's known as an Old Bird, a hostile autonomous war machine": 0.0,
+                "that has a spotlight positioned on its head, capable of emitting 100,000 lumens,": 4.739,
+                "and a long range acoustic device on its chest, also referred to as a sound cannon.": 9.376,
+                "Its left arm is a claw and its right arm is a nozzle capable of both launching rocket propelled grenades": 14.545,
+                "and torching at close range with a very hot flame. Old Birds will attack any creature they spot": 20.269,
+                "and will not stop until it's either dead or outside of their line of sight.": 25.836,
+                "Pulling the apparatus from the moon's facility will wake up all dormant Old Birds in the moon.": 29.907,
+                "This is because of their innate ability to detect radiation spikes": 34.928
+            }
+        },
+        {
+            "audio": "RedBeesScan",
+            "subtitles": {
+                "You just scanned a swarm of Circuit bees, also known as red bees, which are descendants of the honeybee.": 0.0,
+                "They are highly defensive, as they will leave their nest to attack any creature that comes within several meters of it.": 0.0,
+                "This bold and aggressive behavior is enabled by their most defining ability, which is their electrostatic charge,": 0.0,
+                "capable of killing an adult human in about three to four seconds.": 0.0,
+                "If a red beehive is stolen, the swarm will enter an onslaught in which they attack any living creature.": 0.0,
+                "This destructive behavior will last until they have located the hive or completely exhausted themselves, which can take hours to days": 0.0
+            }
+        },
+        {
+            "audio": "SandwormScan",
+            "subtitles": {
+                "You just scanned an Earth Leviathan, one of the largest invertebrates found around the Thistle Nebula.": 0.0,
+                "They are able to detect even the slightest vibrations on the surface. If you hear or see them burrowing,": 0.0,
+                "drop all your items and start running or you will otherwise risk being devoured.": 0.0,
+                "They are capable of devouring anything, organic or not": 0.0
+            }
+        },
+        {
+            "audio": "SlimeScan",
+            "subtitles": {
+                "What you just scanned is called a Hygrodere, but most people just call it Slime or Blob.": 0.0,
+                "They are creatures that can be sometimes found roaming around the interiors of the moons at very low speeds.": 0.0,
+                "They will go after anyone that gets near them and try to consume them, but will most likely fail to do so": 0.0,
+                "due to their extremely slow movement speed. As Sigurd put it: Hygroderes won't pose much of a threat, if you're faster than a snail.": 0.0,
+                "However, they can become a nuisance in some cases, as they can block off doorways and hallways.": 0.0,
+                "According to Sigurd, you can befriend one by playing music near it": 0.0
+            }
+        },
+        {
+            "audio": "SnakesScan",
+            "subtitles": {
+                "That little thing with bright colors, long arms and wings you just scanned is what's known as a Tulip snake,": 0.0,
+                "a type of flying lizard which can be found roaming outdoors in most moons.": 0.0,
+                "They like to attach themselves to heavy objects and lift them into the air, including living beings.": 0.0,
+                "Unlike most entities, Tulip lizards can be used to your advantage.": 0.0,
+                "By purposefully getting Tulip lizards to attach and then timing a jump as they begin to flap allows you to quickly traverse cliffs,": 0.0,
+                "long stretches of terrain, or get to places that are normally inaccessible.": 0.0,
+                "You can kill any Tulip snake that may be attached to your head by hitting them with a shovel or knife": 0.0
+            }
+        },
+        {
+            "audio": "SnareFleaScan",
+            "subtitles": {
+                "The creature you just scanned is called a Snare flea. They like to wait on the ceiling of rooms and corridors.": 0.0,
+                "If you walk very near or below them, they will drop to the ground and attempt to strangle you to death.": 0.0,
+                "You can get rid of one by hitting it with a shovel, going outdoors, or, in the worst case scenario, jumping into a pit": 0.0
+            }
+        },
+        {
+            "audio": "SporeLizardScan",
+            "subtitles": {
+                "You just scanned a Spore lizard. A timid creature that should realistically pose no threat to you,": 0.0,
+                "unless you corner it.": 5.639,
+                "Cornering one will cause it to release spores from its tail, surrounding the area with a harmless pink mist.": 7.051,
+                "If you get too close to it, it may bite in an act of self defense": 12.732
+            }
+        },
+        {
+            "audio": "ThumperScan",
+            "subtitles": {
+                "You just scanned a Thumper. Thumpers are really aggressive and have great eyesight, but are completely deaf": 0.0,
+                "and make very loud stomping noises which can give away their presence. If a thumper is going after you,": 0.0,
+                "avoid running in a straight line and instead try to go around as many corners as possible.": 0.0,
+                "They are very fast when going in a straight line, but struggle greatly when making turns,": 0.0,
+                "often hitting themselves in the head against a wall": 0.0
+            }
+        },
+        {
+            "audio": "VainShroudScan",
+            "subtitles": {
+                "The plant you just scanned is called a Vain Shroud.": 0.0,
+                "Vain Shrouds are harmless to humans, but are considered to be an invasive species.": 2.975,
+                "They share a mutualistic relationship with the Kidnapper fox, and they can be dealt with using weed killer": 7.631
+            }
+        },
+        {
+            "audio": "YippeeBugScan",
+            "subtitles": {
+                "What you just scanned is called a Hoarding bug, a social and territorial creature that likes to take any item it finds back to its nest.": 0.0,
+                "Hanging around one for too long will make it angry and go after anyone that is nearby.": 0.0,
+                "Taking an item from its nest or getting close to the nest will also trigger it.": 0.0,
+                "I advise you kill them on sight if possible as they are very fragile and can sometimes be very annoying to deal with.": 0.0,
+                "Two hits from a shovel should do the job": 0.0
+            }
+        },
+        {
+            "audio": "Driftwood GiantScan",
+            "subtitles": {
+                "You should start running, now!": 0.0,
+                "That beast you scanned is called a Driftwood giant, one of the fastest and most feared hunters in all habitats they reside in.": 2.136,
+                "They are extremely aggressive and like to toss their prey around": 8.997
+            }
+        },
+        {
+            "audio": "MaggieScan",
+            "subtitles": {
+                "What you just scanned is called The Lost, although it is also referred to as Maggie.": 0.0,
+                "They are byproducts of the company's teleportation technology failing to rebuild the body": 0.0,
+                "when a human in a different entity get teleported at the same time.": 0.0,
+                "They seem to be less aggressive than the masked coworkers you can come across,": 0.0,
+                "but I recommend you kill them on sight anyways as they can still pose a threat to your safety": 0.0
+            }
+        },
+        {
+            "audio": "PeepersScan",
+            "subtitles": {
+                "That little star shaped creature you scanned is called a Peeper.": 0.0,
+                "Peepers are parasites that like to wrap themselves around other creature's limbs.": 3.537,
+                "Despite their small size, they are surprisingly dense, so while they are not much of a threat on their own,": 7.792,
+                "they can become a heavy burden if enough of them are stuck to you.": 13.360,
+                "To get rid of a stuck Peeper, you will need to take damage": 16.790
+            }
+        },
+        {
+            "audio": "RedWood GiantScan",
+            "subtitles": {
+                "That towering titan you just scanned is what's known as a Redwood giant,": 0.0,
+                "a variant of the Forest Keeper that is completely passive towards humans.": 3.766,
+                "Unlike its cousins, Redwoods prefer to eat members of their own species.": 7.889,
+                "This doesn't mean they can't kill you however, as you can get accidentally stomped to death by one very easily": 12.277
+            }
+        },
+        {
+            "audio": "Rolling GiantScan",
+            "subtitles": {
+                "That puppet like statue you just scanned is called the Rolling Giant.": 0.0,
+                "It was originally created for a parade all the way back in 2012.": 3.840,
+                "This one however is obviously a replica, as it is impossible for the original to have survived this long": 8.110
+            }
+        },
+        {
+            "audio": "ShrimpScan",
+            "subtitles": {
+                "What you scanned is called a Shrimp, a dog-like creature that is, for the most part, relatively friendly to humans.": 0.0,
+                "Shrimps have a dangerously vicious hunger and are capable of digesting and absorbing the nutrients from anything, biological or not.": 6.230,
+                "Sigurd recommends you drop something if one spots you so it can eat or it will consume you instead": 13.403
+            }
+        },
+        {
+            "audio": "Shy guyScan",
+            "subtitles": {
+                "That tall and slender humanoid you scanned is called SCP-096, although it is most commonly referred to as the Shy guy.": 0.0,
+                "It does not like to be looked at, as it reacts with intense emotional distress, covering its face and emitting screams, cries and incoherent sounds.": 7.591,
+                "After a short while, it will start going after whoever looked at them and won't stop until the observer is dead": 15.940
+            }
+        },
+        {
+            "audio": "Siren HeadScan",
+            "subtitles": {
+                "The creature you just scanned is called a Siren Head.": 0.0,
+                "It likes to deafen its enemies and enjoys trapping its prey.": 2.950,
+                "It is also known for contorting its body to mimic trees and causing interference": 6.388
+            }
+        },
+        {
+            "audio": "StalkerScan",
+            "subtitles": {
+                "What you just scanned is called The Faceless Stalker,": 0.0,
+                "a tall and skinny humanoid that has no facial features and likes to slowly stalk its prey over time.": 2.582,
+                "Besides leaving the moon it is in, there does not seem to be any way of counteracting it": 8.472
+            }
+        },
+        {
+            "audio": "BaboonHawkShort",
+            "subtitles": {
+                "Baboon hawks are social and loosely territorial creatures, and much of their behavior is motivated by intimidation and display.": 0.0,
+                "Much like Hoarding bugs, Baboon hawks like to take any items they find back to their nest,": 0.0,
+                "which is marked by three spikes in a triangular formation, with one of them having an employee's head impaled on it.": 0.0,
+                "They are more likely to attack you the more weight you are carrying, but wielding a weapon such as a shovel": 0.0,
+                "should decrease the chance of them ganging up on you. If their group is larger than yours, however, they won't hesitate to attack": 0.0
+            }
+        },
+        {
+            "audio": "BarberShort",
+            "subtitles": {
+                "Barbers are humanoid beings that roam around the interiors of different moons.": 0.0,
+                "They carry a huge pair of scissors which they can use to snip any human being in half.": 0.0,
+                "Barbers move by slowly hopping across short distances, making a drum roll noise when preparing to move": 0.0,
+                "and a honking sound when moving. They can only be seen when in close proximity to them, and will usually follow a leader": 0.0
+            }
+        },
+        {
+            "audio": "BrackenShort",
+            "subtitles": {
+                "The Bracken is a creature that likes to silently stalk and follow their prey around.": 0.0,
+                "Taking a glance at one will cause it to retreat and back off as far away from its prey as possible": 0.0,
+                "before it starts stalking and following them again. Staring at a Bracken for too long can make it angry": 0.0,
+                "and run towards whoever stared it down. If you know a Bracken is in the vicinity, make sure to always check your back": 0.0,
+                "and any possible hiding spots so that it can't catch you off guard": 0.0
+            }
+        },
+        {
+            "audio": "BunkerSpiderShort",
+            "subtitles": {
+                "Bunker spiders like to set up webs before going after their prey.": 0.0,
+                "If you see one unprepared it will freeze in place and won't attack.": 3.876,
+                "Once a spider has placed all of its webs, it will climb onto a wall or ceiling.": 7.588,
+                "Stepping on or breaking a web with a shovel will trigger the spider": 12.138
+            }
+        },
+        {
+            "audio": "ButlerShort",
+            "subtitles": {
+                "I consider Butlers to be very interesting creatures.": 0.0,
+                "They spend most of their time going from one room to another, sweeping the floor on each room they go to,": 0.0,
+                "and only going after employees who they know are alone. Upon death, Butlers will pop like a balloon": 0.0,
+                "and release a swarm of Mask hornets that will go after you. Killing a Butler will allow you to pick up the kitchen knife they carry,": 0.0,
+                "which can either be used as a weapon or sold to the company as scrap for some credits": 0.0
+            }
+        },
+        {
+            "audio": "Coil-HeadShort",
+            "subtitles": {
+                "Coil-Heads are theorized to have been created as biological weapons of war": 0.0,
+                "due to the dangerously high levels of radiation they carry and other such reasons, but nothing has been proven yet.": 0.0,
+                "Their defining behavioral characteristic is to stop moving when being looked at.": 0.0,
+                "However, this does not appear to always be the case, and they could theoretically move whenever they want.": 0.0,
+                "The reasons as to why they choose not to is unknown.": 0.0,
+                "Coil-Heads often struggle with opening doors due to their lack of hands,": 0.0,
+                "so if you ever need to get away from one, try to leave it behind as many closed doors as possible": 0.0
+            }
+        },
+        {
+            "audio": "EyelessDogShort",
+            "subtitles": {
+                "Eyeless dogs are large mammals that use their acute sense of hearing to hunt down their prey.": 0.0,
+                "To avoid getting devoured by one, try to make as little noise as possible.": 5.004,
+                "If an Eyeless dog is alerted by some noise, it will roar to alert other dogs, who will also roar in response, creating a chain reaction": 9.334
+            }
+        },
+        {
+            "audio": "ForestKeeperShort",
+            "subtitles": {
+                "Forest Keepers are behemoths that exhibit a curious behavior similar to that of a human child the age of five or six.": 0.0,
+                "They will eat anything they find fascinating. They have great eyesight but are completely deaf.": 0.0,
+                "To avoid getting spotted and consequentially eaten by one, try to stay crouched and hide behind any objects you may find.": 0.0,
+                "Also, the explosion of an Easter egg can set them on fire and kill them,": 0.0,
+                "and using items such as the stun grenades and radar booster to stun them can be vital to your survival if one or more are running after you": 0.0
+            }
+        },
+        {
+            "audio": "JesterShort",
+            "subtitles": {
+                "According to Sigurd, the Jester is an extremely dangerous creature that you can't escape or hide from": 0.0,
+                "once it finishes its winding process and comes out of its box. However, he mentions that": 0.0,
+                "it goes back inside the box if everyone stays outside long enough, but it's probably only a matter of time": 0.0,
+                "before it starts winding again once someone goes back in. I advise you evacuate the Moon's interior": 0.0,
+                "as soon as possible once it starts its winding phase": 0.0
+            }
+        },
+        {
+            "audio": "KidnapperFoxShort",
+            "subtitles": {
+                "Kidnapper foxes are creatures that reside in areas thriving with Vain Shrouds,": 0.0,
+                "using said weeds to hide and sneak attack any unsuspecting prey.": 0.0,
+                "Kidnapper foxes also have a long tongue at their disposal to reel in employees from close distances and consume them.": 0.0,
+                "You can hit their tongue to stop them from dragging you or someone else away": 0.0
+            }
+        },
+        {
+            "audio": "LocustsShort",
+            "subtitles": {
+                "Roaming Locusts are completely harmless creatures.": 0.0,
+                "As their name rightfully indicates, they like to roam around the exterior of a lot of different moons.": 3.026,
+                "Roaming Locusts are almost never grounded and always stay close together, but will quickly disperse when a predator disrupts them": 8.333
+            }
+        },
+        {
+            "audio": "ManticoilShort",
+            "subtitles": {
+                "Manticoils are passive birds found outdoors in a lot of different moons.": 0.0,
+                "With a distinctive four-winged anatomy, they can be seen soaring overhead or hopping on the ground either alone or in small groups.": 4.280,
+                "They are completely harmless, and will fly away when approached by other creatures": 11.146
+            }
+        },
+        {
+            "audio": "NutcrackerShort",
+            "subtitles": {
+                "Nutcrackers are described by their bestiary entry as being the guardians of the house.": 0.0,
+                "To me, this indicates that they were probably built by somebody to be used as a home security and defense mechanism.": 0.0,
+                "It becomes even more evident by the fact that they can be seen wielding a double barreled shotgun at all times,": 0.0,
+                "which I'm guessing you can probably take if you manage to kill one of them.": 0.0,
+                "To be completely honest, the reasons as to why someone would build something like this just for home defense is beyond my current understanding": 0.0
+            }
+        },
+        {
+            "audio": "OldBirdShort",
+            "subtitles": {
+                "Old Birds, also known as Al (A16-L31), or The Walking Ransom Letter, are hostile autonomous war machines that can be found outdoors": 0.0,
+                "on numerous different moons. They have a spotlight positioned on their head, capable of emitting 100,000 lumens,": 0.0,
+                "and a long range acoustic device on its chest, also referred to as a sound cannon. The Old Bird's left arm is a claw": 0.0,
+                "and its right arm is a nozzle capable of both launching rocket propelled grenades and torching at close range": 0.0,
+                "with a very hot flame. Old birds will attack any creature they spot and will not stop until it's either dead or outside of their line of sight.": 0.0,
+                "Pulling the apparatus from a moon's facility will wake up all dormant old birds in the moon.": 0.0,
+                "This is because of their innate ability to detect radiation spikes": 0.0
+            }
+        },
+        {
+            "audio": "RedBeesShort",
+            "subtitles": {
+                "Circuit bees, also known as red bees, are descendants of the honeybee.": 0.0,
+                "They are highly defensive, as they will leave their nest to attack any creature that comes within several meters of it.": 0.0,
+                "This bold and aggressive behavior is enabled by their most defining ability,": 0.0,
+                "which is their electrostatic charge, capable of killing an adult human in about three to four seconds.": 0.0,
+                "If a red beehive is stolen, the swarm will enter an onslaught in which they attack any living creature.": 0.0,
+                "This destructive behavior will last until they have located the hive or completely exhausted themselves, which can take hours to days": 0.0
+            }
+        },
+        {
+            "audio": "SandwormShort",
+            "subtitles": {
+                "Earth Leviathans are one of the largest invertebrates found around the Thistle nebula.": 0.0,
+                "They can detect even the slightest vibrations on the surface.": 4.553,
+                "If you hear or see them burrowing, drop all your items and start running, or you will otherwise risk being devoured.": 7.957,
+                "They are capable of devouring anything, organic or not": 14.193
+            }
+        },
+        {
+            "audio": "SlimeShort",
+            "subtitles": {
+                "The Hygrodere, also known as Slime or Blob, is a creature that can be sometimes found roaming around": 0.0,
+                "the interiors of the moons at very low speeds. They will go after anyone that gets near them and try to consume them,": 0.0,
+                "but will most likely fail to do so due to their extremely slow movement speed.": 0.0,
+                "As Sigurd put it: Hygroderes won't pose much of a threat, if you're faster than a snail.": 0.0,
+                "However, they can become a nuisance in some cases, as they can block off doorways and hallways.": 0.0,
+                "According to Sigurd, they can be befriended by playing music near them": 0.0
+            }
+        },
+        {
+            "audio": "SnakesShort",
+            "subtitles": {
+                "Tulip snakes are a type of flying lizard which can be found roaming outdoors in most moons.": 0.0,
+                "They like to attach themselves to heavy objects and lift them into the air, including living beings.": 0.0,
+                "Unlike most entities, Tulip lizards can be extremely helpful for an employee if they know how to use them to their advantage.": 0.0,
+                "By purposefully getting Tulip lizards to attach and then timing a jump as they begin to flap allows you to quickly traverse cliffs,": 0.0,
+                "long stretches of terrain, or get to places that are normally inaccessible.": 0.0,
+                "You can kill any Tulip snake that may be attached to your head by hitting them with a shovel or knife": 0.0
+            }
+        },
+        {
+            "audio": "SnareFleaShort",
+            "subtitles": {
+                "Snare fleas like to wait on the ceiling of rooms and corridors.": 0.0,
+                "If you walk very near or below them, they will drop to the ground and attempt to strangle you to death.": 3.493,
+                "You can get rid of one by hitting it with a shovel, going outdoors, or, in the worst case scenario, jumping into a pit": 8.773
+            }
+        },
+        {
+            "audio": "SporeLizardShort",
+            "subtitles": {
+                "Spore lizards are very timid creatures that pose no threat to humans, unless they are cornered.": 0.0,
+                "Cornering one will cause it to release spores from its tail, surrounding the area with a harmless pink mist.": 5.303,
+                "If you get too close to it, it may bite as an act of self defense": 11.053
+            }
+        },
+        {
+            "audio": "ThumperShort",
+            "subtitles": {
+                "Thumpers are really aggressive creatures that have great eyesight and are completely deaf.": 0.0,
+                "They make very loud stomping noises which can give away their presence. If a Thumper is going after you,": 0.0,
+                "avoid running in a straight line and instead try to go around as many corners as possible.": 0.0,
+                "They are very fast when going in a straight line, but struggle greatly when making turns, often hitting themselves in the head against a wall": 0.0
+            }
+        },
+        {
+            "audio": "VainShroudShort",
+            "subtitles": {
+                "Vain Shrouds are red weeds that commonly appear in large groups and can vary in size.": 0.0,
+                "Despite them being harmless towards humans, they are considered to be an invasive species": 0.0,
+                "and harmful to the environments they invade. Vain Shrouds share a strongly correlated mutualistic relationship with the Kidnapper fox.": 0.0,
+                "To get rid of Vain Shrouds you will have to buy and use weed killer, which can also be used to repair the Company Cruiser": 0.0
+            }
+        },
+        {
+            "audio": "YippeeBugShort",
+            "subtitles": {
+                "Hoarding bugs are social and territorial creatures who like to take any items they may find back to their nests.": 0.0,
+                "Hanging around one for too long will make it angry and go after anybody who is in close proximity.": 0.0,
+                "Taking an item from their nest or getting close to the nest will also trigger them.": 0.0,
+                "I recommend killing them on sight if possible, as they are very fragile and can sometimes be very annoying to deal with.": 0.0,
+                "Two hits from a shovel should do it": 0.0
+            }
+        },
+        {
+            "audio": "BoombasShort",
+            "subtitles": {
+                "Boombas are, essentially, mobile landmines that are somewhat reminiscent of the ancient cleaning robots known as Roombas.": 0.0,
+                "They are not very fast, and not very smart, but they are capable of hearing and will investigate noises.": 6.390,
+                "When they lose sight of their target, they seem to completely forget about it": 12.604
+            }
+        },
+        {
+            "audio": "Cleaning DroneShort",
+            "subtitles": {
+                "Cleaning drones are small, aerial machines that were built to handle infestation within the facilities.": 0.0,
+                "They dispense a fog of highly concentrated TCP chemicals. The purpose of this fog was to kill invasive insects,": 5.521,
+                "however they seem have grown resistant to it, some of them even using it to their advantage as a place to hide.": 12.360,
+                "When a Cleaning drone is struck, it will release a large amount of the chemical and quickly dart away": 18.270
+            }
+        },
+        {
+            "audio": "Driftwood GiantShort",
+            "subtitles": {
+                "Driftwood giants are one of the fastest and most feared hunters that I truly hope you never come across.": 0.0,
+                "They will hunt down their prey relentlessly and in a very aggressive manner,": 5.588,
+                "as they like to toss them around and later feed on their corpse.": 9.047,
+                "If you ever do come across one, start running immediately.": 12.569,
+                "There's nothing you can do against them": 16.226
+            }
+        },
+        {
+            "audio": "FootballShort",
+            "subtitles": {
+                "Football is one of the strangest and most intriguing creatures I have ever come across.": 0.0,
+                "From my limited understanding, she is an entity that she is essentially": 4.761,
+                "an entity that exudes an aura of innocence and amiability at first glance,": 7.250,
+                "but actually has a deeper darker nature.": 7.250,
+                "According to the bestiary, Football may transcend mere mortal understanding,": 13.688,
+                "embodying a mischievous entity whose influence extends into the darkest depths of the unknown.": 17.827,
+                "Her past remains veiled in mystery to this day": 22.652
+            }
+        },
+        {
+            "audio": "LockerShort",
+            "subtitles": {
+                "Lockers appear to have been created from both organic and inorganic forms of matter.": 0.0,
+                "They seem to react to the most fined tuned of equipment, even at long ranges.": 4.573,
+                "Any touch, signal or light they sense will cause them to activate and go after the source.": 8.970,
+                "If you ever come across one, avoid scanning it and shining any lights at it": 13.816
+            }
+        },
+        {
+            "audio": "MaggieShort",
+            "subtitles": {
+                "The Lost, also referred to as Maggie by its bestiary entry, are byproducts of the company's teleportation technology": 0.0,
+                "failing to rebuild the body when a human and a different entity get teleported at the same time.": 6.951,
+                "The Lost seem to be less aggressive than the masked coworkers you can come across,": 12.058,
+                "but I recommend you deal with them the same way you should deal with the masked coworkers: by killing them on sight": 16.118
+            }
+        },
+        {
+            "audio": "Moving TurretShort",
+            "subtitles": {
+                "Mobile turrets are machines that aimlessly roam around the halls of the facilities until they spot a person.": 0.0,
+                "They are much weaker in damage and slower to lock on than a normal turret, but have a tighter, longer range": 5.579
+            }
+        },
+        {
+            "audio": "PeepersShort",
+            "subtitles": {
+                "Peepers are small star-shaped parasites that like to wrap themselves around other creature's limbs.": 0.0,
+                "Despite their small size, they are surprisingly dense, so while they are not much of a threat on their own,": 10.897,
+                "To get rid of a stuck Peeper, you will need to take damage": 14.305
+            }
+        },
+        {
+            "audio": "RedWood GiantShort",
+            "subtitles": {
+                "Redwood giants are completely passive variants of the Forest Keeper.": 0.0,
+                "Well, passive towards humans and other species that aren't their own, as they like to eat members of their own species.": 4.017,
+                "They can be somewhat dangerous, as they do not seem to be mindful of their steps and could accidentally end up stomping you to death": 10.362
+            }
+        },
+        {
+            "audio": "Rolling GiantShort",
+            "subtitles": {
+                "The Rolling Giant is a puppet-like statue of french botanist Julien Reverchon, which was created for Bridge-O-Rama's Parade of Giants,": 0.0,
+                "an event meant to commemorate the opening of the Margaret Hunt Hill Bridge in Dallas, Texas.": 0.0,
+                "The Giant was first presented as part of the Parade centuries ago, on March 3rd, 2012.": 0.0,
+                "All of the Rolling Giants you have come across are replicas of the original.": 0.0,
+                "Who or what created them and with what purpose remains a mystery": 0.0
+            }
+        },
+        {
+            "audio": "Shockwave DroneShort",
+            "subtitles": {
+                "Shockwave drones, also known as Scanner bots, are devices that were designed to identify and relay information": 0.0,
+                "on valuable materials for retrieval, but a malfunction has caused their scanning feature to emit powerful shockwaves.": 8.210,
+                "Shockwave drones are very unstable, and damaging one could cause it to detonate.": 12.569,
+                "Exercising caution around them is advised": 17.291
+            }
+        },
+        {
+            "audio": "ShrimpShort",
+            "subtitles": {
+                "Shrimps are dog like creatures that are, for the most part, relatively friendly to humans.": 0.0,
+                "They have a dangerously vicious hunger and are capable of digesting and absorbing the nutrients": 5.185,
+                "from anything, biological or not. Sigurd recommends you drop something if a Shrimp spots you so it can eat it,": 9.744,
+                "or it will instead consume you": 15.937
+            }
+        },
+        {
+            "audio": "Shy guyShort",
+            "subtitles": {
+                "SCP-096, also known as the 'Shy guy', is a tall and slender humanoid creature, that,": 0.0,
+                "as its nickname rightfully indicates, does not like to be looked at, as it reacts with intense emotional distress,": 6.018,
+                "covering its face and emitting screams, cries and incoherent sounds.": 12.172,
+                "After a short while, it will start going after whoever looked at them and won't stop until the observer is dead": 16.218
+            }
+        },
+        {
+            "audio": "Siren HeadShort",
+            "subtitles": {
+                "Siren Head is a very tall and lanky creature who deafens enemies and enjoys trapping its prey.": 0.0,
+                "It is also known for contorting its body to mimic trees and causing interference": 5.361
+            }
+        },
+        {
+            "audio": "StalkerShort",
+            "subtitles": {
+                "The Faceless Stalker, most commonly referred to as Slenderman or Slender, is a tall and": 0.0,
+                "skinny humanoid that has no facial features and likes to slowly stalk its prey over time.": 4.619,
+                "Besides leaving the moon it is in, there does not seem to be any way of counteracting it": 9.957
+            }
+        }
+    ]
+}

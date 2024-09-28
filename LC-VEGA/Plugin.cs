@@ -3,8 +3,6 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using LC_VEGA.Patches;
-using LobbyCompatibility.Attributes;
-using LobbyCompatibility.Enums;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,8 +13,7 @@ using static BepInEx.BepInDependency;
 namespace LC_VEGA
 {
     [BepInPlugin(modGUID, modName, modVersion)]
-    [LobbyCompatibility(CompatibilityLevel.ClientOnly, VersionStrictness.None)]
-    [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.HardDependency)]
+    [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.SoftDependency)]
     [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.SoftDependency)]
     [BepInDependency("com.rune580.LethalCompanyInputUtils", DependencyFlags.HardDependency)]
     [BepInDependency("me.loaforc.facilitymeltdown", DependencyFlags.SoftDependency)]
@@ -30,7 +27,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "3.1.0";
+        private const string modVersion = "3.2.0";
 
         internal static AssetBundle assetBundle;
 
@@ -243,6 +240,7 @@ namespace LC_VEGA
         {
             mls.LogInfo("Looking for compatible mods...");
 
+            if (ModChecker.CheckForMod("BMX.LobbyCompatibility")) ModChecker.RegisterPlugin(modGUID, modVersion);
             ModChecker.hasVoiceRecognitionAPI = ModChecker.CheckForMod("me.loaforc.voicerecognitionapi");
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");

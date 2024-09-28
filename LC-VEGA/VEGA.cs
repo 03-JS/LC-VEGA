@@ -482,34 +482,27 @@ namespace LC_VEGA
         internal static void OpenSecureDoor()
         {
             TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
-            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
+            if (!facilityHasPower)
             {
-                if (!facilityHasPower)
-                {
-                    PlayRandomLine("NoPower", Random.Range(1, 4));
-                    return;
-                }
-                if (closestDoor != null)
-                {
-                    if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
-                    {
-                        Plugin.LogToConsole("Opening door", "debug");
-                        closestDoor.SetDoorLocalClient(true);
-                        if (Plugin.vocalLevel.Value >= VocalLevels.High)
-                        {
-                            PlayRandomLine("DoorOpened", Random.Range(1, 4), 0.7f);
-                        }
-                    }
-                    else
-                    {
-                        if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoDoorNearby");
-                        PlayLine("NoDoorNearbyLow");
-                    }
-                }
+                PlayRandomLine("NoPower", Random.Range(1, 4));
+                return;
             }
-            else
+            if (closestDoor != null)
             {
-                PlayRandomLine("IndoorsOnly", Random.Range(1, 4));
+                if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
+                {
+                    Plugin.LogToConsole("Opening door", "debug");
+                    closestDoor.SetDoorLocalClient(true);
+                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                    {
+                        PlayRandomLine("DoorOpened", Random.Range(1, 4), 0.7f);
+                    }
+                }
+                else
+                {
+                    if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoDoorNearby");
+                    PlayLine("NoDoorNearbyLow");
+                }
             }
         }
 
@@ -547,33 +540,26 @@ namespace LC_VEGA
         internal static void CloseSecureDoor()
         {
             TerminalAccessibleObject? closestDoor = GetClosestSecureDoor();
-            if (StartOfRound.Instance.localPlayerController.isInsideFactory)
+            if (!facilityHasPower)
             {
-                if (!facilityHasPower)
-                {
-                    PlayRandomLine("NoPower", Random.Range(1, 4));
-                    return;
-                }
-                if (closestDoor != null)
-                {
-                    if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
-                    {
-                        Plugin.LogToConsole("Closing door", "debug");
-                        closestDoor.SetDoorLocalClient(false);
-                        if (Plugin.vocalLevel.Value >= VocalLevels.High)
-                        {
-                            PlayRandomLine("DoorClosed", Random.Range(1, 4), 0.7f);
-                        }
-                    }
-                    else
-                    {
-                        PlayLine("NoDoorNearby");
-                    }
-                }
+                PlayRandomLine("NoPower", Random.Range(1, 4));
+                return;
             }
-            else
+            if (closestDoor != null)
             {
-                PlayRandomLine("IndoorsOnly", Random.Range(1, 4));
+                if (Vector3.Distance(closestDoor.transform.position, StartOfRound.Instance.localPlayerController.transform.position) < 11f)
+                {
+                    Plugin.LogToConsole("Closing door", "debug");
+                    closestDoor.SetDoorLocalClient(false);
+                    if (Plugin.vocalLevel.Value >= VocalLevels.High)
+                    {
+                        PlayRandomLine("DoorClosed", Random.Range(1, 4), 0.7f);
+                    }
+                }
+                else
+                {
+                    PlayLine("NoDoorNearby");
+                }
             }
         }
 

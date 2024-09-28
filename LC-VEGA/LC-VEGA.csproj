@@ -22,8 +22,8 @@
     <Reference Include="com.github.zehsteam.ToilHead">
       <HintPath>D:\Descargas\com.github.zehsteam.ToilHead.dll</HintPath>
     </Reference>
-    <Reference Include="Diversity">
-      <HintPath>D:\Descargas\Diversity.dll</HintPath>
+    <Reference Include="Diversity Remastered">
+      <HintPath>D:\Descargas\Diversity Remastered.dll</HintPath>
     </Reference>
     <Reference Include="FacilityMeltdown">
       <HintPath>..\..\..\..\..\Users\Usuario\AppData\Roaming\com.kesomannen.gale\lethal-company\profiles\Chamba Project\BepInEx\plugins\loaforc-FacilityMeltdown\FacilityMeltdown\FacilityMeltdown.dll</HintPath>
@@ -82,6 +82,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BepInEx.AssemblyPublicizer" Version="0.4.2" />
-    <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.1.0" />
+    <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.2.0" />
   </ItemGroup>
 </Project>

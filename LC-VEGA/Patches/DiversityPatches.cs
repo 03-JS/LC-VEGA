@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using UnityEngine;
-using Diversity;
-using static Diversity.DiversitySoundManager;
+using DiversityRemastered;
+using static DiversityRemastered.DiversitySoundManager;
 using System.Collections;
 
 namespace LC_VEGA.Patches
