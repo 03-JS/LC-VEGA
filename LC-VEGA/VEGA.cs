@@ -158,7 +158,8 @@ namespace LC_VEGA
             { 21, "Snakes" },
             { 22, "VainShroud" },
             { 23, "KidnapperFox" },
-            { 24, "Barber" }
+            { 24, "Barber" },
+            { 25, "Maneater" }
         };
 
         // Creature file names
@@ -177,7 +178,8 @@ namespace LC_VEGA
             "Cleaning Drone",
             "Moving Turret",
             "Maggie",
-            "Shrimp"
+            "Shrimp",
+            "The Fiend"
         };
 
         // Names people may use for vanilla creatures
@@ -235,7 +237,9 @@ namespace LC_VEGA
             "Shroud",
             "Kidnapper Fox",
             "Kidnapper",
-            "Fox"
+            "Fox",
+            "Maneater",
+            "Baby"
         };
 
         // Names people may use for modded creatures
@@ -262,83 +266,10 @@ namespace LC_VEGA
             "Mobile Turret",
             "The Lost",
             "Maggie",
-            "Shrimp"
+            "Shrimp",
+            "The Fiend",
+            "Fiend"
         };
-
-        // Names of moons
-        private static readonly string[] moonNames =
-        {
-            "Experimentation",
-            "Vow",
-            "Assurance",
-            "Ass",
-            "March",
-            "Adamance",
-            "Offense",
-            "Rend",
-            "Dine",
-            "Titan",
-            "Tit",
-            "Artifice",
-            "Embrion",
-            "Mars",
-            "Liquidation"
-        };
-
-        public static void PlayLine(string clipName, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
-        {
-            if (audioSource != null)
-            {
-                if (StartOfRound.Instance.localPlayerController == null) return;
-                if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
-                if (!skip && audioSource.isPlaying) return;
-
-                foreach (var clip in audioClips)
-                {
-                    if (clip.name.Equals(clipName))
-                    {
-                        audioSource.clip = clip;
-                    }
-                }
-
-                if (audioSource.clip != null) Plugin.LogToConsole("Playing " + audioSource.clip.name + " with a " + delay + " second delay");
-                audioSource.PlayDelayed(delay);
-            }
-            else
-            {
-                Plugin.LogToConsole("Unable to play audio. The audio source for VEGA does not exist", "warn");
-            }
-        }
-
-        public static void PlaySFX(string clipName, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
-        {
-            if (sfxAudioSource != null)
-            {
-                if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
-                if (!skip && sfxAudioSource.isPlaying) return;
-
-                foreach (var clip in audioClips)
-                {
-                    if (clip.name.Equals(clipName))
-                    {
-                        sfxAudioSource.clip = clip;
-                    }
-                }
-
-                if (sfxAudioSource.clip != null) Plugin.LogToConsole("Playing " + sfxAudioSource.clip.name + " with a " + delay + " second delay");
-                sfxAudioSource.PlayDelayed(delay);
-            }
-            else
-            {
-                Plugin.LogToConsole("Unable to play SFX. The SFX audio source for VEGA does not exist", "warn");
-            }
-        }
-
-        public static void PlayRandomLine(string clipName, int range, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
-        {
-            clipName += "-" + range;
-            PlayLine(clipName, delay, checkPlayerStatus, skip);
-        }
 
         internal static string GetEntityAudioClipName(string entityName)
         {
@@ -424,10 +355,32 @@ namespace LC_VEGA
                     return "Moving Turret";
                 case "The Lost":
                     return "Maggie";
+                case "Fiend":
+                    return "The Fiend";
                 default:
                     return entityName;
             }
         }
+
+        // Names of moons
+        private static readonly string[] moonNames =
+        {
+            "Experimentation",
+            "Vow",
+            "Assurance",
+            "Ass",
+            "March",
+            "Adamance",
+            "Offense",
+            "Rend",
+            "Dine",
+            "Titan",
+            "Tit",
+            "Artifice",
+            "Embrion",
+            "Mars",
+            "Liquidation"
+        };
 
         internal static string GetMoonAudioClipName(string moonName)
         {
@@ -464,6 +417,61 @@ namespace LC_VEGA
                 default:
                     return moonName;
             }
+        }
+
+        public static void PlayLine(string clipName, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
+        {
+            if (audioSource != null)
+            {
+                if (StartOfRound.Instance.localPlayerController == null) return;
+                if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
+                if (!skip && audioSource.isPlaying) return;
+
+                foreach (var clip in audioClips)
+                {
+                    if (clip.name.Equals(clipName))
+                    {
+                        audioSource.clip = clip;
+                    }
+                }
+
+                if (audioSource.clip != null) Plugin.LogToConsole("Playing " + audioSource.clip.name + " with a " + delay + " second delay");
+                audioSource.PlayDelayed(delay);
+            }
+            else
+            {
+                Plugin.LogToConsole("Unable to play audio. The audio source for VEGA does not exist", "warn");
+            }
+        }
+
+        public static void PlaySFX(string clipName, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
+        {
+            if (sfxAudioSource != null)
+            {
+                if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
+                if (!skip && sfxAudioSource.isPlaying) return;
+
+                foreach (var clip in audioClips)
+                {
+                    if (clip.name.Equals(clipName))
+                    {
+                        sfxAudioSource.clip = clip;
+                    }
+                }
+
+                if (sfxAudioSource.clip != null) Plugin.LogToConsole("Playing " + sfxAudioSource.clip.name + " with a " + delay + " second delay");
+                sfxAudioSource.PlayDelayed(delay);
+            }
+            else
+            {
+                Plugin.LogToConsole("Unable to play SFX. The SFX audio source for VEGA does not exist", "warn");
+            }
+        }
+
+        public static void PlayRandomLine(string clipName, int range, float delay = 0.25f, bool checkPlayerStatus = true, bool skip = false)
+        {
+            clipName += "-" + range;
+            PlayLine(clipName, delay, checkPlayerStatus, skip);
         }
 
         internal static bool ClientHasMoon(string moonName)
