@@ -37,6 +37,9 @@
     <Reference Include="MoreShipUpgrades">
       <HintPath>D:\Descargas\MoreShipUpgrades-publicized.dll</HintPath>
     </Reference>
+    <Reference Include="PySpeech">
+      <HintPath>..\..\..\..\Lethal Company APIs\PySpeech\PySpeech\bin\Debug\netstandard2.1\PySpeech.dll</HintPath>
+    </Reference>
     <Reference Include="TestAccount666.ShipWindows">
       <HintPath>bin\Debug\netstandard2.1\ShipWindows-publicized.dll</HintPath>
     </Reference>
@@ -76,12 +79,9 @@
     <Reference Include="UnityEngine.UIModule">
       <HintPath>E:\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="VoiceRecognitionAPI">
-      <HintPath>D:\Descargas\VoiceRecognitionAPI.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.AssemblyPublicizer" Version="0.4.2" />
-    <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.2.0" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer" Version="0.5.0-beta.1" />
+    <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.4.0" />
   </ItemGroup>
 </Project>

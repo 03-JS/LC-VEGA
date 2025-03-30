@@ -13,6 +13,7 @@ using static BepInEx.BepInDependency;
 namespace LC_VEGA
 {
     [BepInPlugin(modGUID, modName, modVersion)]
+    [BepInDependency("JS03.PySpeech", DependencyFlags.HardDependency)]
     [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.SoftDependency)]
     [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.SoftDependency)]
     [BepInDependency("com.rune580.LethalCompanyInputUtils", DependencyFlags.HardDependency)]
@@ -27,7 +28,7 @@ namespace LC_VEGA
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "3.2.0";
+        private const string modVersion = "4.0.0";
 
         internal static AssetBundle assetBundle;
 
@@ -1198,6 +1199,11 @@ namespace LC_VEGA
                     mls.LogInfo(message);
                     break;
             }
+        }
+
+        public static string GetPluginsPath()
+        {
+            return Instance.Info.Location.TrimEnd($"{modName}.dll".ToCharArray());
         }
     }
 }

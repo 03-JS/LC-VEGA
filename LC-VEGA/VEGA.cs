@@ -1,6 +1,7 @@
 ﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
 using MoreShipUpgrades.Misc.Upgrades;
+using PySpeech;
 using ShipWindows;
 using ShipWindows.Components;
 using System;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
-using VoiceRecognitionAPI;
+// using VoiceRecognitionAPI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -1806,12 +1807,11 @@ namespace LC_VEGA
             if (Plugin.registerActivation.Value)
             {
                 string[] phrases = Plugin.startListeningCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, activate" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.manualActivationConfidence.Value && Plugin.useManualListening.Value)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.manualActivationConfidence.Value) return;
+                    if (Plugin.useManualListening.Value)
                     {
                         if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1830,13 +1830,10 @@ namespace LC_VEGA
                     }
                 });
                 string[] phrases_1 = Plugin.stopListeningCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, deactivate" });
-                Voice.RegisterPhrases(phrases_1);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, deactivate") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.manualActivationConfidence.Value && Plugin.useManualListening.Value)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.manualActivationConfidence.Value) return;
+                    if (Plugin.useManualListening.Value)
                     {
                         if (StartOfRound.Instance.localPlayerController == null) return;
                         if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -1862,31 +1859,19 @@ namespace LC_VEGA
             if (Plugin.registerStop.Value)
             {
                 string[] phrases = Plugin.stopCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, shut up", "VEGA, stop", "VEGA, stop talking", "Shut up, VEGA", "Stop, VEGA", "Stop talking, VEGA" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, shut up" && recognized.Message != "VEGA, stop" && recognized.Message != "VEGA, stop talking" && recognized.Message != "Shut up, VEGA" && recognized.Message != "Stop, VEGA" && recognized.Message != "Stop talking, VEGA") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.stopConfidence.Value)
-                    {
-                        if (audioSource != null) audioSource.Stop();
-                    }
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.stopConfidence.Value) return;
+                    if (audioSource != null) audioSource.Stop();
                 });
             }
             if (Plugin.registerThanks.Value)
             {
                 string[] phrases = Plugin.gratitudeCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, thank you", "VEGA, thanks", "Thank you, VEGA", "Thanks, VEGA" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, thank you" && recognized.Message != "VEGA, thanks" && recognized.Message != "Thank you, VEGA" && recognized.Message != "Thanks, VEGA") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.gratitudeConfidence.Value && listening)
-                    {
-                        PlayRandomLine("NoProblem", Random.Range(1, 5));
-                    }
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.gratitudeConfidence.Value || !listening) return;
+                    PlayRandomLine("NoProblem", Random.Range(1, 5));
                 });
             }
 
@@ -1894,51 +1879,39 @@ namespace LC_VEGA
             if (Plugin.registerInteractShipLights.Value)
             {
                 string[] phrases = Plugin.lightsOnCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, lights on", "VEGA, turn the lights on" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, lights on" && recognized.Message != "VEGA, turn the lights on") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            CoroutineManager.StartCoroutine(SwitchLights(on: true));
                         }
+                        CoroutineManager.StartCoroutine(SwitchLights(on: true));
                     }
                 });
                 string[] phrases_1 = Plugin.lightsOffCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, lights out", "VEGA, lights off", "VEGA, turn the lights off" });
-                Voice.RegisterPhrases(phrases_1);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, lights out" && recognized.Message != "VEGA, lights off" && recognized.Message != "VEGA, turn the lights off") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            CoroutineManager.StartCoroutine(SwitchLights(on: false));
                         }
+                        CoroutineManager.StartCoroutine(SwitchLights(on: false));
                     }
                 });
             }
@@ -1947,50 +1920,38 @@ namespace LC_VEGA
             if (Plugin.registerInteractShipShutters.Value)
             {
                 string[] phrases = Plugin.openShuttersCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, open shutters", "VEGA, open window shutters", "VEGA, open ship shutters" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, open shutters" && recognized.Message != "VEGA, open window shutters" && recognized.Message != "VEGA, open ship shutters") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasShipWindows)
                         {
-                            if (ModChecker.hasShipWindows)
+                            if (ShipWindowsPatches.opened)
                             {
-                                if (ShipWindowsPatches.opened)
-                                {
-                                    PlayLine("ShuttersAlreadyOpen");
-                                    return;
-                                }
-                                CoroutineManager.StartCoroutine(SwitchWindowShutters(open: true));
+                                PlayLine("ShuttersAlreadyOpen");
+                                return;
                             }
+                            CoroutineManager.StartCoroutine(SwitchWindowShutters(open: true));
                         }
                     }
                 });
                 string[] phrases_1 = Plugin.closeShuttersCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, close shutters", "VEGA, close window shutters", "VEGA, close ship shutters" });
-                Voice.RegisterPhrases(new string[] { "VEGA, close shutters", "VEGA, close window shutters", "VEGA, close ship shutters" });
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, close shutters" && recognized.Message != "VEGA, close window shutters" && recognized.Message != "VEGA, close ship shutters") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasShipWindows)
                         {
-                            if (ModChecker.hasShipWindows)
+                            if (!ShipWindowsPatches.opened)
                             {
-                                if (!ShipWindowsPatches.opened)
-                                {
-                                    PlayLine("ShuttersAlreadyClosed");
-                                    return;
-                                }
-                                CoroutineManager.StartCoroutine(SwitchWindowShutters(open: false));
+                                PlayLine("ShuttersAlreadyClosed");
+                                return;
                             }
+                            CoroutineManager.StartCoroutine(SwitchWindowShutters(open: false));
                         }
                     }
                 });
@@ -2000,43 +1961,36 @@ namespace LC_VEGA
             if (Plugin.registerInteractShipMagnet.Value)
             {
                 string[] phrases = Plugin.magnetOnCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (StartOfRound.Instance.magnetOn)
                         {
-                            if (StartOfRound.Instance.magnetOn)
-                            {
-                                PlayLine("MagnetAlreadyActive");
-                                return;
-                            }
-                            StartOfRound.Instance.SetMagnetOnServerRpc(true);
-                            if (Plugin.vocalLevel.Value >= VocalLevels.Low && StartOfRound.Instance.magnetOn) PlayRandomLine("ActivateMagnet", Random.Range(1, 3));
+                            PlayLine("MagnetAlreadyActive");
+                            return;
                         }
+                        StartOfRound.Instance.SetMagnetOnServerRpc(true);
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low && StartOfRound.Instance.magnetOn) PlayRandomLine("ActivateMagnet", Random.Range(1, 3));
                     }
                 });
                 string[] phrases_1 = Plugin.magnetOffCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Voice.RegisterPhrases(phrases_1);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (!StartOfRound.Instance.magnetOn)
                         {
-                            if (!StartOfRound.Instance.magnetOn)
-                            {
-                                PlayLine("MagnetAlreadyInactive");
-                                return;
-                            }
-                            StartOfRound.Instance.SetMagnetOnServerRpc(false);
-                            if (Plugin.vocalLevel.Value >= VocalLevels.Low && !StartOfRound.Instance.magnetOn) PlayRandomLine("DeactivateMagnet", Random.Range(1, 3));
+                            PlayLine("MagnetAlreadyInactive");
+                            return;
                         }
+                        StartOfRound.Instance.SetMagnetOnServerRpc(false);
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low && !StartOfRound.Instance.magnetOn) PlayRandomLine("DeactivateMagnet", Random.Range(1, 3));
                     }
                 });
             }
@@ -2048,56 +2002,51 @@ namespace LC_VEGA
             if (Plugin.registerDiscombobulator.Value && ModChecker.hasLGU)
             {
                 string[] phrases = Plugin.discombobulatorCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, attack", "VEGA, stun", "VEGA, shock" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, attack" && recognized.Message != "VEGA, stun" && recognized.Message != "VEGA, shock") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.upgradesConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.upgradesConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                            }
-
-                            if (!BaseUpgrade.GetActiveUpgrade("Discombobulator"))
-                            {
-                                PlayRandomLine("NoDiscombobulator", Random.Range(1, 4));
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                 return;
                             }
-                            if (LGUPatches.flashCooldown > 0f)
+                            if (malfunctionDistortionTriggered)
                             {
-                                PlayLine("DiscombobulatorUnavailable");
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
                                 return;
                             }
-                            if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom)
-                            {
-                                PlayLine("Discombobulate");
-                            }
-
-                            Type commandParserType = Type.GetType("MoreShipUpgrades.Misc.CommandParser, MoreShipUpgrades");
-                            if (commandParserType != null)
-                            {
-                                MethodInfo atkMethodInfo = commandParserType.GetMethod("ExecuteDiscombobulatorAttack", BindingFlags.NonPublic | BindingFlags.Static);
-                                object[] parameters = new object[] { TerminalPatch.terminalInstance };
-                                atkMethodInfo.Invoke(null, parameters);
-                            }
-
-                            if (Plugin.sendDiscombobulatorChatMessage.Value) SendChatMessage("used the Discombobulator");
                         }
+
+                        if (!BaseUpgrade.GetActiveUpgrade("Discombobulator"))
+                        {
+                            PlayRandomLine("NoDiscombobulator", Random.Range(1, 4));
+                            return;
+                        }
+                        if (LGUPatches.flashCooldown > 0f)
+                        {
+                            PlayLine("DiscombobulatorUnavailable");
+                            return;
+                        }
+                        if (!StartOfRound.Instance.localPlayerController.isInHangarShipRoom)
+                        {
+                            PlayLine("Discombobulate");
+                        }
+
+                        Type commandParserType = Type.GetType("MoreShipUpgrades.Misc.CommandParser, MoreShipUpgrades");
+                        if (commandParserType != null)
+                        {
+                            MethodInfo atkMethodInfo = commandParserType.GetMethod("ExecuteDiscombobulatorAttack", BindingFlags.NonPublic | BindingFlags.Static);
+                            object[] parameters = new object[] { TerminalPatch.terminalInstance };
+                            atkMethodInfo.Invoke(null, parameters);
+                        }
+
+                        if (Plugin.sendDiscombobulatorChatMessage.Value) SendChatMessage("used the Discombobulator");
                     }
                 });
             }
@@ -2109,14 +2058,10 @@ namespace LC_VEGA
             {
                 foreach (var condition in weathers)
                 {
-                    Voice.RegisterPhrases(new string[] { "VEGA, info about " + condition + " weather" });
-                    Voice.RegisterCustomHandler((obj, recognized) =>
+                    Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (recognized.Message != "VEGA, info about " + condition + " weather") return;
-                        if (recognized.Confidence > Plugin.infoConfidence.Value && listening)
-                        {
-                            PlayRandomLine(condition, 2);
-                        }
+                        if (Speech.GetSimilarity("VEGA, info about " + condition + " weather", recognized.Text) < Plugin.infoConfidence.Value || !listening) return;
+                        PlayRandomLine(condition, 2);
                     });
                 }
             }
@@ -2127,61 +2072,50 @@ namespace LC_VEGA
             if (Plugin.registerAdvancedScanner.Value)
             {
                 string[] phrases = Plugin.activateAdvancedScannerCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, activate scanner", "VEGA, activate advanced scanner", "VEGA, turn on scanner", "VEGA, turn on advanced scanner", "VEGA, scan", "VEGA, enable scanner", "VEGA, enable advanced scanner" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, activate scanner" && recognized.Message != "VEGA, activate advanced scanner" && recognized.Message != "VEGA, turn on scanner" && recognized.Message != "VEGA, turn on advanced scanner" && recognized.Message != "VEGA, scan" && recognized.Message != "VEGA, enable scanner" && recognized.Message != "VEGA, enable advanced scanner") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.miscConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (advancedScannerActive)
                         {
-                            if (advancedScannerActive)
-                            {
-                                PlayLine("ScannerAlreadyActive");
-                                return;
-                            }
+                            PlayLine("ScannerAlreadyActive");
+                            return;
+                        }
 
-                            Plugin.LogToConsole("Activating advanced scanner", "debug");
-                            advancedScannerActive = true;
+                        Plugin.LogToConsole("Activating advanced scanner", "debug");
+                        advancedScannerActive = true;
 
-                            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                            {
-                                PlayRandomLine("AdvancedScannerEnabled", Random.Range(1, 4));
-                            }
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                        {
+                            PlayRandomLine("AdvancedScannerEnabled", Random.Range(1, 4));
                         }
                     }
                 });
                 string[] phrases_1 = Plugin.deactivateAdvancedScannerCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, disable scanner", "VEGA, disable advanced scanner", "VEGA, turn off scanner", "VEGA, turn off advanced scanner", "VEGA, disable scan" });
-                Voice.RegisterPhrases(phrases_1);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, disable scanner" && recognized.Message != "VEGA, disable advanced scanner" && recognized.Message != "VEGA, turn off scanner" && recognized.Message != "VEGA, turn off advanced scanner" && recognized.Message != "VEGA, disable scan") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.miscConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (!advancedScannerActive)
                         {
-                            if (!advancedScannerActive)
-                            {
-                                PlayLine("ScannerAlreadyInactive");
-                                return;
-                            }
+                            PlayLine("ScannerAlreadyInactive");
+                            return;
+                        }
 
-                            Plugin.LogToConsole("Deactivating advanced scanner", "debug");
-                            advancedScannerActive = false;
+                        Plugin.LogToConsole("Deactivating advanced scanner", "debug");
+                        advancedScannerActive = false;
 
-                            HUDManagerPatch.entities.GetComponent<TextMeshProUGUI>().SetText("");
-                            HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
+                        HUDManagerPatch.entities.GetComponent<TextMeshProUGUI>().SetText("");
+                        HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
 
-                            if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                            {
-                                PlayRandomLine("AdvancedScannerDisabled", Random.Range(1, 4));
-                            }
+                        if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                        {
+                            PlayRandomLine("AdvancedScannerDisabled", Random.Range(1, 4));
                         }
                     }
                 });
@@ -2193,16 +2127,11 @@ namespace LC_VEGA
             if (Plugin.registerTime.Value)
             {
                 string[] phrases = Plugin.timeCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, what's the current time of day?", "VEGA, current time of day", "VEGA, time of day", "VEGA, current time", "VEGA, time", "VEGA, what time is it?" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, what's the current time of day?" && recognized.Message != "VEGA, current time of day" && recognized.Message != "VEGA, time of day" && recognized.Message != "VEGA, current time" && recognized.Message != "VEGA, time" && recognized.Message != "VEGA, what time is it?") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.infoConfidence.Value && listening)
-                    {
-                        GetDayMode();
-                    }
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.infoConfidence.Value || !listening) return;
+                    GetDayMode();
                 });
             }
         }
@@ -2212,72 +2141,57 @@ namespace LC_VEGA
             if (Plugin.registerCrewStatus.Value)
             {
                 string[] phrases = Plugin.crewStatusCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, crew status", "VEGA, team status", "VEGA, crew info", "VEGA, team info", "VEGA, crew report", "VEGA, team report" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, crew status" && recognized.Message != "VEGA, team status" && recognized.Message != "VEGA, crew info" && recognized.Message != "VEGA, team info" && recognized.Message != "VEGA, crew report" && recognized.Message != "VEGA, team report") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.crewStatusConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.crewStatusConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (malfunctionPowerTriggered)
                         {
-                            if (malfunctionPowerTriggered)
-                            {
-                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                return;
-                            }
-                            CoroutineManager.StartCoroutine(GetCrewStatus());
+                            PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                            return;
                         }
+                        CoroutineManager.StartCoroutine(GetCrewStatus());
                     }
                 });
             }
             if (Plugin.registerCrewInShip.Value)
             {
                 string[] phrases = Plugin.crewInShipCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, crew in ship", "VEGA, people in ship", "VEGA, get crew in ship", "VEGA, get people in ship", "VEGA, how many people are in the ship?", "VEGA, is anyone in the ship?", "VEGA, is anybody in the ship?" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, crew in ship" && recognized.Message != "VEGA, people in ship" && recognized.Message != "VEGA, get crew in ship" && recognized.Message != "VEGA, get people in ship" && recognized.Message != "VEGA, how many people are in the ship?" && recognized.Message != "VEGA, is anyone in the ship?" && recognized.Message != "VEGA, is anybody in the ship?") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.crewInShipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.crewInShipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (malfunctionPowerTriggered)
                         {
-                            if (malfunctionPowerTriggered)
-                            {
-                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                return;
-                            }
-                            CoroutineManager.StartCoroutine(GetCrewInShip());
+                            PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                            return;
                         }
+                        CoroutineManager.StartCoroutine(GetCrewInShip());
                     }
                 });
             }
             if (Plugin.registerScrapLeft.Value)
             {
                 string[] phrases = Plugin.scrapLeftCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, scrap left", "VEGA, items left", "VEGA, scan for scrap", "VEGA, scan for items" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, scrap left" && recognized.Message != "VEGA, items left" && recognized.Message != "VEGA, scan for scrap" && recognized.Message != "VEGA, scan for items") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.scrapLeftConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.scrapLeftConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (malfunctionPowerTriggered)
                         {
-                            if (malfunctionPowerTriggered)
-                            {
-                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                return;
-                            }
-                            CoroutineManager.StartCoroutine(GetScrapLeft(recognized.Message));
+                            PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                            return;
                         }
+                        CoroutineManager.StartCoroutine(GetScrapLeft(recognized.Text));
                     }
                 });
             }
@@ -2288,53 +2202,43 @@ namespace LC_VEGA
             if (Plugin.registerTeleporter.Value)
             {
                 string[] phrases = Plugin.teleporterCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, tp", "VEGA, activate tp", "VEGA, teleport", "VEGA, activate teleporter" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, tp" && recognized.Message != "VEGA, activate tp" && recognized.Message != "VEGA, teleport" && recognized.Message != "VEGA, activate teleporter") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.teleportConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.teleportConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionTeleporterTriggered)
-                                {
-                                    PlayLine("TeleporterMalfunction");
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            CoroutineManager.StartCoroutine(ActivateTeleporter());
+                            if (malfunctionTeleporterTriggered)
+                            {
+                                PlayLine("TeleporterMalfunction");
+                                return;
+                            }
                         }
+                        CoroutineManager.StartCoroutine(ActivateTeleporter());
                     }
                 });
             }
             if (Plugin.registerRadarSwitch.Value)
             {
                 string[] phrases = Plugin.radarSwitchCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, switch to me", "VEGA, switch radar", "VEGA, switch radar to me", "VEGA, focus", "VEGA, focus on me" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, switch to me" && recognized.Message != "VEGA, switch radar" && recognized.Message != "VEGA, switch radar to me" && recognized.Message != "VEGA, focus" && recognized.Message != "VEGA, focus on me") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.teleportConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.teleportConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
-                        {
-                            SwitchRadar();
-                        }
-                        PlayRandomLine("RadarSwitch", Random.Range(1, 4));
+                        SwitchRadar();
                     }
+                    PlayRandomLine("RadarSwitch", Random.Range(1, 4));
                 });
             }
         }
@@ -2345,122 +2249,100 @@ namespace LC_VEGA
             if (Plugin.registerInteractSecureDoor.Value)
             {
                 string[] phrases = Plugin.openSecureDoorCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, open secure door", "VEGA, open door", "VEGA, open the door", "VEGA, open the secure door" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, open secure door" && recognized.Message != "VEGA, open door" && recognized.Message != "VEGA, open the door" && recognized.Message != "VEGA, open the secure door") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.secureDoorsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            OpenSecureDoor();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        OpenSecureDoor();
                     }
                 });
                 string[] phrases_1 = Plugin.closeSecureDoorCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, close secure door", "VEGA, close door", "VEGA, close the door", "VEGA, close the secure door" });
-                Voice.RegisterPhrases(phrases_1);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, close secure door" && recognized.Message != "VEGA, close door" && recognized.Message != "VEGA, close the door" && recognized.Message != "VEGA, close the secure door") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.secureDoorsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            CloseSecureDoor();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        CloseSecureDoor();
                     }
                 });
             }
             if (Plugin.registerInteractAllSecureDoors.Value)
             {
                 string[] phrases = Plugin.openAllSecureDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, open all secure doors", "VEGA, open all doors" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, open all secure doors" && recognized.Message != "VEGA, open all doors") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.secureDoorsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            OpenAllDoors();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        OpenAllDoors();
                     }
                 });
                 string[] phrases_1 = Plugin.closeAllSecureDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" });
-                Voice.RegisterPhrases(new string[] { "VEGA, close all secure doors", "VEGA, close all doors" });
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, close all secure doors" && recognized.Message != "VEGA, close all doors") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.secureDoorsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.secureDoorsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            CloseAllDoors();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        CloseAllDoors();
                     }
                 });
             }
@@ -2469,91 +2351,80 @@ namespace LC_VEGA
             if (Plugin.registerInteractShipDoors.Value)
             {
                 string[] phrases = Plugin.openShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, open ship doors", "VEGA, open the ship's doors", "VEGA, open hangar doors" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
-                {
-                    // if (recognized.Message != "VEGA, open ship doors" && recognized.Message != "VEGA, open the ship's doors" && recognized.Message != "VEGA, open hangar doors") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
-                    {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
-                        {
-                            HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
-                            if (shipDoors != null)
-                            {
-                                if (ModChecker.hasMalfunctions)
-                                {
-                                    if (malfunctionPowerTriggered)
-                                    {
-                                        PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                        return;
-                                    }
-                                    if (malfunctionDoorTriggered)
-                                    {
-                                        PlayLine("DoorMalfunction");
-                                        return;
-                                    }
-                                }
 
-                                if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                Speech.RegisterCustomHandler((obj, recognized) =>
+                {
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                    {
+                        HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
+                        if (shipDoors != null)
+                        {
+                            if (ModChecker.hasMalfunctions)
+                            {
+                                if (malfunctionPowerTriggered)
                                 {
-                                    PlayLine("ShipDoorsAlreadyOpen");
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
-
-                                InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
-                                component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
-                                if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                                if (malfunctionDoorTriggered)
                                 {
-                                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                                    {
-                                        PlayLine("ShipDoorsOpened", 0.7f);
-                                    }
+                                    PlayLine("DoorMalfunction");
+                                    return;
+                                }
+                            }
+
+                            if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                            {
+                                PlayLine("ShipDoorsAlreadyOpen");
+                                return;
+                            }
+
+                            InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StartButton/Cube (2)").GetComponent<InteractTrigger>();
+                            component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
+                            if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                            {
+                                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
+                                {
+                                    PlayLine("ShipDoorsOpened", 0.7f);
                                 }
                             }
                         }
                     }
                 });
                 string[] phrases_1 = Plugin.closeShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, close ship doors", "VEGA, close the ship's doors", "VEGA, close hangar doors" });
-                Voice.RegisterPhrases(phrases_1);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, close ship doors" && recognized.Message != "VEGA, close the ship's doors" && recognized.Message != "VEGA, close hangar doors") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.shipConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.shipConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
+                        if (shipDoors != null)
                         {
-                            HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
-                            if (shipDoors != null)
+                            if (ModChecker.hasMalfunctions)
                             {
-                                if (ModChecker.hasMalfunctions)
+                                if (malfunctionPowerTriggered)
                                 {
-                                    if (malfunctionPowerTriggered)
-                                    {
-                                        PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                        return;
-                                    }
-                                }
-
-                                if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
-                                {
-                                    PlayLine("ShipDoorsAlreadyClosed");
+                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                                     return;
                                 }
+                            }
 
-                                InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
-                                component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
-                                if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                            if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                            {
+                                PlayLine("ShipDoorsAlreadyClosed");
+                                return;
+                            }
+
+                            InteractTrigger component = shipDoors.transform.Find("HangarDoorButtonPanel/StopButton/Cube (3)").GetComponent<InteractTrigger>();
+                            component.Interact(((Component)(object)StartOfRound.Instance.localPlayerController).transform);
+                            if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
+                            {
+                                if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                                 {
-                                    if (Plugin.vocalLevel.Value >= VocalLevels.Low)
-                                    {
-                                        PlayLine("ShipDoorsClosed", 0.7f);
-                                    }
+                                    PlayLine("ShipDoorsClosed", 0.7f);
                                 }
                             }
                         }
@@ -2569,47 +2440,42 @@ namespace LC_VEGA
                 foreach (var signal in signals)
                 {
                     string[] phrases = Plugin.transmitCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                    // Voice.RegisterPhrases(new string[] { "VEGA, transmit " + signal, "VEGA, send " + signal });
                     foreach (var phrase in phrases)
                     {
-                        string fullCommand = phrase + " " + signal;
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-                    Voice.RegisterPhrases(phrases);
-                    Voice.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        // if (recognized.Message != "VEGA, transmit " + signal && recognized.Message != "VEGA, send " + signal) return;
-                        if (!recognized.Message.Contains(signal)) return;
-                        if (recognized.Confidence > Plugin.signalsConfidence.Value && listening)
+                        Speech.RegisterCustomHandler((obj, recognized) =>
                         {
-                            if (StartOfRound.Instance.localPlayerController == null) return;
-                            if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                            if (!recognized.Text.Contains(signal, StringComparison.OrdinalIgnoreCase)) return;
+                            if (Speech.GetSimilarity(phrase, recognized.Text) >= Plugin.shipConfidence.Value && listening)
                             {
-                                if (ModChecker.hasMalfunctions)
+                                if (StartOfRound.Instance.localPlayerController == null) return;
+                                if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                                 {
-                                    if (malfunctionPowerTriggered)
+                                    if (ModChecker.hasMalfunctions)
                                     {
-                                        PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                        if (malfunctionPowerTriggered)
+                                        {
+                                            PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                            return;
+                                        }
+                                        if (malfunctionDistortionTriggered)
+                                        {
+                                            PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                            return;
+                                        }
+                                    }
+                                    SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
+                                    if (translator == null)
+                                    {
+                                        if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoSignalTranslator");
+                                        PlayLine("NoSignalTranslatorLow");
                                         return;
                                     }
-                                    if (malfunctionDistortionTriggered)
-                                    {
-                                        PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                        return;
-                                    }
+                                    HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
+                                    if (Plugin.sendSignalTranslatorChatMessage.Value) SendChatMessage("is transmitting a signal");
                                 }
-                                SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
-                                if (translator == null)
-                                {
-                                    if (Plugin.vocalLevel.Value >= VocalLevels.Medium) PlayLine("NoSignalTranslator");
-                                    PlayLine("NoSignalTranslatorLow");
-                                    return;
-                                }
-                                HUDManager.Instance.UseSignalTranslatorServerRpc(signal);
-                                if (Plugin.sendSignalTranslatorChatMessage.Value) SendChatMessage("is transmitting a signal");
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         }
@@ -2619,61 +2485,50 @@ namespace LC_VEGA
             if (Plugin.registerRadarBoosters.Value)
             {
                 string[] phrases = Plugin.radarPingCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, ping" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, ping") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.miscConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            InteractWithBooster(ping: true);
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        InteractWithBooster(ping: true);
                     }
                 });
                 string[] phrases_1 = Plugin.radarFlashCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, flash" });
-                Voice.RegisterPhrases(phrases_1);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, flash") return;
-                    if (!phrases_1.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.miscConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases_1, recognized.Text) < Plugin.miscConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            InteractWithBooster(ping: false);
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        InteractWithBooster(ping: false);
                     }
                 });
             }
@@ -2685,83 +2540,73 @@ namespace LC_VEGA
             if (Plugin.registerDisableTurret.Value)
             {
                 string[] phrases = Plugin.disableTurretCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, disable the turret", "VEGA, disable turret" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, disable the turret" && recognized.Message != "VEGA, disable turret") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.turretsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.turretsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            turretDisabled = false;
-                            noVisibleTurret = false;
-                            // noTurretNearby = false;
-                            noTurrets = false;
-                            noToils = true;
-                            if (ModChecker.hasToilHead)
+                            if (malfunctionDistortionTriggered)
                             {
-                                noToils = false;
-                                DisableToil();
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            if (!toilDisabled || !ModChecker.hasToilHead)
-                            {
-                                DisableTurret();
-                            }
-                            PlayTurretAudio();
                         }
+                        turretDisabled = false;
+                        noVisibleTurret = false;
+                        // noTurretNearby = false;
+                        noTurrets = false;
+                        noToils = true;
+                        if (ModChecker.hasToilHead)
+                        {
+                            noToils = false;
+                            DisableToil();
+                        }
+                        if (!toilDisabled || !ModChecker.hasToilHead)
+                        {
+                            DisableTurret();
+                        }
+                        PlayTurretAudio();
                     }
                 });
             }
             if (Plugin.registerDisableAllTurrets.Value)
             {
                 string[] phrases = Plugin.disableAllTurretsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, disable all turrets" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, disable all turrets") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.turretsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.turretsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            turretsExist = false;
-                            if (ModChecker.hasToilHead)
+                            if (malfunctionDistortionTriggered)
                             {
-                                DisableAllToils();
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            DisableAllTurrets();
                         }
+                        turretsExist = false;
+                        if (ModChecker.hasToilHead)
+                        {
+                            DisableAllToils();
+                        }
+                        DisableAllTurrets();
                     }
                 });
             }
@@ -2770,64 +2615,54 @@ namespace LC_VEGA
             if (Plugin.registerDisableMine.Value)
             {
                 string[] phrases = Plugin.disableMineCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, disable the mine", "VEGA, disable mine", "VEGA, disable the landmine", "VEGA, disable landmine" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, disable the mine" && recognized.Message != "VEGA, disable mine" && recognized.Message != "VEGA, disable the landmine" && recognized.Message != "VEGA, disable landmine") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.landminesConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.landminesConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            DisableMine();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        DisableMine();
                     }
                 });
             }
             if (Plugin.registerDisableAllMines.Value)
             {
                 string[] phrases = Plugin.disableAllMinesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, disable all mines", "VEGA, disable all landmines" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, disable all mines" && recognized.Message != "VEGA, disable all landmines") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.landminesConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.landminesConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            DisableAllMines();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        DisableAllMines();
                     }
                 });
             }
@@ -2836,64 +2671,54 @@ namespace LC_VEGA
             if (Plugin.registerDisableSpikeTrap.Value)
             {
                 string[] phrases = Plugin.disableSpikeTrapCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, disable the trap", "VEGA, disable trap", "VEGA, disable the spike trap", "VEGA, disable spike trap" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, disable the trap" && recognized.Message != "VEGA, disable trap" && recognized.Message != "VEGA, disable the spike trap" && recognized.Message != "VEGA, disable spike trap") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.trapsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.trapsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            DisableSpikeTrap();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        DisableSpikeTrap();
                     }
                 });
             }
             if (Plugin.registerDisableAllSpikeTraps.Value)
             {
                 string[] phrases = Plugin.disableAllSpikeTrapsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                // Voice.RegisterPhrases(new string[] { "VEGA, disable all traps", "VEGA, disable all spike traps" });
-                Voice.RegisterPhrases(phrases);
-                Voice.RegisterCustomHandler((obj, recognized) =>
+
+                Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    // if (recognized.Message != "VEGA, disable all traps" && recognized.Message != "VEGA, disable all spike traps") return;
-                    if (!phrases.Contains(recognized.Message)) return;
-                    if (recognized.Confidence > Plugin.trapsConfidence.Value && listening)
+                    if (Speech.GetSimilarity(phrases, recognized.Text) < Plugin.trapsConfidence.Value || !listening) return;
+                    if (StartOfRound.Instance.localPlayerController == null) return;
+                    if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                     {
-                        if (StartOfRound.Instance.localPlayerController == null) return;
-                        if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
+                        if (ModChecker.hasMalfunctions)
                         {
-                            if (ModChecker.hasMalfunctions)
+                            if (malfunctionPowerTriggered)
                             {
-                                if (malfunctionPowerTriggered)
-                                {
-                                    PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
-                                if (malfunctionDistortionTriggered)
-                                {
-                                    PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
-                                    return;
-                                }
+                                PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
+                                return;
                             }
-                            DisableAllSpikeTraps();
+                            if (malfunctionDistortionTriggered)
+                            {
+                                PlayRandomLine("CommsMalfunction", Random.Range(1, 4));
+                                return;
+                            }
                         }
+                        DisableAllSpikeTraps();
                     }
                 });
             }
@@ -2909,18 +2734,12 @@ namespace LC_VEGA
                     string[] phrases = Plugin.moonsInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                     foreach (var phrase in phrases)
                     {
-                        string fullCommand = phrase + " " + name;
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-                    Voice.RegisterPhrases(phrases);
-                    Voice.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        if (!recognized.Message.Contains(name)) return;
-                        if (recognized.Confidence > Plugin.infoConfidence.Value && listening)
+                        Speech.RegisterCustomHandler((obj, recognized) =>
                         {
-                            PlayLine(GetMoonAudioClipName(name));
-                        }
-                    });
+                            if (!recognized.Text.Contains(name, StringComparison.OrdinalIgnoreCase)) return;
+                            if (Speech.GetSimilarity(phrase, recognized.Text) >= Plugin.infoConfidence.Value && listening) PlayLine(GetMoonAudioClipName(name));
+                        });
+                    }
                 }
             }
         }
@@ -2935,45 +2754,12 @@ namespace LC_VEGA
                     string[] phrases = Plugin.bestiaryEntriesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                     foreach (var phrase in phrases)
                     {
-                        string fullCommand = phrase + " " + name + " entry";
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-                    Voice.RegisterPhrases(phrases);
-                    Voice.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        if (!recognized.Message.Contains(name) || !recognized.Message.Contains("entry")) return;
-                        if (recognized.Confidence > Plugin.infoConfidence.Value && listening)
+                        Speech.RegisterCustomHandler((obj, recognized) =>
                         {
-                            if (TerminalPatch.scannedEnemyIDs.Contains(enemies.First(key => key.Value == GetEntityAudioClipName(name)).Key))
+                            if (!recognized.Text.Contains(name, StringComparison.OrdinalIgnoreCase) || !recognized.Text.Contains("entry", StringComparison.OrdinalIgnoreCase)) return;
+                            if (Speech.GetSimilarity(phrase, recognized.Text) >= Plugin.infoConfidence.Value && listening)
                             {
-                                PlayLine(GetEntityAudioClipName(name));
-                            }
-                            else
-                            {
-                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
-                            }
-                        }
-                    });
-                }
-
-                // Modded
-                foreach (var name in moddedEntityNames)
-                {
-                    string[] phrases = Plugin.bestiaryEntriesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var phrase in phrases)
-                    {
-                        string fullCommand = phrase + " " + name + " entry";
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-                    Voice.RegisterPhrases(phrases);
-                    Voice.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        if (!recognized.Message.Contains(name) || !recognized.Message.Contains("entry")) return;
-                        if (recognized.Confidence > Plugin.infoConfidence.Value && listening)
-                        {
-                            try
-                            {
-                                if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals(GetEntityAudioClipName(name))).creatureFileID))
+                                if (TerminalPatch.scannedEnemyIDs.Contains(enemies.First(key => key.Value == GetEntityAudioClipName(name)).Key))
                                 {
                                     PlayLine(GetEntityAudioClipName(name));
                                 }
@@ -2982,12 +2768,39 @@ namespace LC_VEGA
                                     PlayRandomLine("NoEntityData", Random.Range(1, 5));
                                 }
                             }
-                            catch (Exception)
+                        });
+                    }
+                }
+
+                // Modded
+                foreach (var name in moddedEntityNames)
+                {
+                    string[] phrases = Plugin.bestiaryEntriesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var phrase in phrases)
+                    {
+                        Speech.RegisterCustomHandler((obj, recognized) =>
+                        {
+                            if (!recognized.Text.Contains(name, StringComparison.OrdinalIgnoreCase) || !recognized.Text.Contains("entry", StringComparison.OrdinalIgnoreCase)) return;
+                            if (Speech.GetSimilarity(phrase, recognized.Text) >= Plugin.infoConfidence.Value && listening)
                             {
-                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
+                                try
+                                {
+                                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals(GetEntityAudioClipName(name))).creatureFileID))
+                                    {
+                                        PlayLine(GetEntityAudioClipName(name));
+                                    }
+                                    else
+                                    {
+                                        PlayRandomLine("NoEntityData", Random.Range(1, 5));
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    PlayRandomLine("NoEntityData", Random.Range(1, 5));
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         }
@@ -3002,45 +2815,12 @@ namespace LC_VEGA
                     string[] phrases = Plugin.creatureInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
                     foreach (var phrase in phrases)
                     {
-                        string fullCommand = phrase + " " + name + "s";
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-                    Voice.RegisterPhrases(phrases);
-                    Voice.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        if (!recognized.Message.Contains(name)) return;
-                        if (recognized.Confidence > Plugin.infoConfidence.Value && listening)
+                        Speech.RegisterCustomHandler((obj, recognized) =>
                         {
-                            if (TerminalPatch.scannedEnemyIDs.Contains(enemies.First(key => key.Value == GetEntityAudioClipName(name)).Key))
+                            if (!recognized.Text.Contains(name, StringComparison.OrdinalIgnoreCase)) return;
+                            if (Speech.GetSimilarity(phrase, recognized.Text) >= Plugin.infoConfidence.Value && listening)
                             {
-                                PlayLine(GetEntityAudioClipName(name) + "Short");
-                            }
-                            else
-                            {
-                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
-                            }
-                        }
-                    });
-                }
-
-                // Modded
-                foreach (var name in moddedEntityNames)
-                {
-                    string[] phrases = Plugin.creatureInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var phrase in phrases)
-                    {
-                        string fullCommand = phrase + " " + name + "s";
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-                    Voice.RegisterPhrases(phrases);
-                    Voice.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        if (!recognized.Message.Contains(name)) return;
-                        if (recognized.Confidence > Plugin.infoConfidence.Value && listening)
-                        {
-                            try
-                            {
-                                if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals(GetEntityAudioClipName(name))).creatureFileID))
+                                if (TerminalPatch.scannedEnemyIDs.Contains(enemies.First(key => key.Value == GetEntityAudioClipName(name)).Key))
                                 {
                                     PlayLine(GetEntityAudioClipName(name) + "Short");
                                 }
@@ -3049,12 +2829,40 @@ namespace LC_VEGA
                                     PlayRandomLine("NoEntityData", Random.Range(2, 5));
                                 }
                             }
-                            catch (Exception)
+                        });
+                    }
+
+                }
+
+                // Modded
+                foreach (var name in moddedEntityNames)
+                {
+                    string[] phrases = Plugin.creatureInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var phrase in phrases)
+                    {
+                        Speech.RegisterCustomHandler((obj, recognized) =>
+                        {
+                            if (!recognized.Text.Contains(name, StringComparison.OrdinalIgnoreCase)) return;
+                            if (Speech.GetSimilarity(phrase, recognized.Text) >= Plugin.infoConfidence.Value && listening)
                             {
-                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
+                                try
+                                {
+                                    if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles.Find(file => file.creatureName.Equals(GetEntityAudioClipName(name))).creatureFileID))
+                                    {
+                                        PlayLine(GetEntityAudioClipName(name) + "Short");
+                                    }
+                                    else
+                                    {
+                                        PlayRandomLine("NoEntityData", Random.Range(2, 5));
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    PlayRandomLine("NoEntityData", Random.Range(2, 5));
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         }
