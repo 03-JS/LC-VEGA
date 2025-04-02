@@ -3,6 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using LC_VEGA.Patches;
+using PySpeech;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -178,7 +179,7 @@ namespace LC_VEGA
         public static ConfigEntry<string> gratitudeCommands;
 
         private readonly Harmony harmony = new Harmony(modGUID);
-        private static Plugin Instance;
+        public static Plugin Instance;
         internal static ManualLogSource mls;
 
         void Awake()
@@ -242,7 +243,6 @@ namespace LC_VEGA
             mls.LogInfo("Looking for compatible mods...");
 
             if (ModChecker.CheckForMod("BMX.LobbyCompatibility")) ModChecker.RegisterPlugin(modGUID, modVersion);
-            ModChecker.hasVoiceRecognitionAPI = ModChecker.CheckForMod("me.loaforc.voicerecognitionapi");
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
             ModChecker.hasFacilityMeltdown = ModChecker.CheckForMod("me.loaforc.facilitymeltdown");

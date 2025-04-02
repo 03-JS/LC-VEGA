@@ -10,7 +10,6 @@ namespace LC_VEGA
 {
     internal class ModChecker
     {   
-        public static bool hasVoiceRecognitionAPI;
         public static bool hasToilHead;
         public static bool hasMalfunctions;
         public static bool hasDiversity;
