@@ -361,97 +361,97 @@ namespace LC_VEGA
             gratitudeConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Gratitude", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Thank you' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             stopConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Stop talking", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Stop talking' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             secureDoorsConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Secure doors", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the voice commands used to interact with secure doors. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             turretsConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Turrets", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable turrets. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             landminesConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Landmines", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable landmines. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             trapsConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Spike traps", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable spike traps. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             signalsConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Signal translator", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the voice commands related to the Signal Translator. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             teleportConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Teleport", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Teleport' and 'Radar Switch' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             shipConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Ship", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to the ship's lights, doors and shutters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             miscConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Miscellaneous", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to the Advanced Scanner and Radar Boosters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             upgradesConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Ship upgrades", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to LGU. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             crewStatusConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Crew Status", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Crew status' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             crewInShipConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Crew in ship", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Crew in ship' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             scrapLeftConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Scrap / items left", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Scrap / items left' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             infoConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Info", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to information about Entities, Moons, Weather phenomena and the current Time of day. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             manualActivationConfidence = Config.Bind(
                 "Confidence", // Config section
                 "Manual Activation", // Key of this config
-                0.7f, // Default value
+                0.5f, // Default value
                 new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Manual Activation' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
 
