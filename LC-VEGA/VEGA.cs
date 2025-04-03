@@ -11,7 +11,6 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
-// using VoiceRecognitionAPI;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 

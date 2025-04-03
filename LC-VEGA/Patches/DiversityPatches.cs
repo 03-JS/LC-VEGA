@@ -31,6 +31,7 @@ namespace LC_VEGA.Patches
         [HarmonyPostfix]
         static void ReplyToIntro(StartOfRound __instance)
         {
+            if (!Configuration.speaker.Value) return;
             if (Plugin.diversitySpeaker.Value && __instance.shipIntroSpeechSFX.name.Contains("Welcome_"))
             {
                 if (SaveManager.firstTimeDiversity && firstTimeWelcome)
