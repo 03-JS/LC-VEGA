@@ -1643,6 +1643,17 @@
             }
         },
         {
+            "audio": "ManeaterScan",
+            "subtitles": {
+                "Maneaters are deceptively cute indoor creatures that will follow the first person they come across.": 0.0,
+                "They require constant care and will transform into a large, strong, and swift beast if upset.": 0.0,
+                "To prevent this from happening, you have to grab a Maneater while it is crying and rock it until it stops.": 0.0,
+                "If it pukes, it means it is close to transforming. If that happens, it will try to kill the nearest person by lunging at them.": 0.0,
+                "After that, they will begin stalking you and your fellow employees as long as any of you are present in the moon's interior.": 0.0,
+                "Because of their indoor nature, Maneaters do not like to be brought outside.": 0.0
+            }
+        },
+        {
             "audio": "ManticoilScan",
             "subtitles": {
                 "The creature you just scanned is called a Manticoil.": 0.0,
@@ -1941,6 +1952,18 @@
                 "Roaming Locusts are completely harmless creatures.": 0.0,
                 "As their name rightfully indicates, they like to roam around the exterior of a lot of different moons.": 3.026,
                 "Roaming Locusts are almost never grounded and always stay close together, but will quickly disperse when a predator disrupts them": 8.333
+            }
+        },
+        {
+            "audio": "ManeaterShort",
+            "subtitles": {
+                "The creature you scanned is called a Maneater, a deceptively cute indoor creature that will follow the first person they come across.": 0.0,
+                "It requires constant care and will transform into a large, strong, and swift beast if upset.": 0.0,
+                "To prevent this from happening, grab it while it is crying and rock it until it stops.": 0.0,
+                "If the Maneater pukes, it means it is close to transforming. If that happens, the Maneater": 0.0,
+                "will try to kill the nearest person by lunging at them. After that, they will begin stalking": 0.0,
+                "you and your fellow employees as long as any of you are present in the moon's interior.": 0.0,
+                "No matter what happens, do not bring it outside. It does not like the sunlight.": 0.0
             }
         },
         {
