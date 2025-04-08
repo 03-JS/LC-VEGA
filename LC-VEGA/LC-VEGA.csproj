@@ -22,9 +22,6 @@
     <Reference Include="com.github.zehsteam.ToilHead">
       <HintPath>D:\Descargas\com.github.zehsteam.ToilHead.dll</HintPath>
     </Reference>
-    <Reference Include="den.meltdownchance">
-      <HintPath>D:\Descargas\den.meltdownchance.dll</HintPath>
-    </Reference>
     <Reference Include="Diversity Remastered">
       <HintPath>D:\Descargas\Diversity Remastered.dll</HintPath>
     </Reference>
