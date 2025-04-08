@@ -267,8 +267,9 @@ namespace LC_VEGA
             "The Lost",
             "Maggie",
             "Shrimp",
-            "The Fiend",
-            "Fiend"
+            // "The Fiend",
+            // "Fiend"
+            // saved for a later date
         };
 
         internal static string GetEntityAudioClipName(string entityName)
@@ -336,6 +337,8 @@ namespace LC_VEGA
                 case "Kidnapper":
                 case "Fox":
                     return "KidnapperFox";
+                case "Baby":
+                    return "Maneater";
                 case "Redwood Giant":
                 case "Redwood":
                     return "RedWood Giant";
@@ -355,8 +358,8 @@ namespace LC_VEGA
                     return "Moving Turret";
                 case "The Lost":
                     return "Maggie";
-                case "Fiend":
-                    return "The Fiend";
+                // case "Fiend":
+                //     return "The Fiend";
                 default:
                     return entityName;
             }

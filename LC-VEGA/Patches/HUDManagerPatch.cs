@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using FacilityMeltdown.API;
+using HarmonyLib;
+using MeltdownChance;
 using System.Linq;
 using UnityEngine;
 
@@ -40,33 +42,29 @@ namespace LC_VEGA.Patches
             {
                 if (ModChecker.hasFacilityMeltdown)
                 {
-                    if (StartOfRound.Instance.localPlayerController.isInsideFactory)
+                    MeltdownAPI.RegisterMeltdownListener(() =>
                     {
-                        VEGA.PlayLine("FacilityMeltdownInside", 3.65f);
+                        Plugin.mls.LogInfo("Meltdown started");
+                        if (StartOfRound.Instance.localPlayerController.isInsideFactory) VEGA.PlayLine("FacilityMeltdownInside", 3.65f);
+                        else VEGA.PlayLine("FacilityMeltdownOutside", 3.65f);
+                    });
+                    if (MeltdownAPI.MeltdownStarted) return;
+                }
+                try
+                {
+                    if (StartOfRound.Instance.localPlayerController.ItemSlots.Any(item => item.GetType() == typeof(LungProp)))
+                    {
+                        if (Random.Range(0, 10) == 0) VEGA.PlayRandomLine("ApparatusPulledEasterEgg", Random.Range(1, 3), 3.65f);
+                        VEGA.PlayLine("ApparatusPulled", 3.65f);
                     }
                     else
                     {
-                        VEGA.PlayLine("FacilityMeltdownOutside", 3.65f);
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        if (StartOfRound.Instance.localPlayerController.ItemSlots.Any(item => item.GetType() == typeof(LungProp)))
-                        {
-                            if (Random.Range(0, 10) == 0) VEGA.PlayRandomLine("ApparatusPulledEasterEgg", Random.Range(1, 3), 3.65f);
-                            VEGA.PlayLine("ApparatusPulled", 3.65f);
-                        }
-                        else
-                        {
-                            VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 3.65f);
-                        }
-                    }
-                    catch (System.Exception)
-                    {
                         VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 3.65f);
                     }
+                }
+                catch (System.Exception)
+                {
+                    VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 3.65f);
                 }
             }
         }

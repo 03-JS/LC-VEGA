@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1412893638
+CRC: 1814273067
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7d0f1acf82ed99f628236ebfecad64ee
+    Hash: 6d26c753c4c6853574a039f5a6b82758
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 7d0f1acf82ed99f628236ebfecad64ee
+    Hash: 6d26c753c4c6853574a039f5a6b82758
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -37,7 +37,6 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/BrackenShort.ogg
 - Assets/LC-VEGA/Voice lines/Mods/ShipWindows/CloseShipShutters.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Doors/ShipDoorsOpened.ogg
-- Assets/LC-VEGA/Voice lines/Mods/Meltdown/FacilityMeltdownInside.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Weather/Rainy-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Weather/Rainy-1.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Slime.ogg
@@ -119,6 +118,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Doors/ShipDoorsClosed.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/RedBeesScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ForestKeeperShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/ID/ManeaterID.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-2.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Stalker.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/ID/ShrimpID.ogg
@@ -261,6 +261,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/NutcrackerScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SlimeScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Reports & Scans/CrewInShipSolo.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Meltdown/FacilityMeltdownInside.ogg
 - Assets/LC-VEGA/Voice lines/Mods/LGU/Discombobulate.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Diversity/Speaker/FirstTimeReply.ogg
 - Assets/LC-VEGA/Voice lines/Mods/ShipWindows/ShuttersAlreadyClosed.ogg
@@ -297,10 +298,11 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Radar booster/NoBoosters.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Time/Midnight.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/ID/BaboonHawkID.ogg
-- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Shy guyScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/ManeaterScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/YippeeBugShort.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/RedBeesShort.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Weather/Stormy-1.ogg
+- Assets/LC-VEGA/Voice lines/Mods/Entities/Scan/Shy guyScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/VainShroud.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/ID/VainShroudID.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Ship/NoTeleporter-2.ogg
@@ -318,6 +320,7 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Moons/7-DIN.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/RedWood Giant.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/VainShroudShort.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Maneater.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/NoVisibleTurret.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Doors/ShipDoorsAlreadyOpen.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Reports & Scans/GettingCrewInShip.ogg
@@ -338,9 +341,10 @@ Assets:
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/Bracken.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Diversity/Speaker/Reply-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/LocustsScan.ogg
-- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SnareFleaScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Summary/ManeaterShort.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Hazards/TrapDisabled-2.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SandwormScan.ogg
+- Assets/LC-VEGA/Voice lines/Vanilla/Entities/Scan/SnareFleaScan.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/ID/BarberID.ogg
 - Assets/LC-VEGA/Voice lines/Vanilla/Entities/Bestiary/OldBird.ogg
 - Assets/LC-VEGA/Voice lines/Mods/Entities/Bestiary/Peepers.ogg
