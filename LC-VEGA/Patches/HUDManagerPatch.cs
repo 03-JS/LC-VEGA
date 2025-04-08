@@ -1,6 +1,5 @@
 ﻿using FacilityMeltdown.API;
 using HarmonyLib;
-using MeltdownChance;
 using System.Linq;
 using UnityEngine;
 

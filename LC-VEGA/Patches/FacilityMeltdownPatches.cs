@@ -1,6 +1,5 @@
 ﻿using FacilityMeltdown.MeltdownSequence.Behaviours;
 using HarmonyLib;
-using MeltdownChance;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
