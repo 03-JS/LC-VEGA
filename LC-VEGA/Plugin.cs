@@ -3,7 +3,6 @@ using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
 using LC_VEGA.Patches;
-using PySpeech;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -229,6 +228,7 @@ namespace LC_VEGA
             harmony.PatchAll(typeof(TerminalPatch));
             harmony.PatchAll(typeof(TimeOfDayPatch));
             harmony.PatchAll(typeof(HUDManagerPatch));
+            harmony.PatchAll(typeof(ApparatusPatch));
             harmony.PatchAll(typeof(GeneralPatches));
             if (patchReadInput.Value) harmony.PatchAll(typeof(ReadInputPatch));
             if (ModChecker.hasMalfunctions) harmony.PatchAll(typeof(MalfunctionsPatches));
