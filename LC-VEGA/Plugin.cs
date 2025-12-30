@@ -14,21 +14,23 @@ namespace LC_VEGA
 {
     [BepInPlugin(modGUID, modName, modVersion)]
     [BepInDependency("JS03.PySpeech", DependencyFlags.HardDependency)]
-    [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.SoftDependency)]
-    [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.SoftDependency)]
     [BepInDependency("com.rune580.LethalCompanyInputUtils", DependencyFlags.HardDependency)]
+    [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.SoftDependency)]
+    /*
+    [BepInDependency("me.loaforc.voicerecognitionapi", DependencyFlags.SoftDependency)]
     [BepInDependency("me.loaforc.facilitymeltdown", DependencyFlags.SoftDependency)]
     [BepInDependency("com.zealsprince.malfunctions", DependencyFlags.SoftDependency)]
     [BepInDependency("com.github.zehsteam.ToilHead", DependencyFlags.SoftDependency)]
     [BepInDependency("Chaos.Diversity", DependencyFlags.SoftDependency)]
     [BepInDependency("TestAccount666.ShipWindows", DependencyFlags.SoftDependency)]
     [BepInDependency("com.malco.lethalcompany.moreshipupgrades", DependencyFlags.SoftDependency)]
+     */
     [BepInDependency("me.eladnlg.customhud", DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
         private const string modGUID = "JS03.LC-VEGA";
         private const string modName = "LC-VEGA";
-        private const string modVersion = "4.0.0";
+        private const string modVersion = "4.0.1";
 
         internal static AssetBundle assetBundle;
 
@@ -231,11 +233,13 @@ namespace LC_VEGA
             harmony.PatchAll(typeof(ApparatusPatch));
             harmony.PatchAll(typeof(GeneralPatches));
             if (patchReadInput.Value) harmony.PatchAll(typeof(ReadInputPatch));
+            /*
             if (ModChecker.hasMalfunctions) harmony.PatchAll(typeof(MalfunctionsPatches));
             if (ModChecker.hasDiversity) harmony.PatchAll(typeof(DiversityPatches));
             if (ModChecker.hasShipWindows) harmony.PatchAll(typeof(ShipWindowsPatches));
             if (ModChecker.hasLGU) harmony.PatchAll(typeof(LGUPatches));
             if (ModChecker.hasFacilityMeltdown) harmony.PatchAll(typeof(FacilityMeltdownPatches));
+            */        
         }
 
         internal void CheckInstalledMods()
@@ -243,12 +247,14 @@ namespace LC_VEGA
             mls.LogInfo("Looking for compatible mods...");
 
             if (ModChecker.CheckForMod("BMX.LobbyCompatibility")) ModChecker.RegisterPlugin(modGUID, modVersion);
+            /*
             ModChecker.hasToilHead = ModChecker.CheckForMod("com.github.zehsteam.ToilHead");
             ModChecker.hasMalfunctions = ModChecker.CheckForMod("com.zealsprince.malfunctions");
             ModChecker.hasFacilityMeltdown = ModChecker.CheckForMod("me.loaforc.facilitymeltdown");
             ModChecker.hasDiversity = ModChecker.CheckForMod("Chaos.Diversity");
             ModChecker.hasShipWindows = ModChecker.CheckForMod("TestAccount666.ShipWindows");
             ModChecker.hasLGU = ModChecker.CheckForMod("com.malco.lethalcompany.moreshipupgrades");
+            */
             ModChecker.hasEladsHUD = ModChecker.CheckForMod("me.eladnlg.customhud");
         }
 
@@ -268,7 +274,7 @@ namespace LC_VEGA
                 SaveManager.hadDiversity = SaveManager.GetValueFromIndex(2);
                 mls.LogDebug("Had Diversity installed? -> " + SaveManager.hadDiversity);
 
-                // This is so reinstalls / reenables of the mod trigger the first time replies as well
+                // This is so reinstalling / re-enabling the mod trigger the first time replies as well
                 if (!SaveManager.firstTimeDiversity && !SaveManager.hadDiversity)
                 {
                     SaveManager.firstTimeDiversity = true;
@@ -332,6 +338,7 @@ namespace LC_VEGA
             );
 
             // Mod Interactions
+            /*
             malfunctionWarnings = Config.Bind(
                 "Mod Interactions", // Config section
                 "Malfunction Warnings", // Key of this config
@@ -354,105 +361,140 @@ namespace LC_VEGA
                 "Mod Interactions", // Config section
                 "Reply chance", // Key of this config
                 40, // Default value
-                new ConfigDescription("Changes how likely it is for VEGA to reply to the Diversity speaker.\n0 means it will never reply, 100 means it will always reply.", new AcceptableValueRange<int>(0, 100)) // Description
+                new ConfigDescription(
+                    "Changes how likely it is for VEGA to reply to the Diversity speaker.\n0 means it will never reply, 100 means it will always reply.",
+                    new AcceptableValueRange<int>(0, 100)) // Description
             );
+            */
 
             // Confidence
             gratitudeConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Gratitude", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Thank you' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the 'Thank you' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             stopConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Stop talking", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Stop talking' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the 'Stop talking' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             secureDoorsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Secure doors", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the voice commands used to interact with secure doors. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the voice commands used to interact with secure doors. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             turretsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Turrets", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable turrets. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize voice commands used to disable turrets. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             landminesConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Landmines", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable landmines. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize voice commands used to disable landmines. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             trapsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Spike traps", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands used to disable spike traps. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize voice commands used to disable spike traps. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             signalsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Signal translator", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the voice commands related to the Signal Translator. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the voice commands related to the Signal Translator. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             teleportConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Teleport", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Teleport' and 'Radar Switch' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the 'Teleport' and 'Radar Switch' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             shipConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Ship", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to the ship's lights, doors and shutters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize voice commands related to the ship's lights, doors and shutters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             miscConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Miscellaneous", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to the Advanced Scanner and Radar Boosters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize voice commands related to the Advanced Scanner and Radar Boosters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             upgradesConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Ship upgrades", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to LGU. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize voice commands related to LGU. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             crewStatusConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Crew Status", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Crew status' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the 'Crew status' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             crewInShipConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Crew in ship", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Crew in ship' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the 'Crew in ship' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             scrapLeftConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Scrap / items left", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Scrap / items left' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the 'Scrap / items left' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             infoConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Info", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize voice commands related to information about Entities, Moons, Weather phenomena and the current Time of day. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize voice commands related to information about Entities, Moons, Weather phenomena and the current Time of day. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             manualActivationConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Manual Activation", // Key of this config
                 0.5f, // Default value
-                new ConfigDescription("Determines how difficult it is for VEGA to recognize the 'Manual Activation' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize the 'Manual Activation' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
 
             // Sound settings
@@ -460,7 +502,8 @@ namespace LC_VEGA
                 "Sound Settings", // Config section
                 "Volume", // Key of this config
                 1.0f, // Default value
-                new ConfigDescription("Changes how loud VEGA is.", new AcceptableValueRange<float>(0f, 1.0f)) // Description
+                new ConfigDescription("Changes how loud VEGA is.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             volume.SettingChanged += (obj, args) =>
             {
@@ -502,6 +545,7 @@ namespace LC_VEGA
                 {
                     VEGA.PlaySFX("Deactivate");
                 }
+
                 VEGA.listening = enableManualListeningAuto.Value;
             };
 
@@ -510,12 +554,10 @@ namespace LC_VEGA
                 "Advanced Scanner", // Config section
                 "Range", // Key of this config
                 29f, // Default value
-                new ConfigDescription("Changes how far the Advanced Scanner can reach (in meters).", new AcceptableValueRange<float>(1f, 29f)) // Description
+                new ConfigDescription("Changes how far the Advanced Scanner can reach (in meters).",
+                    new AcceptableValueRange<float>(1f, 29f)) // Description
             );
-            scannerRange.SettingChanged += (obj, args) =>
-            {
-                VEGA.scannerRange = scannerRange.Value;
-            };
+            scannerRange.SettingChanged += (obj, args) => { VEGA.scannerRange = scannerRange.Value; };
             enableAdvancedScannerAuto = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Enable the Advanced Scanner automatically", // Key of this config
@@ -527,8 +569,10 @@ namespace LC_VEGA
                 VEGA.advancedScannerActive = enableAdvancedScannerAuto.Value;
                 if (!VEGA.advancedScannerActive)
                 {
-                    if (HUDManagerPatch.entities != null) HUDManagerPatch.entities.GetComponent<TextMeshProUGUI>().SetText("");
-                    if (HUDManagerPatch.items != null) HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
+                    if (HUDManagerPatch.entities != null)
+                        HUDManagerPatch.entities.GetComponent<TextMeshProUGUI>().SetText("");
+                    if (HUDManagerPatch.items != null)
+                        HUDManagerPatch.items.GetComponent<TextMeshProUGUI>().SetText("");
                 }
             };
             detectMasked = Config.Bind(
@@ -543,60 +587,42 @@ namespace LC_VEGA
                 DisplayModes.Default, // Default value
                 "Changes how the Advanced Scanner displays information." // Description
             );
-            infoDisplayMode.SettingChanged += (obj, args) =>
-            {
-                VEGA.UpdateScannerDisplayMode();
-            };
+            infoDisplayMode.SettingChanged += (obj, args) => { VEGA.UpdateScannerDisplayMode(); };
             scale = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Scale", // Key of this config
                 1f, // Default value
                 "The size of the Advanced Scanner on the screen." // Description
             );
-            scale.SettingChanged += (obj, args) =>
-            {
-                HUDManagerPatch.UpdateScannerPosAndScale();
-            };
+            scale.SettingChanged += (obj, args) => { HUDManagerPatch.UpdateScannerPosAndScale(); };
             horizontalPosition = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Horizontal position", // Key of this config
                 45f, // Default value
                 "The horizontal position of the Advanced Scanner on the screen." // Description
             );
-            horizontalPosition.SettingChanged += (obj, args) =>
-            {
-                HUDManagerPatch.UpdateScannerPosAndScale();
-            };
+            horizontalPosition.SettingChanged += (obj, args) => { HUDManagerPatch.UpdateScannerPosAndScale(); };
             verticalPosition = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Vertical position", // Key of this config
                 180f, // Default value
                 "The vertical position of the Advanced Scanner on the screen." // Description
             );
-            verticalPosition.SettingChanged += (obj, args) =>
-            {
-                HUDManagerPatch.UpdateScannerPosAndScale();
-            };
+            verticalPosition.SettingChanged += (obj, args) => { HUDManagerPatch.UpdateScannerPosAndScale(); };
             horizontalGap = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Horizontal gap", // Key of this config
                 0f, // Default value
                 "The horizontal gap between the nearby Entities and Items on the screen." // Description
             );
-            horizontalGap.SettingChanged += (obj, args) =>
-            {
-                HUDManagerPatch.UpdateScannerPosAndScale();
-            };
+            horizontalGap.SettingChanged += (obj, args) => { HUDManagerPatch.UpdateScannerPosAndScale(); };
             verticalGap = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Vertical gap", // Key of this config
                 50f, // Default value
                 "The vertical gap between the nearby Entities and Items on the screen." // Description
             );
-            verticalGap.SettingChanged += (obj, args) =>
-            {
-                HUDManagerPatch.UpdateScannerPosAndScale();
-            };
+            verticalGap.SettingChanged += (obj, args) => { HUDManagerPatch.UpdateScannerPosAndScale(); };
             entitiesTextLength = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Entities text length", // Key of this config
@@ -605,8 +631,11 @@ namespace LC_VEGA
             );
             entitiesTextLength.SettingChanged += (obj, args) =>
             {
-                float entitiesLength = ModChecker.hasEladsHUD ? entitiesTextLength.Value + 100f : entitiesTextLength.Value;
-                if (HUDManagerPatch.entities != null) HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta = new Vector2(entitiesLength, HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta.y);
+                float entitiesLength =
+                    ModChecker.hasEladsHUD ? entitiesTextLength.Value + 100f : entitiesTextLength.Value;
+                if (HUDManagerPatch.entities != null)
+                    HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta = new Vector2(entitiesLength,
+                        HUDManagerPatch.entities.GetComponent<RectTransform>().sizeDelta.y);
             };
             itemsTextLength = Config.Bind(
                 "Advanced Scanner", // Config section
@@ -617,7 +646,9 @@ namespace LC_VEGA
             itemsTextLength.SettingChanged += (obj, args) =>
             {
                 float itemsLength = ModChecker.hasEladsHUD ? itemsTextLength.Value + 100f : itemsTextLength.Value;
-                if (HUDManagerPatch.items != null) HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta = new Vector2(itemsLength, HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta.y);
+                if (HUDManagerPatch.items != null)
+                    HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta = new Vector2(itemsLength,
+                        HUDManagerPatch.items.GetComponent<RectTransform>().sizeDelta.y);
             };
             entitiesAlignment = Config.Bind(
                 "Advanced Scanner", // Config section
@@ -651,7 +682,8 @@ namespace LC_VEGA
                 {
                     RectTransform rectTransform = VEGA.entitiesTextComponent.GetComponent<RectTransform>();
                     float tilt = ModChecker.hasEladsHUD ? entitiesTilt.Value - 17f : entitiesTilt.Value;
-                    rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, -tilt, rectTransform.localRotation.z);
+                    rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, -tilt,
+                        rectTransform.localRotation.z);
                 }
             };
             itemsTilt = Config.Bind(
@@ -666,7 +698,8 @@ namespace LC_VEGA
                 {
                     RectTransform rectTransform = VEGA.itemsTextComponent.GetComponent<RectTransform>();
                     float tilt = ModChecker.hasEladsHUD ? itemsTilt.Value - 17f : itemsTilt.Value;
-                    rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, -tilt, rectTransform.localRotation.z); 
+                    rectTransform.localRotation = Quaternion.Euler(rectTransform.localRotation.x, -tilt,
+                        rectTransform.localRotation.z);
                 }
             };
             clearTextColor = Config.Bind(
@@ -675,40 +708,28 @@ namespace LC_VEGA
                 Colors.Blue, // Default value
                 "Changes the color of the text under both sections of the scanner when no entities or items are within its range." // Description
             );
-            clearTextColor.SettingChanged += (obj, args) =>
-            {
-                VEGA.UpdateScannerColors();
-            };
+            clearTextColor.SettingChanged += (obj, args) => { VEGA.UpdateScannerColors(); };
             entitiesNearbyTextColor = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Entities nearby color", // Key of this config
                 Colors.Red, // Default value
                 "Changes the color of the text under the Entities section of the scanner when entities are within the scanner's range." // Description
             );
-            entitiesNearbyTextColor.SettingChanged += (obj, args) =>
-            {
-                VEGA.UpdateScannerColors();
-            };
+            entitiesNearbyTextColor.SettingChanged += (obj, args) => { VEGA.UpdateScannerColors(); };
             itemsNearbyTextColor = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Items nearby color", // Key of this config
                 Colors.Green, // Default value
                 "Changes the color of the text under the Items section of the scanner when items are within the scanner's range." // Description
             );
-            itemsNearbyTextColor.SettingChanged += (obj, args) =>
-            {
-                VEGA.UpdateScannerColors();
-            };
+            itemsNearbyTextColor.SettingChanged += (obj, args) => { VEGA.UpdateScannerColors(); };
             dataUnavailableTextColor = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Data unavailable color", // Key of this config
                 Colors.Yellow, // Default value
                 "Changes the color of the text under both sections of the scanner when a Communications or Power malfunction happen." // Description
             );
-            dataUnavailableTextColor.SettingChanged += (obj, args) =>
-            {
-                VEGA.UpdateScannerColors();
-            };
+            dataUnavailableTextColor.SettingChanged += (obj, args) => { VEGA.UpdateScannerColors(); };
             customColorCodes = Config.Bind(
                 "Advanced Scanner", // Config section
                 "Custom color codes", // Key of this config
@@ -716,10 +737,7 @@ namespace LC_VEGA
                 "Allows you to introduce your own custom color codes for the Clear, Entities, Items and Data unavailable color options." +
                 "\nMake sure you separate the different values with a comma and a blank space." // Description
             );
-            customColorCodes.SettingChanged += (obj, args) =>
-            {
-                VEGA.UpdateScannerColors();
-            };
+            customColorCodes.SettingChanged += (obj, args) => { VEGA.UpdateScannerColors(); };
 
             // Text Chat
             playerNameColors = Config.Bind(
@@ -1201,9 +1219,11 @@ namespace LC_VEGA
             }
         }
 
+        /*
         public static string GetPluginsPath()
         {
             return Instance.Info.Location.TrimEnd($"{modName}.dll".ToCharArray());
         }
+        */
     }
 }

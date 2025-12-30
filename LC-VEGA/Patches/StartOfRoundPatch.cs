@@ -155,6 +155,7 @@ namespace LC_VEGA.Patches
             VEGA.itemsTextComponent = HUDManagerPatch.items.GetComponent<TextMeshProUGUI>();
         }
 
+        /*
         [HarmonyPatch("ReviveDeadPlayers")]
         [HarmonyPrefix]
         static void ResetMalfunctionWarnings()
@@ -181,5 +182,6 @@ namespace LC_VEGA.Patches
                 }
             }
         }
+        */
     }
 }

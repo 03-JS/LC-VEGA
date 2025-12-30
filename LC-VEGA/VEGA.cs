@@ -1,14 +1,12 @@
-﻿using com.github.zehsteam.ToilHead.MonoBehaviours;
+﻿// using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
-using MoreShipUpgrades.Misc.Upgrades;
+// using MoreShipUpgrades.Misc.Upgrades;
 using PySpeech;
-using ShipWindows;
-using ShipWindows.Components;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
+// using ShipWindows.ShutterSwitch;
 using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -109,10 +107,11 @@ namespace LC_VEGA
         internal static bool noTurrets;
         internal static float distanceToTurret;
 
-        // Toils
+        /* Toil heads
         internal static bool toilDisabled;
         internal static bool noToils;
         internal static float distanceToToil;
+        */
 
         // Malfunctions
         internal static bool malfunctionPowerTriggered;
@@ -162,7 +161,7 @@ namespace LC_VEGA
             { 25, "Maneater" }
         };
 
-        // Creature file names
+        /* Modded Creature file names
         public static string[] moddedEnemies =
         {
             "RedWood Giant",
@@ -181,6 +180,7 @@ namespace LC_VEGA
             "Shrimp",
             "The Fiend"
         };
+        */
 
         // Names people may use for vanilla creatures
         private static readonly string[] vanillaEntityNames =
@@ -725,6 +725,7 @@ namespace LC_VEGA
             }
         }
 
+        /*
         internal static FollowTerminalAccessibleObjectBehaviour? GetClosestToil()
         {
             Plugin.LogToConsole("Getting closest toil", "debug");
@@ -769,7 +770,9 @@ namespace LC_VEGA
             distanceToToil = distances.Min();
             return closestToil;
         }
+        */
 
+        /*
         internal static void DisableVisibleToils()
         {
             List<FollowTerminalAccessibleObjectBehaviour> toils = new List<FollowTerminalAccessibleObjectBehaviour>();
@@ -801,6 +804,7 @@ namespace LC_VEGA
                 noVisibleTurret = true;
             }
         }
+        */
 
         internal static void DisableTurret()
         {
@@ -818,6 +822,7 @@ namespace LC_VEGA
             }
         }
 
+        /*
         internal static void DisableToil()
         {
             if (Plugin.enhancedHazardDisabling.Value)
@@ -848,6 +853,7 @@ namespace LC_VEGA
                 toilDisabled = false;
             }
         }
+        */
 
         internal static void PlayTurretAudio()
         {
@@ -862,7 +868,7 @@ namespace LC_VEGA
             {
                 PlayLine("NoVisibleTurret");
             }
-            else if (noTurrets && noToils)
+            else if (noTurrets /* && noToils */)
             {
                 PlayLine("NoTurrets");
             }
@@ -893,6 +899,7 @@ namespace LC_VEGA
             }
         }
 
+        /*
         internal static void DisableAllToils()
         {
             Plugin.LogToConsole("Disabling all toils", "debug");
@@ -903,6 +910,7 @@ namespace LC_VEGA
                 item.CallFunctionFromTerminal();
             }
         }
+        */
 
         internal static TerminalAccessibleObject? GetClosestMine()
         {
@@ -1211,6 +1219,7 @@ namespace LC_VEGA
 
         internal static void SwitchRadar(bool checkMalfunctions = true, bool checkCurrentTarget = true)
         {
+            /*
             if (ModChecker.hasMalfunctions && checkMalfunctions)
             {
                 if (malfunctionPowerTriggered)
@@ -1224,6 +1233,7 @@ namespace LC_VEGA
                     return;
                 }
             }
+            */
 
             if (checkCurrentTarget)
             {
@@ -1277,6 +1287,7 @@ namespace LC_VEGA
         {
             if (advancedScannerActive)
             {
+                /*
                 if (ModChecker.hasMalfunctions)
                 {
                     if (malfunctionDistortionTriggered || malfunctionPowerTriggered)
@@ -1286,6 +1297,7 @@ namespace LC_VEGA
                         return;
                     }
                 }
+                */
 
                 Vector3 playerPosition = StartOfRound.Instance.localPlayerController.transform.position;
 
@@ -1623,10 +1635,11 @@ namespace LC_VEGA
             HUDManager.Instance.DisplayTip(header, "<size=15>" + scrapOutsideStr + "\n" + scrapInShipStr + "</size>");
         }
 
+        /*
         internal static IEnumerator SwitchWindowShutters(bool open)
         {
-            ShipWindowShutterSwitch windowSwitch = Object.FindObjectOfType<ShipWindowShutterSwitch>();
-            if (windowSwitch != null && WindowConfig.enableShutter.Value)
+            ShutterSwitchBehavior windowSwitch = Object.FindObjectOfType<ShutterSwitchBehavior>();
+            if (windowSwitch != null)
             {
                 if (open)
                 {
@@ -1639,15 +1652,16 @@ namespace LC_VEGA
 
                 yield return new WaitForSeconds(2f);
 
-                Type shipWindowsNetworkHandlerType = Type.GetType("ShipWindows.Networking.NetworkHandler, ShipWindows");
+                Type? shipWindowsNetworkHandlerType = Type.GetType("ShipWindows.Networking.NetworkManager, ShipWindows");
                 if (shipWindowsNetworkHandlerType != null)
                 {
-                    MethodInfo windowSwitchUsedMethodInfo = shipWindowsNetworkHandlerType.GetMethod("WindowSwitchUsed");
+                    MethodInfo toggleShuttersMethodInfo = shipWindowsNetworkHandlerType.GetMethod("ToggleShutters");
                     object[] parameters = new object[] { open };
-                    windowSwitchUsedMethodInfo.Invoke(null, parameters);
+                    toggleShuttersMethodInfo.Invoke(null, parameters);
                 }
             }
         }
+        */
 
         internal static void AddNameColors()
         {
@@ -1657,14 +1671,7 @@ namespace LC_VEGA
                 string[] strings = item.Split(": ");
                 string username = strings[0];
                 string hex = strings[1];
-                if (nameColorPairs.ContainsKey(username))
-                {
-                    nameColorPairs[username] = hex;
-                }
-                else
-                {
-                    nameColorPairs.Add(username, hex);
-                }
+                nameColorPairs[username] = hex;
             }
         }
 
@@ -1716,6 +1723,7 @@ namespace LC_VEGA
             return "";
         }
 
+        /*
         public static void ResetMalfunctionValues()
         {
             Plugin.LogToConsole("Resetting malfunction values", "debug");
@@ -1731,6 +1739,7 @@ namespace LC_VEGA
             MalfunctionsPatches.playDoorWarning = true;
             MalfunctionsPatches.playLeverWarning = true;
         }
+        */
 
         public static void UpdateScannerDisplayMode()
         {
@@ -1801,7 +1810,7 @@ namespace LC_VEGA
             RegisterWeatherCommands();
             RegisterReportCommands();
             RegisterActivationCommands();
-            RegisterModdedTerminalCommands();
+            // RegisterModdedTerminalCommands();
         }
 
         internal static void RegisterActivationCommands()
@@ -1888,6 +1897,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.shipConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -1896,6 +1906,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         CoroutineManager.StartCoroutine(SwitchLights(on: true));
                     }
                 });
@@ -1906,6 +1917,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases_1, Plugin.shipConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -1914,12 +1926,13 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         CoroutineManager.StartCoroutine(SwitchLights(on: false));
                     }
                 });
             }
 
-            // Ship shutters (ShipWindows mod)
+            /* Ship shutters (ShipWindows mod)
             if (Plugin.registerInteractShipShutters.Value)
             {
                 string[] phrases = Plugin.openShuttersCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
@@ -1959,6 +1972,7 @@ namespace LC_VEGA
                     }
                 });
             }
+            */
 
             // Ship magnet for the CC
             if (Plugin.registerInteractShipMagnet.Value)
@@ -1998,6 +2012,7 @@ namespace LC_VEGA
             }
         }
 
+        /*
         internal static void RegisterModdedTerminalCommands()
         {
             // DISCOMBOBULATE!
@@ -2052,6 +2067,7 @@ namespace LC_VEGA
                 });
             }
         }
+        */
 
         internal static void RegisterWeatherCommands()
         {
@@ -2147,11 +2163,13 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.crewStatusConfidence.Value) && listening)
                     {
+                        /*
                         if (malfunctionPowerTriggered)
                         {
                             PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                             return;
                         }
+                        */
                         CoroutineManager.StartCoroutine(GetCrewStatus());
                     }
                 });
@@ -2165,11 +2183,13 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.crewInShipConfidence.Value) && listening)
                     {
+                        /*
                         if (malfunctionPowerTriggered)
                         {
                             PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                             return;
                         }
+                        */
                         CoroutineManager.StartCoroutine(GetCrewInShip());
                     }
                 });
@@ -2183,11 +2203,13 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.scrapLeftConfidence.Value) && listening)
                     {
+                        /*
                         if (malfunctionPowerTriggered)
                         {
                             PlayRandomLine("PowerMalfunction", Random.Range(1, 4));
                             return;
                         }
+                        */
                         CoroutineManager.StartCoroutine(GetScrapLeft(recognized.Text));
                     }
                 });
@@ -2205,6 +2227,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.teleportConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2218,6 +2241,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         CoroutineManager.StartCoroutine(ActivateTeleporter());
                     }
                 });
@@ -2250,6 +2274,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.secureDoorsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2263,6 +2288,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         OpenSecureDoor();
                     }
                 });
@@ -2273,6 +2299,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases_1, Plugin.secureDoorsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2286,6 +2313,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         CloseSecureDoor();
                     }
                 });
@@ -2299,6 +2327,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.secureDoorsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2312,6 +2341,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         OpenAllDoors();
                     }
                 });
@@ -2322,6 +2352,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases_1, Plugin.secureDoorsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2335,6 +2366,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         CloseAllDoors();
                     }
                 });
@@ -2353,6 +2385,7 @@ namespace LC_VEGA
                         HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                         if (shipDoors != null)
                         {
+                            /*
                             if (ModChecker.hasMalfunctions)
                             {
                                 if (malfunctionPowerTriggered)
@@ -2366,6 +2399,7 @@ namespace LC_VEGA
                                     return;
                                 }
                             }
+                            */
 
                             if (!shipDoors.shipDoorsAnimator.GetBool("Closed"))
                             {
@@ -2395,6 +2429,7 @@ namespace LC_VEGA
                         HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                         if (shipDoors != null)
                         {
+                            /*
                             if (ModChecker.hasMalfunctions)
                             {
                                 if (malfunctionPowerTriggered)
@@ -2403,6 +2438,7 @@ namespace LC_VEGA
                                     return;
                                 }
                             }
+                            */
 
                             if (shipDoors.shipDoorsAnimator.GetBool("Closed"))
                             {
@@ -2445,6 +2481,7 @@ namespace LC_VEGA
                             if (StartOfRound.Instance.localPlayerController == null) return;
                             if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
                             {
+                                /*
                                 if (ModChecker.hasMalfunctions)
                                 {
                                     if (malfunctionPowerTriggered)
@@ -2458,6 +2495,7 @@ namespace LC_VEGA
                                         return;
                                     }
                                 }
+                                */
                                 SignalTranslator translator = Object.FindObjectOfType<SignalTranslator>();
                                 if (translator == null)
                                 {
@@ -2485,6 +2523,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.miscConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2498,6 +2537,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         InteractWithBooster(ping: true);
                     }
                 });
@@ -2508,6 +2548,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases_1, Plugin.miscConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2521,6 +2562,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         InteractWithBooster(ping: false);
                     }
                 });
@@ -2539,6 +2581,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.turretsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2552,20 +2595,22 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         turretDisabled = false;
                         noVisibleTurret = false;
                         // noTurretNearby = false;
                         noTurrets = false;
-                        noToils = true;
-                        if (ModChecker.hasToilHead)
-                        {
-                            noToils = false;
-                            DisableToil();
-                        }
-                        if (!toilDisabled || !ModChecker.hasToilHead)
-                        {
-                            DisableTurret();
-                        }
+                        // noToils = true;
+                        // if (ModChecker.hasToilHead)
+                        // {
+                        //     noToils = false;
+                        //     DisableToil();
+                        // }
+                        // if (!toilDisabled || !ModChecker.hasToilHead)
+                        // {
+                        //     DisableTurret();
+                        // }
+                        DisableTurret();
                         PlayTurretAudio();
                     }
                 });
@@ -2579,6 +2624,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.turretsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2592,11 +2638,12 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         turretsExist = false;
-                        if (ModChecker.hasToilHead)
-                        {
-                            DisableAllToils();
-                        }
+                        // if (ModChecker.hasToilHead)
+                        // {
+                        //     DisableAllToils();
+                        // }
                         DisableAllTurrets();
                     }
                 });
@@ -2612,6 +2659,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.landminesConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2625,6 +2673,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         DisableMine();
                     }
                 });
@@ -2638,6 +2687,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.landminesConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2651,6 +2701,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         DisableAllMines();
                     }
                 });
@@ -2666,6 +2717,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.trapsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2679,6 +2731,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         DisableSpikeTrap();
                     }
                 });
@@ -2692,6 +2745,7 @@ namespace LC_VEGA
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && Speech.IsAboveThreshold(phrases, Plugin.trapsConfidence.Value) && listening)
                     {
+                        /*
                         if (ModChecker.hasMalfunctions)
                         {
                             if (malfunctionPowerTriggered)
@@ -2705,6 +2759,7 @@ namespace LC_VEGA
                                 return;
                             }
                         }
+                        */
                         DisableAllSpikeTraps();
                     }
                 });

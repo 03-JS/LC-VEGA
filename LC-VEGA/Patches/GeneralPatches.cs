@@ -1,9 +1,5 @@
 ﻿using GameNetcodeStuff;
 using HarmonyLib;
-using System;
-using System.Reflection;
-using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace LC_VEGA.Patches
 {
@@ -21,6 +17,7 @@ namespace LC_VEGA.Patches
         static void SaveValues()
         {
             Plugin.LogToConsole("Saving...", "debug");
+            /*
             if (ModChecker.hasDiversity)
             {
                 if (!DiversityPatches.firstTimeWelcome || !DiversityPatches.firstTimeReply)
@@ -28,10 +25,12 @@ namespace LC_VEGA.Patches
                     SaveManager.firstTimeDiversity = false;
                 }
             }
-            SaveManager.hadDiversity = ModChecker.hasDiversity;
+            */
+            // SaveManager.hadDiversity = ModChecker.hasDiversity;
             SaveManager.SaveToFile();
         }
 
+        /*
         [HarmonyPatch(typeof(GameNetworkManager), "Disconnect")]
         [HarmonyPostfix]
         static void ResetModValuesOnDisconnect()
@@ -47,6 +46,7 @@ namespace LC_VEGA.Patches
                 FacilityMeltdownPatches.condition = 60;
             }
         }
+        */
 
         [HarmonyPatch(typeof(RoundManager), "Update")]
         [HarmonyPostfix]
@@ -134,6 +134,7 @@ namespace LC_VEGA.Patches
             }
         }
 
+        /*
         [HarmonyPatch(typeof(RoundManager), "FinishGeneratingLevel")]
         [HarmonyPostfix]
         static void ResetCountdown()
@@ -143,6 +144,7 @@ namespace LC_VEGA.Patches
                 FacilityMeltdownPatches.playedCountdown = false;
             }
         }
+        */
     }
 
     internal class ReadInputPatch

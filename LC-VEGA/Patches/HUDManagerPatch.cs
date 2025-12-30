@@ -42,7 +42,7 @@ namespace LC_VEGA.Patches
         static void PlayRadiationWarning()
         {
             VEGA.facilityHasPower = false;
-            if (!Plugin.giveApparatusWarnings.Value || ModChecker.hasFacilityMeltdown) return;
+            if (!Plugin.giveApparatusWarnings.Value /* || ModChecker.hasFacilityMeltdown */) return;
             try
             {
                 if (StartOfRound.Instance.localPlayerController.ItemSlots.All(item =>
@@ -67,6 +67,7 @@ namespace LC_VEGA.Patches
                     {
                         VEGA.PlayLine(VEGA.enemies[enemyID] + "Scan", 0.7f);
                     }
+                    /*
                     else
                     {
                         foreach (var file in ___terminalScript.enemyFiles)
@@ -80,6 +81,7 @@ namespace LC_VEGA.Patches
                             }
                         }
                     }
+                    */
                 }
 
                 localPlayerScanned = true;
@@ -105,6 +107,7 @@ namespace LC_VEGA.Patches
                 {
                     VEGA.PlayLine(VEGA.enemies[enemyID] + "ID", 0.7f);
                 }
+                /*
                 else
                 {
                     foreach (var file in ___terminalScript.enemyFiles)
@@ -115,6 +118,7 @@ namespace LC_VEGA.Patches
                         }
                     }
                 }
+                */
             }
 
             localPlayerScanned = false;

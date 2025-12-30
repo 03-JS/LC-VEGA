@@ -10,12 +10,14 @@ namespace LC_VEGA
 {
     internal class ModChecker
     {   
+        /*
         public static bool hasToilHead;
         public static bool hasMalfunctions;
         public static bool hasDiversity;
         public static bool hasFacilityMeltdown;
         public static bool hasShipWindows;
         public static bool hasLGU;
+        */
         public static bool hasEladsHUD;
 
         public static bool CheckForMod(string modGUID)

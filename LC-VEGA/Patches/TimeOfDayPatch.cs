@@ -1,7 +1,4 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Random = UnityEngine.Random;
 
 namespace LC_VEGA.Patches

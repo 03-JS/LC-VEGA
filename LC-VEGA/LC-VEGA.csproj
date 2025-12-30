@@ -19,29 +19,11 @@
     <Reference Include="BepInEx">
       <HintPath>bin\Debug\netstandard2.1\BepInEx.dll</HintPath>
     </Reference>
-    <Reference Include="com.github.zehsteam.ToilHead">
-      <HintPath>bin\Debug\netstandard2.1\com.github.zehsteam.ToilHead.dll</HintPath>
-    </Reference>
-    <Reference Include="Diversity Remastered">
-      <HintPath>bin\Debug\netstandard2.1\Diversity Remastered.dll</HintPath>
-    </Reference>
-    <Reference Include="FacilityMeltdown">
-      <HintPath>bin\Debug\netstandard2.1\FacilityMeltdown.dll</HintPath>
-    </Reference>
     <Reference Include="LethalCompanyInputUtils">
       <HintPath>bin\Debug\netstandard2.1\LethalCompanyInputUtils.dll</HintPath>
     </Reference>
-    <Reference Include="Malfunctions">
-      <HintPath>bin\Debug\netstandard2.1\Malfunctions-publicized.dll</HintPath>
-    </Reference>
-    <Reference Include="MoreShipUpgrades">
-      <HintPath>bin\Debug\netstandard2.1\MoreShipUpgrades-publicized.dll</HintPath>
-    </Reference>
     <Reference Include="PySpeech">
       <HintPath>..\..\..\..\Lethal Company APIs\PySpeech\PySpeech\bin\Debug\netstandard2.1\PySpeech.dll</HintPath>
-    </Reference>
-    <Reference Include="TestAccount666.ShipWindows">
-      <HintPath>bin\Debug\netstandard2.1\ShipWindows-publicized.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
       <HintPath>..\..\..\..\..\..\..\mnt\DATA\Descargas\Unity.InputSystem.dll</HintPath>
@@ -81,7 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.AssemblyPublicizer" Version="0.5.0-beta.1" />
-    <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.4.0" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.5.0-beta.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.5.1" />
   </ItemGroup>
 </Project>

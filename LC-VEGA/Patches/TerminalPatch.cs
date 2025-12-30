@@ -1,15 +1,12 @@
 ﻿using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace LC_VEGA.Patches
 {
     [HarmonyPatch(typeof(Terminal))]
     internal class TerminalPatch
     {
-        public static Terminal terminalInstance;
+        // public static Terminal terminalInstance;
         public static List<int> scannedEnemyIDs;
         public static List<TerminalNode> scannedEnemyFiles;
 
@@ -19,7 +16,7 @@ namespace LC_VEGA.Patches
         {
             scannedEnemyIDs = ___scannedEnemyIDs;
             scannedEnemyFiles = __instance.enemyFiles;
-            terminalInstance = __instance;
+            // terminalInstance = __instance;
         }
 
         [HarmonyPatch("QuitTerminal")]
@@ -53,10 +50,12 @@ namespace LC_VEGA.Patches
                 {
                     VEGA.PlayLine(VEGA.enemies[___currentNode.creatureFileID], delay);
                 }
+                /*
                 else if (VEGA.moddedEnemies.Contains(___currentNode.creatureName))
                 {
                     VEGA.PlayLine(___currentNode.creatureName, delay);
                 }
+                */
             }
         }
     }
