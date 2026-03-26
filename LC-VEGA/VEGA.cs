@@ -861,7 +861,7 @@ namespace LC_VEGA
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {
-                    PlayRandomLine(Plugin.enhancedHazardDisabling.Value ? "TurretsDisabled" : "TurretDisabled", Random.Range(1, 4), 0.7f);
+                    PlayRandomLine("TurretDisabled", Random.Range(1, 4), 0.7f);
                 }
             }
             else if (noVisibleTurret)
@@ -1133,7 +1133,7 @@ namespace LC_VEGA
 
             if (Plugin.vocalLevel.Value >= VocalLevels.High)
             {
-                PlayRandomLine("TrapsDisabled", Random.Range(1, 4));
+                PlayRandomLine("TrapDisabled", Random.Range(1, 4));
             }
         }
 
