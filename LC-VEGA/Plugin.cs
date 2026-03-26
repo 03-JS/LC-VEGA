@@ -437,7 +437,7 @@ namespace LC_VEGA
                 "Ship", // Key of this config
                 0.5f, // Default value
                 new ConfigDescription(
-                    "Determines how difficult it is for VEGA to recognize voice commands related to the ship's lights, doors and shutters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+                    "Determines how difficult it is for VEGA to recognize voice commands related to the ship's lights and door. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             miscConfidence = Config.Bind(
@@ -448,14 +448,14 @@ namespace LC_VEGA
                     "Determines how difficult it is for VEGA to recognize voice commands related to the Advanced Scanner and Radar Boosters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
-            upgradesConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
-                "Ship upgrades", // Key of this config
-                0.5f, // Default value
-                new ConfigDescription(
-                    "Determines how difficult it is for VEGA to recognize voice commands related to LGU. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
-                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
-            );
+            // upgradesConfidence = Config.Bind(
+            //     "Similarity thresholds", // Config section
+            //     "Ship upgrades", // Key of this config
+            //     0.5f, // Default value
+            //     new ConfigDescription(
+            //         "Determines how difficult it is for VEGA to recognize voice commands related to LGU. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
+            //         new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            // );
             crewStatusConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Crew Status", // Key of this config
@@ -769,12 +769,12 @@ namespace LC_VEGA
                 true, // Default value
                 "If set to true, VEGA will send a message in the text chat that lets everyone know you asked VEGA to activate the teleporter." // Description
             );
-            sendDiscombobulatorChatMessage = Config.Bind(
-                "Text Chat", // Config section
-                "Send Discombobulator chat message", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will send a message in the text chat that lets everyone know you made use of the Discombobulator through VEGA." // Description
-            );
+            // sendDiscombobulatorChatMessage = Config.Bind(
+            //     "Text Chat", // Config section
+            //     "Send Discombobulator chat message", // Key of this config
+            //     true, // Default value
+            //     "If set to true, VEGA will send a message in the text chat that lets everyone know you made use of the Discombobulator through VEGA." // Description
+            // );
 
             // Patches
             patchReadInput = Config.Bind(
@@ -1005,18 +1005,18 @@ namespace LC_VEGA
                 "VEGA, switch to me/VEGA, switch radar/VEGA, switch radar to me/VEGA, focus/VEGA, focus on me", // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
-            registerDiscombobulator = Config.Bind(
-                "Voice Commands", // Config section
-                "Register Discombobulator upgrade commands", // Key of this config
-                true, // Default value
-                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with Late Game Upgrades installed." // Description
-            );
-            discombobulatorCommands = Config.Bind(
-                "Voice Commands", // Config section
-                "Discombobulator commands", // Key of this config
-                "VEGA, attack/VEGA, stun/VEGA, shock", // Default value
-                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
-            );
+            // registerDiscombobulator = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Register Discombobulator upgrade commands", // Key of this config
+            //     true, // Default value
+            //     "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with Late Game Upgrades installed." // Description
+            // );
+            // discombobulatorCommands = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Discombobulator commands", // Key of this config
+            //     "VEGA, attack/VEGA, stun/VEGA, shock", // Default value
+            //     "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            // );
             registerCrewStatus = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Crew Status commands", // Key of this config
@@ -1150,24 +1150,24 @@ namespace LC_VEGA
                 "VEGA, deactivate magnet/VEGA, disable magnet/VEGA, turn magnet off", // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
-            registerInteractShipShutters = Config.Bind(
-                "Voice Commands", // Config section
-                "Register Ship Shutters commands", // Key of this config
-                true, // Default value
-                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with ShipWindows installed." // Description
-            );
-            openShuttersCommands = Config.Bind(
-                "Voice Commands", // Config section
-                "Open Ship Shutters commands", // Key of this config
-                "VEGA, open shutters/VEGA, open window shutters/VEGA, open ship shutters", // Default value
-                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
-            );
-            closeShuttersCommands = Config.Bind(
-                "Voice Commands", // Config section
-                "Close Ship Shutters commands", // Key of this config
-                "VEGA, close shutters/VEGA, close window shutters/VEGA, close ship shutters", // Default value
-                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
-            );
+            // registerInteractShipShutters = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Register Ship Shutters commands", // Key of this config
+            //     true, // Default value
+            //     "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game.\nNote: This command only works with ShipWindows installed." // Description
+            // );
+            // openShuttersCommands = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Open Ship Shutters commands", // Key of this config
+            //     "VEGA, open shutters/VEGA, open window shutters/VEGA, open ship shutters", // Default value
+            //     "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            // );
+            // closeShuttersCommands = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Close Ship Shutters commands", // Key of this config
+            //     "VEGA, close shutters/VEGA, close window shutters/VEGA, close ship shutters", // Default value
+            //     "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
+            // );
             registerWeatherInfo = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Weather info commands", // Key of this config
