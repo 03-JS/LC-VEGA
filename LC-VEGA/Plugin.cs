@@ -13,7 +13,7 @@ using static BepInEx.BepInDependency;
 namespace LC_VEGA
 {
     [BepInPlugin(modGUID, modName, modVersion)]
-    [BepInDependency("JS03.PySpeech", DependencyFlags.HardDependency)]
+    [BepInDependency("JS03.SpeechRecognitionAPI", DependencyFlags.HardDependency)]
     [BepInDependency("com.rune580.LethalCompanyInputUtils", DependencyFlags.HardDependency)]
     [BepInDependency("BMX.LobbyCompatibility", DependencyFlags.SoftDependency)]
     /*

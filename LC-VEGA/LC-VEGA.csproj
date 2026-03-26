@@ -20,13 +20,13 @@
       <HintPath>bin\Debug\netstandard2.1\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="LethalCompanyInputUtils">
-      <HintPath>bin\Debug\netstandard2.1\LethalCompanyInputUtils.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\LethalCompanyInputUtils.dll</HintPath>
     </Reference>
-    <Reference Include="PySpeech">
-      <HintPath>..\..\..\..\Lethal Company APIs\PySpeech\PySpeech\bin\Debug\netstandard2.1\PySpeech.dll</HintPath>
+    <Reference Include="SpeechRecognitionAPI">
+      <HintPath>..\..\..\..\Lethal Company APIs\SpeechRecognitionAPI\SpeechRecognitionAPI\bin\Debug\netstandard2.1\SpeechRecognitionAPI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.InputSystem">
-      <HintPath>..\..\..\..\..\..\..\mnt\DATA\Descargas\Unity.InputSystem.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\mnt\SSD\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.InputSystem.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>..\..\..\..\..\..\..\mnt\SSD\SteamLibrary\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>

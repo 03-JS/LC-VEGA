@@ -1,7 +1,6 @@
 ﻿// using com.github.zehsteam.ToilHead.MonoBehaviours;
 using LC_VEGA.Patches;
 // using MoreShipUpgrades.Misc.Upgrades;
-using PySpeech;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
+using SpeechRecognitionAPI;
 
 namespace LC_VEGA
 {
@@ -995,12 +995,13 @@ namespace LC_VEGA
 
             if (Plugin.vocalLevel.Value >= VocalLevels.High)
             {
-                PlayRandomLine("MinesDisabled", Random.Range(1, 4));
+                PlayRandomLine("MineDisabled", Random.Range(1, 4));
             }
         }
 
         internal static void DisableMine()
         {
+            Plugin.LogToConsole("Disabling landmine", "debug");
             if (Plugin.enhancedHazardDisabling.Value)
             {
                 DisableVisibleMines();
@@ -1009,7 +1010,6 @@ namespace LC_VEGA
             TerminalAccessibleObject? closestMine = GetClosestMine();
             if (closestMine != null)
             {
-                Plugin.LogToConsole("Disabling landmine", "debug");
                 closestMine.CallFunctionFromTerminal();
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)
                 {

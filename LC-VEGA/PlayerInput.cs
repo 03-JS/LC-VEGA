@@ -1,6 +1,5 @@
 ﻿using LethalCompanyInputUtils.Api;
 using LethalCompanyInputUtils.BindingPathEnums;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace LC_VEGA
