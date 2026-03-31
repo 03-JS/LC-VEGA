@@ -291,6 +291,20 @@ Feel free to do whatever you want with both the template and the audio files. Yo
 
 <details>
 
+<summary><b>Supported Languages</b></summary>
+
+<br>
+
+VEGA currently supports **English** and **Spanish** for voice commands. Voice lines will be added at a later date.
+
+**I do not plan to add support for more languages at this time**.
+
+</details>
+
+<br>
+
+<details>
+
 <summary><b>Supported Mods</b></summary>
 
 <br>
