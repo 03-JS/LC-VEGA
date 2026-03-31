@@ -38,6 +38,7 @@ namespace LC_VEGA
         internal static PlayerInput PlayerInputInstance;
 
         // Confidence values
+        public static ConfigEntry<float> globalConfidence;
         public static ConfigEntry<float> gratitudeConfidence;
         public static ConfigEntry<float> stopConfidence;
         public static ConfigEntry<float> infoConfidence;
@@ -384,10 +385,19 @@ namespace LC_VEGA
             */
 
             // Confidence
+            globalConfidence = Config.Bind(
+                "Similarity thresholds", // Config section
+                "Global", // Key of this config
+                0.5f, // Default value
+                new ConfigDescription(
+                    "Determines how difficult it is for VEGA to recognize all voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives." +
+                    "\n\nIf you'd like to change the threshold for a specific command or set of commands, simply change their values to something higher than 0.\n\nThis setting can be changed mid-game.",
+                    new AcceptableValueRange<float>(0f, 1.0f)) // Description
+            );
             gratitudeConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Gratitude", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the 'Thank you' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -395,7 +405,7 @@ namespace LC_VEGA
             stopConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Stop talking", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the 'Stop talking' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -403,7 +413,7 @@ namespace LC_VEGA
             secureDoorsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Secure doors", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the voice commands used to interact with secure doors. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -411,7 +421,7 @@ namespace LC_VEGA
             turretsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Turrets", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize voice commands used to disable turrets. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -419,7 +429,7 @@ namespace LC_VEGA
             landminesConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Landmines", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize voice commands used to disable landmines. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -427,7 +437,7 @@ namespace LC_VEGA
             trapsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Spike traps", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize voice commands used to disable spike traps. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -435,7 +445,7 @@ namespace LC_VEGA
             signalsConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Signal translator", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the voice commands related to the Signal Translator. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -443,7 +453,7 @@ namespace LC_VEGA
             teleportConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Teleport", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the 'Teleport' and 'Radar Switch' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -451,7 +461,7 @@ namespace LC_VEGA
             shipConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Ship", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize voice commands related to the ship's lights and door. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -459,7 +469,7 @@ namespace LC_VEGA
             miscConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Miscellaneous", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize voice commands related to the Advanced Scanner and Radar Boosters. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -475,7 +485,7 @@ namespace LC_VEGA
             crewStatusConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Crew Status", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the 'Crew status' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -483,7 +493,7 @@ namespace LC_VEGA
             crewInShipConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Crew in ship", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the 'Crew in ship' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -491,7 +501,7 @@ namespace LC_VEGA
             scrapLeftConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Scrap / items left", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the 'Scrap / items left' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -499,7 +509,7 @@ namespace LC_VEGA
             infoConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Info", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize voice commands related to information about Entities, Moons, Weather phenomena and the current Time of day. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
@@ -507,7 +517,7 @@ namespace LC_VEGA
             manualActivationConfidence = Config.Bind(
                 "Similarity thresholds", // Config section
                 "Manual Activation", // Key of this config
-                0.5f, // Default value
+                0f, // Default value
                 new ConfigDescription(
                     "Determines how difficult it is for VEGA to recognize the 'Manual Activation' voice commands. Higher values means he needs to be more confident, lower values will activate more often, but will cause more false positives.\nCan be changed mid-game.",
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description

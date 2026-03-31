@@ -1936,7 +1936,7 @@ namespace LC_VEGA
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (Speech.IsAboveThreshold(phrases, Plugin.manualActivationConfidence.Value) &&
+                    if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.manualActivationConfidence.Value)) &&
                         Plugin.useManualListening.Value && listening)
                     {
                         if (StartOfRound.Instance.localPlayerController == null) return;
@@ -1960,7 +1960,7 @@ namespace LC_VEGA
                 Speech.RegisterPhrases(phrases_1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (Speech.IsAboveThreshold(phrases_1, Plugin.manualActivationConfidence.Value) &&
+                    if (Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.manualActivationConfidence.Value)) &&
                         Plugin.useManualListening.Value && listening)
                     {
                         if (StartOfRound.Instance.localPlayerController == null) return;
@@ -1992,7 +1992,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && audioSource != null &&
-                        Speech.IsAboveThreshold(phrases, Plugin.stopConfidence.Value) && listening) audioSource.Stop();
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.stopConfidence.Value)) && listening) audioSource.Stop();
                 });
             }
 
@@ -2004,7 +2004,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.gratitudeConfidence.Value) &&
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.gratitudeConfidence.Value)) &&
                         listening) PlayRandomLine("NoProblem", Random.Range(1, 5));
                 });
             }
@@ -2018,7 +2018,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.shipConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2039,7 +2039,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, Plugin.shipConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2107,7 +2107,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.shipConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         if (StartOfRound.Instance.magnetOn)
                         {
@@ -2126,7 +2126,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, Plugin.shipConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         if (!StartOfRound.Instance.magnetOn)
                         {
@@ -2219,7 +2219,7 @@ namespace LC_VEGA
                     Speech.RegisterPhrases(phrases);
                     Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (Speech.IsAboveThreshold(phrases, Plugin.infoConfidence.Value) && listening)
+                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                             PlayRandomLine(weatherCondition, 2);
                     });
                 }
@@ -2237,7 +2237,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.miscConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.miscConfidence.Value)) && listening)
                     {
                         if (advancedScannerActive)
                         {
@@ -2261,7 +2261,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, Plugin.miscConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.miscConfidence.Value)) && listening)
                     {
                         if (!advancedScannerActive)
                         {
@@ -2292,7 +2292,7 @@ namespace LC_VEGA
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (Speech.IsAboveThreshold(phrases, Plugin.infoConfidence.Value) && listening) GetDayMode();
+                    if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening) GetDayMode();
                 });
             }
         }
@@ -2307,7 +2307,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.crewStatusConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.crewStatusConfidence.Value)) && listening)
                     {
                         /*
                         if (malfunctionPowerTriggered)
@@ -2329,7 +2329,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.crewInShipConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.crewInShipConfidence.Value)) && listening)
                     {
                         /*
                         if (malfunctionPowerTriggered)
@@ -2351,7 +2351,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.scrapLeftConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.scrapLeftConfidence.Value)) && listening)
                     {
                         /*
                         if (malfunctionPowerTriggered)
@@ -2376,7 +2376,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.teleportConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.teleportConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2406,7 +2406,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.teleportConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.teleportConfidence.Value)) && listening)
                     {
                         SwitchRadar();
                         PlayRandomLine("RadarSwitch", Random.Range(1, 4));
@@ -2427,7 +2427,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.secureDoorsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.secureDoorsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2454,7 +2454,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, Plugin.secureDoorsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.secureDoorsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2485,7 +2485,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.secureDoorsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.secureDoorsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2512,7 +2512,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, Plugin.secureDoorsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.secureDoorsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2543,7 +2543,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.shipConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                         if (shipDoors != null)
@@ -2591,7 +2591,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, Plugin.shipConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                         if (shipDoors != null)
@@ -2646,7 +2646,7 @@ namespace LC_VEGA
                     Speech.RegisterPhrases(phrases);
                     Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (Speech.IsAboveThreshold(phrases, Plugin.signalsConfidence.Value) && listening)
+                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.signalsConfidence.Value)) && listening)
                         {
                             if (StartOfRound.Instance.localPlayerController == null) return;
                             if (!StartOfRound.Instance.localPlayerController.isPlayerDead)
@@ -2694,7 +2694,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.miscConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.miscConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2720,7 +2720,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, Plugin.miscConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.miscConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2754,7 +2754,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.turretsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.turretsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2800,7 +2800,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.turretsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.turretsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2836,7 +2836,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.landminesConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.landminesConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2867,7 +2867,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.landminesConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.landminesConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2899,7 +2899,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.trapsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.trapsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2930,7 +2930,7 @@ namespace LC_VEGA
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases, Plugin.trapsConfidence.Value) && listening)
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.trapsConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2970,7 +2970,7 @@ namespace LC_VEGA
                     Speech.RegisterPhrases(phrases);
                     Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (Speech.IsAboveThreshold(phrases, Plugin.infoConfidence.Value) && listening)
+                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
                             PlayLine(GetMoonAudioClipName(name));
                         }
@@ -2999,7 +2999,7 @@ namespace LC_VEGA
                     Speech.RegisterPhrases(phrases);
                     Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (Speech.IsAboveThreshold(phrases, Plugin.infoConfidence.Value) && listening)
+                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(enemies
                                     .First(key => key.Value == GetEntityAudioClipName(name)).Key))
@@ -3030,7 +3030,7 @@ namespace LC_VEGA
                     Speech.RegisterPhrases(phrases);
                     Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (Speech.IsAboveThreshold(phrases, Plugin.infoConfidence.Value) && listening)
+                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
                             try
                             {
@@ -3073,7 +3073,7 @@ namespace LC_VEGA
                     Speech.RegisterPhrases(phrases);
                     Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (Speech.IsAboveThreshold(phrases, Plugin.infoConfidence.Value) && listening)
+                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(enemies
                                     .First(key => key.Value == GetEntityAudioClipName(name)).Key))
@@ -3102,7 +3102,7 @@ namespace LC_VEGA
                     Speech.RegisterPhrases(phrases);
                     Speech.RegisterCustomHandler((obj, recognized) =>
                     {
-                        if (Speech.IsAboveThreshold(phrases, Plugin.infoConfidence.Value) && listening)
+                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
                             try
                             {
@@ -3125,6 +3125,11 @@ namespace LC_VEGA
                     });
                 }
             }
+        }
+        
+        private static float GetThreshold(float threshold)
+        {
+            return threshold <= 0f ? Plugin.globalConfidence.Value : threshold;
         }
     }
 }
