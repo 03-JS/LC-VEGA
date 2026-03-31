@@ -2214,7 +2214,6 @@ namespace LC_VEGA
                             ? $"{phrase} {weatherCondition} weather"
                             : $"{phrase} {weatherCondition}";
                         phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                        Plugin.mls.LogDebug($"Registered: {fullCommand}");
                     }
 
                     Speech.RegisterPhrases(phrases);
