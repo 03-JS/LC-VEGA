@@ -6,6 +6,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BepInEx.Configuration;
+using HarmonyLib;
 // using ShipWindows.ShutterSwitch;
 using TMPro;
 using UnityEngine;
@@ -123,7 +125,7 @@ namespace LC_VEGA
         internal static bool malfunctionDoorTriggered;
 
         public static string[] signals;
-        
+
         // Names of the AudioClips paired with their respective IDs in the terminal
         public static Dictionary<int, string> enemies = new Dictionary<int, string>()
         {
@@ -1931,8 +1933,7 @@ namespace LC_VEGA
         {
             if (Plugin.registerActivation.Value)
             {
-                string[] phrases =
-                    Plugin.startListeningCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.startListeningCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -1955,12 +1956,11 @@ namespace LC_VEGA
                         }
                     }
                 });
-                string[] phrases_1 =
-                    Plugin.stopListeningCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.stopListeningCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.manualActivationConfidence.Value)) &&
+                    if (Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.manualActivationConfidence.Value)) &&
                         Plugin.useManualListening.Value && listening)
                     {
                         if (StartOfRound.Instance.localPlayerController == null) return;
@@ -1986,19 +1986,20 @@ namespace LC_VEGA
         {
             if (Plugin.registerStop.Value)
             {
-                string[] phrases = Plugin.stopCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.stopCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead && audioSource != null &&
-                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.stopConfidence.Value)) && listening) audioSource.Stop();
+                        Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.stopConfidence.Value)) &&
+                        listening) audioSource.Stop();
                 });
             }
 
             if (Plugin.registerThanks.Value)
             {
-                string[] phrases = Plugin.gratitudeCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.gratitudeCommands, true);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2012,7 +2013,7 @@ namespace LC_VEGA
             // Ship lights
             if (Plugin.registerInteractShipLights.Value)
             {
-                string[] phrases = Plugin.lightsOnCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.lightsOnCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2033,13 +2034,13 @@ namespace LC_VEGA
                         CoroutineManager.StartCoroutine(SwitchLights(on: true));
                     }
                 });
-                string[] phrases_1 = Plugin.lightsOffCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.lightsOffCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
+                        Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2101,7 +2102,7 @@ namespace LC_VEGA
             // Ship magnet for the CC
             if (Plugin.registerInteractShipMagnet.Value)
             {
-                string[] phrases = Plugin.magnetOnCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.magnetOnCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2120,13 +2121,13 @@ namespace LC_VEGA
                             PlayRandomLine("ActivateMagnet", Random.Range(1, 3));
                     }
                 });
-                string[] phrases_1 = Plugin.magnetOffCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.magnetOffCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
+                        Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         if (!StartOfRound.Instance.magnetOn)
                         {
@@ -2203,10 +2204,10 @@ namespace LC_VEGA
         {
             if (Plugin.registerWeatherInfo.Value)
             {
-                foreach (var weatherCondition in LanguageHelper.Weathers[LanguageHelper.Languages[(int)Plugin.language.Value]])
+                foreach (var weatherCondition in LanguageHelper.Weathers[
+                             LanguageHelper.Languages[(int)Plugin.language.Value]])
                 {
-                    string[] phrases =
-                        Plugin.weatherInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    string[] phrases = CreatePhrases(Plugin.weatherInfoCommands);
                     foreach (var phrase in phrases)
                     {
                         string fullCommand = Plugin.language.Value == Languages.English
@@ -2230,8 +2231,7 @@ namespace LC_VEGA
         {
             if (Plugin.registerAdvancedScanner.Value)
             {
-                string[] phrases =
-                    Plugin.activateAdvancedScannerCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.activateAdvancedScannerCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2254,14 +2254,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                string[] phrases_1 =
-                    Plugin.deactivateAdvancedScannerCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.deactivateAdvancedScannerCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.miscConfidence.Value)) && listening)
+                        Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.miscConfidence.Value)) && listening)
                     {
                         if (!advancedScannerActive)
                         {
@@ -2288,11 +2287,12 @@ namespace LC_VEGA
         {
             if (Plugin.registerTime.Value)
             {
-                string[] phrases = Plugin.timeCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.timeCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
-                    if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening) GetDayMode();
+                    if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
+                        GetDayMode();
                 });
             }
         }
@@ -2301,7 +2301,7 @@ namespace LC_VEGA
         {
             if (Plugin.registerCrewStatus.Value)
             {
-                string[] phrases = Plugin.crewStatusCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.crewStatusCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2323,7 +2323,7 @@ namespace LC_VEGA
 
             if (Plugin.registerCrewInShip.Value)
             {
-                string[] phrases = Plugin.crewInShipCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.crewInShipCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2345,7 +2345,7 @@ namespace LC_VEGA
 
             if (Plugin.registerScrapLeft.Value)
             {
-                string[] phrases = Plugin.scrapLeftCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.scrapLeftCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2370,7 +2370,7 @@ namespace LC_VEGA
         {
             if (Plugin.registerTeleporter.Value)
             {
-                string[] phrases = Plugin.teleporterCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.teleporterCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2400,7 +2400,7 @@ namespace LC_VEGA
 
             if (Plugin.registerRadarSwitch.Value)
             {
-                string[] phrases = Plugin.radarSwitchCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.radarSwitchCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2420,8 +2420,7 @@ namespace LC_VEGA
             // Secure doors
             if (Plugin.registerInteractSecureDoor.Value)
             {
-                string[] phrases =
-                    Plugin.openSecureDoorCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.openSecureDoorCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2447,14 +2446,14 @@ namespace LC_VEGA
                         OpenSecureDoor();
                     }
                 });
-                string[] phrases_1 =
-                    Plugin.closeSecureDoorCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.closeSecureDoorCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.secureDoorsConfidence.Value)) && listening)
+                        Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.secureDoorsConfidence.Value)) &&
+                        listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2478,8 +2477,7 @@ namespace LC_VEGA
 
             if (Plugin.registerInteractAllSecureDoors.Value)
             {
-                string[] phrases =
-                    Plugin.openAllSecureDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.openAllSecureDoorsCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2505,14 +2503,14 @@ namespace LC_VEGA
                         OpenAllDoors();
                     }
                 });
-                string[] phrases_1 =
-                    Plugin.closeAllSecureDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.closeAllSecureDoorsCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.secureDoorsConfidence.Value)) && listening)
+                        Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.secureDoorsConfidence.Value)) &&
+                        listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2537,7 +2535,7 @@ namespace LC_VEGA
             // Ship doors
             if (Plugin.registerInteractShipDoors.Value)
             {
-                string[] phrases = Plugin.openShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.openShipDoorsCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2584,14 +2582,13 @@ namespace LC_VEGA
                         }
                     }
                 });
-                string[] phrases_1 =
-                    Plugin.closeShipDoorsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.closeShipDoorsCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
+                        Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.shipConfidence.Value)) && listening)
                     {
                         HangarShipDoor shipDoors = Object.FindObjectOfType<HangarShipDoor>();
                         if (shipDoors != null)
@@ -2636,7 +2633,7 @@ namespace LC_VEGA
             {
                 foreach (var signal in signals)
                 {
-                    string[] phrases = Plugin.transmitCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    string[] phrases = CreatePhrases(Plugin.transmitCommands);
                     foreach (var phrase in phrases)
                     {
                         string fullCommand = $"{phrase} {signal}";
@@ -2688,7 +2685,7 @@ namespace LC_VEGA
         {
             if (Plugin.registerRadarBoosters.Value)
             {
-                string[] phrases = Plugin.radarPingCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.radarPingCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2714,13 +2711,13 @@ namespace LC_VEGA
                         InteractWithBooster(ping: true);
                     }
                 });
-                string[] phrases_1 = Plugin.radarFlashCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                Speech.RegisterPhrases(phrases_1);
+                string[] phrases1 = CreatePhrases(Plugin.radarFlashCommands);
+                Speech.RegisterPhrases(phrases1);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
                     if (StartOfRound.Instance.localPlayerController == null) return;
                     if (!StartOfRound.Instance.localPlayerController.isPlayerDead &&
-                        Speech.IsAboveThreshold(phrases_1, GetThreshold(Plugin.miscConfidence.Value)) && listening)
+                        Speech.IsAboveThreshold(phrases1, GetThreshold(Plugin.miscConfidence.Value)) && listening)
                     {
                         /*
                         if (ModChecker.hasMalfunctions)
@@ -2748,7 +2745,7 @@ namespace LC_VEGA
             // Turrets
             if (Plugin.registerDisableTurret.Value)
             {
-                string[] phrases = Plugin.disableTurretCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.disableTurretCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2793,8 +2790,7 @@ namespace LC_VEGA
 
             if (Plugin.registerDisableAllTurrets.Value)
             {
-                string[] phrases =
-                    Plugin.disableAllTurretsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.disableAllTurretsCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2830,7 +2826,7 @@ namespace LC_VEGA
             // Landmines
             if (Plugin.registerDisableMine.Value)
             {
-                string[] phrases = Plugin.disableMineCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.disableMineCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2860,8 +2856,7 @@ namespace LC_VEGA
 
             if (Plugin.registerDisableAllMines.Value)
             {
-                string[] phrases =
-                    Plugin.disableAllMinesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.disableAllMinesCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2892,8 +2887,7 @@ namespace LC_VEGA
             // Spike traps
             if (Plugin.registerDisableSpikeTrap.Value)
             {
-                string[] phrases =
-                    Plugin.disableSpikeTrapCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.disableSpikeTrapCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2923,8 +2917,7 @@ namespace LC_VEGA
 
             if (Plugin.registerDisableAllSpikeTraps.Value)
             {
-                string[] phrases =
-                    Plugin.disableAllSpikeTrapsCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                string[] phrases = CreatePhrases(Plugin.disableAllSpikeTrapsCommands);
                 Speech.RegisterPhrases(phrases);
                 Speech.RegisterCustomHandler((obj, recognized) =>
                 {
@@ -2960,7 +2953,7 @@ namespace LC_VEGA
                 // Vanilla
                 foreach (var name in moonNames)
                 {
-                    string[] phrases = Plugin.moonsInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    string[] phrases = CreatePhrases(Plugin.moonsInfoCommands);
                     foreach (var phrase in phrases)
                     {
                         string fullCommand = $"{phrase} {name}";
@@ -2986,8 +2979,7 @@ namespace LC_VEGA
                 // Vanilla
                 foreach (var name in vanillaEntityNames)
                 {
-                    string[] phrases =
-                        Plugin.bestiaryEntriesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    string[] phrases = CreatePhrases(Plugin.bestiaryEntriesCommands);
                     foreach (var phrase in phrases)
                     {
                         string fullCommand = Plugin.language.Value == Languages.English
@@ -3015,43 +3007,43 @@ namespace LC_VEGA
                 }
 
                 // Modded
-                foreach (var name in moddedEntityNames)
-                {
-                    string[] phrases =
-                        Plugin.bestiaryEntriesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var phrase in phrases)
-                    {
-                        string fullCommand = Plugin.language.Value == Languages.English
-                            ? $"{phrase} {name} entry"
-                            : $"{phrase} {name}";
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-
-                    Speech.RegisterPhrases(phrases);
-                    Speech.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
-                        {
-                            try
-                            {
-                                if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles
-                                        .Find(file => file.creatureName.Equals(GetEntityAudioClipName(name)))
-                                        .creatureFileID))
-                                {
-                                    PlayLine(GetEntityAudioClipName(name));
-                                }
-                                else
-                                {
-                                    PlayRandomLine("NoEntityData", Random.Range(1, 5));
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                PlayRandomLine("NoEntityData", Random.Range(1, 5));
-                            }
-                        }
-                    });
-                }
+                // foreach (var name in moddedEntityNames)
+                // {
+                //     string[] phrases =
+                //         Plugin.bestiaryEntriesCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                //     foreach (var phrase in phrases)
+                //     {
+                //         string fullCommand = Plugin.language.Value == Languages.English
+                //             ? $"{phrase} {name} entry"
+                //             : $"{phrase} {name}";
+                //         phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
+                //     }
+                //
+                //     Speech.RegisterPhrases(phrases);
+                //     Speech.RegisterCustomHandler((obj, recognized) =>
+                //     {
+                //         if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
+                //         {
+                //             try
+                //             {
+                //                 if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles
+                //                         .Find(file => file.creatureName.Equals(GetEntityAudioClipName(name)))
+                //                         .creatureFileID))
+                //                 {
+                //                     PlayLine(GetEntityAudioClipName(name));
+                //                 }
+                //                 else
+                //                 {
+                //                     PlayRandomLine("NoEntityData", Random.Range(1, 5));
+                //                 }
+                //             }
+                //             catch (Exception)
+                //             {
+                //                 PlayRandomLine("NoEntityData", Random.Range(1, 5));
+                //             }
+                //         }
+                //     });
+                // }
             }
         }
 
@@ -3062,8 +3054,7 @@ namespace LC_VEGA
                 // Vanilla
                 foreach (var name in vanillaEntityNames)
                 {
-                    string[] phrases =
-                        Plugin.creatureInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                    string[] phrases = CreatePhrases(Plugin.creatureInfoCommands);
                     foreach (var phrase in phrases)
                     {
                         string fullCommand = $"{phrase} {name}s";
@@ -3089,47 +3080,60 @@ namespace LC_VEGA
                 }
 
                 // Modded
-                foreach (var name in moddedEntityNames)
-                {
-                    string[] phrases =
-                        Plugin.creatureInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var phrase in phrases)
-                    {
-                        string fullCommand = $"{phrase} {name}s";
-                        phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
-                    }
-
-                    Speech.RegisterPhrases(phrases);
-                    Speech.RegisterCustomHandler((obj, recognized) =>
-                    {
-                        if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
-                        {
-                            try
-                            {
-                                if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles
-                                        .Find(file => file.creatureName.Equals(GetEntityAudioClipName(name)))
-                                        .creatureFileID))
-                                {
-                                    PlayLine(GetEntityAudioClipName(name) + "Short");
-                                }
-                                else
-                                {
-                                    PlayRandomLine("NoEntityData", Random.Range(2, 5));
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                PlayRandomLine("NoEntityData", Random.Range(2, 5));
-                            }
-                        }
-                    });
-                }
+                // foreach (var name in moddedEntityNames)
+                // {
+                //     string[] phrases =
+                //         Plugin.creatureInfoCommands.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+                //     foreach (var phrase in phrases)
+                //     {
+                //         string fullCommand = $"{phrase} {name}s";
+                //         phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
+                //     }
+                //
+                //     Speech.RegisterPhrases(phrases);
+                //     Speech.RegisterCustomHandler((obj, recognized) =>
+                //     {
+                //         if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
+                //         {
+                //             try
+                //             {
+                //                 if (TerminalPatch.scannedEnemyIDs.Contains(TerminalPatch.scannedEnemyFiles
+                //                         .Find(file => file.creatureName.Equals(GetEntityAudioClipName(name)))
+                //                         .creatureFileID))
+                //                 {
+                //                     PlayLine(GetEntityAudioClipName(name) + "Short");
+                //                 }
+                //                 else
+                //                 {
+                //                     PlayRandomLine("NoEntityData", Random.Range(2, 5));
+                //                 }
+                //             }
+                //             catch (Exception)
+                //             {
+                //                 PlayRandomLine("NoEntityData", Random.Range(2, 5));
+                //             }
+                //         }
+                //     });
+                // }
             }
         }
-        
+
         private static float GetThreshold(float threshold)
         {
             return threshold <= 0f ? Plugin.globalConfidence.Value : threshold;
+        }
+
+        private static string[] CreatePhrases(ConfigEntry<string> entry, bool oppositeOrder = false)
+        {
+            string[] phrases = entry.Value.Split("/", StringSplitOptions.RemoveEmptyEntries);
+            if (string.IsNullOrEmpty(Plugin.name.Value)) return phrases;
+            foreach (var phrase in phrases)
+            {
+                var fullCommand = oppositeOrder ? $"{phrase} {Plugin.name.Value}" : $"{Plugin.name.Value} {phrase}";
+                phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
+                Plugin.LogToConsole($"Created command with name: {fullCommand}", "debug");
+            }
+            return phrases;
         }
     }
 }

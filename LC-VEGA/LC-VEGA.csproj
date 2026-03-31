@@ -21,7 +21,7 @@
       <HintPath>bin\Debug\netstandard2.1\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="LethalCompanyInputUtils">
-      <HintPath>..\..\..\..\..\Downloads\LethalCompanyInputUtils.dll</HintPath>
+      <HintPath>..\..\..\1. DLLs\LethalCompanyInputUtils.dll</HintPath>
     </Reference>
     <Reference Include="SpeechRecognitionAPI">
       <HintPath>..\..\..\..\Lethal Company APIs\SpeechRecognitionAPI\SpeechRecognitionAPI\bin\Debug\netstandard2.1\SpeechRecognitionAPI.dll</HintPath>

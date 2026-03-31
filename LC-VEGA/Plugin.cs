@@ -113,6 +113,7 @@ namespace LC_VEGA
         public static ConfigEntry<bool> patchReadInput;
 
         // Voice commands config values
+        public static ConfigEntry<string> name;
         public static ConfigEntry<bool> enhancedTeleportCommands;
         public static ConfigEntry<bool> enhancedHazardDisabling;
         public static ConfigEntry<bool> registerActivation;
@@ -299,7 +300,8 @@ namespace LC_VEGA
                 "Language", // Key of this config
                 Languages.English, // Default value
                 "As of now, this only changes the voice commands to the language you choose, it does not change any of the voice lines.\n\n" +
-                "Requires a restart." // Description
+                "WARNING: This will erase all your custom commands and replace them with the defaults for the chosen language. If you have any custom commands and would like to keep them, DO NOT touch this!!!" +
+                "\n\nRequires a restart." // Description
             );
             language.SettingChanged += (sender, args) =>
             {
@@ -386,7 +388,7 @@ namespace LC_VEGA
 
             // Confidence
             globalConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Global", // Key of this config
                 0.5f, // Default value
                 new ConfigDescription(
@@ -395,7 +397,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             gratitudeConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Gratitude", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -403,7 +405,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             stopConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Stop talking", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -411,7 +413,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             secureDoorsConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Secure doors", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -419,7 +421,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             turretsConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Turrets", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -427,7 +429,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             landminesConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Landmines", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -435,7 +437,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             trapsConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Spike traps", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -443,7 +445,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             signalsConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Signal translator", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -451,7 +453,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             teleportConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Teleport", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -459,7 +461,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             shipConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Ship", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -467,7 +469,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             miscConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Miscellaneous", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -475,7 +477,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             // upgradesConfidence = Config.Bind(
-            //     "Similarity thresholds", // Config section
+            //     "Accuracy thresholds", // Config section
             //     "Ship upgrades", // Key of this config
             //     0.5f, // Default value
             //     new ConfigDescription(
@@ -483,7 +485,7 @@ namespace LC_VEGA
             //         new AcceptableValueRange<float>(0f, 1.0f)) // Description
             // );
             crewStatusConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Crew Status", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -491,7 +493,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             crewInShipConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Crew in ship", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -499,7 +501,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             scrapLeftConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Scrap / items left", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -507,7 +509,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             infoConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Info", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -515,7 +517,7 @@ namespace LC_VEGA
                     new AcceptableValueRange<float>(0f, 1.0f)) // Description
             );
             manualActivationConfidence = Config.Bind(
-                "Similarity thresholds", // Config section
+                "Accuracy thresholds", // Config section
                 "Manual Activation", // Key of this config
                 0f, // Default value
                 new ConfigDescription(
@@ -811,6 +813,13 @@ namespace LC_VEGA
             );
 
             // Voice commands
+            name = Config.Bind(
+                "Voice Commands", // Config section
+                "Name", // Key of this config
+                "VEGA", // Default value
+                "The name you'd like to address the mod by for voice commands (VEGA by default). This name will be added at the beginning of every command, except for the gratitude commands, where it will be added at the end of the command instead." +
+                "\n\nYou can also leave it empty if you'd like to not use a name at all." // Description
+            );
             enhancedTeleportCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Enhanced Teleport commands", // Key of this config
