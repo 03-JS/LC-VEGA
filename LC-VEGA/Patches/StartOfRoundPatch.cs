@@ -57,7 +57,7 @@ namespace LC_VEGA.Patches
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.Low)
                 {
-                    VEGA.PlayLine("Intro", 4.5f, false);
+                    VEGA.PlayLine("Intro", 5.5f, false);
                     SaveManager.playedIntro = true;
                 }
             }

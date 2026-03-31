@@ -420,7 +420,7 @@ namespace LC_VEGA
         {
             if (audioSource != null)
             {
-                if (StartOfRound.Instance.localPlayerController == null) return;
+                // if (StartOfRound.Instance.localPlayerController == null) return;
                 if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
                 if (!skip && audioSource.isPlaying) return;
 
