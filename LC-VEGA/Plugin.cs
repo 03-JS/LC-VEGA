@@ -307,7 +307,7 @@ namespace LC_VEGA
             {
                 SpeechRecognitionAPI.Plugin.language.Value = language.Value;
                 UpdateVoiceCommands();
-                messages.Value = LanguageHelper.Messages[LanguageHelper.Languages[(int)language.Value]];
+                messages.Value = LanguageHelper.Messages[language.Value];
             };
             vocalLevel = Config.Bind(
                 "Dialogue & Interactions", // Config section
@@ -352,7 +352,7 @@ namespace LC_VEGA
             messages = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Signal Translator messages", // Key of this config
-                LanguageHelper.Messages[LanguageHelper.Languages[(int)language.Value]], // Default value
+                LanguageHelper.Messages[language.Value], // Default value
                 "The messages VEGA can transmit using the Signal Translator.\nEach message must be separated by a comma and a white space, like so -> 'Message, Another message'\nApplies after a game restart." // Description
             );
 
@@ -841,13 +841,13 @@ namespace LC_VEGA
             startListeningCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Start listening commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["startListening"], // Default value
+                LanguageHelper.Commands[language.Value]["startListening"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             stopListeningCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Stop listening commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["stopListening"], // Default value
+                LanguageHelper.Commands[language.Value]["stopListening"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerMoonsInfo = Config.Bind(
@@ -859,7 +859,7 @@ namespace LC_VEGA
             moonsInfoCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Moon info commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["moonInfo"], // Default value
+                LanguageHelper.Commands[language.Value]["moonInfo"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
                 "IMPORTANT: Moon info commands will always have the moon's name at the end!" // Description
             );
@@ -872,7 +872,7 @@ namespace LC_VEGA
             bestiaryEntriesCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Bestiary entries commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]][
+                LanguageHelper.Commands[language.Value][
                     "bestiaryEntries"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
                 "IMPORTANT: Bestiary entries commands will always end with the name of the creature + entry, like so:\n" +
@@ -887,7 +887,7 @@ namespace LC_VEGA
             creatureInfoCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Creature info commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["creatureInfo"], // Default value
+                LanguageHelper.Commands[language.Value]["creatureInfo"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
                 "IMPORTANT: Creature info commands will always have the creature's name at the end!" // Description
             );
@@ -900,14 +900,14 @@ namespace LC_VEGA
             activateAdvancedScannerCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Activate Advanced Scanner commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]][
+                LanguageHelper.Commands[language.Value][
                     "activateScanner"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             deactivateAdvancedScannerCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Deactivate Advanced Scanner commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]][
+                LanguageHelper.Commands[language.Value][
                     "deactivateScanner"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
@@ -920,13 +920,13 @@ namespace LC_VEGA
             openSecureDoorCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Open secure door commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["openDoor"], // Default value
+                LanguageHelper.Commands[language.Value]["openDoor"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             closeSecureDoorCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Close secure door commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["closeDoor"], // Default value
+                LanguageHelper.Commands[language.Value]["closeDoor"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerInteractAllSecureDoors = Config.Bind(
@@ -938,14 +938,14 @@ namespace LC_VEGA
             openAllSecureDoorsCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Open all secure door commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["openAllDoors"], // Default value
+                LanguageHelper.Commands[language.Value]["openAllDoors"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             closeAllSecureDoorsCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Close all secure door commands", // Key of this config
                 LanguageHelper.Commands[
-                    LanguageHelper.Languages[(int)language.Value]]["closeAllDoors"], // Default value
+                    language.Value]["closeAllDoors"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerDisableTurret = Config.Bind(
@@ -958,7 +958,7 @@ namespace LC_VEGA
                 "Voice Commands", // Config section
                 "Disable turret commands", // Key of this config
                 LanguageHelper.Commands[
-                    LanguageHelper.Languages[(int)language.Value]]["disableTurret"], // Default value
+                    language.Value]["disableTurret"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerDisableAllTurrets = Config.Bind(
@@ -970,7 +970,7 @@ namespace LC_VEGA
             disableAllTurretsCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Disable all turrets commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]][
+                LanguageHelper.Commands[language.Value][
                     "disableAllTurrets"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
@@ -983,7 +983,7 @@ namespace LC_VEGA
             disableMineCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Disable landmine commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableMine"], // Default value
+                LanguageHelper.Commands[language.Value]["disableMine"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerDisableAllMines = Config.Bind(
@@ -995,7 +995,7 @@ namespace LC_VEGA
             disableAllMinesCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Disable all landmines commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]][
+                LanguageHelper.Commands[language.Value][
                     "disableAllMines"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
@@ -1008,7 +1008,7 @@ namespace LC_VEGA
             disableSpikeTrapCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Disable spike trap commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableTrap"], // Default value
+                LanguageHelper.Commands[language.Value]["disableTrap"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerDisableAllSpikeTraps = Config.Bind(
@@ -1020,7 +1020,7 @@ namespace LC_VEGA
             disableAllSpikeTrapsCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Disable all spike traps commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]][
+                LanguageHelper.Commands[language.Value][
                     "disableAllTraps"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
@@ -1033,7 +1033,7 @@ namespace LC_VEGA
             teleporterCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Teleporter commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["teleporter"], // Default value
+                LanguageHelper.Commands[language.Value]["teleporter"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerRadarSwitch = Config.Bind(
@@ -1045,7 +1045,7 @@ namespace LC_VEGA
             radarSwitchCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Radar Switch commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["mapSwitch"], // Default value
+                LanguageHelper.Commands[language.Value]["mapSwitch"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             // registerDiscombobulator = Config.Bind(
@@ -1069,7 +1069,7 @@ namespace LC_VEGA
             crewStatusCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Crew Status commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["crewStatus"], // Default value
+                LanguageHelper.Commands[language.Value]["crewStatus"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerCrewInShip = Config.Bind(
@@ -1081,7 +1081,7 @@ namespace LC_VEGA
             crewInShipCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Crew in ship commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["shipCrew"], // Default value
+                LanguageHelper.Commands[language.Value]["shipCrew"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerScrapLeft = Config.Bind(
@@ -1093,7 +1093,7 @@ namespace LC_VEGA
             scrapLeftCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Scrap / items left commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["scrap"], // Default value
+                LanguageHelper.Commands[language.Value]["scrap"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerRadarBoosters = Config.Bind(
@@ -1105,13 +1105,13 @@ namespace LC_VEGA
             radarPingCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Radar Booster ping commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["radarBooster"], // Default value
+                LanguageHelper.Commands[language.Value]["radarBooster"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             radarFlashCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Radar Booster flash commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["radarFlash"], // Default value
+                LanguageHelper.Commands[language.Value]["radarFlash"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerSignalTranslator = Config.Bind(
@@ -1123,7 +1123,7 @@ namespace LC_VEGA
             transmitCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Transmit / send commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]][
+                LanguageHelper.Commands[language.Value][
                     "signalTranslator"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
                 "IMPORTANT: Transmit / send commands will always have the message at the end!" // Description
@@ -1137,7 +1137,7 @@ namespace LC_VEGA
             timeCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Current time commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["time"], // Default value
+                LanguageHelper.Commands[language.Value]["time"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerInteractShipDoors = Config.Bind(
@@ -1149,13 +1149,13 @@ namespace LC_VEGA
             openShipDoorsCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Open ship doors commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["openShip"], // Default value
+                LanguageHelper.Commands[language.Value]["openShip"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             closeShipDoorsCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Close ship doors commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["closeShip"], // Default value
+                LanguageHelper.Commands[language.Value]["closeShip"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerInteractShipLights = Config.Bind(
@@ -1167,13 +1167,13 @@ namespace LC_VEGA
             lightsOnCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Ship Lights on commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["lightsOn"], // Default value
+                LanguageHelper.Commands[language.Value]["lightsOn"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             lightsOffCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Ship Lights off commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["lightsOff"], // Default value
+                LanguageHelper.Commands[language.Value]["lightsOff"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerInteractShipMagnet = Config.Bind(
@@ -1185,13 +1185,13 @@ namespace LC_VEGA
             magnetOnCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Activate Magnet commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["magnetOn"], // Default value
+                LanguageHelper.Commands[language.Value]["magnetOn"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             magnetOffCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Deactivate Magnet commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["magnetOff"], // Default value
+                LanguageHelper.Commands[language.Value]["magnetOff"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             // registerInteractShipShutters = Config.Bind(
@@ -1221,7 +1221,7 @@ namespace LC_VEGA
             weatherInfoCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Weather info commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["weatherInfo"], // Default value
+                LanguageHelper.Commands[language.Value]["weatherInfo"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
                 "IMPORTANT: Weather info commands will always have the condition's name and 'weather' at the end!" // Description
             );
@@ -1234,7 +1234,7 @@ namespace LC_VEGA
             stopCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Stop talking commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["stopTalking"], // Default value
+                LanguageHelper.Commands[language.Value]["stopTalking"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
             registerThanks = Config.Bind(
@@ -1246,7 +1246,7 @@ namespace LC_VEGA
             gratitudeCommands = Config.Bind(
                 "Voice Commands", // Config section
                 "Gratitude commands", // Key of this config
-                LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["gratitude"], // Default value
+                LanguageHelper.Commands[language.Value]["gratitude"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'." // Description
             );
         }
@@ -1272,41 +1272,41 @@ namespace LC_VEGA
 
         private void UpdateVoiceCommands()
         {
-            startListeningCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["startListening"];
-            stopListeningCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["stopListening"];
-            moonsInfoCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["moonInfo"];
-            bestiaryEntriesCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["bestiaryEntries"];
-            creatureInfoCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["creatureInfo"];
-            activateAdvancedScannerCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["activateScanner"];
-            deactivateAdvancedScannerCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["deactivateScanner"];
-            openSecureDoorCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["openDoor"];
-            closeSecureDoorCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["closeDoor"];
-            openAllSecureDoorsCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["openAllDoors"];
-            closeAllSecureDoorsCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["closeAllDoors"];
-            disableTurretCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableTurret"];
-            disableAllTurretsCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableAllTurrets"];
-            disableMineCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableMine"];
-            disableAllMinesCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableAllMines"];
-            disableSpikeTrapCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableTrap"];
-            disableAllSpikeTrapsCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["disableAllTraps"];
-            teleporterCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["teleporter"];
-            radarSwitchCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["mapSwitch"];
-            crewStatusCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["crewStatus"];
-            crewInShipCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["shipCrew"];
-            scrapLeftCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["scrap"];
-            radarPingCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["radarBooster"];
-            radarFlashCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["radarFlash"];
-            transmitCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["signalTranslator"];
-            timeCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["time"];
-            openShipDoorsCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["openShip"];
-            closeShipDoorsCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["closeShip"];
-            lightsOnCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["lightsOn"];
-            lightsOffCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["lightsOff"];
-            magnetOnCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["magnetOn"];
-            magnetOffCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["magnetOff"];
-            weatherInfoCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["weatherInfo"];
-            stopCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["stopTalking"];
-            gratitudeCommands.Value = LanguageHelper.Commands[LanguageHelper.Languages[(int)language.Value]]["gratitude"];
+            startListeningCommands.Value = LanguageHelper.Commands[language.Value]["startListening"];
+            stopListeningCommands.Value = LanguageHelper.Commands[language.Value]["stopListening"];
+            moonsInfoCommands.Value = LanguageHelper.Commands[language.Value]["moonInfo"];
+            bestiaryEntriesCommands.Value = LanguageHelper.Commands[language.Value]["bestiaryEntries"];
+            creatureInfoCommands.Value = LanguageHelper.Commands[language.Value]["creatureInfo"];
+            activateAdvancedScannerCommands.Value = LanguageHelper.Commands[language.Value]["activateScanner"];
+            deactivateAdvancedScannerCommands.Value = LanguageHelper.Commands[language.Value]["deactivateScanner"];
+            openSecureDoorCommands.Value = LanguageHelper.Commands[language.Value]["openDoor"];
+            closeSecureDoorCommands.Value = LanguageHelper.Commands[language.Value]["closeDoor"];
+            openAllSecureDoorsCommands.Value = LanguageHelper.Commands[language.Value]["openAllDoors"];
+            closeAllSecureDoorsCommands.Value = LanguageHelper.Commands[language.Value]["closeAllDoors"];
+            disableTurretCommands.Value = LanguageHelper.Commands[language.Value]["disableTurret"];
+            disableAllTurretsCommands.Value = LanguageHelper.Commands[language.Value]["disableAllTurrets"];
+            disableMineCommands.Value = LanguageHelper.Commands[language.Value]["disableMine"];
+            disableAllMinesCommands.Value = LanguageHelper.Commands[language.Value]["disableAllMines"];
+            disableSpikeTrapCommands.Value = LanguageHelper.Commands[language.Value]["disableTrap"];
+            disableAllSpikeTrapsCommands.Value = LanguageHelper.Commands[language.Value]["disableAllTraps"];
+            teleporterCommands.Value = LanguageHelper.Commands[language.Value]["teleporter"];
+            radarSwitchCommands.Value = LanguageHelper.Commands[language.Value]["mapSwitch"];
+            crewStatusCommands.Value = LanguageHelper.Commands[language.Value]["crewStatus"];
+            crewInShipCommands.Value = LanguageHelper.Commands[language.Value]["shipCrew"];
+            scrapLeftCommands.Value = LanguageHelper.Commands[language.Value]["scrap"];
+            radarPingCommands.Value = LanguageHelper.Commands[language.Value]["radarBooster"];
+            radarFlashCommands.Value = LanguageHelper.Commands[language.Value]["radarFlash"];
+            transmitCommands.Value = LanguageHelper.Commands[language.Value]["signalTranslator"];
+            timeCommands.Value = LanguageHelper.Commands[language.Value]["time"];
+            openShipDoorsCommands.Value = LanguageHelper.Commands[language.Value]["openShip"];
+            closeShipDoorsCommands.Value = LanguageHelper.Commands[language.Value]["closeShip"];
+            lightsOnCommands.Value = LanguageHelper.Commands[language.Value]["lightsOn"];
+            lightsOffCommands.Value = LanguageHelper.Commands[language.Value]["lightsOff"];
+            magnetOnCommands.Value = LanguageHelper.Commands[language.Value]["magnetOn"];
+            magnetOffCommands.Value = LanguageHelper.Commands[language.Value]["magnetOff"];
+            weatherInfoCommands.Value = LanguageHelper.Commands[language.Value]["weatherInfo"];
+            stopCommands.Value = LanguageHelper.Commands[language.Value]["stopTalking"];
+            gratitudeCommands.Value = LanguageHelper.Commands[language.Value]["gratitude"];
         }
 
         /*

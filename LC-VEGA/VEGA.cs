@@ -2204,8 +2204,7 @@ namespace LC_VEGA
         {
             if (Plugin.registerWeatherInfo.Value)
             {
-                foreach (var weatherCondition in LanguageHelper.Weathers[
-                             LanguageHelper.Languages[(int)Plugin.language.Value]])
+                foreach (var weatherCondition in LanguageHelper.Weathers[Plugin.language.Value])
                 {
                     string[] phrases = CreatePhrases(Plugin.weatherInfoCommands);
                     foreach (var phrase in phrases)
@@ -3132,6 +3131,7 @@ namespace LC_VEGA
                 phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
                 Plugin.LogToConsole($"Created command with name: {fullCommand}", "debug");
             }
+
             return phrases;
         }
     }
