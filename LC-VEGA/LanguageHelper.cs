@@ -5,12 +5,10 @@ namespace LC_VEGA
 {
     public class LanguageHelper
     {
-        internal static readonly string[] Languages = ["English", "Spanish"];
-        
         // Voice commands
         internal static readonly Dictionary<Languages, Dictionary<string, string>> Commands = new()
         {
-            [SpeechRecognitionAPI.Languages.English] = new()
+            [Languages.English] = new()
             {
                 ["startListening"] = "activate",
                 ["stopListening"]  = "deactivate",
@@ -48,7 +46,7 @@ namespace LC_VEGA
                 ["stopTalking"]  = "shut up/stop/stop talking",
                 ["gratitude"]  = "thank you/thanks",
             },
-            [SpeechRecognitionAPI.Languages.Spanish] = new()
+            [Languages.Spanish] = new()
             {
                 ["startListening"] = "activate",
                 ["stopListening"]  = "desactivate",
@@ -91,15 +89,15 @@ namespace LC_VEGA
         // Names of weather phenomena
         internal static readonly Dictionary<Languages, string[]> Weathers = new()
         {
-            [SpeechRecognitionAPI.Languages.English] = ["Foggy","Rainy","Stormy","Flooded","Eclipsed"],
-            [SpeechRecognitionAPI.Languages.Spanish] = ["la niebla", "la lluvia", "las tormentas", "las inundaciones", "los eclipses"]
+            [Languages.English] = ["Foggy","Rainy","Stormy","Flooded","Eclipsed"],
+            [Languages.Spanish] = ["la niebla", "la lluvia", "las tormentas", "las inundaciones", "los eclipses"]
         };
         
         // Signal transmitter messages
         internal static readonly Dictionary<Languages, string> Messages = new()
         {
-            [SpeechRecognitionAPI.Languages.English] = "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, JESTER, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, LOST, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS",
-            [SpeechRecognitionAPI.Languages.Spanish] = "SI, NO, OKAY, AYUDA, GRACIAS, OBJETOS, ENTRADA, SALIDA, GIGANTE, GIGANTES, PERRO, PERROS, GUSANO, GUSANOS, BABUINO, BABUINOS, PELIGRO, NIÑA, FANTASMA, BRACKEN, ASESINO, BICHO, BICHOS, YIPPEE, PULGA, COIL, JESTER, SLIME, THUMPER, CLON, CLONES, MASCARA, ARAÑA, SERPIENTE, SERPIENTES, ROBOT, DENTRO, ATRAPADO, VETE, ORO, GENERADOR"
+            [Languages.English] = "YES, NO, OKAY, HELP, THANKS, ITEMS, MAIN, FIRE, GIANT, GIANTS, DOG, DOGS, WORM, WORMS, BABOONS, HAWKS, DANGER, GIRL, GHOST, BRACKEN, BUTLER, BUTLERS, BUG, BUGS, YIPPEE, SNARE, FLEA, COIL, JESTER, SLIME, THUMPER, MIMIC, MIMICS, MASKED, SPIDER, SNAKES, OLD BIRD, LOST, INSIDE, TRAPPED, LEAVE, GOLD, APPARATUS",
+            [Languages.Spanish] = "SI, NO, OKAY, AYUDA, GRACIAS, OBJETOS, ENTRADA, SALIDA, GIGANTE, GIGANTES, PERRO, PERROS, GUSANO, GUSANOS, BABUINO, BABUINOS, PELIGRO, NIÑA, FANTASMA, BRACKEN, ASESINO, BICHO, BICHOS, YIPPEE, PULGA, COIL, JESTER, SLIME, THUMPER, CLON, CLONES, MASCARA, ARAÑA, SERPIENTE, SERPIENTES, ROBOT, DENTRO, ATRAPADO, VETE, ORO, GENERADOR"
         };
     }
 }
