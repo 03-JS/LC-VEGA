@@ -1108,21 +1108,6 @@
     ],
     "Moons": [
         {
-            "audio": "4-MARS",
-            "subtitles": {
-                "Mars is a planet located near the planet Earth in the solar system,": 0.0,
-                "and it's where I was designed and developed by the Union Aerospace Corporation,": 3.601,
-                "or UAC for short. The development project was led by the then CEO of the UAC, Dr. Samuel Hayden.": 7.582,
-                "Mars is a deserted planet with an orange red surface due to it being covered in iron oxide dust,": 14.693,
-                "giving it the nickname the Red Planet. Mars hosts many enormous extinct volcanoes, and one of the largest canyons": 20.124,
-                "in the solar system called Volus Marineris, which is 4000 kilometers long.": 26.682,
-                "Geologically, the planet is fairly active, with Mars quakes trembling underneath the ground,": 31.437,
-                "dust devils sweeping across the landscape, and cirrus clouds.": 36.321,
-                "Carbon dioxide is substantially present in Mars' polar ice caps and thin atmosphere.": 40.093,
-                "It is also where the headquarters of the UAC were located": 45.244
-            }
-        },
-        {
             "audio": "5-EMB",
             "subtitles": {
                 "Embrion was discovered in just the last century. It appears to have been used as a testing ground": 0.0,
@@ -1136,7 +1121,8 @@
         {
             "audio": "7-DIN",
             "subtitles": {
-                "Dine is a very snowy and rocky moon, orbiting a white dwarf star. Like on Rend, there is a line of lights that leads to the main entrance.": 0.0,
+                "Dine is a very snowy and rocky moon, orbiting a white dwarf star. The lights, unlike on Rend,": 0.0,
+                "do not lead directly to or from the main entrance but instead are a dead end.": 0.0,
                 "The main entrance is slightly further away and is positioned almost directly ahead of the ship's exit,": 8.235,
                 "albeit behind a lot of very rough and hilly terrain. Because of the large hills, there are multiple paths that can be taken": 13.329,
                 "to reach the main entrance. The fire exit is located to the left and ahead from the ship's exit, slightly closer and with less hills to face.": 19.763,
@@ -1219,11 +1205,11 @@
         {
             "audio": "61-MAR",
             "subtitles": {
-                "Much like Vow, March has a lush forest landscape, and is under constant rain due to its moisture saturated atmosphere.": 0.0,
-                "March's terrain is rather hilly. It is recommended to check out all the different fire exits on March, as there are three of them.": 7.165,
-                "It has a risk rating of B, but is a lot harder than Experimentation. Just like on Offense, Thumpers and Spiders are the most common": 14.232,
-                "indoor entities on March. Bringing a shovel is heavily advised.": 21.636,
-                "Red bees, Baboon hawks and Forest Keepers are the most common outdoor entities on March": 25.624
+                "Unlike Vow or Adamance, March's terrain resembles a marshland, making it harder to traverse with its many deep pools of water.": 0.0,
+                "It is recommended to check out all the different fire exits on March, as it is the only moon that has three of them.": 7.165,
+                "It has a risk rating of B, but is a lot harder than Experimentation. Thumpers, Backwater Gunkfish and the Bunker Spider": 14.232,
+                "are the most common indoor entities inside March. Bringing a shovel is heavily advised.": 21.636,
+                "Red bees, Baboon hawks and Forest Keepers are the most common outdoor entities": 25.624
             }
         },
         {
@@ -1957,13 +1943,7 @@
         {
             "audio": "ManeaterShort",
             "subtitles": {
-                "The creature you scanned is called a Maneater, a deceptively cute indoor creature that will follow the first person they come across.": 0.0,
-                "It requires constant care and will transform into a large, strong, and swift beast if upset.": 0.0,
-                "To prevent this from happening, grab it while it is crying and rock it until it stops.": 0.0,
-                "If the Maneater pukes, it means it is close to transforming. If that happens, the Maneater": 0.0,
-                "will try to kill the nearest person by lunging at them. After that, they will begin stalking": 0.0,
-                "you and your fellow employees as long as any of you are present in the moon's interior.": 0.0,
-                "No matter what happens, do not bring it outside. It does not like the sunlight.": 0.0
+                "The Man-eater is a deceptively cute creature that will follow the first person it comes across. It requires constant care and will transform into a large, strong and swift beast when upset. To prevent this from happening, grab it while it is crying and rock it until it stops. If the Man-eater pukes, it means it is close to transforming. If that happens, the Man-eater will try to kill the nearest person by lunging at them. After that, it will begin stalking you and your fellow employees": 0.0
             }
         },
         {

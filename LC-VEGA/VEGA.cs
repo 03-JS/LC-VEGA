@@ -238,35 +238,36 @@ namespace LC_VEGA
         };
 
         // Names people may use for modded creatures
-        private static readonly string[] moddedEntityNames =
-        {
-            "Redwood Giant",
-            "Redwood",
-            "Driftwood Giant",
-            "Driftwood",
-            "Faceless Stalker",
-            "Slenderman",
-            "Slender",
-            "Football",
-            "Shy Guy",
-            "SCP 096",
-            "Locker",
-            "Siren Head",
-            "Rolling Giant",
-            "Peepers",
-            "Peeper",
-            "Shockwave Drone",
-            "Cleaning Drone",
-            "Moving Turret",
-            "Mobile Turret",
-            "The Lost",
-            "Maggie",
-            "Shrimp",
-            // "The Fiend",
-            // "Fiend"
-            // saved for a later date
-        };
+        // private static readonly string[] moddedEntityNames =
+        // {
+        //     "Redwood Giant",
+        //     "Redwood",
+        //     "Driftwood Giant",
+        //     "Driftwood",
+        //     "Faceless Stalker",
+        //     "Slenderman",
+        //     "Slender",
+        //     "Football",
+        //     "Shy Guy",
+        //     "SCP 096",
+        //     "Locker",
+        //     "Siren Head",
+        //     "Rolling Giant",
+        //     "Peepers",
+        //     "Peeper",
+        //     "Shockwave Drone",
+        //     "Cleaning Drone",
+        //     "Moving Turret",
+        //     "Mobile Turret",
+        //     "The Lost",
+        //     "Maggie",
+        //     "Shrimp",
+        //     // "The Fiend",
+        //     // "Fiend"
+        //     // saved for a later date
+        // };
 
+        // Gets the name for the audio clip for a given entity name
         internal static string GetEntityAudioClipName(string entityName)
         {
             switch (entityName)
@@ -334,25 +335,25 @@ namespace LC_VEGA
                     return "KidnapperFox";
                 case "Baby":
                     return "Maneater";
-                case "Redwood Giant":
-                case "Redwood":
-                    return "RedWood Giant";
-                case "Driftwood Giant":
-                case "Driftwood":
-                    return "DriftWood Giant";
-                case "Faceless Stalker":
-                case "Slenderman":
-                case "Slender":
-                    return "Stalker";
-                case "Shy Guy":
-                case "SCP 096":
-                    return "Shy guy";
-                case "Peeper":
-                    return "Peepers";
-                case "Mobile Turret":
-                    return "Moving Turret";
-                case "The Lost":
-                    return "Maggie";
+                // case "Redwood Giant":
+                // case "Redwood":
+                //     return "RedWood Giant";
+                // case "Driftwood Giant":
+                // case "Driftwood":
+                //     return "DriftWood Giant";
+                // case "Faceless Stalker":
+                // case "Slenderman":
+                // case "Slender":
+                //     return "Stalker";
+                // case "Shy Guy":
+                // case "SCP 096":
+                //     return "Shy guy";
+                // case "Peeper":
+                //     return "Peepers";
+                // case "Mobile Turret":
+                //     return "Moving Turret";
+                // case "The Lost":
+                //     return "Maggie";
                 // case "Fiend":
                 //     return "The Fiend";
                 default:
@@ -2204,12 +2205,12 @@ namespace LC_VEGA
         {
             if (Plugin.registerWeatherInfo.Value)
             {
-                foreach (var weatherCondition in LanguageHelper.Weathers[Plugin.language.Value])
+                foreach (var weatherCondition in LanguageHelper.Weathers[Plugin.commandLanguage.Value])
                 {
                     string[] phrases = CreatePhrases(Plugin.weatherInfoCommands);
                     foreach (var phrase in phrases)
                     {
-                        string fullCommand = Plugin.language.Value == Languages.English
+                        string fullCommand = Plugin.commandLanguage.Value == Languages.English
                             ? $"{phrase} {weatherCondition} weather"
                             : $"{phrase} {weatherCondition}";
                         phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
@@ -2980,7 +2981,7 @@ namespace LC_VEGA
                     string[] phrases = CreatePhrases(Plugin.bestiaryEntriesCommands);
                     foreach (var phrase in phrases)
                     {
-                        string fullCommand = Plugin.language.Value == Languages.English
+                        string fullCommand = Plugin.commandLanguage.Value == Languages.English
                             ? $"{phrase} {name} entry"
                             : $"{phrase} {name}";
                         phrases[Array.IndexOf(phrases, phrase)] = fullCommand;

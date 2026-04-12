@@ -1,7 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1406719673
+UnityVersion: 6000.4.0f1
+CRC: 2452805051
+HashAppended: 0
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: lcvegavoicelines
+      Name: vega_en
       Dependencies: {}
