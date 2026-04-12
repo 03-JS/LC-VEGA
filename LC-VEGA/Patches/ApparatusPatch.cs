@@ -1,4 +1,3 @@
-using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
@@ -12,8 +11,7 @@ namespace LC_VEGA.Patches
         {
             // VEGA.facilityHasPower = false;
             if (!Plugin.giveApparatusWarnings.Value || !__instance.isLungDocked) return;
-            if (Random.Range(0, 10) == 0) VEGA.PlayRandomLine("ApparatusPulledEasterEgg", Random.Range(1, 3), 3.65f);
-            VEGA.PlayLine("ApparatusPulled", 3.65f);
+            VEGA.PlayRandomLine("ApparatusPulled", Random.Range(1, 4), 3.65f);
         }
     }
 }

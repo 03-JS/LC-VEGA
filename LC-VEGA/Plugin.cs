@@ -63,7 +63,7 @@ namespace LC_VEGA
         // Dialogue & Interactions config values
         public static ConfigEntry<VocalLevels> vocalLevel;
         public static ConfigEntry<bool> playIntro;
-        public static ConfigEntry<bool> readBestiaryEntries;
+        // public static ConfigEntry<bool> readBestiaryEntries;
         public static ConfigEntry<bool> remoteEntityID;
         public static ConfigEntry<bool> giveWeatherInfo;
         public static ConfigEntry<bool> giveApparatusWarnings;
@@ -124,8 +124,8 @@ namespace LC_VEGA
         public static ConfigEntry<string> stopListeningCommands;
         public static ConfigEntry<bool> registerMoonsInfo;
         public static ConfigEntry<string> moonsInfoCommands;
-        public static ConfigEntry<bool> registerBestiaryEntries;
-        public static ConfigEntry<string> bestiaryEntriesCommands;
+        // public static ConfigEntry<bool> registerBestiaryEntries;
+        // public static ConfigEntry<string> bestiaryEntriesCommands;
         public static ConfigEntry<bool> registerCreatureInfo;
         public static ConfigEntry<string> creatureInfoCommands;
         public static ConfigEntry<bool> registerAdvancedScanner;
@@ -301,14 +301,14 @@ namespace LC_VEGA
         {
             // Language
             voLanguage = Config.Bind(
-                "Dialogue & Interactions", // Config section
+                "Language", // Config section
                 "Voice lines", // Key of this config
                 Languages.English, // Default value
                 "Changes the language in which VEGA speaks." // Description
             );
             voLanguage.SettingChanged += (sender, args) => { LoadAssets(); };
             commandLanguage = Config.Bind(
-                "Dialogue & Interactions", // Config section
+                "Language", // Config section
                 "Voice commands", // Key of this config
                 Languages.English, // Default value
                 "Changes the voice commands to the language you choose.\n\n" +
@@ -339,12 +339,12 @@ namespace LC_VEGA
                 true, // Default value
                 "If set to true, VEGA will give you its introduction speech the first time you use the mod." // Description
             );
-            readBestiaryEntries = Config.Bind(
-                "Dialogue & Interactions", // Config section
-                "Read Bestiary entries", // Key of this config
-                true, // Default value
-                "If set to true, VEGA will read every bestiary entry you open in the terminal." // Description
-            );
+            // readBestiaryEntries = Config.Bind(
+            //     "Dialogue & Interactions", // Config section
+            //     "Read Bestiary entries", // Key of this config
+            //     true, // Default value
+            //     "If set to true, VEGA will read every bestiary entry you open in the terminal." // Description
+            // );
             remoteEntityID = Config.Bind(
                 "Dialogue & Interactions", // Config section
                 "Remote Entity Identification", // Key of this config
@@ -877,21 +877,21 @@ namespace LC_VEGA
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
                 "IMPORTANT: Moon info commands will always have the moon's name at the end!" // Description
             );
-            registerBestiaryEntries = Config.Bind(
-                "Voice Commands", // Config section
-                "Register Bestiary entries commands", // Key of this config
-                true, // Default value
-                "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
-            );
-            bestiaryEntriesCommands = Config.Bind(
-                "Voice Commands", // Config section
-                "Bestiary entries commands", // Key of this config
-                LanguageHelper.Commands[commandLanguage.Value][
-                    "bestiaryEntries"], // Default value
-                "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
-                "IMPORTANT: Bestiary entries commands will always end with the name of the creature + entry, like so:\n" +
-                "VEGA, read Bracken entry" // Description
-            );
+            // registerBestiaryEntries = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Register Bestiary entries commands", // Key of this config
+            //     true, // Default value
+            //     "Disable this if you don't want these voice commands to be registered. Will apply after restarting the game." // Description
+            // );
+            // bestiaryEntriesCommands = Config.Bind(
+            //     "Voice Commands", // Config section
+            //     "Bestiary entries commands", // Key of this config
+            //     LanguageHelper.Commands[commandLanguage.Value][
+            //         "bestiaryEntries"], // Default value
+            //     "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
+            //     "IMPORTANT: Bestiary entries commands will always end with the name of the creature + entry, like so:\n" +
+            //     "VEGA, read Bracken entry" // Description
+            // );
             registerCreatureInfo = Config.Bind(
                 "Voice Commands", // Config section
                 "Register Creature info commands", // Key of this config
@@ -1289,7 +1289,7 @@ namespace LC_VEGA
             startListeningCommands.Value = LanguageHelper.Commands[commandLanguage.Value]["startListening"];
             stopListeningCommands.Value = LanguageHelper.Commands[commandLanguage.Value]["stopListening"];
             moonsInfoCommands.Value = LanguageHelper.Commands[commandLanguage.Value]["moonInfo"];
-            bestiaryEntriesCommands.Value = LanguageHelper.Commands[commandLanguage.Value]["bestiaryEntries"];
+            // bestiaryEntriesCommands.Value = LanguageHelper.Commands[commandLanguage.Value]["bestiaryEntries"];
             creatureInfoCommands.Value = LanguageHelper.Commands[commandLanguage.Value]["creatureInfo"];
             activateAdvancedScannerCommands.Value = LanguageHelper.Commands[commandLanguage.Value]["activateScanner"];
             deactivateAdvancedScannerCommands.Value =

@@ -30,6 +30,7 @@ namespace LC_VEGA.Patches
             }
         }
 
+        /*
         [HarmonyPatch("LoadNewNode")]
         [HarmonyPostfix]
         static void LoadNodePatch(ref TerminalNode ___currentNode)
@@ -50,13 +51,12 @@ namespace LC_VEGA.Patches
                 {
                     VEGA.PlayLine(VEGA.enemies[___currentNode.creatureFileID], delay);
                 }
-                /*
                 else if (VEGA.moddedEnemies.Contains(___currentNode.creatureName))
                 {
                     VEGA.PlayLine(___currentNode.creatureName, delay);
                 }
-                */
             }
-        }
+        } 
+        */
     }
 }

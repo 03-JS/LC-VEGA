@@ -1915,7 +1915,7 @@ namespace LC_VEGA
 
             RegisterMiscCommands();
             RegisterMoonsInfo();
-            RegisterBestiaryEntries();
+            // RegisterBestiaryEntries();
             RegisterEntityInfo();
             RegisterDoorCommands();
             RegisterHazardsCommands();
@@ -2973,6 +2973,7 @@ namespace LC_VEGA
 
         internal static void RegisterBestiaryEntries()
         {
+            /*
             if (Plugin.registerBestiaryEntries.Value)
             {
                 // Vanilla
@@ -3044,6 +3045,7 @@ namespace LC_VEGA
                 //     });
                 // }
             }
+            */
         }
 
         internal static void RegisterEntityInfo()
