@@ -7,7 +7,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using BepInEx.Configuration;
-using HarmonyLib;
 // using ShipWindows.ShutterSwitch;
 using TMPro;
 using UnityEngine;
@@ -23,7 +22,7 @@ namespace LC_VEGA
         public static AudioSource sfxAudioSource;
         public static List<AudioClip> audioClips;
         public static bool listening;
-        public static bool shouldBeInterrupted;
+        // public static bool shouldBeInterrupted;
         public static bool warningGiven;
         public static bool facilityHasPower;
         public static float teleporterCooldownTime;
@@ -44,6 +43,7 @@ namespace LC_VEGA
             { "Jowyck", "#00ffff" } // Cyan
         };
 
+        /*
         internal static string[] htmlColors =
         {
             "", // Custom
@@ -87,6 +87,7 @@ namespace LC_VEGA
             "<color=#4d4d4d>", // Dark Gray
             "<color=#000000>" // Black
         };
+        */
 
         // Advanced Scanner
         public static bool advancedScannerActive;
@@ -1762,6 +1763,7 @@ namespace LC_VEGA
             return false;
         }
 
+        /*
         private static string SetCustomScannerColor(int length)
         {
             string[] colorCodes = Plugin.customColorCodes.Value.Split(", ");
@@ -1775,6 +1777,7 @@ namespace LC_VEGA
 
             return "";
         }
+        */
 
         /*
         public static void ResetMalfunctionValues()
@@ -1829,29 +1832,17 @@ namespace LC_VEGA
 
         public static void UpdateScannerColors()
         {
-            clearTextColor = Plugin.clearTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(1)
-                : htmlColors[(int)Plugin.clearTextColor.Value];
-            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(4)
-                : htmlColors[(int)Plugin.dataUnavailableTextColor.Value];
-            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(2)
-                : htmlColors[(int)Plugin.entitiesNearbyTextColor.Value];
-            itemsTextColor = Plugin.itemsNearbyTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(3)
-                : htmlColors[(int)Plugin.itemsNearbyTextColor.Value];
+            clearTextColor = Plugin.clearTextColor.Value;
+            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value;
+            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value;
+            itemsTextColor = Plugin.itemsNearbyTextColor.Value;
         }
 
         internal static void InitializeScannerVariables()
         {
             advancedScannerActive = Plugin.enableAdvancedScannerAuto.Value;
-            clearTextColor = Plugin.clearTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(1)
-                : htmlColors[(int)Plugin.clearTextColor.Value];
-            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(4)
-                : htmlColors[(int)Plugin.dataUnavailableTextColor.Value];
+            clearTextColor = Plugin.clearTextColor.Value;
+            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value;
             enemiesTopText =
                 Plugin.infoDisplayMode.Value == DisplayModes.OneLine ||
                 Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine
@@ -1867,9 +1858,7 @@ namespace LC_VEGA
                 Plugin.infoDisplayMode.Value == DisplayModes.OneLine
                     ? " entities nearby</color>"
                     : " nearby</color>";
-            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(2)
-                : htmlColors[(int)Plugin.entitiesNearbyTextColor.Value];
+            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value;
             itemsTopText =
                 Plugin.infoDisplayMode.Value == DisplayModes.OneLine ||
                 Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine
@@ -1884,16 +1873,14 @@ namespace LC_VEGA
                         Plugin.infoDisplayMode.Value == DisplayModes.OneLine
                 ? " items nearby, worth "
                 : " nearby, ";
-            itemsTextColor = Plugin.itemsNearbyTextColor.Value == Colors.Custom
-                ? SetCustomScannerColor(3)
-                : htmlColors[(int)Plugin.itemsNearbyTextColor.Value];
+            itemsTextColor = Plugin.itemsNearbyTextColor.Value;
             scannerRange = Plugin.scannerRange.Value; // 29m max (default)
         }
 
         public static void Initialize()
         {
             Plugin.LogToConsole("Initializing VEGA");
-            shouldBeInterrupted = false;
+            // shouldBeInterrupted = false;
             signals = Plugin.messages.Value.Split(", ");
             InitializeScannerVariables();
             AddNameColors();

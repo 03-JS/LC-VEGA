@@ -377,8 +377,9 @@ I have separated the list of supported mods into two different categories based 
 <br>
 
 - id Software for creating the original character of VEGA.
-- My friend Nico and Mina for helping me test and polish the mod, as well as giving me suggestions and ideas to further improve it.
-- JacuJ for showing me how to properly compress the audio files and compressing them for me.
+- My friends [Mina](https://ko-fi.com/B0B41CLZ0X) and Nico for helping me test and polish the mod, as well as giving me suggestions and ideas to further improve it.
+- [Ramón López Navarro (Ramonizado)](https://www.youtube.com/channel/UCtkAYB-jMpDoppitJjrBcTw) for helping me translate all of the voice lines to Spanish.
+- [JacuJ](https://thunderstore.io/c/lethal-company/p/JacuJ/) for showing me how to properly compress the audio files and compressing them for me.
 - All the people that use the mod and have constantly been giving me ideas, suggestions and support. I appreciate it a lot <3
 
 </details>

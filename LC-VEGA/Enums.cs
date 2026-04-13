@@ -30,6 +30,7 @@ namespace LC_VEGA
         BottomCentered = 5
     }
 
+    /*
     public enum Colors
     {
         Custom = 0,
@@ -73,4 +74,5 @@ namespace LC_VEGA
         DarkGray = 38,
         Black = 39
     }
+    */
 }

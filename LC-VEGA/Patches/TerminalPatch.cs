@@ -26,7 +26,7 @@ namespace LC_VEGA.Patches
             if (___currentNode.creatureFileID != -1)
             {
                 VEGA.audioSource.Stop();
-                VEGA.shouldBeInterrupted = false;
+                // VEGA.shouldBeInterrupted = false;
             }
         }
 

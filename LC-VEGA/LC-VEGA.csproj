@@ -23,6 +23,9 @@
     <Reference Include="LethalCompanyInputUtils">
       <HintPath>..\..\..\1. DLLs\LethalCompanyInputUtils.dll</HintPath>
     </Reference>
+    <Reference Include="LethalConfig">
+      <HintPath>..\..\..\1. DLLs\LethalConfig.dll</HintPath>
+    </Reference>
     <Reference Include="SpeechRecognitionAPI">
       <HintPath>..\..\..\..\Lethal Company APIs\SpeechRecognitionAPI\SpeechRecognitionAPI\bin\Debug\netstandard2.1\SpeechRecognitionAPI.dll</HintPath>
     </Reference>
