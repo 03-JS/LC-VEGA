@@ -230,7 +230,6 @@ namespace LC_VEGA
             "Tit",
             "Artifice",
             "Embrion",
-            "Mars",
             "Liquidation"
         };
 
@@ -264,8 +263,6 @@ namespace LC_VEGA
                     return "5-EMB";
                 case "Liquidation":
                     return "44-LIQ";
-                case "Mars":
-                    return "4-MARS";
                 default:
                     return moonName;
             }
