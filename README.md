@@ -12,7 +12,7 @@ VEGA is a sentient AI from the modern DOOM games that can assist you in many dif
 
 <br>
 
-[![demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q)
+[![v1demo](https://i.imgur.com/Wtr3mBP.png)](https://www.youtube.com/watch?v=rEAtcF38e_Q)
 
 [![viperianShowcase](https://i.imgur.com/RPpE1Wd.png)](https://www.youtube.com/watch?v=UJv7HbzkoCQ)
 
@@ -38,6 +38,11 @@ You can ask VEGA to give you information about any of the base game's moons with
 
 ### Creatures
 ---
+> ### 🛈 Notice
+> **LC-VEGA version 5.0.0 and above no longer support reading Bestiary Entries!**
+> 
+> **Creature summaries are still supported.**
+
 You can ask VEGA to read out a creature's bestiary entry with the command:
 
 - VEGA read [creature's name] entry
@@ -46,7 +51,72 @@ You can also ask him to give you a summary of the creature by saying:
 
 - VEGA info about [creature's name]
 
+**Here is a list with the all of the creature names you can use:**
+
+- English:
+    - "Baboon Hawks" or "Baboons" or "Hawks".
+    - "Bunker Spiders" or "Spiders".
+    - "Hoarding Bugs" or "Loot Bugs" or "Yippee Bugs".
+    - "Barbers".
+    - "Brackens".
+    - "Butlers".
+    - "Coil Heads" or "Coils".
+    - "Forest Keepers" or "Giants".
+    - "Eyeless Dogs" or "Dogs".
+    - "Earth Leviathans" or "Leviathans" or "Worms".
+    - "Jesters".
+    - "Roaming Locusts" or "Locusts".
+    - "Manticoils".
+    - "Nutcrackers".
+    - "Old Birds" or "Mechs".
+    - "Circuit Bees" or "Red Bees" or "Bees".
+    - "Hygroderes" or "Blobs" or "Slimes".
+    - "Tulip Snakes" or "Tulips".
+    - "Snare Fleas" or "Fleas" or "Centipedes".
+    - "Spore Lizards" or "Spore Doggies" or "Lizards".
+    - "Thumpers" or "Crawlers" or "Halves".
+    - "Vain Shrouds" or "Shrouds".
+    - "Kidnapper Foxes" or "Foxes".
+    - "Maneaters" or "Babies".
+    - "Giant Sapsuckers" or "Sapsuckers" or "Kiwis" or "Birds".
+    - "Backwater Gunkfish" or "Stingrays" or "Gunkfish".
+    - "Feiopars" or "Panthers".
+    - "Cadavers" or "Cadaver Growths".
+
+- Spanish:
+    - "Los Babuinos".
+    - "Las Arañas".
+    - "Las Hoarding Bugs" or "Las Loot Bugs" or "Las Yippee Bugs".
+    - "Los Barberos".
+    - "Los Brackens".
+    - "Los Mayordomos".
+    - "Los Coil Heads".
+    - "Los Gigantes" or "Los Guardianes del bosque".
+    - "Los Perros" or "Los Perros sin ojos".
+    - "Los Leviatanes terrestres" or "Los Leviatanes" or "Los Gusanos".
+    - "Los Jesters".
+    - "Las Langostas errantes" or "Las Langostas".
+    - "Los Manticoils".
+    - "Los Cascanueces" => "Nutcracker",
+    - "Los Pajaros viejos" or "Los Viejos pajaros" or "Los Mechas" => "OldBird",
+    - "Las Abejas rojas" or "Las Abejas" => "RedBees",
+    - "Los Hygroderes" or "Los Blobs" or "Los Slimes" => "Slime",
+    - "Las Serpientes de flor" or "Las Serpientes" => "Snakes",
+    - "Las Pulgas" or "Los Ciempies" => "SnareFlea",
+    - "Los Lagartos de esporas" or "Los Lagartos" => "SporeLizard",
+    - "Los Thumpers" => "Thumper",
+    - "Los Vain Shrouds" or "Los Shrouds" => "VainShroud",
+    - "Los Zorros secuestradores" or "Los Zorros" => "KidnapperFox",
+    - "Los Maneaters" or "Los Bebes" => "Maneater",
+    - "Los Sapsuckers gigantes" or "Los Sapsuckers" or "Los Kiwis" or "Los Pajaros" or "Los Pajaros gigantes".
+    - "Los Peces de aguas estancadas" or "Los Gunkfish" or "Las Mantarrayas".
+    - "Los Feiopars" or "Las Panteras".
+    - "Los Cadavers" or "Los Cadaver Growths".
+
 <br>
+
+> ### 🛈 Notice
+> **As of LC-VEGA v4.0.1, support for mods has been temporarily removed.**
 
 Some creature mods are compatible with these commands. Check the list of [compatible creature mods](#mods-that-add-new-creatures) that is at the end of the page for more details.
 
@@ -268,8 +338,10 @@ On his own, VEGA can:
 - Let you know it's getting late when inside a moon's facility.
 - Give you a brief and informative warning when taking out the Apparatus.
 - When you scan a creature for the first time, he will give you a short summary about it, with some helpful tips on how to avoid / deal with them as well.
-- Read bestiary entries out loud.
+- Read bestiary entries out loud. **(Not available in version 5.0.0 and above)**  
 - Give you some information on the current weather of the moon you're going to as you are landing if you have 150 experience points or less.
+
+[^1]: This feature has been removed as of version 5.0.0 and above.
 
 </details>
 
@@ -295,7 +367,9 @@ Feel free to do whatever you want with both the template and the audio files. Yo
 
 <br>
 
-VEGA currently supports **English** and **Spanish** for voice commands. Voice lines will be added at a later date.
+LC-VEGA currently supports **English** and **Spanish** for both voice commands and voice lines!
+
+You can change the language to be used for voice commands and voice lines independently, allowing you to use, for example, the English voice lines with Spanish voice commands, and vice versa.
 
 **I do not plan to add support for more languages at this time**.
 
@@ -309,9 +383,8 @@ VEGA currently supports **English** and **Spanish** for voice commands. Voice li
 
 <br>
 
-> ## ⚠️ Warning
->
-> ### VEGA v4.0.1 and above DOES NOT support any mods as of now
+> ### 🛈 Notice
+> **As of LC-VEGA v4.0.1, support for mods has been temporarily removed.**
 
 VEGA **v2.0 up to v4.0** is compatible with some of the most popular and used Lethal Company mods on Thunderstore.
 
