@@ -1,16 +1,16 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.4.0f1
-CRC: 4277957020
+CRC: 4076485881
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c28c1f3f9894c3ecc27fffe97f573db8
+    Hash: 43babfaae043150026cd6363f75ba98a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 65aad46d90a1722a95b4b51e8e408381
+    Hash: 351d4d457be18bb8fd225e64647786b4
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -64,8 +64,9 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/PerformingScrapScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/KidnapperFoxID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Moons/68-ART.ogg
-- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/No data/NoEntityData-4.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/NoTurrets.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/No data/NoEntityData-4.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/GunkfishScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Moons/44-LIQ.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Radar booster/NoBoostersLow.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/BaboonHawkID.ogg
@@ -73,6 +74,7 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/GettingCrewInShip.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Misc/NoPower-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/JesterShort.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/FeioparShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/AllTurretsDisabled-3.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/TrapDisabled-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/BarberScan.ogg
@@ -115,6 +117,7 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Weather/Foggy-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Doors/DoorClosed-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/TrapDisabled-2.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/CadaverScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Moons/71-GOR.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Radar booster/NoBoostersNearby.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/TrapDisabled-3.ogg
@@ -134,9 +137,11 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/SnareFleaShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/NoMines.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Doors/DoorClosed-3.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/GunkfishID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/BrackenShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/TurretDisabled-3.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Doors/DoorOpened-3.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/FeioparScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Weather/Stormy-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Radar booster/NoBoosters.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/SlimeShort.ogg
@@ -144,15 +149,17 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Ship/NoTeleporter-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Weather/Foggy-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/AllTrapsDisabled-2.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/GunkfishShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/NutcrackerShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/ScrapScanComplete-3.ogg
-- Assets/LC-VEGA/Voice Lines/Vanilla/Activate.ogg
+- Assets/LC-VEGA/Activate.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/JesterScan.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/SapsuckerShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Manual Listening/AlreadyActive.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/TurretDisabled-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/ForestKeeperID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Misc/NoProblem-3.ogg
-- Assets/LC-VEGA/Voice Lines/Vanilla/Deactivate.ogg
+- Assets/LC-VEGA/Deactivate.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/SporeLizardScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Apparatus/RadiationSpike-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/ReportComplete-1.ogg
@@ -166,6 +173,7 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/MineDisabled-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Doors/NoDoorNearbyLow.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/FeioparID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/OldBirdScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Manual Listening/AlreadyInactive.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Moons/5-EMB.ogg
@@ -173,6 +181,7 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/YippeeBugID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Weather/Rainy-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/NutcrackerID.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/CadaverID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/RedBeesShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/NoVisibleTrap.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Weather/Stormy-2.ogg
@@ -183,19 +192,21 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/BrackenID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/SandwormShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/EyelessDogShort.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/SapsuckerID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/NoVisibleMine.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/ButlerID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/AllMinesDisabled-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Misc/NoProblem-4.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/RedBeesID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Time/Noon.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/CadaverShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/ManticoilShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Weather/Eclipsed-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Time/None.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Advanced Scanner/AdvancedScannerEnabled-3.ogg
-- Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/PerformingItemScan.ogg
-- Assets/LC-VEGA/Voice Lines/Vanilla/Doors/AllDoorsClosed-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Misc/VoteCast.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Doors/AllDoorsClosed-2.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/PerformingItemScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Advanced Scanner/AdvancedScannerDisabled-3.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Doors/ShipDoorsClosed.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Ship/LightsAlreadyOff.ogg
@@ -210,6 +221,7 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/ManeaterScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/AllMinesDisabled-1.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Ship/RadarSwitch-1.ogg
+- Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/SapsuckerScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/SporeLizardShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/BunkerSpiderID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Doors/NoDoors.ogg

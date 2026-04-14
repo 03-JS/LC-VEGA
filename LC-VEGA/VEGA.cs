@@ -128,7 +128,7 @@ namespace LC_VEGA
         public static string[] signals;
 
         // Names of the AudioClips paired with their respective IDs in the terminal
-        public static Dictionary<int, string> enemies = new Dictionary<int, string>()
+        public static Dictionary<int, string> enemies = new()
         {
             { 0, "SnareFlea" },
             { 1, "Bracken" },
@@ -154,7 +154,11 @@ namespace LC_VEGA
             { 22, "VainShroud" },
             { 23, "KidnapperFox" },
             { 24, "Barber" },
-            { 25, "Maneater" }
+            { 25, "Maneater" },
+            { 26, "Sapsucker" },
+            { 27, "Gunkfish" },
+            { 28, "Feiopar" },
+            { 29, "Cadaver" }
         };
 
         /* Modded Creature file names
@@ -1832,17 +1836,17 @@ namespace LC_VEGA
 
         public static void UpdateScannerColors()
         {
-            clearTextColor = Plugin.clearTextColor.Value;
-            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value;
-            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value;
-            itemsTextColor = Plugin.itemsNearbyTextColor.Value;
+            clearTextColor = $"<color={Plugin.clearTextColor.Value.ToLower()}>";
+            // dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value;
+            enemiesTextColor = $"<color={Plugin.entitiesNearbyTextColor.Value.ToLower()}>";
+            itemsTextColor = $"<color={Plugin.itemsNearbyTextColor.Value.ToLower()}>";
         }
 
         internal static void InitializeScannerVariables()
         {
             advancedScannerActive = Plugin.enableAdvancedScannerAuto.Value;
-            clearTextColor = Plugin.clearTextColor.Value;
-            dataUnavailableTextColor = Plugin.dataUnavailableTextColor.Value;
+            clearTextColor = $"<color={Plugin.clearTextColor.Value.ToLower()}>";
+            // dataUnavailableTextColor = $"<color={Plugin.dataUnavailableTextColor.Value.ToLower()}>";
             enemiesTopText =
                 Plugin.infoDisplayMode.Value == DisplayModes.OneLine ||
                 Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine
@@ -1858,7 +1862,7 @@ namespace LC_VEGA
                 Plugin.infoDisplayMode.Value == DisplayModes.OneLine
                     ? " entities nearby</color>"
                     : " nearby</color>";
-            enemiesTextColor = Plugin.entitiesNearbyTextColor.Value;
+            enemiesTextColor = $"<color={Plugin.entitiesNearbyTextColor.Value.ToLower()}>";
             itemsTopText =
                 Plugin.infoDisplayMode.Value == DisplayModes.OneLine ||
                 Plugin.infoDisplayMode.Value == DisplayModes.CompactOneLine
@@ -1873,7 +1877,7 @@ namespace LC_VEGA
                         Plugin.infoDisplayMode.Value == DisplayModes.OneLine
                 ? " items nearby, worth "
                 : " nearby, ";
-            itemsTextColor = Plugin.itemsNearbyTextColor.Value;
+            itemsTextColor = $"<color={Plugin.itemsNearbyTextColor.Value.ToLower()}>";
             scannerRange = Plugin.scannerRange.Value; // 29m max (default)
         }
 
@@ -3054,8 +3058,7 @@ namespace LC_VEGA
                     {
                         if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
-                            if (TerminalPatch.scannedEnemyIDs.Contains(enemies
-                                    .First(key => key.Value == GetEntityAudioClipName(name)).Key))
+                            if (TerminalPatch.scannedEnemyIDs.Contains(enemies.First(key => key.Value == GetEntityAudioClipName(name)).Key))
                             {
                                 PlayLine(GetEntityAudioClipName(name) + "Short");
                             }

@@ -58,7 +58,8 @@ namespace LC_VEGA.Patches
         [HarmonyPatch("AttemptScanNewCreature")]
         [HarmonyPrefix]
         static void PlayNewEnemyLine(int enemyID, ref Terminal ___terminalScript)
-        {
+        { 
+            Plugin.LogToConsole($"Enemy ID: {enemyID}", "debug");
             if (!___terminalScript.scannedEnemyIDs.Contains(enemyID))
             {
                 if (Plugin.vocalLevel.Value >= VocalLevels.High)

@@ -52,7 +52,7 @@ namespace LC_VEGA
                 ["stopListening"]  = "desactivate",
                 ["moonInfo"]  = "info sobre/informacion sobre",
                 // ["bestiaryEntries"]  = "lee la entrada llamada/leeme la entrada llamada/lee el registro llamado/leeme el registro llamado",
-                ["creatureInfo"]  = "info sobre los/informacion sobre los",
+                ["creatureInfo"]  = "info sobre/informacion sobre",
                 ["activateScanner"]  = "activa el escaner/activa el escaner avanzado/enciende el escaner/enciende el escaner avanzado/escanea",
                 ["deactivateScanner"]  = "desactiva el escaner/desactiva el escaner avanzado/apaga el escaner/apaga el escaner avanzado",
                 ["openDoor"]  = "abre la puerta",

@@ -19,16 +19,16 @@ namespace LC_VEGA.Patches
             // terminalInstance = __instance;
         }
 
-        [HarmonyPatch("QuitTerminal")]
-        [HarmonyPostfix]
-        static void StopAudio(ref TerminalNode ___currentNode)
-        {
-            if (___currentNode.creatureFileID != -1)
-            {
-                VEGA.audioSource.Stop();
-                // VEGA.shouldBeInterrupted = false;
-            }
-        }
+        // [HarmonyPatch("QuitTerminal")]
+        // [HarmonyPostfix]
+        // static void StopAudio(ref TerminalNode ___currentNode)
+        // {
+        //     if (___currentNode.creatureFileID != -1)
+        //     {
+        //         VEGA.audioSource.Stop();
+        //         VEGA.shouldBeInterrupted = false;
+        //     }
+        // }
 
         /*
         [HarmonyPatch("LoadNewNode")]

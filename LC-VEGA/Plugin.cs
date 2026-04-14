@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using LethalConfig;
 using LethalConfig.ConfigItems;
-using LethalConfig.ConfigItems.Options;
 using SpeechRecognitionAPI;
 using TMPro;
 using UnityEngine;
