@@ -21,7 +21,9 @@ namespace LC_VEGA
         public static AudioSource audioSource;
         public static AudioSource sfxAudioSource;
         public static List<AudioClip> audioClips;
+
         public static bool listening;
+
         // public static bool shouldBeInterrupted;
         public static bool warningGiven;
         public static bool facilityHasPower;
@@ -182,66 +184,6 @@ namespace LC_VEGA
         };
         */
 
-        // Names people may use for vanilla creatures
-        private static readonly string[] vanillaEntityNames =
-        {
-            "Baboon Hawk",
-            "Baboon",
-            "Hawk",
-            "Bunker Spider",
-            "Spider",
-            "Hoarding Bug",
-            "Loot Bug",
-            "Yippee Bug",
-            "Barber",
-            "Bracken",
-            "Butler",
-            "Coil Head",
-            "Coil",
-            "Forest Keeper",
-            "Giant",
-            "Keeper",
-            "Eyeless Dog",
-            "Dog",
-            "Earth Leviathan",
-            "Leviathan",
-            "Worm",
-            "Jester",
-            "Roaming Locusts",
-            "Locusts",
-            "Manticoil",
-            "Nutcracker",
-            "Old Bird",
-            "Bird",
-            "Mech",
-            "Circuit Bees",
-            "Red Bees",
-            "Bees",
-            "Hygrodere",
-            "Slime",
-            "Blob",
-            "Tulip Snake",
-            "Tulip",
-            "Snake",
-            "Snare Flea",
-            "Flea",
-            "Centipede",
-            "Spore Lizard",
-            "Spore Doggy",
-            "Lizard",
-            "Thumper",
-            "Crawler",
-            "Halve",
-            "Vain Shroud",
-            "Vain",
-            "Shroud",
-            "Kidnapper Fox",
-            "Kidnapper",
-            "Fox",
-            "Maneater",
-            "Baby"
-        };
-
         // Names people may use for modded creatures
         // private static readonly string[] moddedEntityNames =
         // {
@@ -271,100 +213,6 @@ namespace LC_VEGA
         //     // "Fiend"
         //     // saved for a later date
         // };
-
-        // Gets the name for the audio clip for a given entity name
-        internal static string GetEntityAudioClipName(string entityName)
-        {
-            switch (entityName)
-            {
-                case "Baboon Hawk":
-                case "Baboon":
-                case "Hawk":
-                    return "BaboonHawk";
-                case "Bunker Spider":
-                case "Spider":
-                    return "BunkerSpider";
-                case "Hoarding Bug":
-                case "Loot Bug":
-                case "Yippee Bug":
-                    return "YippeeBug";
-                case "Coil Head":
-                case "Coil":
-                    return "Coil-Head";
-                case "Forest Keeper":
-                case "Giant":
-                case "Keeper":
-                    return "ForestKeeper";
-                case "Eyeless Dog":
-                case "Dog":
-                    return "EyelessDog";
-                case "Earth Leviathan":
-                case "Leviathan":
-                case "Worm":
-                    return "Sandworm";
-                case "Roaming Locusts":
-                    return "Locusts";
-                case "Old Bird":
-                case "Bird":
-                case "Mech":
-                    return "OldBird";
-                case "Circuit Bees":
-                case "Red Bees":
-                case "Bees":
-                    return "RedBees";
-                case "Hygrodere":
-                case "Blob":
-                    return "Slime";
-                case "Tulip Snake":
-                case "Tulip":
-                case "Snake":
-                    return "Snakes";
-                case "Snare Flea":
-                case "Flea":
-                case "Centipede":
-                    return "SnareFlea";
-                case "Spore Lizard":
-                case "Spore Doggy":
-                case "Lizard":
-                    return "SporeLizard";
-                case "Crawler":
-                case "Halve":
-                    return "Thumper";
-                case "Vain Shroud":
-                case "Vain":
-                case "Shroud":
-                    return "VainShroud";
-                case "Kidnapper Fox":
-                case "Kidnapper":
-                case "Fox":
-                    return "KidnapperFox";
-                case "Baby":
-                    return "Maneater";
-                // case "Redwood Giant":
-                // case "Redwood":
-                //     return "RedWood Giant";
-                // case "Driftwood Giant":
-                // case "Driftwood":
-                //     return "DriftWood Giant";
-                // case "Faceless Stalker":
-                // case "Slenderman":
-                // case "Slender":
-                //     return "Stalker";
-                // case "Shy Guy":
-                // case "SCP 096":
-                //     return "Shy guy";
-                // case "Peeper":
-                //     return "Peepers";
-                // case "Mobile Turret":
-                //     return "Moving Turret";
-                // case "The Lost":
-                //     return "Maggie";
-                // case "Fiend":
-                //     return "The Fiend";
-                default:
-                    return entityName;
-            }
-        }
 
         // Names of moons
         private static readonly string[] moonNames =
@@ -3044,12 +2892,12 @@ namespace LC_VEGA
             if (Plugin.registerCreatureInfo.Value)
             {
                 // Vanilla
-                foreach (var name in vanillaEntityNames)
+                foreach (var name in LanguageHelper.VanillaEntityNames[Plugin.commandLanguage.Value])
                 {
                     string[] phrases = CreatePhrases(Plugin.creatureInfoCommands);
                     foreach (var phrase in phrases)
                     {
-                        string fullCommand = $"{phrase} {name}s";
+                        string fullCommand = $"{phrase} {name}";
                         phrases[Array.IndexOf(phrases, phrase)] = fullCommand;
                     }
 
@@ -3058,9 +2906,10 @@ namespace LC_VEGA
                     {
                         if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
-                            if (TerminalPatch.scannedEnemyIDs.Contains(enemies.First(key => key.Value == GetEntityAudioClipName(name)).Key))
+                            if (TerminalPatch.scannedEnemyIDs.Contains(enemies
+                                    .First(key => key.Value == LanguageHelper.GetEntityAudioClipName(name, Plugin.commandLanguage.Value)).Key))
                             {
-                                PlayLine(GetEntityAudioClipName(name) + "Short");
+                                PlayLine(LanguageHelper.GetEntityAudioClipName(name, Plugin.commandLanguage.Value) + "Short");
                             }
                             else
                             {
