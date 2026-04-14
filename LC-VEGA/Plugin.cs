@@ -972,7 +972,7 @@ namespace LC_VEGA
                 "Creature info commands", // Key of this config
                 LanguageHelper.Commands[commandLanguage.Value]["creatureInfo"], // Default value
                 "The voice commands that you want to get registered and picked up by VEGA. Make sure to separate different commands with a '/'.\n" +
-                "IMPORTANT: Creature info commands will always have the creature's name at the end!" // Description
+                "IMPORTANT: Creature info commands will always have the creature's name at the end! The list of usable names is available in the Thunderstore page." // Description
             );
             LethalConfigManager.AddConfigItem(new TextInputFieldConfigItem(creatureInfoCommands));
             registerAdvancedScanner = Config.Bind(
