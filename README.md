@@ -97,17 +97,17 @@ You can also ask him to give you a summary of the creature by saying:
     - "Los Jesters".
     - "Las Langostas errantes" or "Las Langostas".
     - "Los Manticoils".
-    - "Los Cascanueces" => "Nutcracker",
-    - "Los Pajaros viejos" or "Los Viejos pajaros" or "Los Mechas" => "OldBird",
-    - "Las Abejas rojas" or "Las Abejas" => "RedBees",
-    - "Los Hygroderes" or "Los Blobs" or "Los Slimes" => "Slime",
-    - "Las Serpientes de flor" or "Las Serpientes" => "Snakes",
-    - "Las Pulgas" or "Los Ciempies" => "SnareFlea",
-    - "Los Lagartos de esporas" or "Los Lagartos" => "SporeLizard",
-    - "Los Thumpers" => "Thumper",
-    - "Los Vain Shrouds" or "Los Shrouds" => "VainShroud",
-    - "Los Zorros secuestradores" or "Los Zorros" => "KidnapperFox",
-    - "Los Maneaters" or "Los Bebes" => "Maneater",
+    - "Los Cascanueces".
+    - "Los Pajaros viejos" or "Los Viejos pajaros" or "Los Mechas".
+    - "Las Abejas rojas" or "Las Abejas".
+    - "Los Hygroderes" or "Los Blobs" or "Los Slimes".
+    - "Las Serpientes de flor" or "Las Serpientes".
+    - "Las Pulgas" or "Los Ciempies".
+    - "Los Lagartos de esporas" or "Los Lagartos".
+    - "Los Thumpers".
+    - "Los Vain Shrouds" or "Los Shrouds".
+    - "Los Zorros secuestradores" or "Los Zorros".
+    - "Los Maneaters" or "Los Bebes".
     - "Los Sapsuckers gigantes" or "Los Sapsuckers" or "Los Kiwis" or "Los Pajaros" or "Los Pajaros gigantes".
     - "Los Peces de aguas estancadas" or "Los Gunkfish" or "Las Mantarrayas".
     - "Los Feiopars" or "Las Panteras".
