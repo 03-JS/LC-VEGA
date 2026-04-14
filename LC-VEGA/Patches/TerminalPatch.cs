@@ -8,14 +8,14 @@ namespace LC_VEGA.Patches
     {
         // public static Terminal terminalInstance;
         public static List<int> scannedEnemyIDs;
-        public static List<TerminalNode> scannedEnemyFiles;
+        // public static List<TerminalNode> scannedEnemyFiles;
 
         [HarmonyPatch("Start")]
         [HarmonyPostfix]
-        static void GetLists(ref Terminal __instance, ref List<int> ___scannedEnemyIDs)
+        static void GetLists(/* ref Terminal __instance, */ ref List<int> ___scannedEnemyIDs)
         {
             scannedEnemyIDs = ___scannedEnemyIDs;
-            scannedEnemyFiles = __instance.enemyFiles;
+            // scannedEnemyFiles = __instance.enemyFiles;
             // terminalInstance = __instance;
         }
 
