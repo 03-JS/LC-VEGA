@@ -1,16 +1,16 @@
 ManifestFileVersion: 0
 UnityVersion: 6000.4.0f1
-CRC: 4076485881
+CRC: 3632309579
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 43babfaae043150026cd6363f75ba98a
+    Hash: 414aedafb46b4cd095e31bb478ebac14
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 351d4d457be18bb8fd225e64647786b4
+    Hash: 3807763b9123747cec7b6fa7e0f4ce73
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -152,14 +152,14 @@ Assets:
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/GunkfishShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/NutcrackerShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/ScrapScanComplete-3.ogg
-- Assets/LC-VEGA/Activate.ogg
+- Assets/LC-VEGA/SFXs/Activate.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/JesterScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Summary/SapsuckerShort.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Manual Listening/AlreadyActive.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Hazards/TurretDisabled-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/ID/ForestKeeperID.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Misc/NoProblem-3.ogg
-- Assets/LC-VEGA/Deactivate.ogg
+- Assets/LC-VEGA/SFXs/Deactivate.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Entities/Scan/SporeLizardScan.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Apparatus/RadiationSpike-2.ogg
 - Assets/LC-VEGA/Voice Lines/Vanilla/Reports & Scans/ReportComplete-1.ogg

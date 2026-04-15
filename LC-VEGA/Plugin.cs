@@ -845,7 +845,7 @@ namespace LC_VEGA
             );
             playerNameColors.SettingChanged += (obj, args) =>
             {
-                VEGA.RestoreNameColors();
+                VEGA.SetNameColors();
                 VEGA.AddNameColors();
             };
             LethalConfigManager.AddConfigItem(new TextInputFieldConfigItem(playerNameColors, requiresRestart: false));

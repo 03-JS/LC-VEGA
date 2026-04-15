@@ -33,17 +33,7 @@ namespace LC_VEGA
         public static char creditsChar;
 
         // Default set of usernames and their respective colors in chat messages
-        private static Dictionary<string, string> nameColorPairs = new Dictionary<string, string>()
-        {
-            { "JS0", "#b51b3e" }, // Opera-san Red
-            { "Dorimon Pls", "#ff0000" }, // Red
-            { "Lunxara", "#6700bd" }, // Lunxara Purple
-            { "Mina", "#a11010" }, // BLOOD (FUEL)
-            { "Sua", "#79e5cb" }, // Suachi Teal
-            { "Nico", "#ffffff" }, // Literally just white
-            { "xVenatoRx", "#ff8000" }, // McLaren Papaya
-            { "Jowyck", "#00ffff" } // Cyan
-        };
+        private static Dictionary<string, string> nameColorPairs;
 
         /*
         internal static string[] htmlColors =
@@ -1565,6 +1555,21 @@ namespace LC_VEGA
         }
         */
 
+        internal static void SetNameColors()
+        {
+            nameColorPairs = new Dictionary<string, string>
+            {
+                { "JS", "#b51b3e" }, // Opera-san Red
+                { "Dorimon Pls", "#ff0000" }, // Red
+                { "Lunxara", "#6700bd" }, // Lunxara Purple
+                { "Mina", "#a11010" }, // BLOOD (FUEL)
+                { "Sua", "#79e5cb" }, // Suachi Teal
+                { "Nico", "#ffffff" }, // Literally just white
+                { "xVenatoRx", "#ff8000" }, // McLaren Papaya
+                { "Jowyck", "#00ffff" } // Cyan
+            };
+        }
+        
         internal static void AddNameColors()
         {
             string[] players = Plugin.playerNameColors.Value.Split(", ", StringSplitOptions.RemoveEmptyEntries);
@@ -1577,24 +1582,9 @@ namespace LC_VEGA
             }
         }
 
-        internal static void RestoreNameColors()
-        {
-            nameColorPairs = new Dictionary<string, string>()
-            {
-                { "JS0", "#b51b3e" }, // Opera-san Red
-                { "Dorimon Pls", "#ff0000" }, // Red
-                { "Lunxara", "#6700bd" }, // Lunxara Purple
-                { "Mina", "#a11010" }, // BLOOD (FUEL)
-                { "Sua", "#79e5cb" }, // Suachi Teal
-                { "Nico", "#ffffff" }, // Literally just white
-                { "xVenatoRx", "#ff8000" }, // McLaren Papaya
-                { "Jowyck", "#00ffff" } // Cyan
-            };
-        }
-
         private static string GetNameColor(string name)
         {
-            return nameColorPairs.ContainsKey(name) ? nameColorPairs[name] : "";
+            return nameColorPairs.GetValueOrDefault(name, "");
         }
 
         public static void SendChatMessage(string message)
@@ -1732,6 +1722,7 @@ namespace LC_VEGA
             // shouldBeInterrupted = false;
             signals = Plugin.messages.Value.Split(", ");
             InitializeScannerVariables();
+            SetNameColors();
             AddNameColors();
             listening = false;
             if (!Plugin.useManualListening.Value ||
