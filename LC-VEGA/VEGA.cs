@@ -1560,6 +1560,7 @@ namespace LC_VEGA
             nameColorPairs = new Dictionary<string, string>
             {
                 { "JS", "#b51b3e" }, // Opera-san Red
+                { "JS0", "#b51b3e" }, // Opera-san Red
                 { "Dorimon Pls", "#ff0000" }, // Red
                 { "Lunxara", "#6700bd" }, // Lunxara Purple
                 { "Mina", "#a11010" }, // BLOOD (FUEL)
