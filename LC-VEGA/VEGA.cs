@@ -103,7 +103,7 @@ namespace LC_VEGA
 
         // internal static bool noTurretNearby;
         internal static bool noTurrets;
-        internal static float distanceToTurret;
+        // internal static float distanceToTurret;
 
         /* Toil heads
         internal static bool toilDisabled;
@@ -541,7 +541,7 @@ namespace LC_VEGA
                 return null;
             }
 
-            distanceToTurret = distances.Min();
+            // distanceToTurret = distances.Min();
             return closestTurret;
         }
 
@@ -1459,7 +1459,7 @@ namespace LC_VEGA
             int creditsLeft = 0;
             int creditsInShip = 0;
 
-            if (message.ToLower().Contains("item")) PlayLine("PerformingItemScan");
+            if (message.ToLower().Contains(Plugin.commandLanguage.Value == Languages.English ? "item" : "objetos")) PlayLine("PerformingItemScan");
             PlayLine("PerformingScrapScan");
 
             yield return new WaitForSeconds(delay);
@@ -1562,9 +1562,9 @@ namespace LC_VEGA
                 { "JS", "#b51b3e" }, // Opera-san Red
                 { "JS0", "#b51b3e" }, // Opera-san Red
                 { "Dorimon Pls", "#ff0000" }, // Red
-                { "Lunxara", "#6700bd" }, // Lunxara Purple
+                /* { "Lunxara", "#6700bd" }, */ // Lunxara Purple
                 { "Mina", "#a11010" }, // BLOOD (FUEL)
-                { "Sua", "#79e5cb" }, // Suachi Teal
+                /* { "Sua", "#79e5cb" }, */ // Suachi Teal
                 { "Nico", "#ffffff" }, // Literally just white
                 { "xVenatoRx", "#ff8000" }, // McLaren Papaya
                 { "Jowyck", "#00ffff" } // Cyan
@@ -2187,7 +2187,7 @@ namespace LC_VEGA
                             return;
                         }
                         */
-                        CoroutineManager.StartCoroutine(GetScrapLeft(recognized.Text));
+                        CoroutineManager.StartCoroutine(GetScrapLeft(Speech.bestMatch));
                     }
                 });
             }

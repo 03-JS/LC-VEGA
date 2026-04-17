@@ -37,23 +37,15 @@ namespace LC_VEGA.Patches
             Plugin.LogToConsole("Position and scale values of the Advanced Scanner updated", "debug");
         }
 
+        /*
         [HarmonyPatch("RadiationWarningHUD")]
         [HarmonyPostfix]
         static void PlayRadiationWarning()
         {
             VEGA.facilityHasPower = false;
-            if (!Plugin.giveApparatusWarnings.Value /* || ModChecker.hasFacilityMeltdown */) return;
-            try
-            {
-                if (StartOfRound.Instance.localPlayerController.ItemSlots.All(item =>
-                        item.GetType() != typeof(LungProp)))
-                    VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 3.65f);
-            }
-            catch (System.Exception)
-            {
-                VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 3.65f);
-            }
+            if (!Plugin.giveApparatusWarnings.Value || ModChecker.hasFacilityMeltdown) return;
         }
+        */
 
         [HarmonyPatch("AttemptScanNewCreature")]
         [HarmonyPrefix]

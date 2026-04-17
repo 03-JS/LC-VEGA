@@ -1,3 +1,4 @@
+using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
@@ -9,9 +10,19 @@ namespace LC_VEGA.Patches
         [HarmonyPrefix]
         static void PlayApparatusPulledLine(LungProp __instance)
         {
-            // VEGA.facilityHasPower = false;
             if (!Plugin.giveApparatusWarnings.Value || !__instance.isLungDocked) return;
-            VEGA.PlayRandomLine("ApparatusPulled", Random.Range(1, 4), 3.65f);
+            VEGA.facilityHasPower = false;
+            try
+            {
+                if (StartOfRound.Instance.localPlayerController.ItemSlots.All(item =>
+                        item.GetType() != typeof(LungProp)))
+                    VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 7.5f);
+                else VEGA.PlayRandomLine("ApparatusPulled", Random.Range(1, 4), 7.5f);
+            }
+            catch (System.Exception)
+            {
+                VEGA.PlayRandomLine("RadiationSpike", Random.Range(1, 3), 7.5f);
+            }
         }
     }
 }
