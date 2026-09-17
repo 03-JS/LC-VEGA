@@ -266,15 +266,7 @@ namespace LC_VEGA
                 // if (StartOfRound.Instance.localPlayerController == null) return;
                 if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
                 if (!skip && audioSource.isPlaying) return;
-
-                foreach (var clip in audioClips)
-                {
-                    if (clip.name.Equals(clipName))
-                    {
-                        audioSource.clip = clip;
-                    }
-                }
-
+                audioSource.clip = audioClips.Find(clip => clip.name == clipName);
                 if (audioSource.clip != null)
                     Plugin.LogToConsole("Playing " + audioSource.clip.name + " with a " + delay + " second delay");
                 audioSource.PlayDelayed(delay);
@@ -292,15 +284,7 @@ namespace LC_VEGA
             {
                 if (checkPlayerStatus && StartOfRound.Instance.localPlayerController.isPlayerDead) return;
                 if (!skip && sfxAudioSource.isPlaying) return;
-
-                foreach (var clip in audioClips)
-                {
-                    if (clip.name.Equals(clipName))
-                    {
-                        sfxAudioSource.clip = clip;
-                    }
-                }
-
+                audioSource.clip = audioClips.Find(clip => clip.name == clipName);
                 if (sfxAudioSource.clip != null)
                     Plugin.LogToConsole("Playing " + sfxAudioSource.clip.name + " with a " + delay + " second delay");
                 sfxAudioSource.PlayDelayed(delay);
@@ -1459,7 +1443,8 @@ namespace LC_VEGA
             int creditsLeft = 0;
             int creditsInShip = 0;
 
-            if (message.ToLower().Contains(Plugin.commandLanguage.Value == Languages.English ? "item" : "objetos")) PlayLine("PerformingItemScan");
+            if (message.ToLower().Contains(Plugin.commandLanguage.Value == Languages.English ? "item" : "objetos"))
+                PlayLine("PerformingItemScan");
             PlayLine("PerformingScrapScan");
 
             yield return new WaitForSeconds(delay);
@@ -1570,7 +1555,7 @@ namespace LC_VEGA
                 { "Jowyck", "#00ffff" } // Cyan
             };
         }
-        
+
         internal static void AddNameColors()
         {
             string[] players = Plugin.playerNameColors.Value.Split(", ", StringSplitOptions.RemoveEmptyEntries);
@@ -2798,7 +2783,7 @@ namespace LC_VEGA
                 }
             }
         }
-        
+
         /*
         internal static void RegisterBestiaryEntries()
         {
@@ -2896,9 +2881,12 @@ namespace LC_VEGA
                         if (Speech.IsAboveThreshold(phrases, GetThreshold(Plugin.infoConfidence.Value)) && listening)
                         {
                             if (TerminalPatch.scannedEnemyIDs.Contains(enemies
-                                    .First(key => key.Value == LanguageHelper.GetEntityAudioClipName(name, Plugin.commandLanguage.Value)).Key))
+                                    .First(key =>
+                                        key.Value ==
+                                        LanguageHelper.GetEntityAudioClipName(name, Plugin.commandLanguage.Value)).Key))
                             {
-                                PlayLine(LanguageHelper.GetEntityAudioClipName(name, Plugin.commandLanguage.Value) + "Short");
+                                PlayLine(LanguageHelper.GetEntityAudioClipName(name, Plugin.commandLanguage.Value) +
+                                         "Short");
                             }
                             else
                             {
